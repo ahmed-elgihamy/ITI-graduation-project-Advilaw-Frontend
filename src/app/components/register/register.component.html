@@ -1,91 +1,91 @@
-<div class="container-fluid p-0 min-vh-100">
-  <div class="row g-0 h-100">
-   
-    <div class="col-12 col-md-5 position-relative">
+<div class="container-fluid">
+  <div class="row min-vh-100">
+  
+    <div class="col-md-5 position-relative d-none d-md-block p-0">
       <img
         src="https://media.istockphoto.com/id/1706061573/photo/judge-hammer-with-judge-lawyer-businessman-in-suit-working-on-legal-documents-in-courtroom.jpg?s=612x612&w=0&k=20&c=GYTBMAPkMvKwBR1t_2j5A341DExw4hhnQiG-Pk9nwvk="
         alt="Legal System"
-        class="img-fluid w-100 h-100 object-fit-cover"
+        class="auth-image"
       />
-      <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-end p-4 p-lg-5 text-white overlay-gradient">
-        <h2 class="mb-3">Legal Excellence Starts Here</h2>
-        <p class="mb-0">Join our community of legal professionals and elevate your practice with our secure platform.</p>
+      <div class="auth-overlay">
+        <h2>Get the Legal Help You Need</h2>
+        <p>Connect with qualified legal professionals</p>
       </div>
     </div>
 
  
-    <div class="col-12 col-md-7 d-flex align-items-center justify-content-center p-4 p-lg-5 bg-white">
-      <div class="w-100" style="max-width: 700px;">
-        <div class="text-center mb-4">
-          <h2 class="fw-bold mb-3 text-navy-blue">Create Your Account</h2>
+    <div class="col-md-7 d-flex align-items-center py-5">
+      <div class="w-100 px-3 px-md-5" style="max-width: 600px;">
+        <h2 class="text-center mb-3" style="color: #313f4c; font-weight: bold;">Client Registration</h2>
+        <p class="text-center mb-4" style="color: #87603f;">Create your account to get started</p>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+         
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Email Address</label>
+            <input formControlName="email" type="email" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Password</label>
+            <div class="position-relative">
+              <input formControlName="password" [type]="passwordVisible ? 'text' : 'password'" class="form-control auth-input">
+              <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
+                {{ passwordVisible ? 'Hide' : 'Show' }}
+              </button>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Username</label>
+            <input formControlName="userName" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Phone Number</label>
+            <input formControlName="phoneNumber" type="tel" class="form-control auth-input" placeholder="e.g., 01012345678">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">City</label>
+            <input formControlName="city" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Country</label>
+            <input formControlName="country" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Postal Code</label>
+            <input formControlName="postalCode" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">National ID</label>
+            <input formControlName="nationalID" type="text" class="form-control auth-input">
+          </div>
+
+          
+          <div class="form-check my-4">
+            <input class="form-check-input" type="checkbox" formControlName="terms" id="terms">
+            <label class="form-check-label" for="terms">
+              I agree to the <a href="#" class="auth-link">Terms</a> and 
+              <a href="#" class="auth-link">Privacy Policy</a>
+            </label>
+          </div>
+
+          <button type="submit" class="btn auth-btn w-100 py-2 fw-bold">Create Account</button>
+        </form>
+
+        <div class="text-center mt-4">
+          <p>Already have an account? <a routerLink="/login" class="auth-link">Sign in here</a></p>
         </div>
 
-        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-          <div class="mb-4 position-relative" *ngFor="let field of fieldConfigs">
-            <div class="position-relative" *ngIf="field.name === 'password'; else normalField">
-              <input
-                [formControlName]="field.name"
-                [type]="field.type"
-                class="form-control py-3 px-0 border-0 border-bottom rounded-0 bg-transparent"
-                [placeholder]="field.placeholder"
-                [ngClass]="{ 'is-invalid': f[field.name].invalid && (f[field.name].touched || f[field.name].dirty) }"
-              />
-              <span class="password-toggle position-absolute end-0 top-50 translate-middle-y me-2" (click)="hideShowPass()">
-                <i class="fa {{ eyeIcon }}"></i>
-              </span>
-            </div>
-            <ng-template #normalField>
-              <input
-                [formControlName]="field.name"
-                [type]="field.type"
-                class="form-control py-3 px-0 border-0 border-bottom rounded-0 bg-transparent"
-                [placeholder]="field.placeholder"
-                [ngClass]="{ 'is-invalid': f[field.name].invalid && (f[field.name].touched || f[field.name].dirty) }"
-              />
-            </ng-template>
-            <small class="error-message position-absolute start-0 text-danger" 
-                   *ngIf="f[field.name].invalid && (f[field.name].touched || f[field.name].dirty)">
-              {{ getErrorMessage(field.name) }}
-            </small>
-          </div>
-          
-     
-          <div class="mb-4 py-3">
-            <div class="form-check d-flex align-items-center">
-              <input
-                class="form-check-input me-2"
-                type="checkbox"
-                formControlName="terms"
-                id="termsCheck"
-                style="width: 22px; height: 22px;"
-              >
-              <label class="form-check-label" for="termsCheck">
-                I agree to the <a href="#" class="terms-link fw-bold text-decoration-none text-navy-blue">Terms of Service</a> and 
-                <a href="#" class="terms-link fw-bold text-decoration-none text-navy-blue">Privacy Policy</a>
-              </label>
-            </div>
-            <small class="error-message d-block text-danger mt-1" 
-                   *ngIf="f['terms'].invalid && f['terms'].touched">
-              *You must accept the terms*
-            </small>
-          </div>
-          
-     
-          <button type="submit" class="btn w-100 mb-3 py-2 px-4 fw-bold border-0 main-btn">Sign Up</button>
-          
-    
-          <div class="text-center mt-4">
-            <p class="mb-0">Already have an account? 
-              <a routerLink="/login" class="fw-bold text-decoration-none text-navy-blue">Sign in here</a>
-            </p>
-          </div>
-          
-         
-          <div class="text-center mt-4 pt-3">
-            <p class="mb-1 small">Secured with industry-standard encryption</p>
-            <p class="mb-0 small">© 2023 AdviLaw. All rights reserved.</p>
-          </div>
-        </form>
+        <div class="text-center mt-5 pt-3 small" style="color: #87603f;">
+          <p>Secured with industry-standard encryption</p>
+          <p>© 2023 AdviLaw. All rights reserved.</p>
+        </div>
       </div>
     </div>
   </div>

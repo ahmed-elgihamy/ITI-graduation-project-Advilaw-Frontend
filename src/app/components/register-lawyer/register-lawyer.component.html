@@ -1,101 +1,111 @@
-<div class="main-container">
-  <div class="container-fluid">
-    <div class="row signup-container g-0">
-      <div class="col-12 col-md-5 left-panel p-0">
-        <img
-          src="https://media.istockphoto.com/id/1706061573/photo/judge-hammer-with-judge-lawyer-businessman-in-suit-working-on-legal-documents-in-courtroom.jpg?s=612x612&w=0&k=20&c=GYTBMAPkMvKwBR1t_2j5A341DExw4hhnQiG-Pk9nwvk="
-          alt="Legal System"
-          class="img-fluid w-100 h-100 object-fit-cover d-block"
-          style="min-height: 100vh;"
-        />
+<div class="container-fluid">
+  <div class="row min-vh-100">
+   
+    <div class="col-md-5 position-relative d-none d-md-block p-0">
+      <img
+        src="https://media.istockphoto.com/id/1706061573/photo/judge-hammer-with-judge-lawyer-businessman-in-suit-working-on-legal-documents-in-courtroom.jpg?s=612x612&w=0&k=20&c=GYTBMAPkMvKwBR1t_2j5A341DExw4hhnQiG-Pk9nwvk="
+        alt="Legal System"
+        class="auth-image"
+      />
+      <div class="auth-overlay">
+        <h2>Advance Your Legal Career</h2>
+        <p>Join our exclusive network of legal professionals</p>
       </div>
+    </div>
 
-      <div class="col-12 col-md-7 d-flex align-items-center justify-content-center">
-        <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="w-100 px-4 py-5">
+    
+    <div class="col-md-7 d-flex align-items-center py-5">
+      <div class="w-100 px-3 px-md-5" style="max-width: 600px;">
+        <h2 class="text-center mb-3" style="color: #313f4c; font-weight: bold;">Lawyer Registration</h2>
+        <p class="text-center mb-4" style="color: #87603f;">Create your professional account</p>
 
-          <div class="text-center mb-4">
-            <h2 class="form-header fw-bold">Lawyer Sign Up</h2>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Email Address</label>
+            <input formControlName="email" type="email" class="form-control auth-input">
           </div>
-
-          <div class="mb-3" *ngFor="let field of [
-            { name: 'email', placeholder: 'Email address', type: 'email' },
-            { name: 'password', placeholder: 'Password', type: type },
-            { name: 'userName', placeholder: 'User Name', type: 'text' },
-            { name: 'phoneNumber', placeholder: 'Phone Number', type: 'text' },
-            { name: 'city', placeholder: 'City', type: 'text' },
-            { name: 'country', placeholder: 'Country', type: 'text' },
-            { name: 'countryCode', placeholder: 'Country Code', type: 'text' },
-            { name: 'postalCode', placeholder: 'Postal Code', type: 'text' },
-            { name: 'nationalID', placeholder: 'National ID', type: 'text' },
-            { name: 'imageURL', placeholder: 'Image URL', type: 'text' }
-          ]">
-            <div class="d-flex justify-content-center">
-              <input
-                [formControlName]="field.name"
-                [type]="field.name === 'password' ? type : field.type"
-                [placeholder]="field.placeholder"
-                class="form-control input-custom p-2 bg-transparent fw-bold"
-                [ngClass]="{ 'is-invalid': f[field.name].invalid && (f[field.name].touched || f[field.name].dirty) }"
-              />
-              <span *ngIf="field.name === 'password'" class="fa {{ eyeIcon }}" (click)="hideShowPass()"></span>
-            </div>
-            <small class="danger" *ngIf="f[field.name].invalid && (f[field.name].touched || f[field.name].dirty)">
-              *{{ field.placeholder }} is required*
-            </small>
-          </div>
-
-     
-          <div class="mb-3" *ngFor="let field of [
-            { name: 'profileHeader', placeholder: 'Profile Header' },
-            { name: 'profileAbout', placeholder: 'Profile About' },
-            { name: 'lawyerCardID', placeholder: 'Lawyer Card ID' },
-            { name: 'barAssociationCardNumber', placeholder: 'Bar Association Card Number' },
-            { name: 'barCardImagePath', placeholder: 'Bar Card Image Path' },
-            { name: 'bio', placeholder: 'Bio' }
-          ]">
-            <div class="d-flex justify-content-center">
-              <input
-                [formControlName]="field.name"
-                type="text"
-                [placeholder]="field.placeholder"
-                class="form-control input-custom p-2 bg-transparent fw-bold"
-                [ngClass]="{ 'is-invalid': f[field.name].invalid && (f[field.name].touched || f[field.name].dirty) }"
-              />
-            </div>
-            <small class="danger" *ngIf="f[field.name].invalid && (f[field.name].touched || f[field.name].dirty)">
-              *{{ field.placeholder }} is required*
-            </small>
-          </div>
-
           
-          <div class="form-check mt-3 d-flex justify-content-center">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              formControlName="terms"
-              style="width: 22px; height: 22px; margin-top: 5px;"
-            />
-            <label class="form-check-label terms-text ms-2">
-              I agree to the
-              <a href="#" class="signin-link">Terms of Service</a> and
-              <a href="#" class="signin-link">Privacy Policy</a>
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Password</label>
+            <div class="position-relative">
+              <input formControlName="password" [type]="passwordVisible ? 'text' : 'password'" class="form-control auth-input">
+              <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
+                {{ passwordVisible ? 'Hide' : 'Show' }}
+              </button>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Username</label>
+            <input formControlName="userName" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Phone Number</label>
+            <input formControlName="phoneNumber" type="tel" class="form-control auth-input" placeholder="e.g., 01012345678">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">City</label>
+            <input formControlName="city" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Country</label>
+            <input formControlName="country" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Postal Code</label>
+            <input formControlName="postalCode" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">National ID</label>
+            <input formControlName="nationalID" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Bar Association Card Number</label>
+            <input formControlName="barAssociationCardNumber" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Lawyer Card ID</label>
+            <input formControlName="lawyerCardID" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Profile Header</label>
+            <input formControlName="profileHeader" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Professional Bio</label>
+            <textarea formControlName="bio" class="form-control auth-input" rows="3"></textarea>
+          </div>
+
+       
+          <div class="form-check my-4">
+            <input class="form-check-input" type="checkbox" formControlName="terms" id="terms">
+            <label class="form-check-label" for="terms">
+              I agree to the <a href="#" class="auth-link">Terms</a> and 
+              <a href="#" class="auth-link">Privacy Policy</a>
             </label>
           </div>
-          <small class="danger d-block text-center" *ngIf="f['terms'].invalid && f['terms'].touched">
-            *You must accept terms*
-          </small>
 
-          <div class="text-center mt-4">
-            <button type="submit" class="btn main-btn rounded-pill px-5 py-2 fw-bold shadow-sm">Sign Up</button>
-          </div>
-
-          <div class="text-center mt-3">
-            <p class="terms-text">
-              Already have an account?
-              <a routerLink="/login" class="signin-link">Sign in here</a>
-            </p>
-          </div>
+          <button type="submit" class="btn auth-btn w-100 py-2 fw-bold">Create Account</button>
         </form>
+
+        <div class="text-center mt-4">
+          <p>Already have an account? <a routerLink="/login" class="auth-link">Sign in here</a></p>
+        </div>
+
+        <div class="text-center mt-5 pt-3 small" style="color: #87603f;">
+          <p>Secured with industry-standard encryption</p>
+          <p>© 2023 AdviLaw. All rights reserved.</p>
+        </div>
       </div>
     </div>
   </div>
