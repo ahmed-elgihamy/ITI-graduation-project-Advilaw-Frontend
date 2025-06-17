@@ -1,0 +1,54 @@
+
+.container-fluid {
+  background-color: var(--color-sand-beige);
+}
+
+.overlay-gradient {
+  background: linear-gradient(180deg, rgba(49, 63, 76, 0.8) 0%, transparent 60%);
+}
+
+.text-navy-blue {
+  color: var(--color-navy-blue) !important;
+}
+
+.form-control {
+  background-color: transparent !important;
+}
+
+.form-control:focus {
+  border-bottom-color: var(--color-mustard) !important;
+  box-shadow: none !important;
+}
+
+.password-toggle {
+  color: var(--color-navy-blue);
+  cursor: pointer;
+  z-index: 5;
+}
+
+.main-btn {
+  background-color: var(--color-mustard);
+  color: white;
+  border-radius: 50px;
+  transition: background-color 0.2s;
+}
+
+.main-btn:hover {
+  background-color: var(--color-gold);
+}
+
+.error-message {
+  font-size: 0.85rem;
+  transform: translateY(5px);
+}
+
+.terms-link:hover {
+  color: var(--color-mustard) !important;
+  text-decoration: underline;
+}
+
+@media (max-width: 767.98px) {
+  .col-md-5 {
+    min-height: 300px;
+  }
+}

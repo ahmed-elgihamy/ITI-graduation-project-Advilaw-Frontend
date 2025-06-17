@@ -1,1 +1,66 @@
-<p>login works!</p>
+<div class="main-container">
+  <div class="container-fluid">
+    <div class="row signup-container g-0">
+
+      <div class="col-12 col-md-5 left-panel p-0">
+        <img
+          src="https://media.istockphoto.com/id/1706061573/photo/judge-hammer-with-judge-lawyer-businessman-in-suit-working-on-legal-documents-in-courtroom.jpg?s=612x612&w=0&k=20&c=GYTBMAPkMvKwBR1t_2j5A341DExw4hhnQiG-Pk9nwvk="
+          alt="Legal System"
+          class="img-fluid w-100 h-100 object-fit-cover d-block"
+          style="min-height: 100vh;" />
+      </div>
+
+      <div class="col-12 col-md-7 d-flex align-items-center justify-content-center">
+        <form class="w-100 px-4 py-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+          <div class="text-center mb-4">
+            <h2 class="form-header fw-bold">Sign In</h2>
+          </div>
+
+        
+          <div class="mb-3 d-flex justify-content-center">
+            <input type="email" id="email" class="form-control input-custom p-2 bg-transparent fw-bold"
+              formControlName="email" placeholder="Email address" />
+          </div>
+          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-danger text-center mb-2">
+            <small *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</small>
+            <small *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format.</small>
+          </div>
+
+          
+          <div class="mb-3 d-flex justify-content-center">
+            <input type="password" id="password" class="form-control input-custom p-2 bg-transparent fw-bold"
+              formControlName="password" placeholder="Password" />
+          </div>
+          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-danger text-center mb-2">
+            <small>Password is required.</small>
+          </div>
+
+         
+          <div class="form-check mt-3 d-flex justify-content-center">
+            <input class="form-check-input" type="checkbox" id="remember" formControlName="remember"
+              style="width: 22px; height: 22px; margin-top: 5px;" />
+            <label class="form-check-label terms-text ms-2" for="remember">
+              I agree to the <a href="#" class="signin-link">Terms of Service</a> and <a href="#" class="signin-link">Privacy Policy</a>
+            </label>
+          </div>
+          <div *ngIf="loginForm.get('remember')?.touched && loginForm.get('remember')?.invalid" class="text-danger text-center mb-2">
+            <small>You must agree to the terms.</small>
+          </div>
+
+         
+          <div class="text-center mt-4">
+            <button type="submit" class="btn main-btn rounded-pill px-5 py-2 fw-bold shadow-sm">Sign In</button>
+          </div>
+
+          
+          <div class="text-center mt-3">
+           <p class="terms-text">Don't have an account? <a routerLink="/signup" class="signin-link">Register here</a></p>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
