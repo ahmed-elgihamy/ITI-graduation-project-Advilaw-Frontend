@@ -1,2 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
-@import "tailwindcss";
+:root {
+    --color-mustard: #f0b35a;
+    --color-dark-gray-blue: #4b545e;
+    --color-sand-beige: #f9f1e3;
+    --color-medium-brown: #87603f;
+    --color-light-brown: #c49b72;
+    --color-sky-blue: #8eb5d0;
+    --color-navy-blue: #313f4c;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-btn {
+    background-color: var(--color-mustard);
+    color: var(--color-navy-blue);
+    font-weight: bold;
+    border: 1px solid var(--color-mustard);
+    transition: all 0.5s;
+}
+
+.main-btn:hover {
+    border-color: var(--color-navy-blue);
+    background-color: transparent;
+    border-radius: 15px;
+}
