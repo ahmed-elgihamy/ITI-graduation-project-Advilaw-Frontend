@@ -1,45 +1,61 @@
-<div  class="modal fade"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg lawyerOrClientModal">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row text-center align-items-center">
+            <div class="col-sm-5">
+              @if(signOutOrSignIn=='signIn') {
+              <a href=""
+                ><!--sign in page-->
+                <img src="assets/images/lawyer.png" class="img-fluid" />
+                <h2 class="mt-2">Lawyer</h2>
+              </a>
+              }@else{
+              <a href="#"
+                ><!--sign up page fro lawyer-->
+                <img src="assets/images/lawyer.png" class="img-fluid" />
+                <h2 class="mt-2">Lawyer</h2>
+              </a>
+              }
+            </div>
+            <div class="col-sm-2 my-md-0 my-4">
+              <span>OR</span>
+            </div>
+            <div class="col-sm-5">
+              @if(signOutOrSignIn=='signIn') {
+              <a href="#"><!--sign in page for client-->
+                <img src="assets/images/client2.png" class="img-fluid" />
 
-<div 
-        class="modal-dialog modal-dialog-centered modal-lg lawyerOrClientModal">
-        <div class="modal-content">
-          <div class="modal-header border-0">
-            @if(signOutOrSignIn=='signIn')
-            {
-                <p>Sign In</p>
-            }@else{
-                <p>SignOut</p>
-            }
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
+                <h2 class="mt-2">Client</h2>
+              </a>
+              }@else{
+              <a href="#"> <!--sign up page for client-->
+                <img src="assets/images/client2.png" class="img-fluid" />
 
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="container-fluid">
-              <div class="row text-center align-items-center">
-                <div class="col-sm-5">
-                  <a href="#">
-                    <img src="assets/images/lawyer.png" class="img-fluid" />
-                    <h2 class="mt-2">Lawyer</h2>
-                  </a>
-                </div>
-                <div class="col-sm-2 my-md-0 my-4">
-                  <span>OR</span>
-                </div>
-                <div class="col-sm-5">
-                  <a href="#">
-                    <img src="assets/images/client2.png" class="img-fluid" />
+                <h2 class="mt-2">Client</h2>
+              </a>
+              }
 
-                    <h2 class="mt-2">Client</h2>
-                  </a>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
-      </div></div>
-
+      </div>
+    </div>
+  </div>
+</div>
