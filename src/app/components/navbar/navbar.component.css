@@ -1,0 +1,50 @@
+
+
+
+.navbar {
+    background-color: var(--color-navy-blue);
+}
+
+.navbar-nav .nav-link {
+    color: var(--color-sand-beige);
+    border: 1px solid transparent;
+    border-radius: 15px;
+}
+
+.navbar-nav .nav-link.active {
+    border-color: var(--color-sand-beige);
+    background-color: var(--color-sand-beige);
+    color: var(--color-navy-blue);
+}
+
+.navbar .nav-link:hover {
+    border-color: var(--color-sand-beige);
+}
+
+.navbar .navbar-brand img {
+    width: 5rem;
+    border-radius: 50%;
+}
+
+.navbar .navbar-toggler {
+    border-color: var(--color-sand-beige);
+}
+
+.signOutBtn:hover {
+    color: var(--color-mustard);
+    border-color: var(--color-mustard);
+}
+
+.signInBtn {
+    color: var(--color-sand-beige);
+    border: 1px solid var(--color-sand-beige);
+    transition: all 0.5s;
+
+}
+
+.signInBtn:hover {
+    background-color: var(--color-sand-beige);
+    color: var(--color-navy-blue);
+    border-radius: 15px;
+
+}
