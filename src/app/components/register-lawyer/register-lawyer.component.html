@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row min-vh-100">
-  
+   
     <div class="col-md-5 position-relative d-none d-md-block p-0">
       <img
         src="https://media.istockphoto.com/id/1706061573/photo/judge-hammer-with-judge-lawyer-businessman-in-suit-working-on-legal-documents-in-courtroom.jpg?s=612x612&w=0&k=20&c=GYTBMAPkMvKwBR1t_2j5A341DExw4hhnQiG-Pk9nwvk="
@@ -8,19 +8,19 @@
         class="auth-image"
       />
       <div class="auth-overlay">
-        <h2>Get the Legal Help You Need</h2>
-        <p>Connect with qualified legal professionals</p>
+        <h2>Advance Your Legal Career</h2>
+        <p>Join our exclusive network of legal professionals</p>
       </div>
     </div>
 
- 
+    
     <div class="col-md-7 d-flex align-items-center py-5">
       <div class="w-100 px-3 px-md-5" style="max-width: 600px;">
-        <h2 class="text-center mb-3" style="color: #313f4c; font-weight: bold;">Client Registration</h2>
-        <p class="text-center mb-4" style="color: #87603f;">Create your account to get started</p>
+        <h2 class="text-center mb-3" style="color: #313f4c; font-weight: bold;">Lawyer Registration</h2>
+        <p class="text-center mb-4" style="color: #87603f;">Create your professional account</p>
 
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-         
+        
           <div class="mb-3">
             <label class="form-label" style="color: #313f4c; font-weight: 500;">Email Address</label>
             <input formControlName="email" type="email" class="form-control auth-input">
@@ -65,8 +65,28 @@
             <label class="form-label" style="color: #313f4c; font-weight: 500;">National ID</label>
             <input formControlName="nationalID" type="text" class="form-control auth-input">
           </div>
-
           
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Bar Association Card Number</label>
+            <input formControlName="barAssociationCardNumber" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Lawyer Card ID</label>
+            <input formControlName="lawyerCardID" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Profile Header</label>
+            <input formControlName="profileHeader" type="text" class="form-control auth-input">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" style="color: #313f4c; font-weight: 500;">Professional Bio</label>
+            <textarea formControlName="bio" class="form-control auth-input" rows="3"></textarea>
+          </div>
+
+       
           <div class="form-check my-4">
             <input class="form-check-input" type="checkbox" formControlName="terms" id="terms">
             <label class="form-check-label" for="terms">

@@ -4,20 +4,21 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-register-lawyer',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule
   ],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  templateUrl: './register-lawyer.component.html',
+  styleUrls: ['./register-lawyer.component.css']
 })
-export class RegisterComponent {  
+export class RegisterLawyerComponent  {
   registerForm: FormGroup;
   formSubmitted = false;
   passwordVisible = false;
+
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,6 +33,10 @@ export class RegisterComponent {
       country: ['', [Validators.required]],
       postalCode: ['', [Validators.required]],
       nationalID: ['', [Validators.required]],
+      profileHeader: ['', [Validators.required]],
+      bio: ['', [Validators.required]],
+      lawyerCardID: ['', [Validators.required]],
+      barAssociationCardNumber: ['', [Validators.required]],
       terms: [false, Validators.requiredTrue]
     });
   }
