@@ -3,7 +3,8 @@ import { LawyerOrClientModalComponent } from "../../shared/lawyer-or-client-moda
 
 @Component({
   selector: 'app-home',
-  imports: [LawyerOrClientModalComponent],
+  standalone: true,
+  imports: [LawyerOrClientModalComponent], 
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
