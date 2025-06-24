@@ -9,8 +9,8 @@ import { LawyerOrClientModalComponent } from "../../shared/lawyer-or-client-moda
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  showModal() {
-   var signOutBtn=document.getElementById("signOutBtn");
-   signOutBtn?.click();
-  }
+  //  showModal() {
+  // var signOutBtn=document.getElementById("signOutBtn");
+  // signOutBtn?.click();
+ // }
 }

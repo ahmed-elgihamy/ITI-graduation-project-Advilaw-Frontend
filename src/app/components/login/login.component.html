@@ -1,6 +1,5 @@
 <div class="container-fluid">
   <div class="row min-vh-100">
-  
     <div class="col-md-5 position-relative d-none d-md-block p-0">
       <img
         src="https://media.istockphoto.com/id/1706061573/photo/judge-hammer-with-judge-lawyer-businessman-in-suit-working-on-legal-documents-in-courtroom.jpg?s=612x612&w=0&k=20&c=GYTBMAPkMvKwBR1t_2j5A341DExw4hhnQiG-Pk9nwvk="
@@ -13,28 +12,25 @@
       </div>
     </div>
 
-    
     <div class="col-md-7 d-flex align-items-center py-5">
       <div class="w-100 px-3 px-md-5" style="max-width: 600px;">
         <h2 class="text-center mb-4" style="color: #313f4c; font-weight: bold;">Sign In</h2>
         <p class="text-center mb-4" style="color: #87603f;">Access your legal account</p>
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-         
           <div class="mb-4">
             <label class="form-label" style="color: #313f4c; font-weight: 500;">Email Address</label>
             <input
               formControlName="email"
               type="email"
               class="form-control auth-input"
-              [class.is-invalid]="formSubmitted && f['email'].invalid"
+              [class.is-invalid]="formSubmitted && loginForm.get('email')?.invalid"
             >
-            <div class="invalid-feedback" *ngIf="formSubmitted && f['email'].invalid">
+            <div class="invalid-feedback" *ngIf="formSubmitted && loginForm.get('email')?.invalid">
               {{ getErrorMessage('email') }}
             </div>
           </div>
 
-       
           <div class="mb-4">
             <div class="d-flex justify-content-between">
               <label class="form-label" style="color: #313f4c; font-weight: 500;">Password</label>
@@ -44,14 +40,13 @@
               formControlName="password"
               type="password"
               class="form-control auth-input"
-              [class.is-invalid]="formSubmitted && f['password'].invalid"
+              [class.is-invalid]="formSubmitted && loginForm.get('password')?.invalid"
             >
-            <div class="invalid-feedback" *ngIf="formSubmitted && f['password'].invalid">
+            <div class="invalid-feedback" *ngIf="formSubmitted && loginForm.get('password')?.invalid">
               {{ getErrorMessage('password') }}
             </div>
           </div>
 
-         
           <div class="form-check mb-4">
             <input
               class="form-check-input"

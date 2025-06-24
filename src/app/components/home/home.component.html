@@ -13,10 +13,11 @@
              <!-- data-bs-toggle="modal"
               data-bs-target="#exampleModal"-->
             <button
-              type="button"
-              class="btn main-btn mt-3 py-3 px-5"
-              (click)="showModal()"
-            >
+          type="button"
+          class="btn main-btn mt-3 py-3 px-5"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
               Get Started
             </button>
           </div>
@@ -135,11 +136,13 @@
         <p class="mb-4">
           Join AdvILaw and connect with the right lawyer in minutes.
         </p>
-            <button
-              type="button"
-              class="btn main-btn mt-3 py-3 px-5"
-              (click)="showModal()">
-              Get Started
-            </button>
+           <button
+          type="button"
+          class="btn main-btn mt-3 py-3 px-5"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+          Get Started
+        </button>
       </div>
     </section>
+    <app-lawyer-or-client-modal signOutOrSignIn="signUp"></app-lawyer-or-client-modal>
