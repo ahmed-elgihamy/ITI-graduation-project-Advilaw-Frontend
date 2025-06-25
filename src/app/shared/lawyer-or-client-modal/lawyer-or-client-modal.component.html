@@ -19,39 +19,22 @@
         <div class="container-fluid">
           <div class="row text-center align-items-center">
             <div class="col-sm-5">
-              @if(signOutOrSignIn=='signIn') {
-              <a routerLink="/login" data-bs-dismiss="modal"
-                ><!--sign in page-->
-                <img src="assets/images/lawyer.png" class="img-fluid" />
-                <h2 class="mt-2">Lawyer</h2>
-              </a>
-              }@else{
-                  <a routerLink="/register-lawyer" data-bs-dismiss="modal"
+              <a routerLink="/register-lawyer" data-bs-dismiss="modal"
                 ><!--sign up page fro lawyer-->
                 <img src="assets/images/lawyer.png" class="img-fluid" />
                 <h2 class="mt-2">Lawyer</h2>
               </a>
-              }
             </div>
             <div class="col-sm-2 my-md-0 my-4">
               <span>OR</span>
             </div>
             <div class="col-sm-5">
-              @if(signOutOrSignIn=='signIn') {
-              <a routerLink="/login" data-bs-dismiss="modal"><!--sign in page for client-->
+              <a routerLink="/register" data-bs-dismiss="modal">
+                <!--sign up page for client-->
                 <img src="assets/images/client2.png" class="img-fluid" />
 
                 <h2 class="mt-2">Client</h2>
               </a>
-              }@else{
-              <a routerLink="/register" data-bs-dismiss="modal"> <!--sign up page for client-->
-                <img src="assets/images/client2.png" class="img-fluid" />
-
-                <h2 class="mt-2">Client</h2>
-              </a>
-              }
-
-              
             </div>
           </div>
         </div>

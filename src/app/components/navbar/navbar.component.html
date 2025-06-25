@@ -1,4 +1,4 @@
-<app-lawyer-or-client-modal [signOutOrSignIn]="signInOrSignOut"></app-lawyer-or-client-modal>
+<app-lawyer-or-client-modal></app-lawyer-or-client-modal>
 <nav class="navbar navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="#"><img src="assets/images/logo.png" /></a>
@@ -55,15 +55,13 @@
             </li>
           </ul>
           <form class="d-flex justify-content-center" role="search">
-            <button
+            <a
+              routerLink="/login"
               type="button"
               class="btn mx-1 py-2 px-5 signInBtn"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              (click)="openedFrom('signIn')"
             >
               Sign In
-            </button>
+          </a>
 
             <button
               id="signOutBtn"
@@ -71,7 +69,6 @@
               class="btn main-btn mx-1 py-2 px-5 signOutBtn"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              (click)="openedFrom('signOut')"
             >
               Sign Out
             </button>

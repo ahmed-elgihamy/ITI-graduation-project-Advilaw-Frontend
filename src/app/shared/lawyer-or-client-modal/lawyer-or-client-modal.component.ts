@@ -12,8 +12,5 @@ export class LawyerOrClientModalComponent {
 
 
 
-  @Input() signOutOrSignIn: string="";
- 
-
    
 }
