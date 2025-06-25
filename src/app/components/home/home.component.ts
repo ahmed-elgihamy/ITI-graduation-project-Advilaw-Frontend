@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { LawyerOrClientModalComponent } from "../../shared/lawyer-or-client-modal/lawyer-or-client-modal.component";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [LawyerOrClientModalComponent],
+  imports: [RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
