@@ -1,0 +1,69 @@
+<nav
+  class="h-100 d-flex flex-column p-4"
+  [ngStyle]="{ width: isOpendsidebar() ? '250px' : '80px' }"
+  style="transition: width 0.3s"
+>
+  <div
+    class="logo fs-4 fw-bold text-center text-white"
+    style="cursor: pointer"
+    routerLink="/"
+  >
+    <span *ngIf="isOpendsidebar()">AdviLaw</span>
+    <i *ngIf="!isOpendsidebar()" class="fa-solid fa-scale-balanced"></i>
+  </div>
+
+  <hr class="text-white fw-bold" />
+
+  <div
+    class="nav flex-column nav-pills gap-2"
+    id="v-pills-tab"
+    role="tablist"
+    aria-orientation="vertical"
+  >
+    <app-nav-item
+      [iconClass]="'fa-chart-simple'"
+      [name]="'Analytics'"
+      [toLink]="'/dashboard/analytics'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+    <app-nav-item
+      [iconClass]="'fa-user'"
+      [name]="'Profile'"
+      [toLink]="'/dashboard/profile'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+    <app-nav-item
+      [iconClass]="'fa-briefcase'"
+      [name]="'Jobs'"
+      [toLink]="'/dashboard/jobs'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+    <app-nav-item
+      [iconClass]="'fa-money-check'"
+      [name]="'Payments'"
+      [toLink]="'/dashboard/payments'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+    <app-nav-item
+      [iconClass]="'fa-microphone'"
+      [name]="'Reviews'"
+      [toLink]="'/dashboard/reviews'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+  </div>
+
+  <!-- Toggle Button at Bottom -->
+  <button
+    class="btn btn-sm btn-light mt-auto"
+    (click)="toggleSidebar()"
+    style="margin-top: auto"
+  >
+    <i
+      class="fa"
+      [ngClass]="{
+        'fa-chevron-left': isOpendsidebar(),
+        'fa-chevron-right': !isOpendsidebar()
+      }"
+    ></i>
+  </button>
+</nav>

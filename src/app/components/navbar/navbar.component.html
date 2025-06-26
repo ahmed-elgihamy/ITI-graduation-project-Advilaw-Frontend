@@ -51,6 +51,9 @@
           <a class="nav-link" href="#">How It Works</a>
         </li>
         <li class="nav-item mx-2">
+          <a class="nav-link" href="#">Jobs</a>
+        </li>
+        <li class="nav-item mx-2">
           <a class="nav-link" href="#">Contact Us</a>
         </li>
       </ul>
@@ -81,7 +84,7 @@
 
       <form
         *ngIf="isLoggedIn"
-        class="d-flex justify-content-center"
+        class="d-flex justify-content-center align-items-center gap-2"
         role="search"
       >
         <button
@@ -92,6 +95,40 @@
         >
           Log Out
         </button>
+        <div class="dropdown">
+          <a
+            class="dropdown-toggle d-block"
+            href="#"
+            role="button"
+            id="profileDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="https://placehold.co/40x40"
+              alt="Profile"
+              class="rounded-circle"
+              style="width: 60px; height: 60px; object-fit: cover"
+            />
+          </a>
+
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="profileDropdown"
+          >
+            <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+            <li>
+              <a class="dropdown-item" routerLink="/dashboard">DashBoard</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/settings">Settings</a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <button class="dropdown-item" (click)="logout()">Logout</button>
+            </li>
+          </ul>
+        </div>
       </form>
     </div>
   </div>

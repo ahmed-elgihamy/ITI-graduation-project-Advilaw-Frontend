@@ -1,6 +1,7 @@
-
 /* You can add global styles to this file, and also import other style files */
-
+* {
+  box-sizing: border-box;
+}
 :root {
   --color-mustard: #f0b35a;
   --color-navy-blue: #313f4c;
@@ -9,22 +10,21 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
 .main-btn {
-    background-color: var(--color-mustard);
-    color: var(--color-navy-blue);
-    font-weight: bold;
-    border: 1px solid var(--color-mustard);
-    transition: all 0.5s;
+  background-color: var(--color-mustard);
+  color: var(--color-navy-blue);
+  font-weight: bold;
+  border: 1px solid var(--color-mustard);
+  transition: all 0.5s;
 }
 
 .main-btn:hover {
-    border-color: var(--color-navy-blue);
-    background-color: transparent;
-    border-radius: 15px;
+  border-color: var(--color-navy-blue);
+  background-color: transparent;
+  border-radius: 15px;
 }
 
 .auth-image {
@@ -35,7 +35,7 @@ body {
 
 .auth-overlay {
   position: absolute;
-  bottom: 20px; 
+  bottom: 20px;
   left: 0;
   right: 0;
   padding: 2rem;
@@ -43,7 +43,6 @@ body {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
   text-align: center;
 }
-
 
 .auth-input {
   background: transparent;
@@ -93,4 +92,3 @@ body {
     padding: 1rem;
   }
 }
-

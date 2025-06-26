@@ -1,0 +1,14 @@
+<div
+  class="shadow-lg border rounded p-4 h-100 bg-white border-4 border-top-0 border-end-0 border-bottom-0"
+  [ngClass]="Color"
+>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex flex-column text-start">
+      <div class="text-muted fw-semibold mb-1">{{ Name }}</div>
+      <div class="fs-4 fw-bold">{{ Value }}</div>
+    </div>
+    <div class="fs-1 text-primary">
+      <i [class]="IconClass"></i>
+    </div>
+  </div>
+</div>
