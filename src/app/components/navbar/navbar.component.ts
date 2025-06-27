@@ -16,11 +16,6 @@ export class NavbarComponent implements OnDestroy {
   private sub!: Subscription;
   readonly _auth = inject(AuthService);
 
-  ngOnInit(): void {
-    this.sub = this._auth.isLoggedIn$.subscribe((status) => {
-      this.isLogged = status;
-    });
-  }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();

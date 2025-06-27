@@ -9,12 +9,12 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly _Router = inject(Router);
 
-  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
-  public isLoggedIn$ = this.loggedIn.asObservable();
+  // private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  // public isLoggedIn$ = this.loggedIn.asObservable();
 
-  private hasToken(): boolean {
-    return !!localStorage.getItem('userToken');
-  }
+  // private hasToken(): boolean {
+  //   return !!localStorage.getItem('userToken');
+  // }
 
   setRegisterForm(data: object): Observable<any> {
     return this.http.post(`${env.baseUrl}/api/Auth/register`, data);
@@ -25,13 +25,13 @@ export class AuthService {
   }
   logIn(token: string) {
     localStorage.setItem('userToken', token);
-    this.loggedIn.next(true);
+    // this.loggedIn.next(true);
   }
 
 
   logOut() {
     localStorage.removeItem('userToken');
-    this.loggedIn.next(false);
+    // this.loggedIn.next(false);
     this._Router.navigate(['/login']);
   }
 
