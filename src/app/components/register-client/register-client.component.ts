@@ -7,32 +7,29 @@ import { CommonModule, NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-register-lawyer',
-  standalone: true,
-  imports: [
-    CommonModule,
+  selector: 'app-register-client',
+  imports: [CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    NgClass
-  ],
-  templateUrl: './register-lawyer.component.html',
-  styleUrls: ['./register-lawyer.component.css']
+    NgClass],
+  templateUrl: './register-client.component.html',
+  styleUrl: './register-client.component.css'
 })
-export class RegisterLawyerComponent {
+export class RegisterClientComponent {
 
   formSubmitted = false;
   passwordVisible = false;
   islodaing: boolean = false;
   messError: string = "";
-  role: string = 'Lawyer';
+  role: string = 'Client';
   fileInputs: { [key: string]: File | null } = {
-    lawLicenseImage: null,
-    barCardImage: null
+    NationalIDImage: null,
+
   };
 
   imagePreviews: { [key: string]: string | ArrayBuffer | null } = {
-    lawLicenseImage: null,
-    barCardImage: null
+    NationalIDImage: null,
+
   };
 
   private readonly _Auth = inject(AuthService)
@@ -53,13 +50,8 @@ export class RegisterLawyerComponent {
       Validators.required,
       Validators.pattern(/^\d{14}$/)
     ]],
-    barAssociationCardNumber: ['', [
-      Validators.required,
-      Validators.pattern(/^[0-9]{5,6}$/)
-    ]],
+
     NationalIDImage: [null, Validators.required],
-    barCardImage: [null, Validators.required],
-    specializations: ['', Validators.required],
     gender: ['', Validators.required]
   });
 
@@ -69,7 +61,7 @@ export class RegisterLawyerComponent {
     this.passwordVisible = !this.passwordVisible;
   }
 
-  onFileSelected(event: Event, controlName: 'NationalIDImage' | 'barCardImage'): void {
+  onFileSelected(event: Event, controlName: 'NationalIDImage'): void {
     const input = event.target as HTMLInputElement;
     const file = input?.files?.[0];
     if (!file) return;
@@ -97,8 +89,6 @@ export class RegisterLawyerComponent {
     formData.append('country', controls['country'].value);
     formData.append('postalCode', controls['postalCode'].value);
     formData.append('nationalID', controls['nationalID'].value.toString());
-    formData.append('barAssociationCardNumber', controls['barAssociationCardNumber'].value.toString());
-    formData.append('specializations', controls['specializations'].value);
     formData.append('gender', controls['gender'].value);
     formData.append('role', this.role);
 
@@ -106,9 +96,7 @@ export class RegisterLawyerComponent {
       formData.append('NationalIDImage', this.fileInputs['NationalIDImage']);
     }
 
-    if (this.fileInputs['barCardImage']) {
-      formData.append('barCardImage', this.fileInputs['barCardImage']);
-    }
+
 
     if (this.registerForm.invalid) {
       this.messError = 'Please fill all required fields correctly';

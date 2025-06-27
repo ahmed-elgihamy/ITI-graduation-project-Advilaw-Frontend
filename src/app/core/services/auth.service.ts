@@ -1,42 +1,46 @@
 import { HttpClient } from '@angular/common/http';
-import { environment } from './../../../environments/environment';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { env } from '../env/env';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private http: HttpClient) {}
-  apiUrl = environment.apiUrl;
-  private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
-  public isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  private readonly http = inject(HttpClient);
+  private readonly _Router = inject(Router);
 
-  private hasToken(): boolean {
-    return !!localStorage.getItem('token');
+  // private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  // public isLoggedIn$ = this.loggedIn.asObservable();
+
+  // private hasToken(): boolean {
+  //   return !!localStorage.getItem('userToken');
+  // }
+
+  setRegisterForm(data: object): Observable<any> {
+    return this.http.post(`${env.baseUrl}/api/Auth/register`, data);
   }
 
-  isLoggedIn(): boolean {
-    return this.hasToken();
+  setLoginForm(data: object): Observable<any> {
+    return this.http.post(`${env.baseUrl}/api/Auth/login`, data);
+  }
+  logIn(token: string) {
+    localStorage.setItem('userToken', token);
+    // this.loggedIn.next(true);
   }
 
-  login(credentials: any) {
-    return this.http.post<any>(`${this.apiUrl}/auth/login`, credentials).pipe(
-      tap((response) => {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('refreshToken', response.refreshToken);
-        this.isLoggedInSubject.next(true);
-      }),
-      catchError((error) => {
-        console.error('Login failed', error);
-        return throwError(() => error);
-      })
-    );
+
+  logOut() {
+    localStorage.removeItem('userToken');
+    // this.loggedIn.next(false);
+    this._Router.navigate(['/login']);
   }
 
-  logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
-    this.isLoggedInSubject.next(false);
+
+  setEmailVerify(data: object): Observable<any> {
+    return this.http.post(`${env.baseUrl}/api/Auth/send-reset-code`, data);
+  }
+
+  setResetPassword(data: object): Observable<any> {
+    return this.http.post(`${env.baseUrl}/api/Auth/reset-password`, data);
   }
 }

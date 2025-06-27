@@ -2,43 +2,13 @@
 <nav class="navbar navbar-expand-lg">
   <div class="container">
     <a class="navbar-brand" href="#"><img src="assets/images/logo.png" /></a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span
-        class="navbar-toggler-icon"
-        style="background-image: none; width: 50px; height: 40px"
-      >
-        <svg
-          width="40px"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M4 18L20 18"
-            stroke="#f9f1e3"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-          <path
-            d="M4 12L20 12"
-            stroke="#f9f1e3"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-          <path
-            d="M4 6L20 6"
-            stroke="#f9f1e3"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon" style="background-image: none; width: 50px; height: 40px">
+        <svg width="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 18L20 18" stroke="#f9f1e3" stroke-width="2" stroke-linecap="round" />
+          <path d="M4 12L20 12" stroke="#f9f1e3" stroke-width="2" stroke-linecap="round" />
+          <path d="M4 6L20 6" stroke="#f9f1e3" stroke-width="2" stroke-linecap="round" />
         </svg>
       </span>
     </button>
@@ -51,84 +21,29 @@
           <a class="nav-link" href="#">How It Works</a>
         </li>
         <li class="nav-item mx-2">
-          <a class="nav-link" href="#">Jobs</a>
-        </li>
-        <li class="nav-item mx-2">
           <a class="nav-link" href="#">Contact Us</a>
         </li>
       </ul>
+      <form class="d-flex justify-content-center" role="search">
 
-      <form
-        *ngIf="!isLoggedIn"
-        class="d-flex justify-content-center"
-        role="search"
-      >
-        <a
-          routerLink="/login"
-          type="button"
-          class="btn mx-1 py-2 px-5 signInBtn"
-        >
+
+        <a routerLink="/login" type="button" class="btn mx-1 py-2 px-5 signInBtn">
           Sign In
         </a>
-
-        <button
-          id="signOutBtn"
-          type="button"
-          class="btn main-btn mx-1 py-2 px-5 signOutBtn"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          Sign Up
+        <button id="signOutBtn" type="button" class="btn main-btn mx-1 py-2 px-5 signOutBtn" data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+          Sign Out
         </button>
-      </form>
 
-      <form
-        *ngIf="isLoggedIn"
-        class="d-flex justify-content-center align-items-center gap-2"
-        role="search"
-      >
-        <button
-          id="logOutBtn"
-          type="button"
-          (click)="logout()"
-          class="btn main-btn mx-1 py-2 px-5 logOutBtn"
-        >
-          Log Out
+
+        <button (click)="_auth.logOut()" id="signOutBtn" type="button" class="btn main-btn mx-1 py-2 px-5 signOutBtn">
+          LogOut
         </button>
-        <div class="dropdown">
-          <a
-            class="dropdown-toggle d-block"
-            href="#"
-            role="button"
-            id="profileDropdown"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="https://placehold.co/40x40"
-              alt="Profile"
-              class="rounded-circle"
-              style="width: 60px; height: 60px; object-fit: cover"
-            />
-          </a>
 
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="profileDropdown"
-          >
-            <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
-            <li>
-              <a class="dropdown-item" routerLink="/dashboard">DashBoard</a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/settings">Settings</a>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <button class="dropdown-item" (click)="logout()">Logout</button>
-            </li>
-          </ul>
-        </div>
+
+
+
+
       </form>
     </div>
   </div>

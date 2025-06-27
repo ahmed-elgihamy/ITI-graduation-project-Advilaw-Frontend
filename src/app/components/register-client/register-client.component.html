@@ -1,0 +1,284 @@
+<div class="container mt-5">
+    <div class="row min-vh-100">
+        <!-- Left Side Image and Overlay -->
+        <div class="col-md-5 position-relative d-none d-md-block p-0">
+            <img src="assets/images/lawyer-professional.jpg" alt="Legal System"
+                class="auth-image w-100 h-100 object-fit-cover" />
+            <div class="auth-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center text-white text-center px-4"
+                style="background: rgba(0, 0, 0, 0.6);">
+                <h2 class="fw-bold">Advance Your Legal Career</h2>
+                <p>Join our exclusive network of legal professionals</p>
+            </div>
+        </div>
+
+        <!-- Right Side Registration Form -->
+        <div class="col-md-7 d-flex align-items-center py-5">
+            <div class="w-100 px-3 px-md-5" style="max-width: 650px;">
+
+                <h2 class="text-center mb-3  fw-bold" style="color: var(--color-navy-blue);">Client Registration</h2>
+                @if(messError)
+                {
+
+                <p class="text-center mb-4 text-danger fw-5 fs-3">*** {{messError}} ***</p>
+
+                }
+                <p class="text-center mb-4 text-secondary">Create your professional account</p>
+
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <div class="row g-3">
+
+                        <!-- Account Info -->
+                        <div class="col-12">
+                            <h5 class="text-primary fw-semibold ">Account Information</h5>
+                            <hr>
+                        </div>
+                        <!-- Email  -->
+                        <div class="col-md-6">
+                            <label class="form-label">Email Address</label>
+                            <input [ngClass]="{
+                  'is-valid': !registerForm.get('email')?.errors  && (registerForm.get('email')?.touched
+                  ||registerForm.get('email')?.dirty ),
+                  'is-invalid': registerForm.get('email')?.errors  && (registerForm.get('email')?.touched
+                  ||registerForm.get('email')?.dirty )
+                }" formControlName="email" type="email" class="form-control">
+                        </div>
+                        <!-- Password  -->
+                        <div class="col-md-6">
+                            <label class="form-label">Password</label>
+                            <div class="position-relative">
+                                <input [ngClass]="{
+                    'is-valid': !registerForm.get('password')?.errors  && (registerForm.get('password')?.touched
+                    ||registerForm.get('password')?.dirty ),
+                    'is-invalid': registerForm.get('password')?.errors  && (registerForm.get('password')?.touched
+                    ||registerForm.get('password')?.dirty )
+                  }" formControlName="password" [type]="passwordVisible ? 'text' : 'password'" class="form-control">
+                                <button type="button"
+                                    class="btn btn-sm btn-outline-secondary position-absolute end-0 top-0 mt-1 me-2"
+                                    (click)="togglePasswordVisibility()">
+                                    {{ passwordVisible ? 'Hide' : 'Show' }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Email Validation -->
+                        @if(registerForm.get('email')?.errors && (registerForm.get('email')?.touched
+                        ||registerForm.get('email')?.dirty ))
+                        {
+                        @if(registerForm.get('email')?.getError('required'))
+                        {
+                        <p class="text-danger mb-0">** Email is required</p>
+                        }
+                        @if(registerForm.get('email')?.getError('email'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** Invalid email format</p>
+                        }
+                        }
+
+                        <!-- Password Validation-->
+                        @if(registerForm.get('password')?.errors && registerForm.get('password')?.touched)
+                        {
+                        @if(registerForm.get('password')?.getError('required'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** Password is required</p>
+                        }
+                        @if(registerForm.get('password')?.getError('minlength'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** Password must contain at least 6 characters</p>
+                        }
+                        @if(registerForm.get('password')?.getError('pattern'))
+                        {
+                        <p class="text-danger mb-0 mt-0">
+                            ** Password must include uppercase, number, and special character (!?*.) </p>
+                        }
+                        }
+                        <!-- Username -->
+                        <div class="col-md-6">
+                            <label class="form-label">Username</label>
+                            <input [ngClass]="{
+                  'is-valid': !registerForm.get('userName')?.errors  && (registerForm.get('userName')?.touched
+                  ||registerForm.get('userName')?.dirty ),
+                  'is-invalid': registerForm.get('userName')?.errors  && (registerForm.get('userName')?.touched
+                  ||registerForm.get('userName')?.dirty )
+                }" formControlName="userName" type="text" class="form-control">
+                        </div>
+                        <!-- Gender -->
+                        <div class="col-md-6">
+                            <label class="form-label">Gender</label>
+                            <select formControlName="gender" class="form-select">
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+
+                            </select>
+                        </div>
+
+                        <!-- Gender Validation -->
+                        @if(registerForm.get('gender')?.errors && registerForm.get('gender')?.touched)
+                        {
+                        @if(registerForm.get('gender')?.getError('required'))
+                        {
+                        <p class="text-danger mt-0 mb-0">** Gender is required</p>
+                        }
+                        }
+
+
+
+                        <!-- Username Validation -->
+                        @if(registerForm.get('userName')?.errors && (registerForm.get('userName')?.touched
+                        ||registerForm.get('userName')?.dirty ))
+                        {
+                        @if(registerForm.get('userName')?.getError('required'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** Username is required</p>
+                        }
+                        @if(registerForm.get('userName')?.getError('minlength'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** Username must be at least 8 characters</p>
+                        }
+                        @if(registerForm.get('userName')?.getError('maxlength'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** Username must not exceed 20 characters</p>
+                        }
+                        }
+
+
+
+
+
+
+                        <!-- Location -->
+                        <div class="col-12 pt-3">
+                            <h5 class="text-primary fw-semibold">Location</h5>
+                            <hr>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">City</label>
+                            <input formControlName="city" type="text" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Country</label>
+                            <input formControlName="country" type="text" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Postal Code</label>
+                            <input formControlName="postalCode" type="text" class="form-control">
+                        </div>
+
+
+
+
+                        <!-- City Validation-->
+                        @if(registerForm.get('city')?.errors && registerForm.get('city')?.touched)
+                        {
+                        @if(registerForm.get('city')?.getError('required'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** City is required</p>
+                        }
+                        }
+
+                        <!-- Country Validation -->
+                        @if(registerForm.get('country')?.errors && registerForm.get('country')?.touched)
+                        {
+                        @if(registerForm.get('country')?.getError('required'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** Country is required</p>
+                        }
+                        }
+
+                        <!-- Postal Code Validation -->
+                        @if(registerForm.get('postalCode')?.errors && registerForm.get('postalCode')?.touched)
+                        {
+                        @if(registerForm.get('postalCode')?.getError('required'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** Postal code is required</p>
+                        }
+                        }
+
+
+
+
+
+
+
+                        <!-- Legal Info -->
+                        <div class="col-12 pt-3">
+                            <h5 class="text-primary fw-semibold">Legal Identification</h5>
+                            <hr>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">National ID</label>
+                            <input formControlName="nationalID" type="text" class="form-control">
+                        </div>
+
+
+
+
+                        @if(registerForm.get('nationalID')?.errors && registerForm.get('nationalID')?.touched)
+                        {
+                        @if(registerForm.get('nationalID')?.getError('required'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** National ID is required</p>
+                        }
+
+                        @if(registerForm.get('nationalID')?.getError('pattern'))
+                        {
+                        <p class="text-danger mb-0 mt-0">** National ID must be exactly 14 digits</p>
+                        }
+                        }
+
+
+
+
+
+
+
+
+                        <div class="col-md-6">
+                            <label class="form-label">National ID Image</label>
+                            <input (change)="onFileSelected($event, 'NationalIDImage')"
+                                formControlName="NationalIDImage" type="file" class="form-control" accept="image/*">
+                        </div>
+
+
+
+
+
+
+
+
+
+                        <!-- License Image -->
+                        @if(registerForm.get('NationalIDImage')?.errors && registerForm.get('NationalIDImage')?.touched)
+                        {
+                        @if(registerForm.get('NationalIDImage')?.getError('required'))
+                        {
+                        <p class="text-danger">** Lawyer license image is required</p>
+                        }
+                        }
+
+
+
+                        <div class="col-12">
+                            <button [disabled]="registerForm.invalid" type="submit"
+                                class="btn btn-secondary w-100 fw-bold">
+                                Create Account
+                                <span *ngIf="islodaing"> <i class="fas fa-spin fa-spinner"></i></span>
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Login Link -->
+                <div class="text-center mt-4">
+                    <p>Already have an account? <a routerLink="/login" class="auth-link">Sign in here</a></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

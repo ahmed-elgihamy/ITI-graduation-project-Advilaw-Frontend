@@ -1,27 +1,23 @@
 import { AuthService } from './../../core/services/auth.service';
-import { Component } from '@angular/core';
-import { LawyerOrClientModalComponent } from '../../shared/lawyer-or-client-modal/lawyer-or-client-modal.component';
+import { Component, inject, OnDestroy } from '@angular/core';
+import { LawyerOrClientModalComponent } from "../../shared/lawyer-or-client-modal/lawyer-or-client-modal.component";
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  imports: [LawyerOrClientModalComponent, RouterModule, CommonModule],
+  imports: [LawyerOrClientModalComponent, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css',
+  styleUrls: ['./navbar.component.css'] // Corrected property name
 })
-export class NavbarComponent {
-  isLoggedIn: boolean = false;
-  constructor(private authService: AuthService) {}
+export class NavbarComponent implements OnDestroy {
 
-  ngOnInit(): void {
-    this.authService.isLoggedIn$.subscribe((status) => {
-      this.isLoggedIn = status;
-    });
-  }
+  isLogged: boolean = false;
+  private sub!: Subscription;
+  readonly _auth = inject(AuthService);
 
-  logout() {
-    this.authService.logout();
-    this.isLoggedIn = false;
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 }
