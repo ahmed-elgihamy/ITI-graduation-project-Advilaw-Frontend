@@ -1,0 +1,11 @@
+<a
+  class="nav-link text-white p-2 mb-2 d-flex align-items-center position-relative"
+  [routerLink]="toLink"
+  routerLinkActive="active"
+>
+  <i
+    class="fas {{ iconClass }}"
+    [ngStyle]="isOpendsidebar ? {} : { 'text-align': 'center', width: '100%' }"
+  ></i>
+  <span *ngIf="isOpendsidebar" class="ms-2">{{ name }}</span>
+</a>
