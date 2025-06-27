@@ -15,4 +15,5 @@ export class SidebarComponent {
   toggleSidebar() {
     this.isOpendsidebar.set(!this.isOpendsidebar());
   }
+  
 }

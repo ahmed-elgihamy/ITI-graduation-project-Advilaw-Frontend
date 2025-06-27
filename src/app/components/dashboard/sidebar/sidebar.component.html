@@ -50,7 +50,24 @@
       [toLink]="'/dashboard/reviews'"
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
+   
+   
+   
+    <app-nav-item
+      [iconClass]="'fa-user-clock'"
+      [name]="'Pending Lawyers'"
+      [toLink]="'/dashboard/admin-dashboard/pending-lawyers'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+    <app-nav-item
+      [iconClass]="'fa-user-clock'"
+      [name]="'Pending Clients'"
+      [toLink]="'/dashboard/admin-dashboard/pending-clients'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
   </div>
+
+  
 
   <!-- Toggle Button at Bottom -->
   <button

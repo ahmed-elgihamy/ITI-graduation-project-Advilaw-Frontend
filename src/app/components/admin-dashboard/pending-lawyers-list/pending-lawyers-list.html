@@ -1,0 +1,30 @@
+<h2>Pending Lawyers</h2>
+<ul>
+  <li *ngFor="let lawyer of pendingLawyers">
+    {{ lawyer.userName }} 
+    <button (click)="showLawyerDetails(lawyer)">Show Details</button>
+    <button (click)="approveLawyer(lawyer.id)">Approve</button>
+  </li>
+</ul>
+<div *ngIf="selectedLawyer">
+    <h3>Lawyer Details</h3>
+    <p><strong>User Name:</strong> {{ selectedLawyer.userName }}</p>
+    <p><strong>Email:</strong> {{ selectedLawyer.email }}</p>
+    <!-- <p><strong>Phone Number:</strong> {{ selectedLawyer.phoneNumber }}</p>
+    <p><strong>Role:</strong> {{ selectedLawyer.role }}</p>
+    <p><strong>City:</strong> {{ selectedLawyer.city }}</p>
+    <p><strong>Country:</strong> {{ selectedLawyer.country }}</p>
+    <p><strong>Country Code:</strong> {{ selectedLawyer.countryCode }}</p>
+    <p><strong>Postal Code:</strong> {{ selectedLawyer.postalCode }}</p>
+    <p><strong>Nationality ID:</strong> {{ selectedLawyer.nationalityId }}</p>
+    <p><strong>Image:</strong> <img [src]="selectedLawyer.imageUrl" width="100"></p>
+    <p><strong>Profile Header:</strong> {{ selectedLawyer.profileHeader }}</p>
+    <p><strong>Profile About:</strong> {{ selectedLawyer.profileAbout }}</p>
+    <p><strong>Lawyer Card ID:</strong> {{ selectedLawyer.lawyerCardID }}</p>
+    <p><strong>Bio:</strong> {{ selectedLawyer.bio }}</p>
+    <p><strong>Bar Card Image:</strong> <img [src]="selectedLawyer.barCardImagePath" width="100"></p>
+    <p><strong>Bar Association Card Number:</strong> {{ selectedLawyer.barAssociationCardNumber }}</p> -->
+    <button (click)="selectedLawyer = null">Close</button>
+  </div>
+
+  

@@ -1,0 +1,27 @@
+
+
+  <h2>Pending Clients</h2>
+<ul>
+  <li *ngFor="let client of pendingClients">
+    {{ client.userName }} 
+    <button (click)="showClientDetails(client)">Show Details</button>
+    <button (click)="approveClient(client.id)">Approve</button>
+  </li>
+</ul>
+
+
+
+<div *ngIf="selectedClient">
+  <h3>Client Details</h3>
+  <p><strong>User Name:</strong> {{ selectedClient.userName }}</p>
+  <p><strong>Email:</strong> {{ selectedClient.email }}</p>
+  <!-- <p><strong>Phone Number:</strong> {{ selectedClient.phoneNumber }}</p>
+  <p><strong>Role:</strong> {{ selectedClient.role }}</p>
+  <p><strong>City:</strong> {{ selectedClient.city }}</p>
+  <p><strong>Country:</strong> {{ selectedClient.country }}</p>
+  <p><strong>Country Code:</strong> {{ selectedClient.countryCode }}</p>
+  <p><strong>Postal Code:</strong> {{ selectedClient.postalCode }}</p>
+  <p><strong>Nationality ID:</strong> {{ selectedClient.nationalityId }}</p>
+  <p><strong>Image:</strong> <img [src]="selectedClient.imageUrl" width="100"></p> -->
+  <button (click)="selectedClient = null">Close</button>
+</div>

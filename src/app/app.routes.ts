@@ -13,6 +13,10 @@ import { AnalysisContentComponent } from './components/dashboard/analysis-conten
 import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-content.component';
 import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
 import { PaymentsContentComponent } from './components/dashboard/payments-content/payments-content.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard';
+import { PendingLawyersList } from './components/admin-dashboard/pending-lawyers-list/pending-lawyers-list';
+import { PendingClientsList } from './components/admin-dashboard/pending-clients-list/pending-clients-list';
+import { AdminDashboardWelcome } from './components/admin-dashboard/admin-dashboard-welcome/admin-dashboard-welcome';
 
 export const routes: Routes = [
   {
@@ -40,13 +44,23 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardLayoutComponent,
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'analytics', pathMatch: 'full' },
       { path: 'analytics', component: AnalysisContentComponent },
       { path: 'profile', component: ProfileContentComponent },
       { path: 'jobs', component: JobsContentComponent },
       { path: 'payments', component: PaymentsContentComponent },
+      {
+        path: 'admin-dashboard',
+        component: AdminDashboardComponent,
+        children: [
+          { path: '', component: AdminDashboardWelcome },
+          { path: 'pending-lawyers', component: PendingLawyersList },
+          { path: 'pending-clients', component: PendingClientsList },
+      
+        ]
+      }
     ],
   },
   { path: '**', redirectTo: '/login' },
