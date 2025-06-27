@@ -5,13 +5,21 @@ import { RegisterLawyerComponent } from './components/register-lawyer/register-l
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component'; 
 import { ResetConfirmationComponent } from './components/reset-confirmation/reset-confirmation.component';
 import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+ { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+   { path: 'register', component: RegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'register-lawyer', component: RegisterLawyerComponent },
   { path: 'reset-confirmation', component: ResetConfirmationComponent },
-  { path: '**', redirectTo: '/login' }
+   { path: '**', redirectTo: '/login' },
+
+
+  {
+  path: 'lawyer-profile/:id',
+  component: ProfileComponent
+}
+
 ];
