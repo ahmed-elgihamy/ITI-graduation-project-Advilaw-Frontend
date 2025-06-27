@@ -1,8 +1,9 @@
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -10,62 +11,89 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    NgClass
   ],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent {
-  forgotForm: FormGroup;
-  formSubmitted = false;
-  isProcessing = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.forgotForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]]
-    });
-  }
 
-  get f() { return this.forgotForm.controls; }
+  step: number = 1;
+  islodaing: boolean = false;
+  messError: string = "";
+  private readonly _fb = inject(FormBuilder);
+  private readonly _router = inject(Router);
+  private readonly _authService = inject(AuthService);
 
-  getErrorMessage() {
-    const emailControl = this.f['email'];
-    
-    if (!this.formSubmitted && !emailControl.dirty) return '';
-    
-    if (emailControl.hasError('required')) {
-      return 'Email is required';
-    }
-    
-    if (emailControl.hasError('email')) {
-      return 'Invalid email format';
-    }
-    
-    return '';
-  }
+  verifyEmail: FormGroup = this._fb.group({
+    email: ['', [Validators.required, Validators.email]]
+  });
 
-  onSubmit(): void {
-    this.formSubmitted = true;
-    
-    if (this.forgotForm.invalid) {
-      return;
-    }
+  resetPasswordForm = this._fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    code: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]], // لازم 6 أرقام بالضبط
+    newPassword: ['', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@!?*\.]).{6,}$/)
+    ]]
+  });
 
-    this.isProcessing = true;
-    
-    /*
-    this.authService.forgotPassword(this.forgotForm.value.email).subscribe({
-      next: () => {
-        this.isProcessing = false;
-        this.router.navigate(['/reset-confirmation']);
+
+  SendEmail() {
+
+
+    let email = this.verifyEmail.value.email;
+
+    this.resetPasswordForm.get('email')?.patchValue(email);
+    this.islodaing = true;
+    this._authService.setEmailVerify(this.verifyEmail.value).subscribe({
+      next: (res) => {
+        console.log(res);
+
+
+        if (res.message == "Operation successful") {
+          this.step = 2;
+          this.islodaing = false;
+        }
+
+
       },
       error: (err) => {
-        console.error('Password reset failed', err);
-        this.isProcessing = false;
-        // Show error message to user
+        this.islodaing = false;
+        console.error(err);
+        this.messError = err.error.message;
+      }
+
+    })
+
+
+  }
+
+
+  resetPassword() {
+
+    this.islodaing = true;
+    const payload = this.resetPasswordForm.value;
+    this._authService.setResetPassword(payload).subscribe({
+      next: (res) => {
+        console.log(res);
+        if (res.message == "Operation successful") {
+          this._router.navigate(['/login']);
+          this.islodaing = false;
+        }
+
+
+      },
+      error: (err) => {
+        console.log(err)
+
+        this.islodaing = false;
+        this.messError = err.error.message;
       }
     });
-    */
   }
 }
 
