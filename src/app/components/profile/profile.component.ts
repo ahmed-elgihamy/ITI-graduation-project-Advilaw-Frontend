@@ -6,7 +6,7 @@ import {
   ElementRef,
   OnDestroy,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -23,8 +23,8 @@ import { takeUntil, catchError } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./profile.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   lawyer: LawyerProfile | null = null;
@@ -51,9 +51,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadLawyerData();
   }
 
-  ngAfterViewInit(): void {
-  
-  }
+  ngAfterViewInit(): void {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -76,11 +74,11 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     forkJoin({
       profile: this.lawyerService.getProfile(id),
       reviews: this.lawyerService.getReviews(id),
-      schedule: this.lawyerService.getSchedule(id)
+      schedule: this.lawyerService.getSchedule(id),
     })
       .pipe(
         takeUntil(this.destroy$),
-        catchError(err => {
+        catchError((err) => {
           this.handleError('Failed to load lawyer information.');
           return throwError(() => err);
         })
@@ -116,7 +114,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.chart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: this.STAR_LEVELS.map(s => `${s}★`),
+        labels: this.STAR_LEVELS.map((s) => `${s}★`),
         datasets: [
           {
             label: 'Count',
@@ -125,9 +123,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
             borderColor: '#313f4c',
             borderWidth: 2,
             borderRadius: 8,
-            borderSkipped: false
-          }
-        ]
+            borderSkipped: false,
+          },
+        ],
       },
       options: {
         responsive: true,
@@ -139,29 +137,29 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
             titleColor: '#f9f1e3',
             bodyColor: '#f9f1e3',
             borderColor: '#f0b35a',
-            borderWidth: 1
-          }
+            borderWidth: 1,
+          },
         },
         scales: {
           x: {
             ticks: { color: '#313f4c', font: { weight: 'bold', size: 14 } },
             grid: { display: false },
-            border: { color: '#313f4c' }
+            border: { color: '#313f4c' },
           },
           y: {
             beginAtZero: true,
             ticks: { stepSize: 1, color: '#313f4c', font: { size: 12 } },
             grid: { color: 'rgba(49, 63, 76, 0.1)' },
-            border: { color: '#313f4c' }
-          }
-        }
-      }
+            border: { color: '#313f4c' },
+          },
+        },
+      },
     });
   }
 
   private calculateReviewStats(): number[] {
     const counts = this.STAR_LEVELS.map(() => 0);
-    this.reviews.forEach(r => {
+    this.reviews.forEach((r) => {
       const idx = this.STAR_LEVELS.indexOf(r.rate);
       if (idx !== -1) {
         counts[idx]++;
@@ -175,7 +173,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!total) {
       return 0;
     }
-    const count = this.reviews.filter(r => r.rate === stars).length;
+    const count = this.reviews.filter((r) => r.rate === stars).length;
     return Math.round((count / total) * 100);
   }
 
@@ -192,12 +190,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onFollowClick(): void {
-    
     console.log('Follow clicked');
   }
 
   onConsultationClick(): void {
-    
     console.log('Consultation requested');
   }
 }
