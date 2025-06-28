@@ -5,6 +5,7 @@ import { PaymentsService } from './../../../core/services/payments.service';
 import { Component } from '@angular/core';
 import { DashboardTableComponent } from '../dashboard-table/dashboard-table.component';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-payments-content',
@@ -14,8 +15,13 @@ import { PaginationComponent } from '../pagination/pagination.component';
 })
 export class PaymentsContentComponent {
   ApiService: any;
-  constructor(private PaymentsService: PaymentsService) {
+  Role: string | null = null;
+  constructor(
+    private PaymentsService: PaymentsService,
+    private authService: AuthService
+  ) {
     this.ApiService = PaymentsService;
+    this.Role = authService.getUserInfo()?.role ?? null;
   }
   ngOnInit(): void {
     this.loadData(1);
@@ -42,18 +48,20 @@ export class PaymentsContentComponent {
   loadData(page: number): void {
     this.currentPage = page;
 
-    this.ApiService.GetLawyerPayments(page).subscribe({
-      next: (res: ApiResponse<PagedResponse<LawyerPaymentListDTO>>) => {
-        const pagedData = res.data;
-        this.payments = pagedData.data; // actual job list
-        this.totalPages = pagedData.totalPages;
-        this.pageSize = pagedData.pageSize;
-        this.currentPage = pagedData.pageNumber;
-        console.log(res);
-      },
-      error: (err: any) => {
-        console.error('Failed to load jobs:', err);
-      },
-    });
+    if (this.Role === 'Lawyer') {
+      this.ApiService.GetLawyerPayments(page).subscribe({
+        next: (res: ApiResponse<PagedResponse<LawyerPaymentListDTO>>) => {
+          const pagedData = res.data;
+          this.payments = pagedData.data; // actual job list
+          this.totalPages = pagedData.totalPages;
+          this.pageSize = pagedData.pageSize;
+          this.currentPage = pagedData.pageNumber;
+          console.log(res);
+        },
+        error: (err: any) => {
+          console.error('Failed to load jobs:', err);
+        },
+      });
+    }
   }
 }
