@@ -8,7 +8,6 @@ import { map, catchError } from 'rxjs/operators';
 
 interface ApiResponse<T> {
   data: T;
- 
 }
 
 @Injectable({ providedIn: 'root' })
@@ -21,8 +20,8 @@ export class LawyerService {
     return this.http
       .get<ApiResponse<LawyerProfile>>(`${this.baseUrl}/${id}/profile`)
       .pipe(
-        map(res => res.data),
-        catchError(err => throwError(() => new Error('Profile load failed')))
+        map((res) => res.data),
+        catchError((err) => throwError(() => new Error('Profile load failed')))
       );
   }
 
@@ -30,8 +29,8 @@ export class LawyerService {
     return this.http
       .get<ApiResponse<Review[]>>(`${this.baseUrl}/${id}/reviews`)
       .pipe(
-        map(res => res.data),
-        catchError(err => throwError(() => new Error('Reviews load failed')))
+        map((res) => res.data),
+        catchError((err) => throwError(() => new Error('Reviews load failed')))
       );
   }
 
@@ -39,8 +38,8 @@ export class LawyerService {
     return this.http
       .get<ApiResponse<LawyerSchedule[]>>(`${this.baseUrl}/${id}/schedule`)
       .pipe(
-        map(res => res.data),
-        catchError(err => throwError(() => new Error('Schedule load failed')))
+        map((res) => res.data),
+        catchError((err) => throwError(() => new Error('Schedule load failed')))
       );
   }
 }

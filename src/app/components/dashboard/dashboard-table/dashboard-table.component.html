@@ -1,0 +1,54 @@
+<div class="bg-white min-h-screen p-6">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">{{ title }}</h1>
+
+    <div class="mb-6">
+      <input
+        type="text"
+        placeholder="Search..."
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+      />
+    </div>
+
+    <div class="overflow-x-auto rounded-lg shadow">
+      <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+        <thead>
+          <tr class="bg-blue-50 text-blue-900">
+            <th
+              *ngFor="let column of columns"
+              class="py-3 px-5 text-left text-sm font-semibold border-b"
+            >
+              {{ column.label }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let item of data"
+            class="hover:bg-blue-50 transition-colors"
+          >
+            <td
+              *ngFor="let column of columns"
+              class="py-3 px-5 border-b text-sm text-gray-700"
+            >
+              <!-- If column is 'client', show profile image -->
+              <ng-container *ngIf="column.key === 'client'; else normalCell">
+                <div class="flex items-center">
+                  <img
+                    [src]="item.image || 'https://placehold.co/40x40'"
+                    alt="Client"
+                    class="w-8 h-8 rounded-full mr-3 shadow"
+                  />
+                  <span class="font-medium">{{ item[column.key] }}</span>
+                </div>
+              </ng-container>
+              <ng-template #normalCell>
+                {{ item[column.key] }}
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
