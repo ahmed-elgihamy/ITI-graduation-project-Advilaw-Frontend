@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   getUserInfo(): UserInfo | null {
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('token');
     if (!token) return null;
 
     try {
@@ -41,6 +41,7 @@ export class AuthService {
         role: decoded[
           'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
         ],
+        foreignKey: +decoded.userId,
         email: decoded.email,
         expiresAt: decoded.exp,
       };

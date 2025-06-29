@@ -1,7 +1,9 @@
 <app-lawyer-or-client-modal></app-lawyer-or-client-modal>
 <nav class="navbar navbar-expand-lg">
   <div class="container">
-    <a class="navbar-brand" href="#"><img src="assets/images/logo.png" /></a>
+    <a class="navbar-brand" routerLink="/"
+      ><img src="assets/images/logo.png"
+    /></a>
     <button
       class="navbar-toggler"
       type="button"
@@ -52,6 +54,15 @@
         </li>
         <li class="nav-item mx-2">
           <a class="nav-link" href="#">Contact Us</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link" routerLink="/jobs">Jobs</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link" routerLink="/lawyers">Lawyers</a>
         </li>
       </ul>
       <form class="d-flex justify-content-center" role="search">

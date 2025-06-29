@@ -17,9 +17,17 @@ export class JobsService {
     // this.Role = authService.getUserInfo()?.role ?? null;
   }
 
+  GetJob(id: number): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(`${this.apiUrl}/Job/${id}`);
+  }
+
   GetJobs(page: number): Observable<ApiResponse<PagedResponse<any>>> {
     return this.http.get<ApiResponse<PagedResponse<any>>>(
-      `${this.apiUrl}/job?pageNumber=${page}`
+      `${this.apiUrl}/Job?pageNumber=${page}`
     );
+  }
+
+  CreateJob(data: any): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/job/create`, data);
   }
 }
