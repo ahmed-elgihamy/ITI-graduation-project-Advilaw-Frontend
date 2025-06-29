@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PagedResponse } from '../../types/PagedResponse';
 import { ApiResponse } from '../../types/ApiResponse';
+import { CreateProposalDTO } from '../../types/Proposals/CreateProposalDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +30,9 @@ export class JobsService {
 
   CreateJob(data: any): Observable<ApiResponse<any>> {
     return this.http.post<ApiResponse<any>>(`${this.apiUrl}/job/create`, data);
+  }
+
+  ApplyToJob(data: CreateProposalDTO): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/proposals`, data);
   }
 }
