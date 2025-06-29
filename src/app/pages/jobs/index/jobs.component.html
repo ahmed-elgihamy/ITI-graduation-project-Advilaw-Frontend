@@ -1,0 +1,15 @@
+<div class="container py-4">
+  <app-dashboard-table
+    [data]="jobs"
+    [columns]="jobsColumns"
+    title="Job Listings"
+  ></app-dashboard-table>
+  <div class="d-flex justify-content-center align-items-center">
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChanged)="loadData($event)"
+    >
+    </app-pagination>
+  </div>
+</div>

@@ -13,6 +13,10 @@ import { RegisterLawyerComponent } from './components/register-lawyer/register-l
 import { ResetConfirmationComponent } from './components/reset-confirmation/reset-confirmation.component';
 import { Routes } from '@angular/router';
 import { ReviewsContentComponent } from './components/dashboard/reviews-content/reviews-content.component';
+import { JobsComponent } from './pages/jobs/index/jobs.component';
+import { CreateJobComponent } from './pages/jobs/create-job/create-job.component';
+import { LawyersComponent } from './pages/lawyers/lawyers.component';
+import { JobDetailsComponent } from './pages/jobs/job-details/job-details.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +30,26 @@ export const routes: Routes = [
         path: 'register-client',
         component: RegisterClientComponent,
         canActivate: [authGuard],
+      },
+      {
+        path: 'jobs',
+        component: JobsComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'jobs/create',
+        component: CreateJobComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'jobs/:id',
+        component: JobDetailsComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'lawyers',
+        component: LawyersComponent,
+        // canActivate: [authGuard],
       },
 
       { path: 'forgot-password', component: ForgotPasswordComponent },

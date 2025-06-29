@@ -1,0 +1,107 @@
+<div class="container py-5">
+  <div class="card shadow-lg mx-auto" style="max-width: 800px">
+    <div class="card-body">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="part d-flex align-items-center">
+          <img
+            [src]="job.clientProfilePictureUrl"
+            alt="Client Photo"
+            class="rounded-circle border"
+            style="width: 64px; height: 64px; object-fit: cover"
+          />
+          <div class="ms-3">
+            <h4 class="card-title mb-1">{{ job.header }}</h4>
+            <small class="text-muted">Job ID: #{{ job.id }}</small>
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+          <!-- Edit button: only if client and NOT owner -->
+          <button
+            type="button"
+            class="btn btn-warning"
+            *ngIf="isClient && myJob"
+            [routerLink]="['/jobs', job.id, 'edit']"
+          >
+            Edit
+          </button>
+
+          <!-- Apply button: only if lawyer and NOT already applied -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            *ngIf="isLawyer && !alreadyApplied"
+            [routerLink]="['/jobs', job.id, 'apply']"
+          >
+            Apply
+          </button>
+
+          <!-- Optional disabled state -->
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            disabled
+            *ngIf="isLawyer && alreadyApplied"
+          >
+            Already Applied
+          </button>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-sm-6">
+          <label class="form-label text-muted">Client Name</label>
+          <div class="fw-semibold">{{ job.clientName }}</div>
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label text-muted">Budget</label>
+          <div class="fw-semibold text-success">
+            {{ job.budget | currency }}
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <label class="form-label text-muted">Job Field</label>
+          <div class="fw-semibold">{{ job.jobFieldName }}</div>
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label text-muted">Type</label>
+          <div class="fw-semibold">{{ job.type }}</div>
+        </div>
+
+        <div class="col-sm-6">
+          <label class="form-label text-muted">Status</label>
+          <div class="fw-semibold">{{ job.status }}</div>
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label text-muted">Anonymous</label>
+          <div class="fw-semibold">
+            {{ job.isAnonymus ? "Yes" : "No" }}
+          </div>
+        </div>
+
+        <div class="col-sm-6" *ngIf="job.lawyerId">
+          <label class="form-label text-muted">Lawyer ID</label>
+          <div class="fw-semibold">{{ job.lawyerId }}</div>
+        </div>
+
+        <div class="col-sm-6" *ngIf="job.escrowTransactionId">
+          <label class="form-label text-muted">Escrow Transaction ID</label>
+          <div class="fw-semibold">{{ job.escrowTransactionId }}</div>
+        </div>
+
+        <div class="col-sm-6" *ngIf="job.sessionId">
+          <label class="form-label text-muted">Session ID</label>
+          <div class="fw-semibold">{{ job.sessionId }}</div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <label class="form-label text-muted">Description</label>
+        <p class="fw-normal text-dark mb-0" style="white-space: pre-line">
+          {{ job.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,13 +1,18 @@
 import { AuthService } from './../../core/services/auth.service';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { LawyerOrClientModalComponent } from '../../shared/lawyer-or-client-modal/lawyer-or-client-modal.component';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [LawyerOrClientModalComponent, RouterModule, CommonModule],
+  imports: [
+    LawyerOrClientModalComponent,
+    RouterModule,
+    CommonModule,
+    RouterLink,
+  ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'], // Corrected property name
 })
