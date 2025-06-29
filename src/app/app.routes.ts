@@ -1,11 +1,3 @@
-import { RegisterClientComponent } from './components/register-client/register-client.component';
-import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-
-import { RegisterLawyerComponent } from './components/register-lawyer/register-lawyer.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { ResetConfirmationComponent } from './components/reset-confirmation/reset-confirmation.component';
-import { HomeComponent } from './components/home/home.component';
 import { authGuard } from './core/guards/auth.guard';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
@@ -13,10 +5,25 @@ import { AnalysisContentComponent } from './components/dashboard/analysis-conten
 import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-content.component';
 import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
 import { PaymentsContentComponent } from './components/dashboard/payments-content/payments-content.component';
+<<<<<<< HEAD
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard';
 import { PendingLawyersList } from './components/admin-dashboard/pending-lawyers-list/pending-lawyers-list';
 import { PendingClientsList } from './components/admin-dashboard/pending-clients-list/pending-clients-list';
 import { AdminDashboardWelcome } from './components/admin-dashboard/admin-dashboard-welcome/admin-dashboard-welcome';
+=======
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterClientComponent } from './components/register-client/register-client.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { RegisterLawyerComponent } from './components/register-lawyer/register-lawyer.component';
+import { ResetConfirmationComponent } from './components/reset-confirmation/reset-confirmation.component';
+import { Routes } from '@angular/router';
+import { ReviewsContentComponent } from './components/dashboard/reviews-content/reviews-content.component';
+import { JobsComponent } from './pages/jobs/index/jobs.component';
+import { CreateJobComponent } from './pages/jobs/create-job/create-job.component';
+import { LawyersComponent } from './pages/lawyers/lawyers.component';
+import { JobDetailsComponent } from './pages/jobs/job-details/job-details.component';
+>>>>>>> 138772e41e697e3acb52079e109f686a1d4ee404
 
 export const routes: Routes = [
   {
@@ -30,6 +37,26 @@ export const routes: Routes = [
         path: 'register-client',
         component: RegisterClientComponent,
         canActivate: [authGuard],
+      },
+      {
+        path: 'jobs',
+        component: JobsComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'jobs/create',
+        component: CreateJobComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'jobs/:id',
+        component: JobDetailsComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'lawyers',
+        component: LawyersComponent,
+        // canActivate: [authGuard],
       },
 
       { path: 'forgot-password', component: ForgotPasswordComponent },
@@ -51,6 +78,7 @@ export const routes: Routes = [
       { path: 'profile', component: ProfileContentComponent },
       { path: 'jobs', component: JobsContentComponent },
       { path: 'payments', component: PaymentsContentComponent },
+<<<<<<< HEAD
       {
         path: 'admin-dashboard',
         component: AdminDashboardComponent,
@@ -61,6 +89,9 @@ export const routes: Routes = [
       
         ]
       }
+=======
+      { path: 'reviews', component: ReviewsContentComponent },
+>>>>>>> 138772e41e697e3acb52079e109f686a1d4ee404
     ],
   },
   { path: '**', redirectTo: '/login' },

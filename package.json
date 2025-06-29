@@ -21,6 +21,10 @@
     "@fortawesome/fontawesome-free": "^6.7.2",
     "bootstrap": "^5.3.6",
     "chart.js": "^4.5.0",
+<<<<<<< HEAD
+=======
+    "jwt-decode": "^4.0.0",
+>>>>>>> 138772e41e697e3acb52079e109f686a1d4ee404
     "ng-apexcharts": "^1.7.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

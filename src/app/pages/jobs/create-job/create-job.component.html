@@ -1,0 +1,91 @@
+<div class="container py-4">
+  <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+    <!-- Header -->
+    <div class="mb-3">
+      <label for="header" class="form-label">Header</label>
+      <input
+        id="header"
+        formControlName="header"
+        type="text"
+        [ngClass]="{ 'is-invalid': isInvalid('header') }"
+        class="form-control"
+      />
+      <div *ngIf="isInvalid('header')" class="invalid-feedback">
+        Header is required.
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        [ngClass]="{ 'is-invalid': isInvalid('description') }"
+        class="form-control"
+      ></textarea>
+      <div *ngIf="isInvalid('description')" class="invalid-feedback">
+        Description is required.
+      </div>
+    </div>
+
+    <!-- Budget -->
+    <div class="mb-3">
+      <label for="budget" class="form-label">Budget</label>
+      <input
+        id="budget"
+        formControlName="budget"
+        type="number"
+        [ngClass]="{ 'is-invalid': isInvalid('budget') }"
+        class="form-control"
+      />
+      <div *ngIf="isInvalid('budget')" class="invalid-feedback">
+        Budget is required and must be greater than 0.
+      </div>
+    </div>
+
+    <!-- IsAnonymous -->
+    <div class="form-check mb-3">
+      <input
+        id="isAnonymus"
+        type="checkbox"
+        class="form-check-input"
+        formControlName="isAnonymus"
+      />
+      <label class="form-check-label" for="isAnonymus">Anonymous</label>
+    </div>
+
+    <!-- Job Field -->
+    <div class="mb-3">
+      <label for="jobFieldId" class="form-label">Job Field</label>
+      <select
+        id="jobFieldId"
+        formControlName="jobFieldId"
+        [ngClass]="{ 'is-invalid': isInvalid('jobFieldId') }"
+        class="form-control"
+      >
+        <option [value]="null" disabled>Select a Job Field</option>
+        <option *ngFor="let field of jobFields" [value]="field.id">
+          {{ field.name }}
+        </option>
+      </select>
+      <div *ngIf="isInvalid('jobFieldId')" class="invalid-feedback">
+        Please select a job field.
+      </div>
+    </div>
+
+    <div class="btns d-flex">
+      <!-- Submit -->
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="jobForm.invalid"
+      >
+        Create Job
+      </button>
+
+      <!-- Cancel -->
+      <a class="btn btn-secondary ms-2" routerLink="/lawyers">Cancel</a>
+    </div>
+  </form>
+</div>

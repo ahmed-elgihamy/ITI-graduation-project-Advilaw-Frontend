@@ -1,1 +1,11 @@
-<p>jobs-content works!</p>
+<app-dashboard-table
+  [data]="jobs"
+  [columns]="jobColumns"
+  title="Job Listings"
+></app-dashboard-table>
+<app-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChanged)="loadData($event)"
+>
+</app-pagination>

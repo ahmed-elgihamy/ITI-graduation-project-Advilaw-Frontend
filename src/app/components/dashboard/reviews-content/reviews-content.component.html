@@ -1,0 +1,11 @@
+<app-dashboard-table
+  [data]="reviews"
+  [columns]="reviewColumns"
+  title="Review Listings"
+></app-dashboard-table>
+<app-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChanged)="loadData($event)"
+>
+</app-pagination>

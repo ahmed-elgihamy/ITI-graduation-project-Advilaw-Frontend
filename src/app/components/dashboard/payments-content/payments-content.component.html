@@ -1,1 +1,11 @@
-<p>payments-content works!</p>
+<app-dashboard-table
+  [data]="payments"
+  [columns]="paymentColumns"
+  title="Payment Listings"
+></app-dashboard-table>
+<app-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChanged)="loadData($event)"
+>
+</app-pagination>

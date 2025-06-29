@@ -1,0 +1,186 @@
+.profile-page {
+  background: var(--color-sand-beige);
+  color: var(--color-navy-blue);
+  min-height: 100vh;
+
+  .loading-overlay,
+  .error-container {
+    min-height: 50vh;
+  }
+
+  .profile-header {
+    text-align: center;
+    padding: 4rem 1rem;
+    background: linear-gradient(135deg, var(--color-sand-beige) 0%, rgba(240, 179, 90, 0.1) 100%);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('data:image/svg+xml,...');
+      pointer-events: none;
+    }
+
+    .profile-avatar {
+      width: 140px;
+      height: 140px;
+      border: 3px solid var(--color-mustard);
+      border-radius: 50%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      letter-spacing: 0.1em;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      .divider { color: var(--color-medium-brown); }
+    }
+
+    .actions {
+      .btn {
+        margin: 0 0.5rem;
+        border-radius: 8px;
+        &.consult-btn {
+          background: var(--color-mustard);
+          color: var(--color-navy-blue);
+        }
+      }
+    }
+  }
+
+  .bio-section {
+    padding: 2rem 0;
+    h2 { margin-bottom: 1rem; letter-spacing: 0.05em; }
+    p { line-height: 1.6; }
+  }
+
+  .rating-overview {
+    h2 { letter-spacing: 0.05em; margin-bottom: 1rem; }
+
+    .chart-wrapper {
+      position: relative;
+      height: 200px;
+      margin-bottom: 1rem;
+    }
+
+    .rating-bars {
+      .rating-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        .label { width: 2rem; }
+        .bar {
+          flex: 1;
+          background: #f0f0f0;
+          border-radius: 10px;
+          overflow: hidden;
+          margin: 0 0.5rem;
+          .progress-bar {
+            height: 18px;
+            background: var(--color-mustard);
+            transition: width 0.4s ease;
+          }
+        }
+        .percent {
+          width: 2.5rem;
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  .schedule {
+    h2 { letter-spacing: 0.05em; margin-bottom: 1rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      tr { border-bottom: 1px solid #e9ecef; }
+      td {
+        padding: 0.75rem 0;
+        &:first-child { font-weight: 600; width: 30%; }
+        .badge {
+          background: rgba(240, 179, 90, 0.2);
+          color: var(--color-navy-blue);
+          border-radius: 999px;
+          padding: 0.25rem 0.5rem;
+          margin-right: 0.25rem;
+        }
+        .unavail { color: var(--color-medium-brown); font-style: italic; }
+      }
+    }
+  }
+
+  .reviews {
+    h2 { letter-spacing: 0.05em; margin-bottom: 1rem; }
+
+    .review-card {
+      display: flex;
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 12px rgba(49, 63, 76, 0.08);
+      margin-bottom: 1rem;
+
+      .review-avatar {
+        width: 40px;
+        height: 40px;
+        border: 2px solid var(--color-mustard);
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 1rem;
+      }
+
+      .review-content {
+        flex: 1;
+
+        .header {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 0.5rem;
+          h6 { margin: 0; }
+        }
+
+        .stars {
+          color: var(--color-mustard);
+          margin-bottom: 0.5rem;
+        }
+
+        p { margin: 0; line-height: 1.5; }
+      }
+    }
+
+    .no-reviews {
+      text-align: center;
+      color: var(--color-medium-brown);
+      padding: 2rem 0;
+    }
+  }
+}
+
+
+
+@media (max-width: 991.98px) {
+  .profile-header h1 { font-size:2rem!important; }
+  .profile-header .d-flex { flex-direction:column!important; gap:.75rem!important; }
+}
+@media (max-width: 767.98px) {
+  .profile-header h1 { font-size:1.75rem!important; }
+  .profile-avatar { width:120px!important; height:120px!important; }
+}
+@media (max-width: 575.98px) {
+  .profile-header { padding:2rem 0!important; }
+  .profile-header h1 { font-size:1.5rem!important; letter-spacing:0.05em!important; }
+  .container { padding:0 1rem!important; }
+}
