@@ -1,59 +1,19 @@
 
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background-color: var(--color-sand-beige);
-}
 
-.hero-text h1 {
-    font-size: 3rem;
-    font-weight: bold;
+.hero-section{
+    background-image: url('/assets/images/landing-page.jpg');
+    background-size: cover;
+    background-position: center;
     color: var(--color-navy-blue);
+    padding: 2rem;
+    padding-block: 80px;
 }
 
-.hero-text p {
-    font-size: 1.25rem;
-    margin-top: 1rem;
+.CoverAreasSection{
+    background-image: url('/assets/images/Area.jpg');
+    background-size: cover;
+    background-position: center;
+    color: var(--color-navy-blue);
+    padding: 2rem;
+    padding-block: 80px;
 }
-
-.hero-img {
-    max-width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-
-
-
-#WhySection .WhySectionItem{
-    background-color:#fdfdfd;
-    border-radius: 20px;
-    border: 2px solid var(--color-sand-beige);
-    padding: 1rem;
-    height: 100%;
-}
-
-#WhySection i{
-    font-size: 3rem;
-    color: var(--color-mustard);
-}
-#WhySection h3{
-    margin: 1rem 0;
-    font-size: 1.3rem;
-}
-
-@media (min-width: 992px) and (max-width: 1200px) {
-  #howItWorks h3.display-2 {
-    font-size: calc(1.275rem + 3.9vw);
-  }
- 
-}
-
-@media  (min-width:768px) and (max-width:991){
-      #howItWorks h3.display-2 {
-    font-size: calc(1rem + 3.9vw);
-  }
- 
-}
-

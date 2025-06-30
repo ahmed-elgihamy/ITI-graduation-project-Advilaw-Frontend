@@ -17,6 +17,7 @@ import { JobsComponent } from './pages/jobs/index/jobs.component';
 import { CreateJobComponent } from './pages/jobs/create-job/create-job.component';
 import { LawyersComponent } from './pages/lawyers/lawyers.component';
 import { JobDetailsComponent } from './pages/jobs/job-details/job-details.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -24,27 +25,28 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
+      { path: 'profile', component: ProfileComponent },
       { path: 'home', redirectTo: '' },
-      { path: 'login', component: LoginComponent, canActivate: [authGuard] },
+      { path: 'login', component: LoginComponent },
       {
         path: 'register-client',
         component: RegisterClientComponent,
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
       },
       {
         path: 'jobs',
         component: JobsComponent,
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
       },
       {
         path: 'jobs/create',
         component: CreateJobComponent,
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
       },
       {
         path: 'jobs/:id',
         component: JobDetailsComponent,
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
       },
       {
         path: 'lawyers',
@@ -56,7 +58,7 @@ export const routes: Routes = [
       {
         path: 'register-lawyer',
         component: RegisterLawyerComponent,
-        canActivate: [authGuard],
+        //   canActivate: [authGuard],
       },
       { path: 'reset-confirmation', component: ResetConfirmationComponent },
     ],
@@ -64,7 +66,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardLayoutComponent,
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'analytics', pathMatch: 'full' },
       { path: 'analytics', component: AnalysisContentComponent },

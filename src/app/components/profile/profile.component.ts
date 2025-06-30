@@ -45,13 +45,13 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private lawyerService: LawyerService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadLawyerData();
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -65,7 +65,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private loadLawyerData(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (!id) {
+    if (id) {
       this.handleError('Invalid lawyer ID provided.');
       return;
     }
