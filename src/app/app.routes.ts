@@ -18,6 +18,7 @@ import { CreateJobComponent } from './pages/jobs/create-job/create-job.component
 import { LawyersComponent } from './pages/lawyers/lawyers.component';
 import { JobDetailsComponent } from './pages/jobs/job-details/job-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AllLawyerComponent } from './components/all-lawyer/all-lawyer.component';
 
 export const routes: Routes = [
   {
@@ -25,7 +26,8 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
-      { path: 'profile', component: ProfileComponent },
+      { path: 'profile/:id', component: ProfileComponent },
+      { path: 'allLawyers', component: AllLawyerComponent },
       { path: 'home', redirectTo: '' },
       { path: 'login', component: LoginComponent },
       {
