@@ -143,21 +143,21 @@
             <!-- Specializations -->
             <div class="col-md-12">
               <label class="form-label">Specializations</label>
-              <select formControlName="specializations" class="form-select">
+              <select formControlName="FieldIds" class="form-select">
                 <option value="" disabled selected>Select Specializations</option>
-                <option value="Criminal Law">Criminal Law</option>
-                <option value="Family Law">Family Law</option>
-                <option value="Tax Law">Tax Law</option>
-                <option value="Civil Law">Civil Law</option>
+                <option value="1">Criminal Law</option>
+                <option value="2">Family Law</option>
+                <option value="3">Tax Law</option>
+                <option value="4">Civil Law</option>
 
               </select>
             </div>
 
 
             <!-- Specializations Validation -->
-            @if(registerForm.get('specializations')?.errors && registerForm.get('specializations')?.touched)
+            @if(registerForm.get('FieldIds')?.errors && registerForm.get('FieldIds')?.touched)
             {
-            @if(registerForm.get('specializations')?.getError('required'))
+            @if(registerForm.get('FieldIds')?.getError('required'))
             {
             <p class="text-danger mt-0 mb-0">** specializations is required</p>
             }
