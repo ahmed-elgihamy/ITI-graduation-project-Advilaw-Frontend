@@ -78,4 +78,9 @@ export class AuthService {
   setResetPassword(data: object): Observable<any> {
     return this.http.post(`${env.baseUrl}/Auth/reset-password`, data);
   }
+
+  isAdmin(): boolean {
+    const userInfo = this.getUserInfo();
+    return userInfo?.role === 'Admin' || userInfo?.role === 'SuperAdmin';
+  }
 }

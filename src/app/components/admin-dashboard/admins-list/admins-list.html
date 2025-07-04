@@ -1,0 +1,26 @@
+<div *ngIf="isLoading">Loading admins...</div>
+<div *ngIf="error" class="text-danger">{{ error }}</div>
+<table *ngIf="!isLoading && admins.length" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Assign Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let admin of admins">
+      <td>{{ admin.userName }}</td>
+      <td>{{ admin.email }}</td>
+      <td>{{ admin.role }}</td>
+      <td>
+        <select [value]="admin.role" (change)="onRoleChange(admin, $event)" class="form-select">
+          <option value="Admin">Admin</option>
+          <option value="SuperAdmin">SuperAdmin</option>
+        </select>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="!isLoading && !admins.length && !error">No admins found.</div>

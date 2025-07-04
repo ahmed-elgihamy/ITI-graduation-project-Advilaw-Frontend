@@ -1,0 +1,23 @@
+.avatar-sm {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.table th {
+  font-weight: 600;
+  color: #495057;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.btn-group .btn {
+  margin-right: 5px;
+}
+
+.btn-group .btn:last-child {
+  margin-right: 0;
+}

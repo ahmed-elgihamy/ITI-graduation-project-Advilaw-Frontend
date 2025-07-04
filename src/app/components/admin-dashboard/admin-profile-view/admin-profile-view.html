@@ -1,0 +1,30 @@
+<div class="profile-page-container">
+  <div class="profile-wrapper" *ngIf="profile && !isLoading; else loadingOrError">
+    <div class="profile-card">
+      <div class="profile-header">
+        <img [src]="profileImageUrl" alt="Profile Photo" class="profile-photo">
+        <h2 class="profile-name">{{ profile.name }}</h2>
+        <p class="role">{{ profile.role }}</p>
+      </div>
+
+      <div class="profile-details">
+        <div><strong>Email:</strong> {{ profile.email }}</div>
+        <div><strong>Phone Number:</strong> {{ profile.phoneNumber || '-' }}</div>
+        <div><strong>City:</strong> {{ profile.city }}</div>
+        <div><strong>Country:</strong> {{ profile.country }}</div>
+        <div><strong>Country Code:</strong> {{ profile.countryCode }}</div>
+        <div><strong>Postal Code:</strong> {{ profile.postalCode }}</div>
+        <div><strong>Gender:</strong> {{ profile.gender }}</div>
+        <div><strong>Nationality ID:</strong> {{ profile.nationalityId }}</div>
+        <div><strong>Created At:</strong> {{ profile.createdAt | date:'medium' }}</div>
+      </div>
+
+      <button class="edit-profile-btn" [routerLink]="['/dashboard/admin-dashboard/profile-edit']">Edit Profile</button>
+    </div>
+  </div>
+
+  <ng-template #loadingOrError>
+    <div *ngIf="isLoading" class="loading">Loading...</div>
+    <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+  </ng-template>
+</div>
