@@ -59,7 +59,7 @@ export class RegisterLawyerComponent {
     ]],
     NationalIDImage: [null, Validators.required],
     barCardImage: [null, Validators.required],
-    specializations: ['', Validators.required],
+    FieldIds: ['', Validators.required],
     gender: ['', Validators.required]
   });
 
@@ -98,7 +98,7 @@ export class RegisterLawyerComponent {
     formData.append('postalCode', controls['postalCode'].value);
     formData.append('nationalID', controls['nationalID'].value.toString());
     formData.append('barAssociationCardNumber', controls['barAssociationCardNumber'].value.toString());
-    formData.append('specializations', controls['specializations'].value);
+    formData.append('FieldIds', controls['FieldIds'].value);
     formData.append('gender', controls['gender'].value);
     formData.append('role', this.role);
 

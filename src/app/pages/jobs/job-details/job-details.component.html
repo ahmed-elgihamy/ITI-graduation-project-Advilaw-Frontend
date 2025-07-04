@@ -27,13 +27,14 @@
           </button>
 
           <!-- Apply button: only if lawyer and NOT already applied -->
+          <!-- Button to Open Modal -->
           <button
             type="button"
             class="btn btn-primary"
-            *ngIf="isLawyer && !alreadyApplied"
-            [routerLink]="['/jobs', job.id, 'apply']"
+            data-bs-toggle="modal"
+            data-bs-target="#createProposalModal"
           >
-            Apply
+            Create New Proposal
           </button>
 
           <!-- Optional disabled state -->
@@ -102,6 +103,66 @@
           {{ job.description }}
         </p>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="createProposalModal"
+  tabindex="-1"
+  aria-labelledby="proposalModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="proposalForm" (ngSubmit)="submitProposal()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="proposalModalLabel">New Proposal</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              formControlName="content"
+              class="form-control"
+              id="description"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input
+              type="number"
+              formControlName="budget"
+              class="form-control"
+              id="price"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-success">Submit Proposal</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

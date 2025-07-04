@@ -27,6 +27,8 @@ import { adminGuard } from './core/guards/admin.guard';
 import { AdminProfileViewComponent } from './components/admin-dashboard/admin-profile-view/admin-profile-view.component';
 import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { AllLawyerComponent } from './components/all-lawyer/all-lawyer.component';
 
 
 export const routes: Routes = [
@@ -35,27 +37,29 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
+      { path: 'profile/:id', component: ProfileComponent },
+      { path: 'allLawyers', component: AllLawyerComponent },
       { path: 'home', redirectTo: '' },
-      { path: 'login', component: LoginComponent, canActivate: [authGuard] },
+      { path: 'login', component: LoginComponent },
       {
         path: 'register-client',
         component: RegisterClientComponent,
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
       },
       {
         path: 'jobs',
         component: JobsComponent,
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
       },
       {
         path: 'jobs/create',
         component: CreateJobComponent,
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
       },
       {
         path: 'jobs/:id',
         component: JobDetailsComponent,
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
       },
       {
         path: 'lawyers',
@@ -67,7 +71,7 @@ export const routes: Routes = [
       {
         path: 'register-lawyer',
         component: RegisterLawyerComponent,
-        canActivate: [authGuard],
+        //   canActivate: [authGuard],
       },
       { path: 'reset-confirmation', component: ResetConfirmationComponent },
     ],
@@ -75,7 +79,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardLayoutComponent,
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'analytics', pathMatch: 'full' },
       { path: 'analytics', component: AnalysisContentComponent },
