@@ -1,0 +1,75 @@
+.glass-card {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+  }
+  
+  .glass-card.light-glass {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  
+  .text-theme-yellow {
+    color: #ffce3a !important;
+  }
+  
+  .avatar-sm {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: rgba(255, 206, 58, 0.9);
+    color: #181a1b;
+  }
+  
+  .btn-group .btn {
+    margin-right: 6px;
+  }
+  
+  .btn-group .btn:last-child {
+    margin-right: 0;
+  }
+  
+  .admin-hero-section {
+    background: linear-gradient(to bottom right, rgba(24, 26, 27, 0.85), rgba(30, 30, 30, 0.9));
+    backdrop-filter: blur(4px);
+    min-height: 100vh;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffce3a;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #555;
+    padding-bottom: 0.5rem;
+    text-align: left;
+  }
+  
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  }
+  
+  .info-label {
+    font-weight: 600;
+    color: #ccc;
+    width: 40%;
+    text-align: left;
+  }
+  
+  .info-value {
+    font-weight: 500;
+    color: #fff;
+    width: 60%;
+    text-align: right;
+  }
+  
+  

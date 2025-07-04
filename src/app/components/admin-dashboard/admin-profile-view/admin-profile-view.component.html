@@ -1,52 +1,62 @@
-<div class="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
-  <div class="row w-100">
-    <div class="col-12 col-md-8 col-lg-6 mx-auto">
-      <div class="profile-card shadow rounded p-4 bg-white w-100 w-md-75 w-lg-50" *ngIf="profile && !isLoading; else loadingOrError">
-        <div class="profile-header">
-          <img [src]="profileImageUrl || 'assets/images/default-profile.png'"  alt="Profile Photo" class="profile-photo mb-2">
-          <h2>{{ profile.name }}</h2>
-          <p class="role">{{ profile.role }}</p>
-        </div>
-        <div class="profile-details">
-          <ul class="list-group list-group-flush text-start my-4">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><i class="fas fa-envelope me-2 text-primary"></i><strong>Email:</strong></span>
+<section class="py-5 text-white profile-section" style="background-image: url('/assets/images/Area.jpg'); background-size: cover;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-xl-9">
+
+        <div *ngIf="profile && !isLoading; else loadingOrError"
+             class="glass-card text-center p-4 p-md-5 rounded-4 shadow-lg">
+
+          <img [src]="profileImageUrl"
+               alt="Profile Photo"
+               class="rounded-circle border border-3 border-light shadow"
+               style="width: 140px; height: 140px; object-fit: cover;">
+
+          <h3 class="mt-3 fw-bold text-warning">{{ profile.name }}</h3>
+          <p class="text-light mb-4">{{ profile.role }}</p>
+
+          <div class="text-start px-2 px-md-4">
+            <div class="d-flex justify-content-between py-2 border-bottom border-secondary mb-3">
+              <span><i class="fas fa-envelope text-warning me-2"></i> Email</span>
               <span>{{ profile.email }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><i class="fas fa-city me-2 text-primary"></i><strong>City:</strong></span>
+            </div>
+            <div class="d-flex justify-content-between py-2 border-bottom border-secondary mb-3">
+              <span><i class="fas fa-city text-warning me-2"></i> City</span>
               <span>{{ profile.city }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><i class="fas fa-globe me-2 text-primary"></i><strong>Country:</strong></span>
+            </div>
+            <div class="d-flex justify-content-between py-2 border-bottom border-secondary mb-3">
+              <span><i class="fas fa-globe text-warning me-2"></i> Country</span>
               <span>{{ profile.country }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><i class="fas fa-venus-mars me-2 text-primary"></i><strong>Gender:</strong></span>
+            </div>
+            <div class="d-flex justify-content-between py-2 border-bottom border-secondary mb-3">
+              <span><i class="fas fa-venus-mars text-warning me-2"></i> Gender</span>
               <span>{{ profile.gender }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><i class="fas fa-id-card me-2 text-primary"></i><strong>Nationality ID:</strong></span>
+            </div>
+            <div class="d-flex justify-content-between py-2 border-bottom border-secondary mb-3">
+              <span><i class="fas fa-id-card text-warning me-2"></i> Nationality ID</span>
               <span>{{ profile.nationalityId }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><i class="fas fa-phone me-2 text-primary"></i><strong>Phone Number:</strong></span>
+            </div>
+            <div class="d-flex justify-content-between py-2 border-bottom border-secondary mb-3">
+              <span><i class="fas fa-phone text-warning me-2"></i> Phone</span>
               <span>{{ profile.phoneNumber || '-' }}</span>
-            </li>
-          </ul>
+            </div>
+          </div>
+
+          <a [routerLink]="['/dashboard/admin-dashboard/profile-edit']"
+             class="btn btn-warning mt-4 px-4 py-2 fw-bold rounded-pill">
+            <i class="fas fa-edit me-2"></i>Edit Profile
+          </a>
         </div>
-        <button
-          class="btn btn-primary btn-lg mt-4"
-          [routerLink]="['/dashboard/admin-dashboard/profile-edit']"
-        >
-          <i class="fas fa-edit me-2"></i>
-          Edit Profile
-        </button>
+
+        <ng-template #loadingOrError>
+          <div *ngIf="isLoading" class="text-center py-5">
+            <div class="spinner-border text-warning" role="status"></div>
+          </div>
+          <div *ngIf="errorMsg" class="alert alert-danger mt-4 text-center">
+            {{ errorMsg }}
+          </div>
+        </ng-template>
+
       </div>
-      <ng-template #loadingOrError>
-        <div *ngIf="isLoading" class="loading">Loading...</div>
-        <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
-      </ng-template>
     </div>
   </div>
-</div>
+</section>

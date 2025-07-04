@@ -1,26 +1,37 @@
-.admin-profile-edit-container {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 24px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+.glass-form {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
 }
-.admin-profile-edit-container h2 {
-  margin-bottom: 24px;
-  text-align: center;
+
+.admin-hero-section {
+  min-height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(3px);
 }
-.admin-profile-edit-container .btn {
-  width: 100%;
+
+.form-control,
+.form-select {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
-.profile-photo {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid #eee;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }
-.form-control-file {
-  margin-top: 8px;
+
+.form-control:focus,
+.form-select:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: #ffc107;
+  box-shadow: none;
+}
+
+.invalid-feedback {
+  color: #ffc107;
 }

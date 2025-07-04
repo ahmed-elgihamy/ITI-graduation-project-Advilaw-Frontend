@@ -133,7 +133,10 @@ export class AdminProfileEdit implements OnInit {
   }
 
   onSubmit() {
-    if (this.profileForm.invalid) return;
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      return;
+    }
     this.isLoading = true;
     this.successMsg = '';
     this.errorMsg = '';
