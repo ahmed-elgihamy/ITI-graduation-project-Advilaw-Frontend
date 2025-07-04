@@ -23,13 +23,12 @@ export interface LawyerResponse {
 
 @Injectable({ providedIn: 'root' })
 export class LawyerService {
-  private baseUrl = 'https://localhost:44302/api/lawyers';
 
   constructor(private http: HttpClient) { }
 
   getProfile(id: number): Observable<LawyerProfile> {
     return this.http
-      .get<ApiResponse<LawyerProfile>>(`${this.baseUrl}/${id}/profile`)
+      .get<ApiResponse<LawyerProfile>>(`${env.baseUrl}/lawyer/${id}/profile`)
       .pipe(
         map((res) => res.data),
         catchError((err) => throwError(() => new Error('Profile load failed')))
@@ -38,7 +37,7 @@ export class LawyerService {
 
   getReviews(id: number): Observable<Review[]> {
     return this.http
-      .get<ApiResponse<Review[]>>(`${this.baseUrl}/${id}/reviews`)
+      .get<ApiResponse<Review[]>>(`${env.baseUrl}/lawyer/${id}/reviews`)
       .pipe(
         map((res) => res.data),
         catchError((err) => throwError(() => new Error('Reviews load failed')))
@@ -47,7 +46,7 @@ export class LawyerService {
 
   getSchedule(id: number): Observable<LawyerSchedule[]> {
     return this.http
-      .get<ApiResponse<LawyerSchedule[]>>(`${this.baseUrl}/${id}/schedule`)
+      .get<ApiResponse<LawyerSchedule[]>>(`${env.baseUrl}/lawyer/${id}/schedule`)
       .pipe(
         map((res) => res.data),
         catchError((err) => throwError(() => new Error('Schedule load failed')))

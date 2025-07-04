@@ -29,6 +29,7 @@ import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-deta
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AllLawyerComponent } from './components/all-lawyer/all-lawyer.component';
+import { ChatComponent } from './components/communication/chat/chat.component';
 
 
 export const routes: Routes = [
@@ -39,6 +40,8 @@ export const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'profile/:id', component: ProfileComponent },
       { path: 'allLawyers', component: AllLawyerComponent },
+      { path: 'chat', component: ChatComponent },
+
       { path: 'home', redirectTo: '' },
       { path: 'login', component: LoginComponent },
       {

@@ -34,6 +34,138 @@ export class AllLawyerComponent implements OnInit {
   totalPages = 1;
   totalItems = 0;
   allLawyers: Lawyer[] = [];
+  topLawyers: Lawyer[] = [
+    {
+      id: 1,
+      name: 'Linda Parker',
+      specialty: 'Business Law • Civil Litigation',
+      experience: '25 years',
+      rating: 5,
+      image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150',
+      cases: 350,
+      location: 'New York, USA',
+      country: 'USA',
+      city: 'New York',
+      field: 'Business Law'
+    },
+    {
+      id: 2,
+      name: 'Tom Johnson',
+      specialty: 'Personal Injury • Auto Accidents',
+      experience: '15 years',
+      rating: 5,
+      image: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=150',
+      cases: 200,
+      location: 'New York, USA',
+      country: 'USA',
+      city: 'New York',
+      field: 'Personal Injury Law'
+    },
+    {
+      id: 3,
+      name: 'Hannah Smith',
+      specialty: 'Real Estate • Contract Law',
+      experience: '12 years',
+      rating: 5,
+      image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150',
+      cases: 180,
+      location: 'Los Angeles, USA',
+      country: 'USA',
+      city: 'Los Angeles',
+      field: 'Real Estate Law'
+    },
+    {
+      id: 4,
+      name: 'David White',
+      specialty: 'Corporate Law • M&A',
+      experience: '20 years',
+      rating: 5,
+      image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150',
+      cases: 300,
+      location: 'Toronto, Canada',
+      country: 'Canada',
+      city: 'Toronto',
+      field: 'Business Law'
+    },
+    {
+      id: 5,
+      name: 'Sara Davis',
+      specialty: 'Family Law • Divorce',
+      experience: '8 years',
+      rating: 4,
+      image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150',
+      cases: 150,
+      location: 'London, UK',
+      country: 'UK',
+      city: 'London',
+      field: 'Family Law'
+    },
+    {
+      id: 6,
+      name: 'Mike Brown',
+      specialty: 'Criminal Defense • DUI',
+      experience: '18 years',
+      rating: 5,
+      image: 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=150',
+      cases: 250,
+      location: 'Sydney, Australia',
+      country: 'Australia',
+      city: 'Sydney',
+      field: 'Criminal Defense'
+    },
+    {
+      id: 7,
+      name: 'Jennifer Miller',
+      specialty: 'Immigration • Visa Services',
+      experience: '10 years',
+      rating: 4,
+      image: 'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=150',
+      cases: 160,
+      location: 'Berlin, Germany',
+      country: 'Germany',
+      city: 'Berlin',
+      field: 'Immigration Law'
+    },
+    {
+      id: 8,
+      name: 'Chris Wilson',
+      specialty: 'Employment Law • Workplace Rights',
+      experience: '14 years',
+      rating: 4,
+      image: 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=150',
+      cases: 190,
+      location: 'Vancouver, Canada',
+      country: 'Canada',
+      city: 'Vancouver',
+      field: 'Employment Law'
+    },
+    {
+      id: 9,
+      name: 'Rachel Lee',
+      specialty: 'Intellectual Property • Patents',
+      experience: '16 years',
+      rating: 5,
+      image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150',
+      cases: 220,
+      location: 'Manchester, UK',
+      country: 'UK',
+      city: 'Manchester',
+      field: 'Intellectual Property'
+    },
+    {
+      id: 10,
+      name: 'Benjamin Taylor',
+      specialty: 'Estate Planning • Wills',
+      experience: '22 years',
+      rating: 5,
+      image: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=150',
+      cases: 280,
+      location: 'Melbourne, Australia',
+      country: 'Australia',
+      city: 'Melbourne',
+      field: 'Estate Planning'
+    }
+  ];
   filteredLawyers: Lawyer[] = [];
 
   selectedCountry = '';
