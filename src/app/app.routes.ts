@@ -29,6 +29,13 @@ import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-deta
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AllLawyerComponent } from './components/all-lawyer/all-lawyer.component';
+import { ClientDashboardComponent } from './components/client-dashboard/client-dashboard.component';
+import { ClientChatsComponent } from './components/client-dashboard/client-chats/client-chats.component';
+import { ClientSettingsComponent } from './components/client-dashboard/client-settings/client-settings.component';
+import { ClientPaymentsComponent } from './components/client-dashboard/client-payments/client-payments.component';
+import { ClientOverviewComponent } from './components/client-dashboard/client-overview/client-overview.component';
+import { ClientConsultsComponent } from './components/client-dashboard/client-consults/client-consults.component';
+
 
 
 export const routes: Routes = [
@@ -103,10 +110,23 @@ export const routes: Routes = [
         ]
       }
 
-      ,{ path: 'reviews', component: ReviewsContentComponent },
+      , { path: 'reviews', component: ReviewsContentComponent },
 
     ],
   },
-  
+  {
+    path: 'client-dashboard',
+    component: ClientDashboardComponent,
+    children: [
+      {path:"",redirectTo:'overview',pathMatch:"full"},
+      { path: 'chats', component: ClientChatsComponent },
+      { path: 'settings', component: ClientSettingsComponent },
+      { path: 'payments', component: ClientPaymentsComponent },
+      { path: 'overview', component: ClientOverviewComponent },
+      { path: 'consults', component: ClientConsultsComponent }
+    ]
+    // canActivate: [authGuard],
+  },
+
   { path: '**', redirectTo: '/login' },
 ];
