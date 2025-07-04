@@ -1,0 +1,95 @@
+<div class="container py-4">
+  <h2 class="mb-4">Book a Consultation</h2>
+
+  <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+    <!-- Header -->
+    <div class="mb-3">
+      <label class="form-label" for="header">Header</label>
+      <input
+        id="header"
+        formControlName="header"
+        class="form-control"
+        type="text"
+        [ngClass]="{ 'is-invalid': isInvalid('header') }"
+      />
+      <div *ngIf="isInvalid('header')" class="invalid-feedback">Header is required.</div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label class="form-label" for="description">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isInvalid('description') }"
+      ></textarea>
+      <div *ngIf="isInvalid('description')" class="invalid-feedback">Description is required.</div>
+    </div>
+
+    <!-- Appointment Time -->
+    <div class="mb-3">
+      <label class="form-label" for="appointmentTime">Appointment Time</label>
+      <input
+        id="appointmentTime"
+        formControlName="appointmentTime"
+        type="datetime-local"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isInvalid('appointmentTime') }"
+      />
+      <div *ngIf="isInvalid('appointmentTime')" class="invalid-feedback">
+        Appointment time is required.
+      </div>
+    </div>
+
+    <!-- Start Time -->
+    <div class="mb-3">
+      <label class="form-label" for="startTime">Start Time</label>
+      <input id="startTime" formControlName="startTime" type="time" class="form-control" />
+    </div>
+
+    <!-- End Time -->
+    <div class="mb-3">
+      <label class="form-label" for="endTime">End Time</label>
+      <input id="endTime" formControlName="endTime" type="time" class="form-control" />
+    </div>
+
+    <!-- Duration -->
+    <div class="mb-3">
+      <label class="form-label" for="durationHours">Duration (hours)</label>
+      <input id="durationHours" formControlName="durationHours" type="number" class="form-control" readonly />
+    </div>
+
+    <!-- Budget -->
+    <div class="mb-3">
+      <label class="form-label" for="budget">Calculated Budget</label>
+      <input id="budget" formControlName="budget" type="number" class="form-control" readonly />
+    </div>
+
+    <!-- Job Field -->
+    <div class="mb-3">
+      <label class="form-label" for="jobFieldId">Job Field</label>
+      <select
+        formControlName="jobFieldId"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isInvalid('jobFieldId') }"
+      >
+        <option [value]="null" disabled>Select a Job Field</option>
+        <option *ngFor="let field of jobFields" [value]="field.id">{{ field.name }}</option>
+      </select>
+      <div *ngIf="isInvalid('jobFieldId')" class="invalid-feedback">Please select a job field.</div>
+    </div>
+
+    <!-- Anonymous -->
+    <div class="form-check mb-3">
+      <input id="isAnonymus" type="checkbox" class="form-check-input" formControlName="isAnonymus" />
+      <label for="isAnonymus" class="form-check-label">Post Anonymously</label>
+    </div>
+
+    <!-- Submit/Cancel -->
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary" type="submit" [disabled]="jobForm.invalid">Request Consultation</button>
+      <a class="btn btn-secondary" routerLink="/lawyers">Cancel</a>
+    </div>
+  </form>
+</div>

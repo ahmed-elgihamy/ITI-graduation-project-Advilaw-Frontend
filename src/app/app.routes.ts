@@ -17,62 +17,79 @@ import { JobsComponent } from './pages/jobs/index/jobs.component';
 import { CreateJobComponent } from './pages/jobs/create-job/create-job.component';
 import { LawyersComponent } from './pages/lawyers/lawyers.component';
 import { JobDetailsComponent } from './pages/jobs/job-details/job-details.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: '', component: HomeComponent },
-      { path: 'home', redirectTo: '' },
-      { path: 'login', component: LoginComponent, canActivate: [authGuard] },
       {
-        path: 'register-client',
-        component: RegisterClientComponent,
-        canActivate: [authGuard],
+        path: 'lawyer-profile/:id',
+        component: ProfileComponent
       },
       {
-        path: 'jobs',
-        component: JobsComponent,
-        canActivate: [authGuard],
-      },
-      {
-        path: 'jobs/create',
-        component: CreateJobComponent,
-        canActivate: [authGuard],
-      },
-      {
-        path: 'jobs/:id',
-        component: JobDetailsComponent,
-        canActivate: [authGuard],
-      },
-      {
-        path: 'lawyers',
-        component: LawyersComponent,
-        // canActivate: [authGuard],
-      },
+  path: 'client/consultation/:lawyerId',
+  loadComponent: () =>
+    import('./pages/jobs/lawyer-consultation/lawyer-consultation.component').then(
+      (m) => m.LawyerConsultationComponent
+    ),
+}
 
-      { path: 'forgot-password', component: ForgotPasswordComponent },
-      {
-        path: 'register-lawyer',
-        component: RegisterLawyerComponent,
-        canActivate: [authGuard],
-      },
-      { path: 'reset-confirmation', component: ResetConfirmationComponent },
-    ],
+    ]
   },
-  {
-    path: 'dashboard',
-    component: DashboardLayoutComponent,
-    canActivate: [authGuard],
-    children: [
-      { path: '', redirectTo: 'analytics', pathMatch: 'full' },
-      { path: 'analytics', component: AnalysisContentComponent },
-      { path: 'profile', component: ProfileContentComponent },
-      { path: 'jobs', component: JobsContentComponent },
-      { path: 'payments', component: PaymentsContentComponent },
-      { path: 'reviews', component: ReviewsContentComponent },
-    ],
-  },
-  { path: '**', redirectTo: '/login' },
+  { path: '**', redirectTo: '/lawyer-profile/1' } // for testing fallback
 ];
+//       { path: '', component: HomeComponent },
+//       { path: 'home', redirectTo: '' },
+//       { path: 'login', component: LoginComponent, canActivate: [authGuard] },
+//       {
+//         path: 'register-client',
+//         component: RegisterClientComponent,
+//         canActivate: [authGuard],
+//       },
+//       {
+//         path: 'jobs',
+//         component: JobsComponent,
+//         canActivate: [authGuard],
+//       },
+//       {
+//         path: 'jobs/create',
+//         component: CreateJobComponent,
+//         canActivate: [authGuard],
+//       },
+//       {
+//         path: 'jobs/:id',
+//         component: JobDetailsComponent,
+//         canActivate: [authGuard],
+//       },
+//       {
+//         path: 'lawyers',
+//         component: LawyersComponent,
+//         // canActivate: [authGuard],
+//       },
+
+//       { path: 'forgot-password', component: ForgotPasswordComponent },
+//       {
+//         path: 'register-lawyer',
+//         component: RegisterLawyerComponent,
+//         canActivate: [authGuard],
+//       },
+//       { path: 'reset-confirmation', component: ResetConfirmationComponent },
+//     ],
+//   },
+//   {
+//     path: 'dashboard',
+//     component: DashboardLayoutComponent,
+//     canActivate: [authGuard],
+//     children: [
+//       { path: '', redirectTo: 'analytics', pathMatch: 'full' },
+//       { path: 'analytics', component: AnalysisContentComponent },
+//       { path: 'profile', component: ProfileContentComponent },
+//       { path: 'jobs', component: JobsContentComponent },
+//       { path: 'payments', component: PaymentsContentComponent },
+//       { path: 'reviews', component: ReviewsContentComponent },
+//     ],
+//   },
+//   { path: '**', redirectTo: '/login' },
+// ];

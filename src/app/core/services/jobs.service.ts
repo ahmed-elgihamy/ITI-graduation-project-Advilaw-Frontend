@@ -30,4 +30,5 @@ export class JobsService {
   CreateJob(data: any): Observable<ApiResponse<any>> {
     return this.http.post<ApiResponse<any>>(`${this.apiUrl}/job/create`, data);
   }
+
 }
