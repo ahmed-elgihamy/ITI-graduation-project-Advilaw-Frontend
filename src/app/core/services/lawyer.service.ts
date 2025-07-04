@@ -31,7 +31,9 @@ export class LawyerService {
       .get<ApiResponse<LawyerProfile>>(`${env.baseUrl}/lawyer/${id}/profile`)
       .pipe(
         map((res) => res.data),
-        catchError((err) => throwError(() => new Error('Profile load failed')))
+        catchError(() => {
+          throw new Error('Profile load failed');
+        })
       );
   }
 
