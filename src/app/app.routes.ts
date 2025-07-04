@@ -18,6 +18,7 @@ import { CreateJobComponent } from './pages/jobs/create-job/create-job.component
 import { LawyersComponent } from './pages/lawyers/lawyers.component';
 import { JobDetailsComponent } from './pages/jobs/job-details/job-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ProposalDetailsComponent } from './pages/proposals/details/details.component';
 
 export const routes: Routes = [
   {
@@ -51,6 +52,11 @@ export const routes: Routes = [
       {
         path: 'lawyers',
         component: LawyersComponent,
+        // canActivate: [authGuard],
+      },
+      {
+        path: 'proposals/:id',
+        component: ProposalDetailsComponent,
         // canActivate: [authGuard],
       },
 
