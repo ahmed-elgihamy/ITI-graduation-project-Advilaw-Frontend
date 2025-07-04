@@ -89,9 +89,10 @@ export const routes: Routes = [
 
       {
         path: 'admin-dashboard',
-        component: AdminDashboardComponent,
+        component: MainLayoutComponent,
         canActivate: [adminGuard],
         children: [
+  
           { path: '', component: AdminDashboardWelcome, canActivate: [adminGuard] },
           { path: 'pending-lawyers', component: PendingLawyersList, canActivate: [adminGuard] },
           { path: 'pending-clients', component: PendingClientsList, canActivate: [adminGuard] },
@@ -99,7 +100,8 @@ export const routes: Routes = [
           { path: 'profile-edit', component: AdminProfileEdit, canActivate: [adminGuard] },
           { path: 'admin/profile', component: AdminProfileViewComponent, canActivate: [adminGuard] },
           { path: 'lawyers/:id', component: LawyerDetailsComponent, canActivate: [adminGuard] },
-          { path: 'clients/:id', component: ClientDetailsComponent, canActivate: [adminGuard] }
+          { path: 'clients/:id', component: ClientDetailsComponent, canActivate: [adminGuard] },
+          
         ]
       }
 
