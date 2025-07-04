@@ -5,6 +5,10 @@ import { AnalysisContentComponent } from './components/dashboard/analysis-conten
 import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-content.component';
 import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
 import { PaymentsContentComponent } from './components/dashboard/payments-content/payments-content.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard';
+import { PendingLawyersList } from './components/admin-dashboard/pending-lawyers-list/pending-lawyers-list';
+import { PendingClientsList } from './components/admin-dashboard/pending-clients-list/pending-clients-list';
+import { AdminDashboardWelcome } from './components/admin-dashboard/admin-dashboard-welcome/admin-dashboard-welcome';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterClientComponent } from './components/register-client/register-client.component';
@@ -17,8 +21,20 @@ import { JobsComponent } from './pages/jobs/index/jobs.component';
 import { CreateJobComponent } from './pages/jobs/create-job/create-job.component';
 import { LawyersComponent } from './pages/lawyers/lawyers.component';
 import { JobDetailsComponent } from './pages/jobs/job-details/job-details.component';
+import { AdminsList } from './components/admin-dashboard/admins-list/admins-list';
+import { AdminProfileEdit } from './components/admin-dashboard/admin-profile-edit/admin-profile-edit';
+import { adminGuard } from './core/guards/admin.guard';
+import { AdminProfileViewComponent } from './components/admin-dashboard/admin-profile-view/admin-profile-view.component';
+import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
+import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
+<<<<<<< HEAD
 import { ProposalDetailsComponent } from './pages/proposals/details/details.component';
+=======
+import { AllLawyerComponent } from './components/all-lawyer/all-lawyer.component';
+import { ChatComponent } from './components/communication/chat/chat.component';
+
+>>>>>>> 4cfec0407857dd421d87a11e042faa4d9e2f37b9
 
 export const routes: Routes = [
   {
@@ -26,7 +42,10 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
-      { path: 'profile', component: ProfileComponent },
+      { path: 'profile/:id', component: ProfileComponent },
+      { path: 'allLawyers', component: AllLawyerComponent },
+      { path: 'chat', component: ChatComponent },
+
       { path: 'home', redirectTo: '' },
       { path: 'login', component: LoginComponent },
       {
@@ -79,8 +98,29 @@ export const routes: Routes = [
       { path: 'profile', component: ProfileContentComponent },
       { path: 'jobs', component: JobsContentComponent },
       { path: 'payments', component: PaymentsContentComponent },
-      { path: 'reviews', component: ReviewsContentComponent },
+
+      {
+        path: 'admin-dashboard',
+        component: MainLayoutComponent,
+        canActivate: [adminGuard],
+        children: [
+  
+          { path: '', component: AdminDashboardWelcome, canActivate: [adminGuard] },
+          { path: 'pending-lawyers', component: PendingLawyersList, canActivate: [adminGuard] },
+          { path: 'pending-clients', component: PendingClientsList, canActivate: [adminGuard] },
+          { path: 'admins-list', component: AdminsList, canActivate: [adminGuard] },
+          { path: 'profile-edit', component: AdminProfileEdit, canActivate: [adminGuard] },
+          { path: 'admin/profile', component: AdminProfileViewComponent, canActivate: [adminGuard] },
+          { path: 'lawyers/:id', component: LawyerDetailsComponent, canActivate: [adminGuard] },
+          { path: 'clients/:id', component: ClientDetailsComponent, canActivate: [adminGuard] },
+          
+        ]
+      }
+
+      ,{ path: 'reviews', component: ReviewsContentComponent },
+
     ],
   },
+  
   { path: '**', redirectTo: '/login' },
 ];

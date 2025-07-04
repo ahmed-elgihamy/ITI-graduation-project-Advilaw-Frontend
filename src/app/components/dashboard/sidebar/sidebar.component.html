@@ -28,10 +28,19 @@
     ></app-nav-item>
     <app-nav-item
       [iconClass]="'fa-user'"
-      [name]="'Profile'"
-      [toLink]="'/dashboard/profile'"
+      [name]="profileLabel"
+      [toLink]="profileLink"
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
+
+    <app-nav-item
+    *ngIf="isAdmin"
+    [iconClass]="'fa-user-edit'"
+    [name]="'Edit Profile'"
+    [toLink]="'/dashboard/admin-dashboard/profile-edit'"
+    [isOpendsidebar]="isOpendsidebar()"
+  ></app-nav-item>
+  
     <app-nav-item
       [iconClass]="'fa-briefcase'"
       [name]="'Jobs'"
@@ -50,7 +59,34 @@
       [toLink]="'/dashboard/reviews'"
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
+   
+   
+   
+    <app-nav-item
+      *ngIf="isAdmin"
+      [iconClass]="'fa-user-clock'"
+      [name]="'Pending Lawyers'"
+      [toLink]="'/dashboard/admin-dashboard/pending-lawyers'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+    <app-nav-item
+      *ngIf="isAdmin"
+      [iconClass]="'fa-user-clock'"
+      [name]="'Pending Clients'"
+      [toLink]="'/dashboard/admin-dashboard/pending-clients'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+    <app-nav-item
+      *ngIf="isAdmin"
+      [iconClass]="'fa-users-cog'"
+      [name]="'Admins List'"
+      [toLink]="'/dashboard/admin-dashboard/admins-list'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+
   </div>
+
+  
 
   <!-- Toggle Button at Bottom -->
   <button

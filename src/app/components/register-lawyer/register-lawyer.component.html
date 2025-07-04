@@ -106,8 +106,8 @@
               <label class="form-label">Gender</label>
               <select formControlName="gender" class="form-select">
                 <option value="" disabled selected>Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
 
               </select>
             </div>
@@ -143,21 +143,21 @@
             <!-- Specializations -->
             <div class="col-md-12">
               <label class="form-label">Specializations</label>
-              <select formControlName="specializations" class="form-select">
+              <select formControlName="FieldIds" class="form-select">
                 <option value="" disabled selected>Select Specializations</option>
-                <option value="Criminal Law">Criminal Law</option>
-                <option value="Family Law">Family Law</option>
-                <option value="Tax Law">Tax Law</option>
-                <option value="Civil Law">Civil Law</option>
+                <option value="1">Criminal Law</option>
+                <option value="2">Family Law</option>
+                <option value="3">Tax Law</option>
+                <option value="4">Civil Law</option>
 
               </select>
             </div>
 
 
             <!-- Specializations Validation -->
-            @if(registerForm.get('specializations')?.errors && registerForm.get('specializations')?.touched)
+            @if(registerForm.get('FieldIds')?.errors && registerForm.get('FieldIds')?.touched)
             {
-            @if(registerForm.get('specializations')?.getError('required'))
+            @if(registerForm.get('FieldIds')?.getError('required'))
             {
             <p class="text-danger mt-0 mb-0">** specializations is required</p>
             }
@@ -230,7 +230,7 @@
 
             <div class="col-md-6">
               <label class="form-label">National ID</label>
-              <input formControlName="nationalID" type="text" class="form-control">
+              <input formControlName="NationalityId" type="text" class="form-control">
             </div>
 
             <div class="col-md-6">
@@ -239,14 +239,14 @@
             </div>
 
 
-            @if(registerForm.get('nationalID')?.errors && registerForm.get('nationalID')?.touched)
+            @if(registerForm.get('NationalityId')?.errors && registerForm.get('NationalityId')?.touched)
             {
-            @if(registerForm.get('nationalID')?.getError('required'))
+            @if(registerForm.get('NationalityId')?.getError('required'))
             {
             <p class="text-danger mb-0 mt-0">** National ID is required</p>
             }
 
-            @if(registerForm.get('nationalID')?.getError('pattern'))
+            @if(registerForm.get('NationalityId')?.getError('pattern'))
             {
             <p class="text-danger mb-0 mt-0">** National ID must be exactly 14 digits</p>
             }

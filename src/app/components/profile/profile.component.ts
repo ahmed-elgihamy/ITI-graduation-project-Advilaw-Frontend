@@ -14,7 +14,7 @@ import Chart from 'chart.js/auto';
 import { LawyerProfile } from '../models/LawyerProfile';
 import { Review } from '../models/Review';
 import { LawyerSchedule } from '../models/Lawyer Schedule';
-import { LawyerService } from '../../services/lawyer.service';
+import { LawyerService } from '../../core/services/lawyer.service';
 import { Subject, forkJoin, throwError } from 'rxjs';
 import { takeUntil, catchError } from 'rxjs/operators';
 
@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   schedule: LawyerSchedule[] = [];
   isLoading = true;
   errorMessage = '';
-
+  uuid: any;
   readonly STAR_LEVELS = [5, 4, 3, 2, 1];
 
   private chart: Chart | null = null;
@@ -64,32 +64,42 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private loadLawyerData(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.handleError('Invalid lawyer ID provided.');
-      return;
-    }
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (params) => {
+          this.uuid = params.get('id');
+          console.log('Loading lawyer data for ID:', this.uuid);
 
-    this.isLoading = true;
-    forkJoin({
-      profile: this.lawyerService.getProfile(id),
-      reviews: this.lawyerService.getReviews(id),
-      schedule: this.lawyerService.getSchedule(id),
-    })
-      .pipe(
-        takeUntil(this.destroy$),
-        catchError((err) => {
-          this.handleError('Failed to load lawyer information.');
-          return throwError(() => err);
-        })
-      )
-      .subscribe(({ profile, reviews, schedule }) => {
-        this.lawyer = profile;
-        this.reviews = reviews;
-        this.schedule = schedule;
-        this.isLoading = false;
-        this.cdr.markForCheck();
-        this.renderChart();
+          if (!this.uuid) {
+            this.handleError('Invalid lawyer ID provided.');
+            return;
+          }
+
+          this.isLoading = true;
+
+          forkJoin({
+            profile: this.lawyerService.getProfile(this.uuid),
+            reviews: this.lawyerService.getReviews(this.uuid),
+            schedule: this.lawyerService.getSchedule(this.uuid),
+          })
+            .pipe(
+              catchError((err) => {
+                this.handleError('Failed to load lawyer information.');
+                return throwError(() => err);
+              })
+            )
+            .subscribe({
+              next: ({ profile, reviews, schedule }) => {
+                this.lawyer = profile;
+                this.reviews = reviews;
+                this.schedule = schedule;
+                this.isLoading = false;
+                this.cdr.markForCheck();
+                this.renderChart();
+              }
+            });
+        }
       });
   }
 
