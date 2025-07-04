@@ -1,27 +1,72 @@
 
 
-  <h2>Pending Clients</h2>
-<ul>
-  <li *ngFor="let client of pendingClients">
-    {{ client.userName }} 
-    <button (click)="showClientDetails(client)">Show Details</button>
-    <button (click)="approveClient(client.id)">Approve</button>
-  </li>
-</ul>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Pending Clients</h2>
+        <span class="badge bg-warning text-dark">{{ pendingClients.length }} Pending</span>
+      </div>
 
+      <div *ngIf="pendingClients.length === 0" class="text-center py-5">
+        <div class="text-muted">
+          <i class="fas fa-check-circle fa-3x mb-3"></i>
+          <h4>No Pending Clients</h4>
+          <p>All clients have been processed.</p>
+        </div>
+      </div>
 
-
-<div *ngIf="selectedClient">
-  <h3>Client Details</h3>
-  <p><strong>User Name:</strong> {{ selectedClient.userName }}</p>
-  <p><strong>Email:</strong> {{ selectedClient.email }}</p>
-  <!-- <p><strong>Phone Number:</strong> {{ selectedClient.phoneNumber }}</p>
-  <p><strong>Role:</strong> {{ selectedClient.role }}</p>
-  <p><strong>City:</strong> {{ selectedClient.city }}</p>
-  <p><strong>Country:</strong> {{ selectedClient.country }}</p>
-  <p><strong>Country Code:</strong> {{ selectedClient.countryCode }}</p>
-  <p><strong>Postal Code:</strong> {{ selectedClient.postalCode }}</p>
-  <p><strong>Nationality ID:</strong> {{ selectedClient.nationalityId }}</p>
-  <p><strong>Image:</strong> <img [src]="selectedClient.imageUrl" width="100"></p> -->
-  <button (click)="selectedClient = null">Close</button>
+      <div *ngIf="pendingClients.length > 0" class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="border-0">Client Name</th>
+                      <th class="border-0">Email</th>
+                      <th class="border-0">Nationality ID</th>
+                      <th class="border-0 text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let client of pendingClients" class="align-middle">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3">
+                            {{ client.userName?.charAt(0)?.toUpperCase() || 'C' }}
+                          </div>
+                          <div>
+                            <h6 class="mb-0">{{ client.userName }}</h6>
+                            <small class="text-muted">Client</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="text-muted">{{ client.email }}</span>
+                      </td>
+                      <td>
+                        <span class="badge bg-light text-dark">{{ client.nationalityId }}</span>
+                      </td>
+                      <td class="text-center">
+                        <div class="btn-group" role="group">
+                          <button class="btn btn-outline-primary btn-sm" [routerLink]="['/dashboard/admin-dashboard/clients', client.id]">
+                            <i class="fas fa-eye me-1"></i>Details
+                          </button>
+                          <button class="btn btn-success btn-sm" (click)="approveClient(client.id)">
+                            <i class="fas fa-check me-1"></i>Approve
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

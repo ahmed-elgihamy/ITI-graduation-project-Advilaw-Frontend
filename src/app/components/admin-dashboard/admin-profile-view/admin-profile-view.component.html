@@ -1,0 +1,52 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="row w-100">
+    <div class="col-12 col-md-8 col-lg-6 mx-auto">
+      <div class="profile-card shadow rounded p-4 bg-white w-100 w-md-75 w-lg-50" *ngIf="profile && !isLoading; else loadingOrError">
+        <div class="profile-header">
+          <img [src]="profileImageUrl || 'assets/images/default-profile.png'"  alt="Profile Photo" class="profile-photo mb-2">
+          <h2>{{ profile.name }}</h2>
+          <p class="role">{{ profile.role }}</p>
+        </div>
+        <div class="profile-details">
+          <ul class="list-group list-group-flush text-start my-4">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><i class="fas fa-envelope me-2 text-primary"></i><strong>Email:</strong></span>
+              <span>{{ profile.email }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><i class="fas fa-city me-2 text-primary"></i><strong>City:</strong></span>
+              <span>{{ profile.city }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><i class="fas fa-globe me-2 text-primary"></i><strong>Country:</strong></span>
+              <span>{{ profile.country }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><i class="fas fa-venus-mars me-2 text-primary"></i><strong>Gender:</strong></span>
+              <span>{{ profile.gender }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><i class="fas fa-id-card me-2 text-primary"></i><strong>Nationality ID:</strong></span>
+              <span>{{ profile.nationalityId }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><i class="fas fa-phone me-2 text-primary"></i><strong>Phone Number:</strong></span>
+              <span>{{ profile.phoneNumber || '-' }}</span>
+            </li>
+          </ul>
+        </div>
+        <button
+          class="btn btn-primary btn-lg mt-4"
+          [routerLink]="['/dashboard/admin-dashboard/profile-edit']"
+        >
+          <i class="fas fa-edit me-2"></i>
+          Edit Profile
+        </button>
+      </div>
+      <ng-template #loadingOrError>
+        <div *ngIf="isLoading" class="loading">Loading...</div>
+        <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+      </ng-template>
+    </div>
+  </div>
+</div>

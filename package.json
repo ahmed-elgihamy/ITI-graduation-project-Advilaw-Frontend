@@ -19,12 +19,10 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "apexcharts": "^4.7.0",
     "bootstrap": "^5.3.6",
     "chart.js": "^4.5.0",
-<<<<<<< HEAD
-=======
     "jwt-decode": "^4.0.0",
->>>>>>> 138772e41e697e3acb52079e109f686a1d4ee404
     "ng-apexcharts": "^1.7.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -35,6 +33,7 @@
     "@angular/cli": "^19.2.9",
     "@angular/compiler-cli": "^19.2.0",
     "@types/jasmine": "~5.1.0",
+    "@types/jwt-decode": "^2.2.1",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

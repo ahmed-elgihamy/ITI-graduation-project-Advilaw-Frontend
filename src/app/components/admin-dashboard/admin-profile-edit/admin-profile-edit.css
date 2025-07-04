@@ -1,0 +1,26 @@
+.admin-profile-edit-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.admin-profile-edit-container h2 {
+  margin-bottom: 24px;
+  text-align: center;
+}
+.admin-profile-edit-container .btn {
+  width: 100%;
+}
+.profile-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #eee;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.form-control-file {
+  margin-top: 8px;
+}

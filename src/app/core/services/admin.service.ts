@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { env } from '../env/env';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
-  private apiUrl = 'http://localhost:5214/api/Admin';
+  private apiUrl = `${env.baseUrl}/Admin`;
 
   constructor(private http: HttpClient) {}
 
@@ -26,14 +27,25 @@ approveClient(clientId: number): Observable<string> {
 }
 
 // Approve a lawyer by ID
-approveLawyer(lawyerId: number): Observable<string> {
+approveLawyer(lawyerId: string): Observable<string> {
   return this.http.post(`${this.apiUrl}/lawyers/${lawyerId}/approve`, {}, { responseType: 'text' });
 }
 
+getLawyerById(id: string) {
+  return this.http.get(`${this.apiUrl}/lawyers/${id}`);
+}
+getClientById(id: string) {
+  return this.http.get(`${this.apiUrl}/clients/${id}`);
+}
+
+//get admin profile
+getAdminProfile(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/profile`);
+}
 
   // Edit admin profile
   editAdminProfile(profileData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/profile`, profileData);
+    return this.http.patch(`${this.apiUrl}/profile`, profileData);
   }
 
   // Get all admins
@@ -43,6 +55,11 @@ approveLawyer(lawyerId: number): Observable<string> {
 
   // Assign role to another admin
   assignRoleToAdmin(userId: string, role: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/admins/${userId}/role`, { role });
+    return this.http.put(
+      `${this.apiUrl}/admins/${userId}/role`,
+      { role },
+      { responseType: 'text' }
+    );
   }
+
 } 

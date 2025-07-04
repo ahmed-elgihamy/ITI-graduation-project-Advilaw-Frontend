@@ -7,11 +7,10 @@ import { RouterModule } from '@angular/router';
   selector: 'app-pending-clients-list',
   imports: [CommonModule, RouterModule],
   templateUrl: './pending-clients-list.html',
-  styleUrl: './pending-clients-list.css'
+  styleUrls: ['./pending-clients-list.css']
 })
 export class PendingClientsList implements OnInit {
   pendingClients: any[] = [];
-  selectedClient: any = null;
 
   constructor(private adminService: AdminService) {}
 
@@ -25,13 +24,11 @@ export class PendingClientsList implements OnInit {
     });
   }
 
+
+
   approveClient(id: number) {
     this.adminService.approveClient(id).subscribe(() => {
       this.pendingClients = this.pendingClients.filter(client => client.id !== id);
     });
-  }
-
-  showClientDetails(client: any) {
-    this.selectedClient = client;
   }
 }

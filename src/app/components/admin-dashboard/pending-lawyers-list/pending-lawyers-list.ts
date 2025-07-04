@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 })
 export class PendingLawyersList implements OnInit {
   pendingLawyers: any[] = [];
-  selectedLawyer: any = null;
 
   constructor(private adminService: AdminService) {}
 
@@ -26,12 +25,8 @@ export class PendingLawyersList implements OnInit {
   }
 
   approveLawyer(id: number) {
-    this.adminService.approveLawyer(id).subscribe(() => {
+    this.adminService.approveLawyer(id.toString()).subscribe(() => {
       this.pendingLawyers = this.pendingLawyers.filter(lawyer => lawyer.id !== id);
     });
-  }
-
-  showLawyerDetails(lawyer: any) {
-    this.selectedLawyer = lawyer;
   }
 }
