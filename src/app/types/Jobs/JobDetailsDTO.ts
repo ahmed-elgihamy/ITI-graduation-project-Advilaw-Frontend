@@ -1,3 +1,4 @@
+import { ProposalDetailsDTO } from '../Proposals/ProposalDetailsDTO';
 import { JobStatus } from './JobStatus';
 import { JobType } from './JobType';
 
@@ -9,6 +10,7 @@ export interface JobDetailsForLawyerDTO {
   status: JobStatus;
   type: JobType;
   isAnonymus: boolean;
+  proposals: ProposalDetailsDTO[];
 
   // Navigation Properties
   jobFieldId: number;

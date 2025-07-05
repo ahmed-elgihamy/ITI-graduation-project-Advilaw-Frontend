@@ -1,0 +1,80 @@
+<section class="py-5 text-white admin-hero-section" style="background-image: url('/assets/images/Area.jpg'); background-size: cover;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-xl-9">
+        <div class="glass-form p-4 p-md-5 rounded-4 shadow-lg">
+
+          <h2 class="fw-bold text-warning text-center mb-4">Edit Profile</h2>
+
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex flex-column align-items-center mb-4">
+              <img [src]="profileImageUrl || 'assets/images/default-profile.png'"
+                   alt="Profile Photo"
+                   class="rounded-circle border border-3 border-light shadow-sm mb-2"
+                   style="width: 120px; height: 120px; object-fit: cover;" />
+              <input type="file"
+                     accept="image/*"
+                     (change)="onImageChange($event)"
+                     class="form-control w-auto mt-2" />
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6" *ngFor="let field of [
+                {label: 'User Name', name: 'userName', type: 'text'},
+                {label: 'Email', name: 'email', type: 'email'},
+                {label: 'Phone Number', name: 'phoneNumber', type: 'text'},
+                {label: 'City', name: 'city', type: 'text'},
+                {label: 'Country', name: 'country', type: 'text'},
+                {label: 'Country Code', name: 'countryCode', type: 'text'},
+                {label: 'Postal Code', name: 'postalCode', type: 'text'},
+                {label: 'Nationality ID', name: 'nationalityId', type: 'text'}
+              ]">
+                <div class="mb-3">
+                  <label [for]="field.name" class="form-label">{{ field.label }}</label>
+                  <input [id]="field.name"
+                         [type]="field.type"
+                         class="form-control"
+                         [formControlName]="field.name"
+                         [class.is-invalid]="profileForm.get(field.name)?.invalid && profileForm.get(field.name)?.touched" />
+                         <div *ngIf="profileForm.get('nationalityId')?.invalid && profileForm.get('nationalityId')?.touched" class="invalid-feedback">
+                          <div *ngIf="profileForm.get('nationalityId')?.errors?.['required']">National ID is required.</div>
+                          <div *ngIf="profileForm.get('nationalityId')?.errors?.['pattern']">National ID must be exactly 14 digits.</div>
+                        </div>
+                        <div *ngIf="profileForm.get(field.name)?.invalid && profileForm.get(field.name)?.touched" class="invalid-feedback">
+                          <div *ngIf="profileForm.get(field.name)?.errors?.['required']">{{ field.label }} is required.</div>
+                          <div *ngIf="profileForm.get(field.name)?.errors?.['email']">Invalid email format.</div>
+                          <div *ngIf="profileForm.get(field.name)?.errors?.['minlength']">
+                            Minimum length is {{ profileForm.get(field.name)?.errors?.['minlength'].requiredLength }}.
+                          </div>
+                          <div *ngIf="profileForm.get(field.name)?.errors?.['pattern']">Invalid format.</div>
+                        </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="gender" class="form-label">Gender</label>
+                <select id="gender"
+                        class="form-select"
+                        formControlName="gender">
+                  <option *ngFor="let g of genderOptions" [value]="g.value">{{ g.label }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button type="submit"
+                      class="btn btn-warning fw-bold rounded-pill px-5 py-2"
+                      [disabled]="profileForm.invalid || isLoading">
+                <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin me-2"></i> Saving...</span>
+                <span *ngIf="!isLoading">Save Changes</span>
+              </button>
+            </div>
+          </form>
+
+          <div *ngIf="successMsg" class="alert alert-success mt-4">{{ successMsg }}</div>
+          <div *ngIf="errorMsg" class="alert alert-danger mt-3">{{ errorMsg }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

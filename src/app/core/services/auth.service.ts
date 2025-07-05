@@ -33,7 +33,7 @@ export class AuthService {
       const userInfo: UserInfo = {
         userId:
           decoded[
-            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
           ],
         name: decoded[
           'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
@@ -77,5 +77,10 @@ export class AuthService {
 
   setResetPassword(data: object): Observable<any> {
     return this.http.post(`${env.baseUrl}/Auth/reset-password`, data);
+  }
+
+  isAdmin(): boolean {
+    const userInfo = this.getUserInfo();
+    return userInfo?.role === 'Admin' || userInfo?.role === 'SuperAdmin';
   }
 }

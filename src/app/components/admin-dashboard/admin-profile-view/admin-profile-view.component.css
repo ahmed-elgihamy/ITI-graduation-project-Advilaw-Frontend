@@ -1,0 +1,26 @@
+
+.loading, .error {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1.2rem;
+}
+
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.glass-card {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.profile-section {
+  min-height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

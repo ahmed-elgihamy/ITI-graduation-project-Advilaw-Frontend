@@ -1,0 +1,13 @@
+/* Add this to your styles.scss or component styles */
+.glass-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.avatar-sm {
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+}

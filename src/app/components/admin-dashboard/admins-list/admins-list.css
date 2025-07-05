@@ -1,0 +1,30 @@
+.form-select {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+    border-color: #ffc107;
+  }
+  
+  .table td,
+  .table th {
+    vertical-align: middle;
+    padding: 1rem;
+  }
+  
+  .badge {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 1rem;
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+  }
+    

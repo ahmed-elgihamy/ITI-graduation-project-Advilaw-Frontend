@@ -11,7 +11,7 @@ import { JobFieldsService } from '../../../core/services/job-fields.service';
 import { JobsService } from '../../../core/services/jobs.service';
 import { JobFieldDTO } from '../../../types/JobFields/JobFieldsDTO';
 import { JobType } from '../../../types/Jobs/JobType';
-import { LawyerService } from '../../../services/lawyer.service';
+import { LawyerService } from'../../../core/services/lawyer.service'
 
 @Component({
   selector: 'app-lawyer-consultation',

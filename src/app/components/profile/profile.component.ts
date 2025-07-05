@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { LawyerProfile } from '../models/LawyerProfile';
 import { Review } from '../models/Review';
 import { LawyerSchedule } from '../models/Lawyer Schedule';
-import { LawyerService } from '../../services/lawyer.service';
+import { LawyerService } from'../../core/services/lawyer.service'
 import { Subject, forkJoin, throwError } from 'rxjs';
 import { takeUntil, catchError } from 'rxjs/operators';
 

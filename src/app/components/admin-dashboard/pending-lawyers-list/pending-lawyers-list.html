@@ -1,0 +1,71 @@
+<section class="py-5 text-white text-center admin-hero-section pending-lawyers-section">
+  <div class="container position-relative z-1">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="glass-card light-glass">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Pending Lawyers</h2>
+            <span class="badge bg-warning text-dark">{{ pendingLawyers.length }} Pending</span>
+          </div>
+
+          <div *ngIf="pendingLawyers.length === 0" class="text-center py-5">
+            <div class="text-muted">
+              <i class="fas fa-check-circle fa-3x mb-3"></i>
+              <h4>No Pending Lawyers</h4>
+              <p>All lawyers have been processed.</p>
+            </div>
+          </div>
+
+          <div *ngIf="pendingLawyers.length > 0" class="row">
+            <div class="col-12">
+              <div class="glass-card light-glass p-0">
+                <div class="table-responsive rounded-4">
+                  <table class="table table-hover mb-0 text-white">
+                    <thead class="table-light text-dark">
+                      <tr>
+                        <th class="border-0">Lawyer Name</th>
+                        <th class="border-0">Email</th>
+                        <th class="border-0">Bar Card Number</th>
+                        <th class="border-0">Nationality ID</th>
+                        <th class="border-0 text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let lawyer of pendingLawyers" class="align-middle">
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <div class="avatar-sm rounded-circle d-flex align-items-center justify-content-center me-3">
+                              {{ lawyer.userName?.charAt(0)?.toUpperCase() || 'L' }}
+                            </div>
+                            <div>
+                              <h6 class="mb-0">{{ lawyer.userName }}</h6>
+                              <small class="text-muted">Lawyer</small>
+                            </div>
+                          </div>
+                        </td>
+                        <td><span class="text-muted">{{ lawyer.email }}</span></td>
+                        <td><span class="badge bg-light text-dark">{{ lawyer.barAssociationCardNumber }}</span></td>
+                        <td><span class="badge bg-light text-dark">{{ lawyer.nationalityId }}</span></td>
+                        <td class="text-center">
+                          <div class="btn-group" role="group">
+                            <button class="btn btn-outline-warning btn-sm rounded-pill" [routerLink]="['/dashboard/admin-dashboard/lawyers', lawyer.id]">
+                              <i class="fas fa-eye me-1"></i>Details
+                            </button>
+                            <button class="btn btn-warning btn-sm rounded-pill" (click)="approveLawyer(lawyer.id)">
+                              <i class="fas fa-check me-1"></i>Approve
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

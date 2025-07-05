@@ -29,7 +29,7 @@
 
                         <!-- Account Info -->
                         <div class="col-12">
-                            <h5 class="text-primary fw-semibold ">Account Information</h5>
+                            <h5 class="text-warning fw-semibold ">Account Information</h5>
                             <hr>
                         </div>
                         <!-- Email  -->
@@ -148,7 +148,7 @@
 
                         <!-- Location -->
                         <div class="col-12 pt-3">
-                            <h5 class="text-primary fw-semibold">Location</h5>
+                            <h5 class="text-warning fw-semibold">Location</h5>
                             <hr>
                         </div>
 
@@ -205,26 +205,26 @@
 
                         <!-- Legal Info -->
                         <div class="col-12 pt-3">
-                            <h5 class="text-primary fw-semibold">Legal Identification</h5>
+                            <h5 class="text-warning fw-semibold">Legal Identification</h5>
                             <hr>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">National ID</label>
-                            <input formControlName="nationalID" type="text" class="form-control">
+                            <input formControlName="NationalityId" type="text" class="form-control">
                         </div>
 
 
 
 
-                        @if(registerForm.get('nationalID')?.errors && registerForm.get('nationalID')?.touched)
+                        @if(registerForm.get('NationalityId')?.errors && registerForm.get('NationalityId')?.touched)
                         {
-                        @if(registerForm.get('nationalID')?.getError('required'))
+                        @if(registerForm.get('NationalityId')?.getError('required'))
                         {
                         <p class="text-danger mb-0 mt-0">** National ID is required</p>
                         }
 
-                        @if(registerForm.get('nationalID')?.getError('pattern'))
+                        @if(registerForm.get('NationalityId')?.getError('pattern'))
                         {
                         <p class="text-danger mb-0 mt-0">** National ID must be exactly 14 digits</p>
                         }
