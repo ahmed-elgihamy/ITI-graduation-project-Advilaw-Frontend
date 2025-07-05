@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../../../core/services/admin.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Client } from '../../../core/models/client.model';
 
 @Component({
   selector: 'app-client-details',
@@ -12,6 +13,8 @@ import { CommonModule } from '@angular/common';
 })
 export class ClientDetailsComponent implements OnInit {
   client: any;
+  nationalIDImageUrl: string = '';
+  apiBaseUrl: string = 'http://localhost:5214';
 
   constructor(
     private route: ActivatedRoute,
@@ -26,8 +29,9 @@ export class ClientDetailsComponent implements OnInit {
   
     if (id) {
       this.adminService.getClientById(id).subscribe({
-        next: (data) => {
+        next: (data: Client) => {
           this.client = data;
+          this.nationalIDImageUrl = data.nationalIDImagePath ? this.apiBaseUrl + data.nationalIDImagePath : '';
         },
         error: (err) => {
           console.error('Error loading client:', err);

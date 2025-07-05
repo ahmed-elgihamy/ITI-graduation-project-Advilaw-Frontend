@@ -52,24 +52,36 @@
             </div>
           </div>
           
-          
 
-            <div class="mb-4" *ngIf="lawyer.barCardImagePath">
+
+
+          <!-- <div class="d-flex flex-column align-items-center mb-4">
+            <img [src]="lawyerImageUrl || 'assets/images/default-profile.png'"
+                 alt="Lawyer Photo"
+                 class="rounded-circle border border-3 border-light shadow-sm mb-2"
+                 style="width: 120px; height: 120px; object-fit: cover;" />
+          </div>
+           -->
+
+
+            <!-- Bar Card Image Preview -->
+            <div class="mb-4" *ngIf="barCardImageUrl">
               <h3 class="text-theme-yellow border-bottom pb-2 mb-3">Bar Card Image</h3>
               <div class="text-center">
-                <img [src]="lawyer.barCardImagePath" alt="Bar Card" class="img-fluid border rounded shadow-sm" style="max-width: 300px; max-height: 200px;">
+                <img [src]="barCardImageUrl" alt="Bar Card" class="img-fluid border rounded shadow-sm" style="max-width: 300px; max-height: 200px;">
               </div>
             </div>
 
-            <div class="mb-4" *ngIf="lawyer.nationalIDImagePath">
+            <!-- National ID Image Preview -->
+            <div class="mb-4" *ngIf="nationalIDImageUrl">
               <h3 class="text-theme-yellow border-bottom pb-2 mb-3">National ID Image</h3>
               <div class="text-center">
-                <img [src]="lawyer.nationalIDImagePath" alt="National ID" class="img-fluid border rounded shadow-sm" style="max-width: 300px; max-height: 200px;">
+                <img [src]="nationalIDImageUrl" alt="National ID" class="img-fluid border rounded shadow-sm" style="max-width: 300px; max-height: 200px;">
               </div>
             </div>
 
             <div class="text-center mt-4">
-              <button class="btn btn-warning fw-bold rounded-pill px-5 py-2" (click)="approveLawyer()">
+              <button class="btn btn-warning fw-bold rounded-pill px-5 py-2 mb-4" (click)="approveLawyer()">
                 <i class="fas fa-check me-1"></i> Approve Lawyer
               </button>
             </div>
