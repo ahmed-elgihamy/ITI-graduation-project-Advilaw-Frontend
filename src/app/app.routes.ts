@@ -39,6 +39,10 @@ import { AdminProfileEdit } from './components/admin-dashboard/admin-profile-edi
 import { AdminProfileViewComponent } from './components/admin-dashboard/admin-profile-view/admin-profile-view.component';
 import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ProposalDetailsComponent } from './pages/proposals/details/details.component';
+import { AllLawyerComponent } from './components/all-lawyer/all-lawyer.component';
+import { ChatComponent } from './components/communication/chat/chat.component';
 
 export const routes: Routes = [
   {
@@ -104,19 +108,53 @@ export const routes: Routes = [
         component: MainLayoutComponent,
         canActivate: [adminGuard],
         children: [
-          { path: '', component: AdminDashboardWelcome },
-          { path: 'pending-lawyers', component: PendingLawyersList },
-          { path: 'pending-clients', component: PendingClientsList },
-          { path: 'admins-list', component: AdminsList },
-          { path: 'profile-edit', component: AdminProfileEdit },
-          { path: 'admin/profile', component: AdminProfileViewComponent },
-          { path: 'lawyers/:id', component: LawyerDetailsComponent },
-          { path: 'clients/:id', component: ClientDetailsComponent },
-        ]
-      }
-    ]
+          {
+            path: '',
+            component: AdminDashboardWelcome,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'pending-lawyers',
+            component: PendingLawyersList,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'pending-clients',
+            component: PendingClientsList,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'admins-list',
+            component: AdminsList,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'profile-edit',
+            component: AdminProfileEdit,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'admin/profile',
+            component: AdminProfileViewComponent,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'lawyers/:id',
+            component: LawyerDetailsComponent,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'clients/:id',
+            component: ClientDetailsComponent,
+            canActivate: [adminGuard],
+          },
+        ],
+      },
+
+      { path: 'reviews', component: ReviewsContentComponent },
+    ],
   },
 
+  { path: '**', redirectTo: '/login' },
 
-  { path: '**', redirectTo: '/login' }
 ];
