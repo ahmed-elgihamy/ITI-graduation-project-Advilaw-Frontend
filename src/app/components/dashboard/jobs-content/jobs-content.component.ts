@@ -32,11 +32,26 @@ export class JobsContentComponent implements OnInit {
   // ];
 
   jobColumns = [
-    { key: 'client', label: 'Client' },
-    { key: 'jobTitle', label: 'Job Title' },
+    {
+      key: 'clientImageUrl',
+      label: 'Image',
+      type: 'image',
+    },
+    {
+      key: 'id',
+      label: 'Job ID',
+      type: 'link',
+      link: '/jobs/', // base path
+      linkKey: 'id', // value from the row to append
+    },
+    { key: 'header', label: 'Header' },
     { key: 'description', label: 'Description' },
     { key: 'budget', label: 'Budget' },
-    { key: 'field', label: 'Field' },
+    { key: 'isAnonymus', label: 'Anonymous', type: 'boolean' },
+    { key: 'clientId', label: 'Client ID' },
+    { key: 'clientName', label: 'Client Name' },
+    { key: 'jobFieldId', label: 'Job Field ID' },
+    { key: 'jobFieldName', label: 'Job Field Name' },
   ];
 
   jobs: any[] = [];
@@ -47,7 +62,7 @@ export class JobsContentComponent implements OnInit {
   loadData(page: number): void {
     this.currentPage = page;
 
-    this.jobsService.GetJobs(page).subscribe({
+    this.jobsService.GetActiveJobs(page).subscribe({
       next: (res: ApiResponse<PagedResponse<any>>) => {
         const pagedData = res.data;
         this.jobs = pagedData.data; // actual job list

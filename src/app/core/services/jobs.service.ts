@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { PagedResponse } from '../../types/PagedResponse';
 import { ApiResponse } from '../../types/ApiResponse';
 import { CreateProposalDTO } from '../../types/Proposals/CreateProposalDTO';
+import { CreateAppointmentDTO } from '../../types/Appointments/CreateAppointmentDTO';
+import { AppointmentDetailsDTO } from '../../types/Appointments/AppointmentDetailsDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -28,11 +30,34 @@ export class JobsService {
     );
   }
 
+  GetActiveJobs(page: number): Observable<ApiResponse<PagedResponse<any>>> {
+    return this.http.get<ApiResponse<PagedResponse<any>>>(
+      `${this.apiUrl}/Job/me/ActiveJobs?pageNumber=${page}`
+    );
+  }
+
   CreateJob(data: any): Observable<ApiResponse<any>> {
     return this.http.post<ApiResponse<any>>(`${this.apiUrl}/job/create`, data);
   }
 
   ApplyToJob(data: CreateProposalDTO): Observable<ApiResponse<any>> {
     return this.http.post<ApiResponse<any>>(`${this.apiUrl}/proposals`, data);
+  }
+
+  MakeAppointment(
+    jobId: number,
+    data: CreateAppointmentDTO
+  ): Observable<ApiResponse<AppointmentDetailsDTO>> {
+    return this.http.post<ApiResponse<any>>(
+      `${this.apiUrl}/appointment/${jobId}/create`,
+      data
+    );
+  }
+
+  AcceptAppointment(id: number | undefined): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(
+      `${this.apiUrl}/appointment/${id}/accept`,
+      null
+    );
   }
 }

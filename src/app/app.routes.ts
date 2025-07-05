@@ -28,13 +28,9 @@ import { AdminProfileViewComponent } from './components/admin-dashboard/admin-pr
 import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
-<<<<<<< HEAD
 import { ProposalDetailsComponent } from './pages/proposals/details/details.component';
-=======
 import { AllLawyerComponent } from './components/all-lawyer/all-lawyer.component';
 import { ChatComponent } from './components/communication/chat/chat.component';
-
->>>>>>> 4cfec0407857dd421d87a11e042faa4d9e2f37b9
 
 export const routes: Routes = [
   {
@@ -104,23 +100,52 @@ export const routes: Routes = [
         component: MainLayoutComponent,
         canActivate: [adminGuard],
         children: [
-  
-          { path: '', component: AdminDashboardWelcome, canActivate: [adminGuard] },
-          { path: 'pending-lawyers', component: PendingLawyersList, canActivate: [adminGuard] },
-          { path: 'pending-clients', component: PendingClientsList, canActivate: [adminGuard] },
-          { path: 'admins-list', component: AdminsList, canActivate: [adminGuard] },
-          { path: 'profile-edit', component: AdminProfileEdit, canActivate: [adminGuard] },
-          { path: 'admin/profile', component: AdminProfileViewComponent, canActivate: [adminGuard] },
-          { path: 'lawyers/:id', component: LawyerDetailsComponent, canActivate: [adminGuard] },
-          { path: 'clients/:id', component: ClientDetailsComponent, canActivate: [adminGuard] },
-          
-        ]
-      }
+          {
+            path: '',
+            component: AdminDashboardWelcome,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'pending-lawyers',
+            component: PendingLawyersList,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'pending-clients',
+            component: PendingClientsList,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'admins-list',
+            component: AdminsList,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'profile-edit',
+            component: AdminProfileEdit,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'admin/profile',
+            component: AdminProfileViewComponent,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'lawyers/:id',
+            component: LawyerDetailsComponent,
+            canActivate: [adminGuard],
+          },
+          {
+            path: 'clients/:id',
+            component: ClientDetailsComponent,
+            canActivate: [adminGuard],
+          },
+        ],
+      },
 
-      ,{ path: 'reviews', component: ReviewsContentComponent },
-
+      { path: 'reviews', component: ReviewsContentComponent },
     ],
   },
-  
+
   { path: '**', redirectTo: '/login' },
 ];

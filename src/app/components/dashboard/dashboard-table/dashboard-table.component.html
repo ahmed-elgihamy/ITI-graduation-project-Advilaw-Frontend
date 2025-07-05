@@ -6,7 +6,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data">
+      <tr
+        *ngFor="let item of data"
+        (click)="goToDetailsPage(item.id)"
+        class="clickable-row"
+        style="cursor: pointer"
+      >
         <td *ngFor="let col of columns">
           <!-- Image column -->
           <ng-container *ngIf="col.type === 'image'; else nonImage">
@@ -20,21 +25,9 @@
               {{ item[col.key] ? "Yes" : "No" }}
             </ng-container>
 
-            <!-- Link -->
+            <!-- Link (text only, row is now clickable) -->
             <ng-template #nonBoolean>
-              <ng-container *ngIf="col.type === 'link'; else plain">
-                <a
-                  [routerLink]="col.link + item[col.linkKey || col.key]"
-                  class="text-decoration-underline"
-                >
-                  {{ item[col.key] }}
-                </a>
-              </ng-container>
-
-              <!-- Plain text -->
-              <ng-template #plain>
-                {{ item[col.key] }}
-              </ng-template>
+              {{ item[col.key] }}
             </ng-template>
           </ng-template>
         </td>

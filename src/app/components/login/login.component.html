@@ -3,84 +3,117 @@
     <!-- Left Side Image -->
 
     <div class="col-md-5 position-relative d-none d-md-block p-0 min-width-100">
-      <img src="assets/images/logind.jpg" alt="Law" class="auth-image w-100 h-100 object-fit-cover" />
+      <img
+        src="assets/images/logind.jpg"
+        alt="Law"
+        class="auth-image w-100 h-100 object-fit-cover"
+      />
       <div
         class="auth-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center text-white text-center px-4"
-        style="background: rgba(0, 0, 0, 0.6);">
+        style="background: rgba(0, 0, 0, 0.6)"
+      >
         <h2 class="fw-bold">Welcome Back!</h2>
-        <p class="lead">Sign in to manage your legal profile and connect with clients.</p>
+        <p class="lead">
+          Sign in to manage your legal profile and connect with clients.
+        </p>
       </div>
     </div>
     <!-- Right Side Login Form -->
     <div class="col-md-7 d-flex align-items-center justify-content-center">
-      <div class="w-100 px-4" style="max-width: 400px;">
+      <div class="w-100 px-4" style="max-width: 400px">
         <h2 class="mb-5 text-center fw-bold text-secondary">Login</h2>
 
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
           <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" id="email" formControlName="email" class="form-control  "
-              [ngClass]="{ 'is-invalid': loginForm.get('email')?.touched && loginForm.get('email')?.invalid }">
-
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  loginForm.get('email')?.touched &&
+                  loginForm.get('email')?.invalid
+              }"
+            />
           </div>
           <!-- Email Validation -->
           @if(loginForm.get('email')?.errors && (loginForm.get('email')?.touched
-          ||loginForm.get('email')?.dirty ))
-          {
-          @if(loginForm.get('email')?.getError('required'))
-          {
+          ||loginForm.get('email')?.dirty )) {
+          @if(loginForm.get('email')?.getError('required')) {
           <p class="text-danger mb-0">** Email is required</p>
-          }
-          @if(loginForm.get('email')?.getError('email'))
-          {
+          } @if(loginForm.get('email')?.getError('email')) {
           <p class="text-danger mb-0 mt-0">** Invalid email format</p>
-          }
-          }
+          } }
 
           <div class="mb-3">
-            <label for="password" class="form-label ">Password</label>
+            <label for="password" class="form-label">Password</label>
             <div class="input-group">
-              <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password"
-                class="form-control "
-                [ngClass]="{ 'is-invalid': loginForm.get('password')?.touched && loginForm.get('password')?.invalid }">
-              <button type="button" class="btn btn-outline-secondary" (click)="passwordVisible = !passwordVisible">
-                <i class="fas" [ngClass]="passwordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
+              <input
+                [type]="passwordVisible ? 'text' : 'password'"
+                id="password"
+                formControlName="password"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    loginForm.get('password')?.touched &&
+                    loginForm.get('password')?.invalid
+                }"
+              />
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="passwordVisible = !passwordVisible"
+              >
+                <i
+                  class="fas"
+                  [ngClass]="passwordVisible ? 'fa-eye-slash' : 'fa-eye'"
+                ></i>
               </button>
-
             </div>
 
             <!-- Password Validation-->
-            @if(loginForm.get('password')?.errors && loginForm.get('password')?.touched)
-            {
-            @if(loginForm.get('password')?.getError('required'))
-            {
+            @if(loginForm.get('password')?.errors &&
+            loginForm.get('password')?.touched) {
+            @if(loginForm.get('password')?.getError('required')) {
             <p class="text-danger mb-0 mt-0">** Password is required</p>
-            }
-            @if(loginForm.get('password')?.getError('minlength'))
-            {
-            <p class="text-danger mb-0 mt-0">** Password must contain at least 6 characters</p>
-            }
-            @if(loginForm.get('password')?.getError('pattern'))
-            {
+            } @if(loginForm.get('password')?.getError('minlength')) {
             <p class="text-danger mb-0 mt-0">
-              ** Password must include uppercase, number, and special character (!?*.) </p>
-            }
-            }
+              ** Password must contain at least 6 characters
+            </p>
+            } @if(loginForm.get('password')?.getError('pattern')) {
+            <p class="text-danger mb-0 mt-0">
+              ** Password must include uppercase, number, and special character
+              (!?*.)
+            </p>
+            } }
           </div>
           <div class="text-center mt-2">
-            <a routerLink="/forgot-password" class=" text-secondary " role="">Forgot
-              Password?</a>
+            <a routerLink="/forgot-password" class="text-secondary" role=""
+              >Forgot Password?</a
+            >
           </div>
           <div class="d-grid mb-3">
-            <button type="submit" class="btn btn-secondary fw-bold mt-3" [disabled]="loginForm.invalid">
+            <button
+              type="submit"
+              class="btn btn-secondary fw-bold mt-3"
+              [disabled]="loginForm.invalid"
+            >
               Login
-              <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin ms-2"></i></span>
+              <span *ngIf="isLoading"
+                ><i class="fas fa-spinner fa-spin ms-2"></i
+              ></span>
             </button>
           </div>
 
           <div class="text-center">
-            <p class="mb-0">Don't have an account? <a routerLink="/register-lawyer"
-                class="text-decoration-none">Register</a></p>
+            <p class="mb-0">
+              Don't have an account?
+              <a routerLink="/register-lawyer" class="text-decoration-none"
+                >Register</a
+              >
+            </p>
           </div>
 
           <div *ngIf="messError" class="alert alert-danger mt-3 text-center">
