@@ -1,5 +1,8 @@
-// app.routes.ts or app-routing.module.ts
+
+
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
@@ -11,19 +14,31 @@ import { RegisterLawyerComponent } from './components/register-lawyer/register-l
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetConfirmationComponent } from './components/reset-confirmation/reset-confirmation.component';
 
+import { ProfileComponent } from './components/profile/profile.component';
+import { AllLawyerComponent } from './components/all-lawyer/all-lawyer.component';
+import { ChatComponent } from './components/communication/chat/chat.component';
+
 import { JobsComponent } from './pages/jobs/index/jobs.component';
 import { CreateJobComponent } from './pages/jobs/create-job/create-job.component';
 import { JobDetailsComponent } from './pages/jobs/job-details/job-details.component';
+
 import { LawyersComponent } from './pages/lawyers/lawyers.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { ProposalDetailsComponent } from './pages/proposals/details/details.component';
 
 import { AnalysisContentComponent } from './components/dashboard/analysis-content/analysis-content.component';
-import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
 import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-content.component';
+import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
 import { PaymentsContentComponent } from './components/dashboard/payments-content/payments-content.component';
 import { ReviewsContentComponent } from './components/dashboard/reviews-content/reviews-content.component';
 
-import { authGuard } from './core/guards/auth.guard';
+import { AdminDashboardWelcome } from './components/admin-dashboard/admin-dashboard-welcome/admin-dashboard-welcome';
+import { PendingLawyersList } from './components/admin-dashboard/pending-lawyers-list/pending-lawyers-list';
+import { PendingClientsList } from './components/admin-dashboard/pending-clients-list/pending-clients-list';
+import { AdminsList } from './components/admin-dashboard/admins-list/admins-list';
+import { AdminProfileEdit } from './components/admin-dashboard/admin-profile-edit/admin-profile-edit';
+import { AdminProfileViewComponent } from './components/admin-dashboard/admin-profile-view/admin-profile-view.component';
+import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
+import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
 
 export const routes: Routes = [
   {
@@ -31,20 +46,37 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
-      { path: 'home', redirectTo: '', pathMatch: 'full' },
+      { path: 'home', redirectTo: '' },
+
+    
       { path: 'login', component: LoginComponent },
-      { path: 'register-client', component: RegisterClientComponent },
-      { path: 'register-lawyer', component: RegisterLawyerComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'reset-confirmation', component: ResetConfirmationComponent },
 
-      // 👇 All Lawyers Page
-      { path: 'lawyers', component: LawyersComponent },
+  
+      { path: 'register-client', component: RegisterClientComponent },
+      { path: 'register-lawyer', component: RegisterLawyerComponent },
 
-      // 👇 Lawyer Profile Page
+    
+      { path: 'profile/:id', component: ProfileComponent },
       { path: 'lawyer-profile/:id', component: ProfileComponent },
 
-      // 👇 Lawyer Consultation Page (lazy-loaded)
+     
+      { path: 'lawyers', component: LawyersComponent },
+      { path: 'allLawyers', component: AllLawyerComponent },
+
+    
+      { path: 'chat', component: ChatComponent },
+
+    
+      { path: 'jobs', component: JobsComponent },
+      { path: 'jobs/create', component: CreateJobComponent },
+      { path: 'jobs/:id', component: JobDetailsComponent },
+
+     
+      { path: 'proposals/:id', component: ProposalDetailsComponent },
+
+    
       {
         path: 'client/consultation/:lawyerId',
         loadComponent: () =>
@@ -52,8 +84,9 @@ export const routes: Routes = [
             (m) => m.LawyerConsultationComponent
           )
       },
-    ]
+    ],
   },
+
   {
     path: 'dashboard',
     component: DashboardLayoutComponent,
@@ -64,8 +97,26 @@ export const routes: Routes = [
       { path: 'profile', component: ProfileContentComponent },
       { path: 'jobs', component: JobsContentComponent },
       { path: 'payments', component: PaymentsContentComponent },
-      { path: 'reviews', component: ReviewsContentComponent }
+      { path: 'reviews', component: ReviewsContentComponent },
+
+      {
+        path: 'admin-dashboard',
+        component: MainLayoutComponent,
+        canActivate: [adminGuard],
+        children: [
+          { path: '', component: AdminDashboardWelcome },
+          { path: 'pending-lawyers', component: PendingLawyersList },
+          { path: 'pending-clients', component: PendingClientsList },
+          { path: 'admins-list', component: AdminsList },
+          { path: 'profile-edit', component: AdminProfileEdit },
+          { path: 'admin/profile', component: AdminProfileViewComponent },
+          { path: 'lawyers/:id', component: LawyerDetailsComponent },
+          { path: 'clients/:id', component: ClientDetailsComponent },
+        ]
+      }
     ]
   },
-  { path: '**', redirectTo: '' }
+
+
+  { path: '**', redirectTo: '/login' }
 ];
