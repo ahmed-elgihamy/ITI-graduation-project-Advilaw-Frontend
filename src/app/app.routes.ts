@@ -1,5 +1,3 @@
-
-
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
@@ -39,10 +37,6 @@ import { AdminProfileEdit } from './components/admin-dashboard/admin-profile-edi
 import { AdminProfileViewComponent } from './components/admin-dashboard/admin-profile-view/admin-profile-view.component';
 import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { ProposalDetailsComponent } from './pages/proposals/details/details.component';
-import { AllLawyerComponent } from './components/all-lawyer/all-lawyer.component';
-import { ChatComponent } from './components/communication/chat/chat.component';
 
 export const routes: Routes = [
   {
@@ -52,41 +46,33 @@ export const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'home', redirectTo: '' },
 
-    
       { path: 'login', component: LoginComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'reset-confirmation', component: ResetConfirmationComponent },
 
-  
       { path: 'register-client', component: RegisterClientComponent },
       { path: 'register-lawyer', component: RegisterLawyerComponent },
 
-    
       { path: 'profile/:id', component: ProfileComponent },
       { path: 'lawyer-profile/:id', component: ProfileComponent },
 
-     
       { path: 'lawyers', component: LawyersComponent },
       { path: 'allLawyers', component: AllLawyerComponent },
 
-    
       { path: 'chat', component: ChatComponent },
 
-    
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },
       { path: 'jobs/:id', component: JobDetailsComponent },
 
-     
       { path: 'proposals/:id', component: ProposalDetailsComponent },
 
-    
       {
         path: 'client/consultation/:lawyerId',
         loadComponent: () =>
-          import('./pages/jobs/lawyer-consultation/lawyer-consultation.component').then(
-            (m) => m.LawyerConsultationComponent
-          )
+          import(
+            './pages/jobs/lawyer-consultation/lawyer-consultation.component'
+          ).then((m) => m.LawyerConsultationComponent),
       },
     ],
   },
@@ -156,5 +142,4 @@ export const routes: Routes = [
   },
 
   { path: '**', redirectTo: '/login' },
-
 ];
