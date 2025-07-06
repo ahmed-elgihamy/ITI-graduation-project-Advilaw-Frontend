@@ -1,3 +1,6 @@
 export const env = {
-  baseUrl: 'http://localhost:5214/api',
+  baseUrl: 'https://localhost:44302/api',
+  publicUrl: 'https://localhost:44302'
+
 };
+

@@ -134,12 +134,13 @@
         <div class="position-relative">
             <div class="row flex-nowrap overflow-auto pb-4 gap-3">
                 <!-- Lawyer Card 1 -->
-                <div class="col-md-3 col-10" *ngFor="let i of [].constructor(10); let idx = index">
+                <div class="col-md-3 col-10" *ngFor="let item of topLawyers; let idx = index">
                     <div class="card lawyer-card h-100 border-0 shadow-sm">
-                        <img src="/assets/images/landing-page.jpg" class="card-img-top" alt="Robert Anderson">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxT1icFMKk2T20hgaSVcoIiEnv6Sj_m59yag&s"
+                            class="card-img-top h-50" alt="Robert Anderson">
                         <div class="card-body">
-                            <h5 class="card-title">Robert Anderson {{ idx + 1 }}</h5>
-                            <p class="card-text text-muted">Business Law Expert</p>
+                            <h5 class="card-title">{{item.name}}</h5>
+                            <p class="card-text text-muted">{{item.field}}</p>
                             <p class="card-text"><small class="text-muted">8 years exp, 47 reviews</small></p>
                         </div>
                     </div>
@@ -199,9 +200,10 @@
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <button class="btn btn-outline-warning" [routerLink]="['/profile', lawyer.id]">
-                                            Request Consultation
-                                        </button>
+                                        <!-- All Lawyer Card Action Button -->
+                                       <button
+                                            class="btn btn-outline-warning"[routerLink]="['/lawyer-profile', lawyer.id]" >  View Profile </button>
+
 
                                     </div>
                                 </div>
@@ -216,7 +218,7 @@
                         </div>
                         <h4 class="text-muted">No lawyers found</h4>
                         <p class="text-muted">Try adjusting your filters or search criteria</p>
-                        <button class="btn btn-primary" (click)="clearFilters()">Clear All Filters</button>
+                        <button class="btn btn-warning" (click)="clearFilters()">Clear All Filters</button>
                     </div>
 
                     <!-- Pagination -->

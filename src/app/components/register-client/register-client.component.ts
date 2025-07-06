@@ -46,7 +46,7 @@ export class RegisterClientComponent {
     city: ['', Validators.required],
     country: ['', Validators.required],
     postalCode: ['', Validators.required],
-    nationalID: ['', [
+    NationalityId: ['', [
       Validators.required,
       Validators.pattern(/^\d{14}$/)
     ]],
@@ -88,7 +88,7 @@ export class RegisterClientComponent {
     formData.append('city', controls['city'].value);
     formData.append('country', controls['country'].value);
     formData.append('postalCode', controls['postalCode'].value);
-    formData.append('nationalID', controls['nationalID'].value.toString());
+    formData.append('NationalityId', controls['NationalityId'].value.toString());
     formData.append('gender', controls['gender'].value);
     formData.append('role', this.role);
 
@@ -104,6 +104,8 @@ export class RegisterClientComponent {
       return;
     }
 
+    console.log("formData", formData);
+    console.log("formData keys", Array.from(formData.keys()));
     this._Auth.setRegisterForm(formData).subscribe(
 
       {
@@ -126,7 +128,7 @@ export class RegisterClientComponent {
 
         },
         complete: () => {
-          this.islodaing = false; // ⬅️ ده مهم جدًا
+          this.islodaing = false;
 
         }
       });

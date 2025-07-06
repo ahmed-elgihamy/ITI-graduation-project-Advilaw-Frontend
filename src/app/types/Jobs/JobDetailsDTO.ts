@@ -1,3 +1,5 @@
+import { AppointmentDetailsDTO } from '../Appointments/AppointmentDetailsDTO';
+import { ProposalDetailsDTO } from '../Proposals/ProposalDetailsDTO';
 import { JobStatus } from './JobStatus';
 import { JobType } from './JobType';
 
@@ -9,6 +11,8 @@ export interface JobDetailsForLawyerDTO {
   status: JobStatus;
   type: JobType;
   isAnonymus: boolean;
+  proposals: ProposalDetailsDTO[];
+  appointments: AppointmentDetailsDTO[];
 
   // Navigation Properties
   jobFieldId: number;

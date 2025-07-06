@@ -32,6 +32,15 @@
       [toLink]="profileLink"
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
+
+    <app-nav-item
+    *ngIf="isAdmin"
+    [iconClass]="'fa-user-edit'"
+    [name]="'Edit Profile'"
+    [toLink]="'/dashboard/admin-dashboard/profile-edit'"
+    [isOpendsidebar]="isOpendsidebar()"
+  ></app-nav-item>
+  
     <app-nav-item
       [iconClass]="'fa-briefcase'"
       [name]="'Jobs'"
@@ -74,13 +83,7 @@
       [toLink]="'/dashboard/admin-dashboard/admins-list'"
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
-    <app-nav-item
-      *ngIf="isAdmin"
-      [iconClass]="'fa-user-edit'"
-      [name]="'Edit Profile'"
-      [toLink]="'/dashboard/admin-dashboard/profile-edit'"
-      [isOpendsidebar]="isOpendsidebar()"
-    ></app-nav-item>
+
   </div>
 
   

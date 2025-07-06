@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { env } from '../env/env';
+import { Lawyer } from '../models/lawyer.model';
+import { Client } from '../models/client.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,11 +33,11 @@ approveLawyer(lawyerId: string): Observable<string> {
   return this.http.post(`${this.apiUrl}/lawyers/${lawyerId}/approve`, {}, { responseType: 'text' });
 }
 
-getLawyerById(id: string) {
-  return this.http.get(`${this.apiUrl}/lawyers/${id}`);
+getLawyerById(id: string): Observable<Lawyer> {
+  return this.http.get<Lawyer>(`${this.apiUrl}/lawyers/${id}`);
 }
-getClientById(id: string) {
-  return this.http.get(`${this.apiUrl}/clients/${id}`);
+getClientById(id: string): Observable<Client> {
+  return this.http.get<Client>(`${this.apiUrl}/clients/${id}`);
 }
 
 //get admin profile

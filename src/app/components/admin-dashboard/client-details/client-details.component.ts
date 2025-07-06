@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../../../core/services/admin.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Client } from '../../../core/models/client.model';
+import { env } from '../../../core/env/env';
 
 @Component({
   selector: 'app-client-details',
@@ -12,6 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ClientDetailsComponent implements OnInit {
   client: any;
+  nationalIDImageUrl: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -26,8 +29,9 @@ export class ClientDetailsComponent implements OnInit {
   
     if (id) {
       this.adminService.getClientById(id).subscribe({
-        next: (data) => {
+        next: (data: Client) => {
           this.client = data;
+          this.nationalIDImageUrl = data.nationalIDImagePath ? env.publicUrl + data.nationalIDImagePath : '';
         },
         error: (err) => {
           console.error('Error loading client:', err);

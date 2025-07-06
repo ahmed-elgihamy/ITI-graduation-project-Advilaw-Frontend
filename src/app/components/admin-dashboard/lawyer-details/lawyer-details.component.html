@@ -1,78 +1,100 @@
-
-
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-12">
-      <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-        <h2 class="mb-0">Lawyer Details</h2>
-        <button class="btn btn-secondary" (click)="backToList()">Back to List</button>
-      </div>
-
-      <div *ngIf="lawyer" class="card">
-        <div class="card-body">
-          <div class="mb-4">
-            <h3 class="card-title text-primary border-bottom pb-2 mb-3">Personal Information</h3>
-            <div class="row mb-3">
-              <div class="col-md-3">
-                <strong class="text-muted">Name:</strong>
-              </div>
-              <div class="col-md-9">
-                {{ lawyer.userName }}
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-md-3">
-                <strong class="text-muted">Email:</strong>
-              </div>
-              <div class="col-md-9">
-                {{ lawyer.email }}
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-md-3">
-                <strong class="text-muted">Bar Association Card Number:</strong>
-              </div>
-              <div class="col-md-9">
-                {{ lawyer.barAssociationCardNumber }}
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-md-3">
-                <strong class="text-muted">Nationality ID:</strong>
-              </div>
-              <div class="col-md-9">
-                {{ lawyer.nationalityId }}
+<section class="py-5 bg-dark text-white text-center admin-hero-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="glass-card">
+          <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+            <h2 class="mb-0">Lawyer Details</h2>
+            <button class="btn btn-warning fw-bold rounded-pill px-4 py-2" (click)="backToList()">Back to List</button>
+          </div>
+          <div *ngIf="lawyer">
+            <div class="mb-4">
+              <h3 class="section-title text-warning mb-4">Personal Information</h3>
+              <div class="row gy-3">
+          
+                <!-- Name -->
+                <div class="col-12 d-flex align-items-center">
+                  <div class="info-label fw-bold text-secondary me-3 d-flex align-items-center" style="width: 220px;">
+                    <i class="fas fa-user text-warning me-2" style="width: 20px; text-align: center;"></i>
+                    Name:
+                  </div>
+                  <div class="info-value fs-5">{{ lawyer.userName }}</div>
+                </div>
+          
+                <!-- Email -->
+                <div class="col-12 d-flex align-items-center">
+                  <div class="info-label fw-bold text-secondary me-3 d-flex align-items-center" style="width: 220px;">
+                    <i class="fas fa-envelope text-warning me-2" style="width: 20px; text-align: center;"></i>
+                    Email:
+                  </div>
+                  <div class="info-value fs-5">{{ lawyer.email }}</div>
+                </div>
+          
+                <!-- Bar Card Number -->
+                <div class="col-12 d-flex align-items-center">
+                  <div class="info-label fw-bold text-secondary me-3 d-flex align-items-center" style="width: 220px;">
+                    <i class="fas fa-id-card text-warning me-2" style="width: 20px; text-align: center;"></i>
+                    Bar Card Number:
+                  </div>
+                  <div class="info-value fs-5">{{ lawyer.barAssociationCardNumber }}</div>
+                </div>
+          
+                <!-- Nationality ID -->
+                <div class="col-12 d-flex align-items-center">
+                  <div class="info-label fw-bold text-secondary me-3 d-flex align-items-center" style="width: 220px;">
+                    <i class="fas fa-passport text-warning me-2" style="width: 20px; text-align: center;"></i>
+                    Nationality ID:
+                  </div>
+                  <div class="info-value fs-5">{{ lawyer.nationalityId }}</div>
+                </div>
+          
               </div>
             </div>
           </div>
+          
 
-          <div class="mb-4" *ngIf="lawyer.barCardImagePath">
-            <h3 class="card-title text-primary border-bottom pb-2 mb-3">Bar Card Image</h3>
-            <div class="text-center">
-              <img [src]="lawyer.barCardImagePath" alt="Bar Card" class="img-fluid border rounded shadow-sm" style="max-width: 300px; max-height: 200px;">
+
+
+          <!-- <div class="d-flex flex-column align-items-center mb-4">
+            <img [src]="lawyerImageUrl || 'assets/images/default-profile.png'"
+                 alt="Lawyer Photo"
+                 class="rounded-circle border border-3 border-light shadow-sm mb-2"
+                 style="width: 120px; height: 120px; object-fit: cover;" />
+          </div>
+           -->
+
+
+            <!-- Bar Card Image Preview -->
+            <div class="mb-4" *ngIf="barCardImageUrl">
+              <h3 class="text-theme-yellow border-bottom pb-2 mb-3">Bar Card Image</h3>
+              <div class="text-center">
+                <img [src]="barCardImageUrl" alt="Bar Card" class="img-fluid border rounded shadow-sm" style="max-width: 300px; max-height: 200px;">
+              </div>
+            </div>
+
+            <!-- National ID Image Preview -->
+            <div class="mb-4" *ngIf="nationalIDImageUrl">
+              <h3 class="text-theme-yellow border-bottom pb-2 mb-3">National ID Image</h3>
+              <div class="text-center">
+                <img [src]="nationalIDImageUrl" alt="National ID" class="img-fluid border rounded shadow-sm" style="max-width: 300px; max-height: 200px;">
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-warning fw-bold rounded-pill px-5 py-2 mb-4" (click)="approveLawyer()">
+                <i class="fas fa-check me-1"></i> Approve Lawyer
+              </button>
             </div>
           </div>
 
-          <div class="mb-4" *ngIf="lawyer.nationalIDImagePath">
-            <h3 class="card-title text-primary border-bottom pb-2 mb-3">National ID Image</h3>
-            <div class="text-center">
-              <img [src]="lawyer.nationalIDImagePath" alt="National ID" class="img-fluid border rounded shadow-sm" style="max-width: 300px; max-height: 200px;">
+          <div *ngIf="!lawyer" class="text-center py-5">
+            <div class="spinner-border text-warning" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
-          </div>
-
-          <div class="text-center mt-4">
-            <button class="btn btn-success btn-lg" (click)="approveLawyer()">Approve Lawyer</button>
+            <p class="mt-3 text-muted">Loading lawyer details...</p>
           </div>
         </div>
-      </div>
-
-      <div *ngIf="!lawyer" class="text-center py-5">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <p class="mt-3 text-muted">Loading lawyer details...</p>
       </div>
     </div>
-  </div>
-</div>
- 
+
+</section>
