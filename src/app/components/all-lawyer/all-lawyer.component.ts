@@ -26,6 +26,8 @@ interface Lawyer {
   templateUrl: './all-lawyer.component.html',
   styleUrl: './all-lawyer.component.css'
 })
+
+
 export class AllLawyerComponent implements OnInit {
   searchQuery = '';
   currentPage = 1;
@@ -304,6 +306,8 @@ export class AllLawyerComponent implements OnInit {
     this.currentPage = 1;
     this.loadLawyers();
   }
+
+
 
   scrollLeft(direction: 'left' | 'right') {
     const container = document.querySelector('.row.flex-nowrap');

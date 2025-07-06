@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { JobsService } from '../../../core/services/jobs.service';
 import { JobFieldsService } from '../../../core/services/job-fields.service';
 import { JobFieldDTO } from '../../../types/JobFields/JobFieldsDTO';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { JobType } from '../../../types/Jobs/JobType';
 
 @Component({
@@ -21,28 +21,35 @@ import { JobType } from '../../../types/Jobs/JobType';
 export class CreateJobComponent implements OnInit {
   jobForm!: FormGroup;
   jobFields: JobFieldDTO[] = [];
+  lawyerId: number | null = null; 
 
   constructor(
     private fb: FormBuilder,
     private jobFieldsService: JobFieldsService,
     private jobsService: JobsService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute 
   ) {}
 
   ngOnInit(): void {
+    this.lawyerId = Number(this.route.snapshot.paramMap.get('lawyerId')) || null;
+
     this.jobForm = this.fb.group({
       header: ['', Validators.required],
       description: ['', Validators.required],
       budget: [0, [Validators.required, Validators.min(1)]],
-      type: [JobType.ClientPublishing, Validators.required],
+      type: [
+        this.lawyerId ? JobType.LawyerProposal : JobType.ClientPublishing,
+        Validators.required,
+      ],
       isAnonymus: [false],
       jobFieldId: [null, Validators.required],
+      lawyerId: [this.lawyerId],
     });
 
     this.jobFieldsService.GetJobFields().subscribe({
       next: (res: any) => {
         this.jobFields = res.data;
-        console.log(res);
       },
       error: (err: any) => {
         console.error('Failed to load job fields', err);
@@ -53,11 +60,9 @@ export class CreateJobComponent implements OnInit {
   onSubmit(): void {
     if (this.jobForm.valid) {
       const requestData = this.jobForm.value;
-      console.log('Sending CreateJobDTO:', requestData);
 
       this.jobsService.CreateJob(requestData).subscribe({
         next: (res: any) => {
-          console.log('Job created:', res);
           this.router.navigate(['/jobs']);
         },
         error: (err: any) => {
@@ -65,7 +70,7 @@ export class CreateJobComponent implements OnInit {
         },
       });
     } else {
-      this.jobForm.markAllAsTouched(); // mark all controls to trigger errors
+      this.jobForm.markAllAsTouched();
     }
   }
 

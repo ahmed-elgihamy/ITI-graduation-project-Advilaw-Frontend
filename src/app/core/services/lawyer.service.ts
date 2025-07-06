@@ -26,9 +26,9 @@ export class LawyerService {
 
   constructor(private http: HttpClient) { }
 
-  getProfile(id: number): Observable<LawyerProfile> {
+  getProfile(id: string): Observable<LawyerProfile> {
     return this.http
-      .get<ApiResponse<LawyerProfile>>(`${env.baseUrl}/lawyer/${id}/profile`)
+      .get<ApiResponse<LawyerProfile>>(`${env.baseUrl}/lawyers/${id}/profile`)
       .pipe(
         map((res) => res.data),
         catchError(() => {
@@ -37,25 +37,23 @@ export class LawyerService {
       );
   }
 
-  getReviews(id: number): Observable<Review[]> {
+  getReviews(id: string): Observable<Review[]> {
     return this.http
-      .get<ApiResponse<Review[]>>(`${env.baseUrl}/lawyer/${id}/reviews`)
+      .get<ApiResponse<Review[]>>(`${env.baseUrl}/lawyers/${id}/reviews`)
       .pipe(
         map((res) => res.data),
         catchError((err) => throwError(() => new Error('Reviews load failed')))
       );
   }
 
-  getSchedule(id: number): Observable<LawyerSchedule[]> {
+  getSchedule(id: string): Observable<LawyerSchedule[]> {
     return this.http
-      .get<ApiResponse<LawyerSchedule[]>>(`${env.baseUrl}/lawyer/${id}/schedule`)
+      .get<ApiResponse<LawyerSchedule[]>>(`${env.baseUrl}/lawyers/${id}/schedule`)
       .pipe(
         map((res) => res.data),
         catchError((err) => throwError(() => new Error('Schedule load failed')))
       );
   }
-
-
 
   getAllLawyers(page: number, size: number, searchPhrase: string = ''): Observable<LawyerResponse> {
     let params = new HttpParams()
@@ -66,7 +64,6 @@ export class LawyerService {
       params = params.set('SearchPhrase', searchPhrase);
     }
 
-    return this.http.get<LawyerResponse>(`${env.baseUrl}/lawyer/all`, { params });
+    return this.http.get<LawyerResponse>(`${env.baseUrl}/lawyers/all`, { params });
   }
-
 }

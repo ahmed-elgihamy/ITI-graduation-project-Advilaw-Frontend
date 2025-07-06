@@ -25,19 +25,121 @@
           >
             Edit
           </button>
+          <!-- Button to trigger appointment modal -->
+          <button
+            class="btn btn-outline-primary mt-2"
+            *ngIf="canMakeAppointment"
+            data-bs-toggle="modal"
+            data-bs-target="#appointmentModal"
+          >
+            Make Appointment
+          </button>
+
+          <!-- Appointment Modal -->
+          <div
+            class="modal fade"
+            id="appointmentModal"
+            tabindex="-1"
+            aria-labelledby="appointmentModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form (ngSubmit)="MakeAppointment()" #appointmentForm="ngForm">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentModalLabel">
+                      Make Appointment
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+
+                  <div class="modal-body">
+                    <!-- Schedule selection -->
+                    <div class="mb-3">
+                      <label for="scheduleSelect" class="form-label"
+                        >Select Schedule</label
+                      >
+                      <select
+                        class="form-select"
+                        id="scheduleSelect"
+                        [(ngModel)]="ScheduleId"
+                        name="scheduleId"
+                      >
+                        <option [ngValue]="null">-- No Schedule --</option>
+                        <!-- <option
+                          *ngFor="let s of job.schedules"
+                          [ngValue]="s.id"
+                        >
+                          {{ s.name }}
+                        </option> -->
+                      </select>
+                    </div>
+
+                    <!-- Date selection -->
+                    <div class="mb-3">
+                      <label for="dateInput" class="form-label"
+                        >Select Date</label
+                      >
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="dateInput"
+                        [(ngModel)]="selectedDate"
+                        name="date"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      [disabled]="!appointmentForm.form.valid"
+                    >
+                      Confirm
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 
           <!-- Apply button: only if lawyer and NOT already applied -->
           <!-- Button to Open Modal -->
           <button
             type="button"
             class="btn btn-primary"
-            *ngIf="isLawyer"
+            *ngIf="canMakeProposal"
             data-bs-toggle="modal"
             data-bs-target="#createProposalModal"
           >
             Create New Proposal
           </button>
-
+          <button
+            type="button"
+            class="btn btn-primary"
+            *ngIf="
+              (lastAppointment?.type === AppointmentType.FromClient &&
+                isLawyer) ||
+              (lastAppointment?.type === AppointmentType.FromLawyer && isClient)
+            "
+            (click)="showReplyToLastAppointmentModal()"
+          >
+            Respond to Last Appointment
+          </button>
           <!-- Optional disabled state -->
           <button
             type="button"
@@ -105,6 +207,45 @@
         <p class="fw-normal text-dark mb-0" style="white-space: pre-line">
           {{ job.description }}
         </p>
+      </div>
+      <!-- Appointment Section -->
+      <div class="mt-5" *ngIf="job.appointments">
+        <h3 class="mb-4">Appointments</h3>
+        <table class="table table-bordered table-hover shadow-sm rounded">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Job ID</th>
+              <th>Schedule ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let appointment of job.appointments">
+              <td>{{ appointment.id }}</td>
+              <td>{{ appointment.date | date : "medium" }}</td>
+              <td>{{ appointment.type }}</td>
+              <td>
+                <span
+                  [ngClass]="{
+                    'badge bg-secondary':
+                      appointment.status === AppointmentStatus.None,
+                    'badge bg-warning text-dark':
+                      appointment.status === AppointmentStatus.Accepted,
+                    'badge bg-success':
+                      appointment.status === AppointmentStatus.Rejected,
+                  }"
+                >
+                  {{ getAppointmentStatusLabel(appointment.status) }}
+                </span>
+              </td>
+              <td>{{ appointment.jobId }}</td>
+              <td>{{ appointment.scheduleId ?? "N/A" }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="mt-5" *ngIf="isClient && job.proposals?.length">
         <h4 class="mb-4 text-primary">
@@ -209,6 +350,63 @@
           <button type="submit" class="btn btn-success">Submit Proposal</button>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<!-- Appointment Modal  -->
+<div
+  class="modal fade"
+  id="appointmentActionModal"
+  tabindex="-1"
+  aria-labelledby="appointmentActionLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="appointmentActionLabel">
+          Respond to Appointment
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <p>
+          The last appointment was created by
+          <strong>{{ lastAppointment?.date }}</strong
+          >. Would you like to:
+        </p>
+
+        <ul>
+          <li>Accept the existing appointment</li>
+          <li>Or create a new one with your preferred time</li>
+        </ul>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="acceptAppointment(lastAppointment)"
+          data-bs-dismiss="modal"
+        >
+          Accept Appointment
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          data-bs-dismiss="modal"
+          (click)="openMakeAppointmentModal()"
+        >
+          Make New Appointment
+        </button>
+      </div>
     </div>
   </div>
 </div>
