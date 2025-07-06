@@ -64,6 +64,6 @@ export class LawyerService {
       params = params.set('SearchPhrase', searchPhrase);
     }
 
-    return this.http.get<LawyerResponse>(`${env.baseUrl}/lawyers/all`, { params });
+    return this.http.get<LawyerResponse>(`${env.baseUrl}/lawyer/all`, { params });
   }
 }

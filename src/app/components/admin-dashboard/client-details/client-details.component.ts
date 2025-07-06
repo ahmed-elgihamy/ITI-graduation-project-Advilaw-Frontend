@@ -4,6 +4,7 @@ import { AdminService } from '../../../core/services/admin.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Client } from '../../../core/models/client.model';
+import { env } from '../../../core/env/env';
 
 @Component({
   selector: 'app-client-details',
@@ -14,7 +15,6 @@ import { Client } from '../../../core/models/client.model';
 export class ClientDetailsComponent implements OnInit {
   client: any;
   nationalIDImageUrl: string = '';
-  apiBaseUrl: string = 'http://localhost:5214';
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +31,7 @@ export class ClientDetailsComponent implements OnInit {
       this.adminService.getClientById(id).subscribe({
         next: (data: Client) => {
           this.client = data;
-          this.nationalIDImageUrl = data.nationalIDImagePath ? this.apiBaseUrl + data.nationalIDImagePath : '';
+          this.nationalIDImageUrl = data.nationalIDImagePath ? env.publicUrl + data.nationalIDImagePath : '';
         },
         error: (err) => {
           console.error('Error loading client:', err);

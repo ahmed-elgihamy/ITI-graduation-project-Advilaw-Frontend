@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Lawyer } from '../../../core/models/lawyer.model';
+import { env } from '../../../core/env/env';
 
 @Component({
   selector: 'app-lawyer-details',
@@ -16,7 +17,6 @@ export class LawyerDetailsComponent implements OnInit {
   lawyerImageUrl: string = '';
   barCardImageUrl: string = '';
   nationalIDImageUrl: string = '';
-  apiBaseUrl: string = 'http://localhost:5214'; // Consider using environment variable in production
   lawyerForm!: FormGroup;
 
   constructor(
@@ -59,8 +59,8 @@ export class LawyerDetailsComponent implements OnInit {
             // Patch other fields as needed
           });
           this.lawyerImageUrl = data.imageUrl;
-          this.barCardImageUrl = data.barCardImagePath ? this.apiBaseUrl + data.barCardImagePath : '';
-          this.nationalIDImageUrl = data.nationalIDImagePath ? this.apiBaseUrl + data.nationalIDImagePath : '';
+          this.barCardImageUrl = data.barCardImagePath ? env.publicUrl + data.barCardImagePath : '';
+          this.nationalIDImageUrl = data.nationalIDImagePath ? env.publicUrl + data.nationalIDImagePath : '';
         },
         error: (err) => {
           console.error('Error loading lawyer:', err);
