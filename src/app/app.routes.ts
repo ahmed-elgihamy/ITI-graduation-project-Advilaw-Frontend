@@ -38,6 +38,8 @@ import { AdminProfileViewComponent } from './components/admin-dashboard/admin-pr
 import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
 
+
+
 export const routes: Routes = [
   {
     path: '',
