@@ -1,1 +1,39 @@
-<p>subscription-plans works!</p>
+<div class="container py-4">
+  <h2 class="mb-4 text-center">Subscription Plans</h2>
+
+  <ng-container *ngIf="subscriptionPlans$ | async as plans">
+    <ng-container *ngIf="plans.length > 0; else noPlans">
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4" *ngFor="let plan of plans">
+          <div class="card shadow-sm h-100 border-primary">
+            <div class="card-header bg-primary text-white text-center">
+              <h5 class="card-title mb-0">{{ plan.name }}</h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <strong>Price:</strong> {{ plan.price }} EGP
+              </p>
+              <p class="card-text">
+                <strong>Points:</strong> {{ plan.points }}
+              </p>
+            </div>
+            <div class="card-footer text-center">
+              <button
+                (click)="choosePlan(plan)"
+                class="btn btn-outline-primary w-100"
+              >
+                Choose Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #noPlans>
+    <div class="alert alert-warning text-center mt-4">
+      No plans available at the moment.
+    </div>
+  </ng-template>
+</div>
