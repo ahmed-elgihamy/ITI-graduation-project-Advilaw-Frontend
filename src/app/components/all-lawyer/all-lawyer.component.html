@@ -1,110 +1,108 @@
-<div class="app">
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-overlay"></div>
-        <div class="container">
-            <div class="hero-content text-center">
-                <h1 class="display-4 fw-bold mb-4">Find the right lawyer for your case</h1>
-                <p class="lead mb-4">Connect with experienced legal professionals</p>
-                <div class="search-box mx-auto">
-                    <div class="input-group">
-                        <input type="text" [(ngModel)]="searchQuery" placeholder="e.g. Business Contracts"
-                            class="form-control search-input">
-                        <button class="btn btn-warning" (click)="searchLawyers()">
-                            <i class="fas fa-search me-2"></i>Search
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Filters Section -->
-    <section class="filters-section bg-light py-4">
-        <div class="container">
-            <div class="row g-3">
-                <div class="col-md-3">
-                    <label class="form-label fw-semibold">Country</label>
-                    <select class="form-select" [(ngModel)]="selectedCountry" (change)="onCountryChange()">
-                        <option value="">All Countries</option>
-                        <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label fw-semibold">City</label>
-                    <select class="form-select" [(ngModel)]="selectedCity" (change)="applyFilters()"
-                        [disabled]="!selectedCountry">
-                        <option value="">All Cities</option>
-                        <option *ngFor="let city of availableCities" [value]="city">{{ city }}</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label fw-semibold">Legal Field</label>
-                    <select class="form-select" [(ngModel)]="selectedField" (change)="applyFilters()">
-                        <option value="">All Fields</option>
-                        <option *ngFor="let field of legalFields" [value]="field">{{ field }}</option>
-                    </select>
-                </div>
-                <div class="col-md-3 d-flex align-items-end">
-                    <button class="btn btn-outline-warning w-100" (click)="clearFilters()">
-                        <i class="fas fa-times me-2"></i>Clear Filters
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content text-center">
+            <h1 class="display-4 fw-bold mb-4">Find the right lawyer for your case</h1>
+            <p class="lead mb-4">Connect with experienced legal professionals</p>
+            <div class="search-box mx-auto">
+                <div class="input-group">
+                    <input type="text" [(ngModel)]="searchQuery" placeholder="e.g. Business Contracts"
+                        class="form-control search-input">
+                    <button class="btn btn-warning" (click)="searchLawyers()">
+                        <i class="fas fa-search me-2"></i>Search
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
 
-            <!-- Active Filters Display -->
-            <div class="mt-3" *ngIf="hasActiveFilters()">
-                <div class="d-flex flex-wrap gap-2">
-                    <span class="badge bg-warning" *ngIf="selectedCountry">
-                        Country: {{ selectedCountry }}
-                        <button class="btn-close btn-close-white ms-1" (click)="clearCountryFilter()"></button>
-                    </span>
-                    <span class="badge bg-warning" *ngIf="selectedCity">
-                        City: {{ selectedCity }}
-                        <button class="btn-close btn-close-white ms-1" (click)="clearCityFilter()"></button>
-                    </span>
-                    <span class="badge bg-warning" *ngIf="selectedField">
-                        Field: {{ selectedField }}
-                        <button class="btn-close btn-close-white ms-1" (click)="clearFieldFilter()"></button>
-                    </span>
-                </div>
+<!-- Filters Section -->
+<section class="filters-section bg-light py-4">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Country</label>
+                <select class="form-select" [(ngModel)]="selectedCountry" (change)="onCountryChange()">
+                    <option value="">All Countries</option>
+                    <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">City</label>
+                <select class="form-select" [(ngModel)]="selectedCity" (change)="applyFilters()"
+                    [disabled]="!selectedCountry">
+                    <option value="">All Cities</option>
+                    <option *ngFor="let city of availableCities" [value]="city">{{ city }}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Legal Field</label>
+                <select class="form-select" [(ngModel)]="selectedField" (change)="applyFilters()">
+                    <option value="">All Fields</option>
+                    <option *ngFor="let field of legalFields" [value]="field">{{ field }}</option>
+                </select>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button class="btn btn-outline-warning w-100" (click)="clearFilters()">
+                    <i class="fas fa-times me-2"></i>Clear Filters
+                </button>
             </div>
         </div>
 
-    </section>
+        <!-- Active Filters Display -->
+        <div class="mt-3" *ngIf="hasActiveFilters()">
+            <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-warning" *ngIf="selectedCountry">
+                    Country: {{ selectedCountry }}
+                    <button class="btn-close btn-close-white ms-1" (click)="clearCountryFilter()"></button>
+                </span>
+                <span class="badge bg-warning" *ngIf="selectedCity">
+                    City: {{ selectedCity }}
+                    <button class="btn-close btn-close-white ms-1" (click)="clearCityFilter()"></button>
+                </span>
+                <span class="badge bg-warning" *ngIf="selectedField">
+                    Field: {{ selectedField }}
+                    <button class="btn-close btn-close-white ms-1" (click)="clearFieldFilter()"></button>
+                </span>
+            </div>
+        </div>
+    </div>
 
-    <!-- Results Summary -->
-    <section class="results-summary py-3 bg-white border-bottom">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0 text-muted">
-                        Showing {{ filteredLawyers.length }} of {{ allLawyers.length }} lawyers
-                        <span *ngIf="hasActiveFilters()"> with applied filters</span>
-                    </p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="btn-group" role="group">
-                        <input type="radio" class="btn-check" name="sortBy" id="sort-rating" [(ngModel)]="sortBy"
-                            value="rating" (change)="applySorting()">
-                        <label class="btn btn-outline-warning btn-sm" for="sort-rating">Top Rated</label>
+</section>
 
-                        <input type="radio" class="btn-check" name="sortBy" id="sort-experience" [(ngModel)]="sortBy"
-                            value="experience" (change)="applySorting()">
-                        <label class="btn btn-outline-warning btn-sm" for="sort-experience">Most Experienced</label>
+<!-- Results Summary -->
+<section class="results-summary py-3 bg-white border-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0 text-muted">
+                    Showing {{ filteredLawyers.length }} of {{ allLawyers.length }} lawyers
+                    <span *ngIf="hasActiveFilters()"> with applied filters</span>
+                </p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="sortBy" id="sort-rating" [(ngModel)]="sortBy"
+                        value="rating" (change)="applySorting()">
+                    <label class="btn btn-outline-warning btn-sm" for="sort-rating">Top Rated</label>
 
-                        <input type="radio" class="btn-check" name="sortBy" id="sort-cases" [(ngModel)]="sortBy"
-                            value="cases" (change)="applySorting()">
-                        <label class="btn btn-outline-warning btn-sm" for="sort-cases">Most Cases</label>
-                    </div>
+                    <input type="radio" class="btn-check" name="sortBy" id="sort-experience" [(ngModel)]="sortBy"
+                        value="experience" (change)="applySorting()">
+                    <label class="btn btn-outline-warning btn-sm" for="sort-experience">Most Experienced</label>
+
+                    <input type="radio" class="btn-check" name="sortBy" id="sort-cases" [(ngModel)]="sortBy"
+                        value="cases" (change)="applySorting()">
+                    <label class="btn btn-outline-warning btn-sm" for="sort-cases">Most Cases</label>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Top 10 Lawyers -->
-    <!-- <section class="top-lawyers py-5" *ngIf="!hasActiveFilters()">
+<!-- Top 10 Lawyers -->
+<!-- <section class="top-lawyers py-5" *ngIf="!hasActiveFilters()">
         <div class="container">
             <h2 class="text-center mb-5">Top 10 Lawyers</h2>
             <div class="row g-4">
@@ -129,123 +127,118 @@
             </div>
         </div>
     </section> -->
-    <section class="container mb-5">
-        <h2 class="mb-4 fw-bold">Top 10 Lawyers</h2>
-        <div class="position-relative">
-            <div class="row flex-nowrap overflow-auto pb-4 gap-3">
-                <!-- Lawyer Card 1 -->
-                <div class="col-md-3 col-10" *ngFor="let item of topLawyers; let idx = index">
-                    <div class="card lawyer-card h-100 border-0 shadow-sm">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxT1icFMKk2T20hgaSVcoIiEnv6Sj_m59yag&s"
-                            class="card-img-top h-50" alt="Robert Anderson">
-                        <div class="card-body">
-                            <h5 class="card-title">{{item.name}}</h5>
-                            <p class="card-text text-muted">{{item.field}}</p>
-                            <p class="card-text"><small class="text-muted">8 years exp, 47 reviews</small></p>
-                        </div>
+<section class="container mb-5 top-lawyers">
+    <h2 class="mb-4 fw-bold">Top 10 Lawyers</h2>
+    <div class="position-relative">
+
+        <!-- SCROLLABLE ROW -->
+        <div class="row flex-nowrap overflow-auto pb-4 gap-3" #scrollContainer>
+            <div class="col-md-3 col-10" *ngFor="let item of topLawyers">
+                <div class="card lawyer-card h-100 border-0 shadow-sm">
+                    <img src="/assets/images/Family.jpg" class="card-img-top h-50" alt="{{item.name}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{item.name}}</h5>
+                        <p class="card-text text-muted">{{item.field}}</p>
+                        <p class="card-text"><small class="text-muted">8 years exp, 47 reviews</small></p>
                     </div>
                 </div>
-                <!-- Pagination Dots -->
-                <div class="text-center mt-3">
-                    <span class="pagination-dot active"></span>
-                    <span class="pagination-dot"></span>
-                    <span class="pagination-dot"></span>
-                    <span class="pagination-dot"></span>
-                    <span class="pagination-dot"></span>
-                </div>
-                <!-- Navigation Arrows -->
-                <button (click)="scrollLeft('left')"
-                    class="btn btn-light position-absolute top-50 start-0 translate-middle-y rounded-circle p-2 d-none d-md-block">
-                    <i class="ri-arrow-left-s-line ri-lg text-danger"></i>
-                </button>
-                <button (click)="scrollLeft('right')"
-                    class="btn btn-light position-absolute top-50 end-0 translate-middle-y rounded-circle p-2 d-none d-md-block">
-                    <i class="ri-arrow-right-s-line ri-lg"></i>
-                </button>
-
-
             </div>
+        </div>
 
-            <!-- All Lawyers -->
-            <section class="all-lawyers py-5">
-                <div class="container">
-                    <h2 class="mb-4" *ngIf="!hasActiveFilters()">All Lawyers</h2>
-                    <h2 class="mb-4" *ngIf="hasActiveFilters()">Filtered Results</h2>
+        <!-- Navigation Arrows OUTSIDE scroll row -->
+        <button (click)="scroll('left')"
+            class="btn btn-light position-absolute top-50 left-1 translate-middle-y rounded-circle p-2 d-none d-md-block ">
+            <i class="fa-solid fa-arrow-left"></i> </button>
+        <button (click)="scroll('right')"
+            class="btn btn-light position-absolute top-50 end-0 translate-middle-y rounded-circle p-2 d-none d-md-block">
+            <i class="fa-solid fa-arrow-right"></i> </button>
 
-                    <div class="lawyers-list" *ngIf="filteredLawyers.length > 0">
-                        <div class="card lawyer-item mb-3" *ngFor="let lawyer of paginatedLawyers">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <div class="lawyer-avatar">
-                                            <img [src]="lawyer.image? lawyer.image : 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=150 '"
-                                                [alt]="lawyer.name" class="rounded-circle">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <h5 class="mb-1">{{ lawyer.name }}</h5>
-                                        <p class="text-warning fw-semibold mb-1">{{ lawyer.jobFieldNames }}</p>
-                                        <p class="text-muted small mb-0">
-                                            {{ lawyer.experience ?lawyer.experience :10 }} years • {{ lawyer.cases
-                                            ?lawyer.cases :1 }}
-                                            cases • {{ lawyer.city
-                                            }}, {{
-                                            lawyer.country }}
-                                        </p>
-                                        <div class="rating mt-1">
-                                            <span *ngFor="let star of getStars(lawyer.rating)"
-                                                class="text-warning small">⭐</span>
-                                            <span class="text-muted small ms-1">⭐ {{ lawyer.rating ?lawyer.rating :4
-                                                }}/5</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <!-- All Lawyer Card Action Button -->
-                                       <button
-                                            class="btn btn-outline-warning"[routerLink]="['/lawyer-profile', lawyer.id]" >  View Profile </button>
+        <!-- Pagination Dots OUTSIDE scroll row -->
+        <!-- <div class="text-center  mt-3">
+                <span class="pagination-dot active">dff</span>
+                <span class="pagination-dot">dr</span>
+                <span class="pagination-dot"></span>
+            </div> -->
 
+    </div>
 
-                                    </div>
+    <!-- All Lawyers -->
+    <section class="all-lawyers py-5">
+        <div class="container">
+            <h2 class="mb-4" *ngIf="!hasActiveFilters()">All Lawyers</h2>
+            <h2 class="mb-4" *ngIf="hasActiveFilters()">Filtered Results</h2>
+
+            <div class="lawyers-list" *ngIf="filteredLawyers.length > 0">
+                <div class="card lawyer-item mb-3" *ngFor="let lawyer of paginatedLawyers">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <div class="lawyer-avatar">
+                                    <img [src]="lawyer.image? lawyer.image : 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=150 '"
+                                        [alt]="lawyer.name" class="rounded-circle">
                                 </div>
+                            </div>
+                            <div class="col">
+                                <h5 class="mb-1">{{ lawyer.name }}</h5>
+                                <p class="text-warning fw-semibold mb-1">{{ lawyer.jobFieldNames }}</p>
+                                <p class="text-muted small mb-0">
+                                    {{ lawyer.experience ?lawyer.experience :10 }} years • {{ lawyer.cases
+                                    ?lawyer.cases :1 }}
+                                    cases • {{ lawyer.city
+                                    }}, {{
+                                    lawyer.country }}
+                                </p>
+                                <div class="rating mt-1">
+                                    <span *ngFor="let star of getStars(lawyer.rating)"
+                                        class="text-warning small">⭐</span>
+                                    <span class="text-muted small ms-1">⭐ {{ lawyer.rating ?lawyer.rating :4
+                                        }}/5</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-outline-warning" [routerLink]="['/profile', lawyer.id]">
+                                    <i class="fas fa-user me-2"></i>View Profile
+                                </button>
+
                             </div>
                         </div>
                     </div>
-
-                    <!-- No Results -->
-                    <div class="text-center py-5" *ngIf="filteredLawyers.length === 0">
-                        <div class="mb-4">
-                            <i class="fas fa-search fa-3x text-muted"></i>
-                        </div>
-                        <h4 class="text-muted">No lawyers found</h4>
-                        <p class="text-muted">Try adjusting your filters or search criteria</p>
-                        <button class="btn btn-warning" (click)="clearFilters()">Clear All Filters</button>
-                    </div>
-
-                    <!-- Pagination -->
-                    <nav *ngIf="allLawyers.length > 0 && totalPages > 1">
-                        <ul class="pagination justify-content-center mt-4">
-                            <li class="page-item" [class.disabled]="currentPage === 1">
-                                <button class="page-link" (click)="changePage(currentPage - 1)"
-                                    [disabled]="currentPage === 1">
-                                    <i class="fas fa-chevron-left text-warning"></i>
-                                </button>
-                            </li>
-
-                            <li class="page-item bg-warning" *ngFor="let page of getPages()"
-                                [class.active]="page === currentPage">
-                                <button class="page-link bg-dark text-white" (click)="changePage(page)">
-                                    {{ page }}
-                                </button>
-                            </li>
-
-                            <li class="page-item" [class.disabled]="currentPage === totalPages">
-                                <button class="page-link" (click)="changePage(currentPage + 1)"
-                                    [disabled]="currentPage === totalPages">
-                                    <i class="fas fa-chevron-right text-warning"></i>
-                                </button>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
-            </section>
+            </div>
+
+            <!-- No Results -->
+            <div class="text-center py-5" *ngIf="filteredLawyers.length === 0">
+                <div class="mb-4">
+                    <i class="fas fa-search fa-3x text-muted"></i>
+                </div>
+                <h4 class="text-muted">No lawyers found</h4>
+                <p class="text-muted">Try adjusting your filters or search criteria</p>
+                <button class="btn btn-warning" (click)="clearFilters()">Clear All Filters</button>
+            </div>
+
+            <!-- Pagination -->
+            <nav *ngIf="allLawyers.length > 0 && totalPages > 1">
+                <ul class="pagination justify-content-center mt-4">
+                    <li class="page-item" [class.disabled]="currentPage === 1">
+                        <button class="page-link" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+                            <i class="fas fa-chevron-left text-warning"></i>
+                        </button>
+                    </li>
+
+                    <li class="page-item bg-warning" *ngFor="let page of getPages()"
+                        [class.active]="page === currentPage">
+                        <button class="page-link bg-dark text-white" (click)="changePage(page)">
+                            {{ page }}
+                        </button>
+                    </li>
+
+                    <li class="page-item" [class.disabled]="currentPage === totalPages">
+                        <button class="page-link" (click)="changePage(currentPage + 1)"
+                            [disabled]="currentPage === totalPages">
+                            <i class="fas fa-chevron-right text-warning"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
+    </section>

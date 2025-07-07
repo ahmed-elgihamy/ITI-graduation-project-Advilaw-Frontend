@@ -1,0 +1,52 @@
+<div class="container-fluid vh-30 d-flex align-items-center justify-content-center">
+    <div class="timer-container">
+        <div class="law-logo ">
+            ⚖️ AdviLaw
+        </div>
+
+        <div class="waiting-message" [class.pulse]="isBlinking">
+            {{ waitingMessage }}
+        </div>
+
+        <div class="progress-ring">
+            <svg width="200" height="200">
+                <circle class="progress-ring-circle" cx="100" cy="100" r="90">
+                </circle>
+                <circle class="progress-ring-circle-active" cx="100" cy="100" r="90"
+                    [style.stroke-dasharray]="circumference" [style.stroke-dashoffset]="strokeDashoffset">
+                </circle>
+            </svg>
+        </div>
+
+        <div class="timer-display">
+            <span class="timer-unit">
+                {{ formatTime(hours) }}
+                <div class="timer-label">Hours</div>
+            </span>
+            <span class="timer-unit">
+                {{ formatTime(minutes) }}
+                <div class="timer-label">Minutes</div>
+            </span>
+            <span class="timer-unit">
+                {{ formatTime(seconds) }}
+                <div class="timer-label">Seconds</div>
+            </span>
+        </div>
+
+        <div class="session-info">
+            <h5>Session Information</h5>
+            <p>Session Date: {{ sessionDate }}</p>
+            <p>Remaining Wait Time: {{ totalMinutes }} minutes</p>
+        </div>
+
+        <div class="text-center">
+            <span class="status-badge" [class]="isSessionReady ? 'status-ready' : 'status-waiting'">
+                {{ isSessionReady ? 'Session Ready Now' : 'Waiting for Session to Begin' }}
+            </span>
+        </div>
+
+        <div class="footer-note">
+            <p>You will be notified when the session begins • Professional Law Office</p>
+        </div>
+    </div>
+</div>
