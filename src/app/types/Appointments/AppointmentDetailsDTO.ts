@@ -8,4 +8,9 @@ export interface AppointmentDetailsDTO {
   status: AppointmentStatus;
   jobId: number;
   scheduleId?: number;
+  
+  // Extra for UI:
+  jobHeader: string;
+  clientName: string;
+  lawyerName: string;
 }

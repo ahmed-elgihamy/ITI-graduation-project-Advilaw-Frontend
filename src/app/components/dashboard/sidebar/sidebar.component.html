@@ -48,6 +48,13 @@
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
     <app-nav-item
+      *ngIf="isLawyer()"
+      [iconClass]="'fa-calendar-check'"
+      [name]="'Consultations'"
+      [toLink]="'/dashboard/consultations'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+    <app-nav-item
       [iconClass]="'fa-money-check'"
       [name]="'Payments'"
       [toLink]="'/dashboard/payments'"

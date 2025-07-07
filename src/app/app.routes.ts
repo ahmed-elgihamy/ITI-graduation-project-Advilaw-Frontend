@@ -28,6 +28,7 @@ import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-c
 import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
 import { PaymentsContentComponent } from './components/dashboard/payments-content/payments-content.component';
 import { ReviewsContentComponent } from './components/dashboard/reviews-content/reviews-content.component';
+import { ConsultationsContentComponent } from './components/dashboard/consultations-content/consultations-content.component';
 
 import { AdminDashboardWelcome } from './components/admin-dashboard/admin-dashboard-welcome/admin-dashboard-welcome';
 import { PendingLawyersList } from './components/admin-dashboard/pending-lawyers-list/pending-lawyers-list';
@@ -94,6 +95,7 @@ export const routes: Routes = [
       { path: 'analytics', component: AnalysisContentComponent },
       { path: 'profile', component: ProfileContentComponent },
       { path: 'jobs', component: JobsContentComponent },
+      { path: 'consultations', component: ConsultationsContentComponent },
       { path: 'payments', component: PaymentsContentComponent },
       { path: 'reviews', component: ReviewsContentComponent },
 
