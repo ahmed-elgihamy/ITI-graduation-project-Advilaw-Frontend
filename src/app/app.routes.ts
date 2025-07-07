@@ -37,6 +37,8 @@ import { AdminProfileEdit } from './components/admin-dashboard/admin-profile-edi
 import { AdminProfileViewComponent } from './components/admin-dashboard/admin-profile-view/admin-profile-view.component';
 import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
+import { SubscriptionPlansComponent } from './components/subscriptions/subscription-plans/subscription-plans.component';
+import { SubscriptionManagementComponent } from './components/subscriptions/subscription-management/subscription-management.component';
 
 
 
@@ -76,6 +78,10 @@ export const routes: Routes = [
             './pages/jobs/lawyer-consultation/lawyer-consultation.component'
           ).then((m) => m.LawyerConsultationComponent),
       },
+      {
+        path: 'subscriptions/plan',
+        component: SubscriptionPlansComponent,
+      },
     ],
   },
 
@@ -94,47 +100,52 @@ export const routes: Routes = [
       {
         path: 'admin-dashboard',
         component: MainLayoutComponent,
-        canActivate: [adminGuard],
+        // canActivate: [adminGuard],
         children: [
           {
             path: '',
             component: AdminDashboardWelcome,
-            canActivate: [adminGuard],
+            // canActivate: [adminGuard],
           },
           {
             path: 'pending-lawyers',
             component: PendingLawyersList,
-            canActivate: [adminGuard],
+            // canActivate: [adminGuard],
           },
           {
             path: 'pending-clients',
             component: PendingClientsList,
-            canActivate: [adminGuard],
+            // canActivate: [adminGuard],
           },
           {
             path: 'admins-list',
             component: AdminsList,
-            canActivate: [adminGuard],
+            // canActivate: [adminGuard],
           },
           {
             path: 'profile-edit',
             component: AdminProfileEdit,
-            canActivate: [adminGuard],
+            // canActivate: [adminGuard],
           },
           {
             path: 'admin/profile',
             component: AdminProfileViewComponent,
-            canActivate: [adminGuard],
+            // canActivate: [adminGuard],
           },
           {
             path: 'lawyers/:id',
             component: LawyerDetailsComponent,
-            canActivate: [adminGuard],
+            // canActivate: [adminGuard],
           },
           {
             path: 'clients/:id',
             component: ClientDetailsComponent,
-            canActivate: [adminGuard],
+            // canActivate: [adminGuard],
+          },
+          {
+            path: 'subscriptions',
+            component: SubscriptionManagementComponent,
+            // canActivate: [adminGuard],
           },
         ],
       },
