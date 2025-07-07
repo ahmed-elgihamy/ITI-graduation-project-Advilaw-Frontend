@@ -1,11 +1,13 @@
 
   .hero {
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                url('https://images.pexels.com/photos/5668884/pexels-photo-5668884.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover;
-    min-height: 60vh;
+                url('/assets/images/landing-page.jpg') ;
+    min-height: 70vh;
     display: flex;
     align-items: center;
     color: white;
+    background-position: center;
+    background-size: cover;
   }
 
   .hero h1 {

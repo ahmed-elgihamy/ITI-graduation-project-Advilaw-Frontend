@@ -30,6 +30,10 @@ import { ClientDetailsComponent } from './components/admin-dashboard/client-deta
 import { ProfileComponent } from './components/profile/profile.component';
 import { AllLawyerComponent } from './components/all-lawyer/all-lawyer.component';
 import { ChatComponent } from './components/communication/chat/chat.component';
+import { CountdownTimerComponentComponent } from './components/countdown-timer-component/countdown-timer-component.component';
+import { SessionGuard } from './core/guards/session.guard';
+import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
+import { ConsultationReviewComponent } from './components/reviews/consultation-review/consultation-review.component';
 
 
 export const routes: Routes = [
@@ -40,7 +44,15 @@ export const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'profile/:id', component: ProfileComponent },
       { path: 'allLawyers', component: AllLawyerComponent },
-      { path: 'chat', component: ChatComponent },
+      { path: 'not-allowed', component: AccessDeniedComponent },
+      { path: 'ConsultationReview', component: ConsultationReviewComponent },
+
+      {
+        path: 'chat',
+        component: ChatComponent
+        //  canActivate: [SessionGuard]
+      },
+      { path: 'countdown', component: CountdownTimerComponentComponent },
 
       { path: 'home', redirectTo: '' },
       { path: 'login', component: LoginComponent },
@@ -95,7 +107,7 @@ export const routes: Routes = [
         component: MainLayoutComponent,
         canActivate: [adminGuard],
         children: [
-  
+
           { path: '', component: AdminDashboardWelcome, canActivate: [adminGuard] },
           { path: 'pending-lawyers', component: PendingLawyersList, canActivate: [adminGuard] },
           { path: 'pending-clients', component: PendingClientsList, canActivate: [adminGuard] },
@@ -104,14 +116,14 @@ export const routes: Routes = [
           { path: 'admin/profile', component: AdminProfileViewComponent, canActivate: [adminGuard] },
           { path: 'lawyers/:id', component: LawyerDetailsComponent, canActivate: [adminGuard] },
           { path: 'clients/:id', component: ClientDetailsComponent, canActivate: [adminGuard] },
-          
+
         ]
       }
 
-      ,{ path: 'reviews', component: ReviewsContentComponent },
+      , { path: 'reviews', component: ReviewsContentComponent },
 
     ],
   },
-  
+
   { path: '**', redirectTo: '/login' },
 ];

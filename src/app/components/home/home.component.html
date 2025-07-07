@@ -1,229 +1,510 @@
-<section class="py-5 bg-dark text-white text-center hero-section">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <h1 class="display-4 fw-bold mb-3">
-          Connect with the Right <span class="text-warning">Lawyer</span>
-        </h1>
-        <p class="lead text-light mb-4" style="max-width: 650px;">
-          Find verified legal experts across all practice areas. Get professional help with confidence and transparency.
-        </p>
-      </div>
-    </div>
-  </div>
-  >
-  <div class="container py-5" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 1rem;">
-    <h1 class="display-4 fw-bold mb-3">
-      Find the Right <span class="text-warning">Legal Expert</span> for Your Needs
-    </h1>
-    <p class="lead text-light mx-auto mb-4" style="max-width: 650px;">
-      Connect with verified lawyers across all practice areas.
-      Get professional legal help with confidence and transparency.
-    </p>
-    <div class="row justify-content-center mb-5">
-      <div class="col-lg-8">
-        <div class="input-group input-group-lg shadow rounded-pill overflow-hidden bg-white">
-          <span class="input-group-text bg-white border-0 ps-4">
-            <i class="fas fa-search text-muted"></i>
-          </span>
-          <input type="text" class="form-control border-0" placeholder="What legal service do you need?" />
-          <button class="btn btn-warning px-4 rounded-end-pill" type="button">
-            Find Lawyers
-          </button>
+<section class="hero-section py-5 py-md-6 text-white text-center bg-dark position-relative">
+  <div class="container px-4">
+    <div class="mx-auto" style="max-width: 700px;">
+      <h1 class="display-4 fw-bold mb-4">
+        Connect with the Right
+        <span class="text-warning">Legal Expert</span>
+      </h1>
+      <p class="lead text-light mb-5">
+        Find verified legal professionals across all practice areas. Get the
+        specialized legal assistance you need with confidence and
+        transparency.
+      </p>
+
+      <!-- Search Box -->
+      <div class="bg-white p-4 rounded shadow mx-auto" style="max-width: 800px;">
+        <form class="row g-0">
+          <div class="col-md-9 position-relative">
+            <span class="position-absolute top-50 start-0 translate-middle-y ps-3 text-muted">
+              <i class="ri-search-line"></i>
+            </span>
+            <input type="text" class="form-control ps-5 py-3 border-0 rounded-start"
+              placeholder="What legal service do you need?" />
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-warning w-100 py-3 rounded-end text-white fw-medium">
+              Find Lawyers
+            </button>
+          </div>
+        </form>
+
+        <!-- Popular Tags -->
+        <div class="mt-4 d-flex flex-wrap gap-2 justify-content-center">
+          <span class="badge bg-light text-dark px-3 py-2 rounded-pill">Divorce</span>
+          <span class="badge bg-light text-dark px-3 py-2 rounded-pill">Business Formation</span>
+          <span class="badge bg-light text-dark px-3 py-2 rounded-pill">Criminal Defense</span>
+          <span class="badge bg-light text-dark px-3 py-2 rounded-pill">Immigration</span>
+          <span class="badge bg-light text-dark px-3 py-2 rounded-pill">Real Estate</span>
         </div>
       </div>
     </div>
   </div>
 </section>
-<section class="py-5 text-white CoverAreasSection">
-  > <div class="container" style="background-color: rgba(0, 0, 0, 0.6); border-radius: 1rem; padding: 3rem;">
+<section class="py-5 bg-light">
+  <div class="container">
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold text-warning mb-3">
-        Legal Areas We Cover
-      </h2>
-      <p class="lead mx-auto" style="max-width: 600px;">
-        Our network of lawyers covers all major areas of law to meet your specific needs.
+      <h2 class="fw-bold">Legal Areas We Cover</h2>
+      <p class="text-muted mx-auto" style="max-width: 700px;">
+        Our network of lawyers covers all major areas of law to meet your specific needs with expertise and dedication.
       </p>
     </div>
+
     <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card h-100 bg-dark text-white border-0 shadow-sm">
-          <div class="card-body p-4">
-            <div class="d-flex align-items-start mb-3">
-              <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3 me-3">
-                <i class="fas fa-home fa-lg"></i>
-              </div>
-              <div>
-                <h5 class="card-title mb-1 text-warning">Family Law</h5>
-                <small class="text-light fw-medium">2,400+ cases</small>
-              </div>
-            </div>
-            <p class="text-light">Divorce, custody, adoption, and domestic relations</p>
-            <div class="pt-3 border-top border-secondary">
-              <a href="#" class="text-warning fw-medium small text-decoration-none">Find Family Lawyers →</a>
+      <!-- Family Law -->
+      <div class="col-md-6 col-lg-4">
+        <div class="practice-card family-law">
+          <div class="practice-card-content">
+            <div class="practice-icon"><i class="ri-user-heart-line"></i></div>
+            <h5 class="fw-bold">Family Law</h5>
+            <p class="small">Divorce, custody, adoption, and domestic relations matters handled with compassion.</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="cases-badge">2,450+ cases</span>
+              <a [routerLink]="['/allLawyers']" [queryParams]="{ specialization: 'Family Law' }">
+                Find Family Lawyers <i class="ri-arrow-right-line ms-1"></i>
+              </a>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card h-100 bg-dark text-white border-0 shadow-sm">
-          <div class="card-body p-4">
-            <div class="d-flex align-items-start mb-3">
-              <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3 me-3">
-                <i class="fas fa-briefcase fa-lg"></i>
-              </div>
-              <div>
-                <h5 class="card-title mb-1 text-warning">Business Law</h5>
-                <small class="text-light fw-medium">1,800+ cases</small>
-              </div>
-            </div>
-            <p class="text-light">Corporate law, contracts, and business formation</p>
-            <div class="pt-3 border-top border-secondary">
-              <a href="#" class="text-warning fw-medium small text-decoration-none">Find Business Lawyers →</a>
+
+      <!-- Business Law -->
+      <div class="col-md-6 col-lg-4">
+        <div class="practice-card Business-law">
+          <div class="practice-card-content">
+            <div class="practice-icon"><i class="ri-building-line"></i></div>
+            <h5 class="fw-bold">Business Law</h5>
+            <p class="small">Corporate law, contracts, and business formation services for entrepreneurs and companies.
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="cases-badge">3,180+ cases</span>
+              <a [routerLink]="['/allLawyers']" [queryParams]="{ specialization: 'Business Law' }">Find Business Lawyers
+                <i class="ri-arrow-right-line ms-1"></i></a>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card h-100 bg-dark text-white border-0 shadow-sm">
-          <div class="card-body p-4">
-            <div class="d-flex align-items-start mb-3">
-              <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3 me-3">
-                <i class="fas fa-shield-alt fa-lg"></i>
-              </div>
-              <div>
-                <h5 class="card-title mb-1 text-warning">Criminal Defense</h5>
-                <small class="text-light fw-medium">1,200+ cases</small>
-              </div>
-            </div>
-            <p class="text-light">Criminal charges, DUI, and legal representation</p>
-            <div class="pt-3 border-top border-secondary">
-              <a href="#" class="text-warning fw-medium small text-decoration-none">Find Criminal Defense Lawyers →</a>
+
+      <!-- Criminal Defense -->
+      <div class="col-md-6 col-lg-4 ">
+        <div class="practice-card criminal-lawyer">
+          <div class="practice-card-content">
+            <div class="practice-icon"><i class="ri-scales-line"></i></div>
+            <h5 class="fw-bold">Criminal Defense</h5>
+            <p class="small">Criminal charges, trial, and legal representation for individuals facing allegations.</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="cases-badge">1,750+ cases</span>
+              <a [routerLink]="['/allLawyers']" [queryParams]="{ specialization: 'Criminal Defense' }">Find Criminal
+                Defense Lawyers <i class="ri-arrow-right-line ms-1"></i></a>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card h-100 bg-dark text-white border-0 shadow-sm">
-          <div class="card-body p-4">
-            <div class="d-flex align-items-start mb-3">
-              <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3 me-3">
-                <i class="fas fa-shield-alt fa-lg"></i>
-              </div>
-              <div>
-                <h5 class="card-title mb-1 text-warning">Criminal Defense</h5>
-                <small class="text-light fw-medium">1,200+ cases</small>
-              </div>
-            </div>
-            <p class="text-light">Criminal charges, DUI, and legal representation</p>
-            <div class="pt-3 border-top border-secondary">
-              <a href="#" class="text-warning fw-medium small text-decoration-none">Find Criminal Defense Lawyers →</a>
+
+      <!-- Personal Injury -->
+      <div class="col-md-6 col-lg-4">
+        <div class="practice-card Personal-injury">
+          <div class="practice-card-content">
+            <div class="practice-icon"><i class="ri-heart-pulse-line"></i></div>
+            <h5 class="fw-bold">Personal Injury</h5>
+            <p class="small">Accident claims, medical malpractice, and compensation for injuries caused by negligence.
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="cases-badge">2,120+ cases</span>
+              <a [routerLink]="['/allLawyers']" [queryParams]="{ specialization: 'Personal Injury' }">Find Personal
+                Injury Lawyers <i class="ri-arrow-right-line ms-1"></i></a>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card h-100 bg-dark text-white border-0 shadow-sm">
-          <div class="card-body p-4">
-            <div class="d-flex align-items-start mb-3">
-              <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3 me-3">
-                <i class="fas fa-shield-alt fa-lg"></i>
-              </div>
-              <div>
-                <h5 class="card-title mb-1 text-warning">Criminal Defense</h5>
-                <small class="text-light fw-medium">1,200+ cases</small>
-              </div>
-            </div>
-            <p class="text-light">Criminal charges, DUI, and legal representation</p>
-            <div class="pt-3 border-top border-secondary">
-              <a href="#" class="text-warning fw-medium small text-decoration-none">Find Criminal Defense Lawyers →</a>
+
+      <!-- Immigration -->
+      <div class="col-md-6 col-lg-4">
+        <div class="practice-card Immigration">
+          <div class="practice-card-content">
+            <div class="practice-icon"><i class="ri-passport-line"></i></div>
+            <h5 class="fw-bold">Immigration</h5>
+            <p class="small">Visa applications, green cards, citizenship, and deportation defense services.</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="cases-badge">1,890+ cases</span>
+              <a [routerLink]="['/allLawyers']" [queryParams]="{ specialization: 'Immigration Law' }">Find Immigration
+                Lawyers <i class="ri-arrow-right-line ms-1"></i></a>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card h-100 bg-dark text-white border-0 shadow-sm">
-          <div class="card-body p-4">
-            <div class="d-flex align-items-start mb-3">
-              <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3 me-3">
-                <i class="fas fa-shield-alt fa-lg"></i>
-              </div>
-              <div>
-                <h5 class="card-title mb-1 text-warning">Criminal Defense</h5>
-                <small class="text-light fw-medium">1,200+ cases</small>
-              </div>
-            </div>
-            <p class="text-light">Criminal charges, DUI, and legal representation</p>
-            <div class="pt-3 border-top border-secondary">
-              <a href="#" class="text-warning fw-medium small text-decoration-none">Find Criminal Defense Lawyers →</a>
+
+      <!-- Real Estate -->
+      <div class="col-md-6 col-lg-4">
+        <div class="practice-card RealEstate">
+          <div class="practice-card-content">
+            <div class="practice-icon"><i class="ri-home-4-line"></i></div>
+            <h5 class="fw-bold">Real Estate</h5>
+            <p class="small">Property transactions, landlord-tenant disputes, and real estate contract review.</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="cases-badge">2,340+ cases</span>
+              <a [routerLink]="['/allLawyers']" [queryParams]="{ specialization: 'Real Estate' }">Find Real Estate
+                Lawyers <i class="ri-arrow-right-line ms-1"></i></a>
             </div>
           </div>
         </div>
       </div>
-      <button class="btn btn-warning" routerLink="/allLawyers"> showing</button>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-5">
+      <a href="#" class="btn btn-warning text-white fw-semibold px-4 py-2">
+        View All Practice Areas <i class="ri-arrow-right-line ms-2"></i>
+      </a>
     </div>
   </div>
 </section>
-
 <section class="py-5 bg-white">
   <div class="container">
     <div class="text-center mb-5">
-      <h2 class="display-4 fw-bold">Why AdvILaw?</h2>
+      <h2 class="fw-bold">Top-Rated Legal Professionals</h2>
+      <p class="text-muted mx-auto" style="max-width: 700px;">
+        Connect with our highly-rated attorneys who have proven track records of success in their respective fields.
+      </p>
     </div>
 
+    <div class="row g-4">
+      <!-- Lawyer 1 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="lawyer-card position-relative">
+          <span class="rating-badge"><i class="ri-star-fill"></i> 4.9</span>
+          <img src="/assets/images/TopRigth.jpg" alt="Rebecca Anderson" />
+          <div class="lawyer-info text-center">
+            <h6 class="fw-bold mb-1">Rebecca Anderson</h6>
+            <p class="mb-1 text-muted small">Family Law Specialist</p>
+            <p class="location"><i class="ri-map-pin-line me-1"></i> New York, NY</p>
+            <div>
+              <span class="tag">Divorce</span>
+              <span class="tag">Child Custody</span>
+              <span class="tag">Alimony</span>
+            </div>
+            <button class="btn btn-dark-custom mt-3">View Profile</button>
+          </div>
+        </div>
+      </div>
 
-    <div class="row g-4 justify-content-around text-center">
-      <div class="col-md-3">
-        <div class="WhySectionItem px-3">
-          <i class="fa-regular fa-clock fa-2x text-secondary mb-2"></i>
-          <h5 class="fw-bold">Fast Response</h5>
-          <p class="small text-muted">Connect with lawyers instantly — fast, reliable legal advice at your fingertips.
+      <!-- Lawyer 2 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="lawyer-card position-relative">
+          <span class="rating-badge"><i class="ri-star-fill"></i> 4.8</span>
+          <img src="/assets/images/TopRigth.jpg" alt="Michael Thompson" />
+          <div class="lawyer-info text-center">
+            <h6 class="fw-bold mb-1">Michael Thompson</h6>
+            <p class="mb-1 text-muted small">Business Law Attorney</p>
+            <p class="location"><i class="ri-map-pin-line me-1"></i> Chicago, IL</p>
+            <div>
+              <span class="tag">Contracts</span>
+              <span class="tag">Startups</span>
+              <span class="tag">IP Law</span>
+            </div>
+            <button class="btn btn-dark-custom mt-3">View Profile</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lawyer 3 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="lawyer-card position-relative">
+          <span class="rating-badge"><i class="ri-star-fill"></i> 5.0</span>
+          <img src="/assets/images/TopRigth.jpg" alt="Jasmine Williams" />
+          <div class="lawyer-info text-center">
+            <h6 class="fw-bold mb-1">Jasmine Williams</h6>
+            <p class="mb-1 text-muted small">Criminal Defense Lawyer</p>
+            <p class="location"><i class="ri-map-pin-line me-1"></i> Los Angeles, CA</p>
+            <div>
+              <span class="tag">Felonies</span>
+              <span class="tag">DUI</span>
+              <span class="tag">White Collar</span>
+            </div>
+            <button class="btn btn-dark-custom mt-3">View Profile</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lawyer 4 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="lawyer-card position-relative">
+          <span class="rating-badge"><i class="ri-star-fill"></i> 4.7</span>
+          <img src="/assets/images/TopRigth.jpg" alt="Daniel Rodriguez" />
+          <div class="lawyer-info text-center">
+            <h6 class="fw-bold mb-1">Daniel Rodriguez</h6>
+            <p class="mb-1 text-muted small">Immigration Attorney</p>
+            <p class="location"><i class="ri-map-pin-line me-1"></i> Miami, FL</p>
+            <div>
+              <span class="tag">Visas</span>
+              <span class="tag">Citizenship</span>
+              <span class="tag">Asylum</span>
+            </div>
+            <button class="btn btn-dark-custom mt-3">View Profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-5">
+      <a routerLink="/allLawyers" class="btn btn-warning text-white fw-semibold px-4 py-2">
+        Browse All Lawyers <i class="ri-arrow-right-line ms-2"></i>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">How AdviLaw Works</h2>
+      <p class="text-muted">
+        Our platform makes finding the right legal help simple, transparent, and efficient.
+      </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="step-box">
+          <div class="step-icon">
+            <i class="fa-solid fa-magnifying-glass" style="color: #FFD43B;"></i>
+          </div>
+          <h6 class="fw-bolder fs-4">1. Search for a Lawyer</h6>
+          <p class="text-muted">
+            Specify your legal needs and location to find qualified attorneys who specialize in your case type.
           </p>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="WhySectionItem px-3">
-          <i class="fas fa-shield-alt fa-2x text-secondary"></i>
-          <h5 class="fw-bold mb-2">Verified Lawyers</h5>
-          <p class="text-muted small">All lawyers are background-checked and licensed professionals.</p>
+      <div class="col-md-6 col-lg-4">
+        <div class="step-box">
+          <div class="step-icon">
+            <i class="fa-solid fa-code-compare" style="color: #FFD43B;"></i>
+          </div>
+          <h6 class="fw-bolder fs-4">2. Compare Profiles</h6>
+          <p class="text-muted">
+            Review detailed profiles, client ratings, experience, and fees to find the perfect match for your legal
+            needs.
+          </p>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="WhySectionItem px-3">
-          <i class="fa-solid fa-money-bill-1 fa-2x text-secondary mb-2"></i>
-          <h5 class="fw-bold">No Hidden Fees</h5>
-          <p class="small text-muted">We believe in clear, upfront pricing. What you see is what you pay.</p>
+      <div class="col-md-6 col-lg-4">
+        <div class="step-box">
+          <div class="step-icon">
+            <i class="fa-solid fa-comment" style="color: #FFD43B;"></i>
+          </div>
+          <h6 class="fw-bolder fs-4">3. Connect & Consult</h6>
+          <p class="text-muted">
+            Schedule consultations, discuss your case, and hire the lawyer who best understands your legal situation.
+          </p>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="WhySectionItem px-3">
-          <i class="fas fa-users fa-2x text-secondary"></i>
-          <h5 class="fw-bold mb-2">10,000+ Clients Served</h5>
-          <p class="text-muted small">Trusted by thousands of clients nationwide.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Metrics Section -->
+<!-- <section class="py-5 bg-white">
+  <div class="container">
+    <div class="row g-4 text-center justify-content-center">
+      <div class="col-sm-6 col-md-3">
+        <div class="metric-box">
+          <div class="metric-icon">
+            <i class="ri-group-line"></i>
+          </div>
+          <div class="metric-value">5,000+</div>
+          <p class="text-muted mb-0">Satisfied Clients</p>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="WhySectionItem px-3">
-          <i class="fas fa-trophy fa-2x text-secondary"></i>
-          <h5 class="fw-bold">95% Success Rate</h5>
-          <p class="small text-muted">High client satisfaction and case success rates.</p>
+      <div class="col-sm-6 col-md-3">
+        <div class="metric-box">
+          <div class="metric-icon">
+            <i class="ri-medal-line"></i>
+          </div>
+          <div class="metric-value">98%</div>
+          <p class="text-muted mb-0">Expert Lawyers</p>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="WhySectionItem px-3">
-          <i class="fa-solid fa-shield-halved fa-2x text-secondary mb-2"></i>
-          <h5 class="fw-bold">Secure Payments</h5>
-          <p class="small text-muted">Your transactions are protected with industry-grade security measures.</p>
+      <div class="col-sm-6 col-md-3">
+        <div class="metric-box">
+          <div class="metric-icon">
+            <i class="ri-shield-check-line"></i>
+          </div>
+          <div class="metric-value">50%</div>
+          <p class="text-muted mb-0">Success Rate</p>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="WhySectionItem px-3">
-          <i class="fa-solid fa-users fa-2x text-secondary mb-2"></i>
-          <h5 class="fw-bold">Trusted By Businesses</h5>
-          <p class="small text-muted">Hundreds of professionals and companies rely on AdvILaw for fast, transparent
-            legal help.</p>
+      <div class="col-sm-6 col-md-3">
+        <div class="metric-box">
+          <div class="metric-icon">
+            <i class="ri-map-pin-line"></i>
+          </div>
+          <div class="metric-value">50+</div>
+          <p class="text-muted mb-0">Cities Covered</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+ -->
+
+
+<!-- Why Choose Advilaw Section -->
+<section class="why-section">
+  <div class="container">
+    <h1 class="mb-4">Why Choose Advilaw?</h1>
+    <p class="lead mb-5">We're committed to making legal services accessible, transparent, and effective for everyone.
+    </p>
+
+    <hr class="divider">
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="feature-card">
+          <div class="step-icon">
+
+            <i class="fas fa-bolt text-warning"></i>
+          </div>
+          <h3>Fast Response</h3>
+          <p>Connect with lawyers quickly - most respond within 24 hours to your inquiries.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="feature-card">
+          <div class="step-icon">
+            <i class="fas fa-user-shield text-warning"></i>
+          </div>
+          <h3>Verified Lawyers</h3>
+          <p>All lawyers are carefully vetted and verified legal professionals.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="feature-card">
+          <div class="step-icon">
+            <i class="fas fa-tag text-warning"></i>
+          </div>
+          <h3>No Hidden Fees</h3>
+          <p>We believe in total upfront pricing. What you see is what you pay.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="feature-card">
+          <div class="step-icon">
+            <i class="fas fa-chart-line text-warning"></i>
+          </div>
+          <h3>95% Success Rate</h3>
+          <p>High satisfaction with our recommended legal experts.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-3">
+        <div class="feature-card">
+          <div class="step-icon">
+            <i class="fas fa-lock text-warning"></i>
+          </div>
+          <h3>Secure Payments</h3>
+          <p>Your transactions are protected by industry-standard encryption.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="feature-card">
+          <div class="step-icon ">
+            <i class="fas fa-headset text-warning"></i>
+          </div>
+          <h3>24/7 Support</h3>
+          <p>Our customer service team is available around the clock to assist you.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="feature-card">
+          <div class="step-icon">
+            <i class="fas fa-users text-warning"></i>
+          </div>
+          <h3>10,000+ Clients Served</h3>
+          <p>Trusted by thousands of clients who have found the right legal help.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="feature-card">
+          <div class="step-icon">
+            <i class="fas fa-building text-warning"></i>
+          </div>
+          <h3>Trusted By Businesses</h3>
+          <p>Hundreds of companies rely on us for consistent legal help.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center section-title">What Our Clients Say</h2>
+    <p class="text-center mb-5">Real feedback from people who found the legal help they needed through our platform.
+    </p>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="testimonial-card">
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <span>5.0</span>
+          </div>
+          <p><em>I was facing a complex divorce case and found an excellent family lawyer through Advilaw. The process
+              was smooth, and my attorney was incredibly knowledgeable. Highly recommend</em></p>
+          <div class="client-name">Jennifer Martinez</div>
+          <div class="client-type">Family Law Client</div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="testimonial-card">
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+            <span>4.5</span>
+          </div>
+          <p><em>As a small business owner, I needed legal help with contracts. Advilaw connected me with a business
+              attorney who understood my needs perfectly. The transparent pricing was a huge plus.</em></p>
+          <div class="client-name">Robert Johnson</div>
+          <div class="client-type">Business Owner</div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="testimonial-card">
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <span>5.0</span>
+          </div>
+          <p><em>I was in a difficult situation with immigration issues. The lawyer I found through Advilaw was
+              compassionate, knowledgeable, and helped me navigate the complex process successfully.</em></p>
+          <div class="client-name">Sophia Chen</div>
+          <div class="client-type">Immigration Client</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="#" class="btn btn-outline-warning">Read More Client Reviews</a>
     </div>
   </div>
 </section>
