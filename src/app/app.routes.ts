@@ -26,7 +26,8 @@ import { ProposalDetailsComponent } from './pages/proposals/details/details.comp
 import { AnalysisContentComponent } from './components/dashboard/analysis-content/analysis-content.component';
 import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-content.component';
 import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
-import { PaymentsContentComponent } from './components/dashboard/payments-content/payments-content.component';
+// Update the import to match the actual exported member from the file
+import { LawyerPaymentsComponent } from './components/dashboard/payments-content/lawyerPaymentDashboard/lawyerPayments.component';
 import { ReviewsContentComponent } from './components/dashboard/reviews-content/reviews-content.component';
 import { ConsultationsContentComponent } from './components/dashboard/consultations-content/consultations-content.component';
 
@@ -114,8 +115,7 @@ export const routes: Routes = [
       { path: 'analytics', component: AnalysisContentComponent },
       { path: 'profile', component: ProfileContentComponent },
       { path: 'jobs', component: JobsContentComponent },
-      { path: 'consultations', component: ConsultationsContentComponent },
-      { path: 'payments', component: PaymentsContentComponent },
+      { path: 'lawyer-payments', component: LawyerPaymentsComponent },
       { path: 'reviews', component: ReviewsContentComponent },
 
       {

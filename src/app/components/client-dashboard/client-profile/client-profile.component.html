@@ -80,7 +80,7 @@
                   <div class="profile-image-container">
                     <div class="profile-image-wrapper">
                       <img 
-                        [src]="imagePreview || 'https://localhost:44302'+client?.imageUrl || 'assets/images/default-profile.png'" 
+                        [src]="imagePreview || 'https://localhost:44302'+client.imageUrl || 'assets/images/default-profile.png'" 
                         alt="Profile Picture" 
                         class="profile-image"
                         (error)="onImageError($event)"

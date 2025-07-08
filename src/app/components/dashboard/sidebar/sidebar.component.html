@@ -54,12 +54,18 @@
       [toLink]="'/dashboard/consultations'"
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
+
+
+
     <app-nav-item
+      *ngIf="isLawyer()"
       [iconClass]="'fa-money-check'"
-      [name]="'Payments'"
-      [toLink]="'/dashboard/payments'"
+      [name]="'Lawyer Payments'"
+      [toLink]="'/dashboard/lawyer-payments'"
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
+
+    
     <app-nav-item
       [iconClass]="'fa-microphone'"
       [name]="'Reviews'"
