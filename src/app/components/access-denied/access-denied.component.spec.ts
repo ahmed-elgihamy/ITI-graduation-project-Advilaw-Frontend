@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClientDashboardComponent } from './client-dashboard.component';
+import { AccessDeniedComponent } from './access-denied.component';
 
-describe('ClientDashboardComponent', () => {
-  let component: ClientDashboardComponent;
-  let fixture: ComponentFixture<ClientDashboardComponent>;
+describe('AccessDeniedComponent', () => {
+  let component: AccessDeniedComponent;
+  let fixture: ComponentFixture<AccessDeniedComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ClientDashboardComponent]
+      imports: [AccessDeniedComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ClientDashboardComponent);
+    fixture = TestBed.createComponent(AccessDeniedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

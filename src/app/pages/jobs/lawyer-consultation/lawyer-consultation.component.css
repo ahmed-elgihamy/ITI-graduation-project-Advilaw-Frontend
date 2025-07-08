@@ -1,0 +1,387 @@
+.consultation-page {
+  background: var(--color-sand-beige);
+  color: var(--color-navy-blue);
+  min-height: 100vh;
+}
+
+.loading-overlay,
+.error-container {
+  min-height: 50vh;
+}
+
+.consultation-header {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: linear-gradient(135deg, var(--color-sand-beige) 0%, rgba(240, 179, 90, 0.1) 100%);
+  position: relative;
+}
+
+.consultation-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><pattern id="grain" width="100" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23313f4c" opacity="0.05"/></pattern></defs><rect width="100" height="20" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
+}
+
+
+
+.consultation-header h1 {
+  font-size: 2.5rem;
+  letter-spacing: 0.1em;
+  margin: 1rem 0 0.5rem;
+  color: var(--color-navy-blue);
+}
+
+.consultation-header .meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.consultation-header .meta .divider {
+  color: var(--color-medium-brown);
+  font-size: 1.2rem;
+}
+
+.consultation-header .meta span {
+  color: var(--color-navy-blue);
+  font-size: 1rem;
+}
+
+.consultation-header .actions {
+  margin-top: 1.5rem;
+}
+
+.consultation-header .actions .btn {
+  margin: 0 0.5rem;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.consultation-header .actions .consult-btn {
+  background: var(--color-mustard);
+  color: var(--color-navy-blue);
+  border: 1px solid var(--color-mustard);
+}
+
+.consultation-header .actions .consult-btn:hover {
+  background: transparent;
+  border-color: var(--color-navy-blue);
+  color: var(--color-navy-blue);
+  transform: translateY(-1px);
+}
+
+.bio-section {
+  padding: 3rem 0 2rem;
+}
+
+.bio-section h2 {
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  font-size: 1.1rem;
+  color: var(--color-navy-blue);
+}
+
+.bio-section p {
+  line-height: 1.6;
+  font-size: 0.95rem;
+  color: var(--color-navy-blue);
+  text-align: justify;
+}
+
+.consultation-form-section h2 {
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: var(--color-navy-blue);
+}
+
+.form-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(49, 63, 76, 0.1);
+  border: 2px solid var(--color-mustard);
+  transition: all 0.3s ease;
+}
+
+.form-card:hover {
+  box-shadow: 0 12px 40px rgba(49, 63, 76, 0.15);
+}
+
+.form-label {
+  color: var(--color-navy-blue);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-control,
+.form-select {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-mustard);
+  box-shadow: 0 0 0 0.2rem rgba(240, 179, 90, 0.25);
+  background-color: white;
+}
+
+.form-control-lg {
+  padding: 1rem 1.25rem;
+  font-size: 1.1rem;
+}
+
+.form-select-lg {
+  padding: 1rem 1.25rem;
+  font-size: 1.1rem;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: #dc3545;
+  background-color: #fff5f5;
+}
+
+.form-control.is-invalid:focus,
+.form-select.is-invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+  font-size: 0.875rem;
+  color: #dc3545;
+  margin-top: 0.25rem;
+}
+
+.form-text {
+  font-size: 0.875rem;
+  color: var(--color-medium-brown);
+  margin-top: 0.25rem;
+}
+
+.form-check-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  border: 2px solid #e9ecef;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.form-check-input:checked {
+  background-color: var(--color-mustard);
+  border-color: var(--color-mustard);
+}
+
+.form-check-input:focus {
+  border-color: var(--color-mustard);
+  box-shadow: 0 0 0 0.2rem rgba(240, 179, 90, 0.25);
+}
+
+.form-check-label {
+  color: var(--color-navy-blue);
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.btn {
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+
+.btn-primary {
+  background: var(--color-mustard);
+  border-color: var(--color-mustard);
+  color: var(--color-navy-blue);
+}
+
+.btn-primary:hover {
+  background: transparent;
+  border-color: var(--color-navy-blue);
+  color: var(--color-navy-blue);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  color: white;
+  transform: none;
+}
+
+.btn-outline-secondary {
+  border-color: var(--color-medium-brown);
+  color: var(--color-medium-brown);
+}
+
+.btn-outline-secondary:hover {
+  background: var(--color-medium-brown);
+  border-color: var(--color-medium-brown);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.btn-outline-secondary:disabled {
+  opacity: 0.6;
+  transform: none;
+}
+
+.alert {
+  border-radius: 8px;
+  border: none;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.alert-success {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+.alert-danger {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.alert-dismissible .btn-close {
+  padding: 0.75rem 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 991.98px) {
+  .consultation-header h1 {
+    font-size: 2rem;
+  }
+  
+  .form-card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .consultation-header {
+    padding: 2rem 1rem;
+  }
+  
+  .consultation-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .form-card {
+    padding: 1.5rem;
+  }
+  
+
+  
+  .consultation-header .meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .consultation-header .meta .divider {
+    display: none;
+  }
+  
+  .btn-lg {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .consultation-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .consultation-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .form-card {
+    padding: 1.25rem;
+    margin: 0 0.5rem;
+  }
+  
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .d-flex.gap-3 {
+    flex-direction: column;
+  }
+  
+
+}
+
+/* Animation for form elements */
+.form-control,
+.form-select,
+.btn {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading spinner styles */
+.spinner-border {
+  color: var(--color-mustard) !important;
+}
+
+/* Custom scrollbar for textarea */
+textarea.form-control::-webkit-scrollbar {
+  width: 8px;
+}
+
+textarea.form-control::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+textarea.form-control::-webkit-scrollbar-thumb {
+  background: var(--color-mustard);
+  border-radius: 4px;
+}
+
+textarea.form-control::-webkit-scrollbar-thumb:hover {
+  background: var(--color-navy-blue);
+}

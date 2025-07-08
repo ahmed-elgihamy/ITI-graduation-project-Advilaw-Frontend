@@ -33,11 +33,11 @@ export class JobsService {
   GetActiveJobs(page: number): Observable<ApiResponse<PagedResponse<any>>> {
     return this.http.get<ApiResponse<PagedResponse<any>>>(
       `${this.apiUrl}/Job/me/ActiveJobs?pageNumber=${page}`
-    );
+    ); 
   }
 
   CreateJob(data: any): Observable<ApiResponse<any>> {
-    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/job/create`, data);
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/Job/Create`, data);
   }
 
   ApplyToJob(data: CreateProposalDTO): Observable<ApiResponse<any>> {
