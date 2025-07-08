@@ -1,0 +1,25 @@
+.sidebar {
+    background: var(--color-navy-blue);
+    color: #fff;
+    min-height: 100vh;
+  }
+  .sidebar .nav-link,
+  #sidebarMenuOffcanvas .nav-link {
+    color: #fff;
+    transition: color 0.2s, background 0.2s;
+  }
+ 
+  .sidebar .nav-link.active, .sidebar .nav-link:hover,
+  #sidebarMenuOffcanvas .nav-link.active, #sidebarMenuOffcanvas .nav-link:hover {
+    color: var(--color-navy-blue);
+    background: var(--color-sand-beige);
+  }
+  .sidebar .nav-link i,
+  #sidebarMenuOffcanvas .nav-link i {
+    margin-right: 8px;
+  }
+  @media (max-width: 991.98px) {
+    .sidebar {
+      min-height: auto;
+    }
+  }

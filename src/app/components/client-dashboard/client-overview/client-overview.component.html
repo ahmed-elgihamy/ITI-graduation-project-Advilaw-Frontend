@@ -1,0 +1,141 @@
+<div class="overview-container">
+  <div class="overview-header mb-4">
+    <h2 class="mb-2">Overview</h2>
+    <p class="text-muted">Welcome to your dashboard overview. Here you can see a summary of your activity.</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3 text-muted">Loading your statistics...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="alert alert-danger" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    {{ error }}
+  </div>
+
+  <!-- Statistics Cards -->
+  <div *ngIf="!isLoading && !error" class="row g-4">
+    <!-- Jobs Card -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card overview-card h-100 shadow-sm border-0">
+        <div class="card-body text-center p-4">
+          <div class="card-icon mb-3">
+            <i class="fas fa-briefcase text-primary fa-2x"></i>
+          </div>
+          <h3 class="card-title mb-2">{{ statistics.jobsCount }}</h3>
+          <p class="card-text text-muted mb-3">Total Jobs</p>
+          <a routerLink="../consults" class="btn btn-outline-primary btn-sm">
+            View Jobs <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chats Card -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card overview-card h-100 shadow-sm border-0">
+        <div class="card-body text-center p-4">
+          <div class="card-icon mb-3">
+            <i class="fas fa-comments text-success fa-2x"></i>
+          </div>
+          <h3 class="card-title mb-2">{{ statistics.chatsCount }}</h3>
+          <p class="card-text text-muted mb-3">Active Chats</p>
+          <a routerLink="../chats" class="btn btn-outline-success btn-sm">
+            View Chats <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payments Card -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card overview-card h-100 shadow-sm border-0">
+        <div class="card-body text-center p-4">
+          <div class="card-icon mb-3">
+            <i class="fas fa-credit-card text-warning fa-2x"></i>
+          </div>
+          <h3 class="card-title mb-2">{{ statistics.paymentsCount }}</h3>
+          <p class="card-text text-muted mb-3">Total Payments</p>
+          <a routerLink="../payments" class="btn btn-outline-warning btn-sm">
+            View Payments <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consultations Card -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card overview-card h-100 shadow-sm border-0">
+        <div class="card-body text-center p-4">
+          <div class="card-icon mb-3">
+            <i class="fas fa-calendar-check text-info fa-2x"></i>
+          </div>
+          <h3 class="card-title mb-2">{{ statistics.consultationsCount }}</h3>
+          <p class="card-text text-muted mb-3">Consultations</p>
+          <a routerLink="../consults" class="btn btn-outline-info btn-sm">
+            View Consultations <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions Section -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <h4 class="mb-4">Quick Actions</h4>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="quick-action-card">
+            <a routerLink="/jobs/create" class="d-block p-4 text-decoration-none">
+              <div class="d-flex align-items-center">
+                <div class="quick-action-icon me-3">
+                  <i class="fas fa-plus-circle text-primary fa-lg"></i>
+                </div>
+                <div>
+                  <h6 class="mb-1">Create New Job</h6>
+                  <p class="text-muted mb-0 small">Post a new legal job request</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="quick-action-card">
+            <a routerLink="../profile" class="d-block p-4 text-decoration-none">
+              <div class="d-flex align-items-center">
+                <div class="quick-action-icon me-3">
+                  <i class="fas fa-cog text-secondary fa-lg"></i>
+                </div>
+                <div>
+                  <h6 class="mb-1">Update Profile</h6>
+                  <p class="text-muted mb-0 small">Manage your account settings</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="quick-action-card">
+            <a routerLink="/lawyers" class="d-block p-4 text-decoration-none">
+              <div class="d-flex align-items-center">
+                <div class="quick-action-icon me-3">
+                  <i class="fas fa-search text-success fa-lg"></i>
+                </div>
+                <div>
+                  <h6 class="mb-1">Find Lawyers</h6>
+                  <p class="text-muted mb-0 small">Browse available legal professionals</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

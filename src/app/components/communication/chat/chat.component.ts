@@ -1,3 +1,4 @@
+
 import { UserInfo } from './../../../types/UserInfo';
 import { CommonModule, NgClass } from "@angular/common";
 import { Component, effect, ElementRef, inject, signal, ViewChild } from "@angular/core";
@@ -19,6 +20,7 @@ export interface Message {
 
 @Component({
   selector: 'app-chat',
+
   imports: [FormsModule, NgClass, CommonModule, SecondsToTimePipe],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
@@ -43,6 +45,7 @@ export class ChatComponent {
       sessionStorage.setItem(key, id);
     }
     return id;
+
   }
 
   chatService = inject(ChatService);
@@ -81,6 +84,9 @@ export class ChatComponent {
     this.chatService.stopConnection();
   }
 
+  goBack(): void {
+    this.router.navigate(['/client/chats']);
+  }
 
 }
 

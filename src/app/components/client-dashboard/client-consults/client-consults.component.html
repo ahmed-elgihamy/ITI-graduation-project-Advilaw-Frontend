@@ -1,0 +1,328 @@
+<div class="consults-container">
+  <!-- Header Section -->
+  <div class="consults-header mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h2 class="mb-2">My Consultations & Jobs</h2>
+        <p class="text-muted mb-0">Manage and track all your legal consultations and job postings</p>
+      </div>
+      <button class="btn btn-primary" routerLink="/jobs/create">
+        <i class="fas fa-plus me-2"></i>Create New Job
+      </button>
+    </div>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="row g-4 mb-4">
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-briefcase text-primary fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1">{{ statistics.total }}</h4>
+          <p class="stat-label text-muted mb-0">Total Jobs</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-clock text-warning fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1">{{ statistics.pending }}</h4>
+          <p class="stat-label text-muted mb-0">Pending</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-play-circle text-info fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1">{{ statistics.active }}</h4>
+          <p class="stat-label text-muted mb-0">Active</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-check-circle text-success fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1">{{ statistics.completed }}</h4>
+          <p class="stat-label text-muted mb-0">Completed</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-8 col-sm-12">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-dollar-sign text-success fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1">{{ formatCurrency(statistics.totalBudget) }}</h4>
+          <p class="stat-label text-muted mb-0">Total Budget</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="card-title mb-0">
+          <i class="fas fa-filter me-2"></i>Filters
+        </h5>
+        <button 
+          class="btn btn-outline-secondary btn-sm" 
+          (click)="clearFilters()"
+          *ngIf="selectedStatus !== 'all' || searchTerm || selectedField !== 'all'"
+        >
+          <i class="fas fa-times me-1"></i>Clear Filters
+        </button>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label for="searchInput" class="form-label">Search</label>
+          <input 
+            type="text" 
+            id="searchInput"
+            class="form-control" 
+            placeholder="Search by title, description, or lawyer name..."
+            [(ngModel)]="searchTerm"
+            (input)="onSearchChange()"
+          >
+        </div>
+        <div class="col-md-4">
+          <label for="statusFilter" class="form-label">Status</label>
+          <select 
+            id="statusFilter"
+            class="form-select" 
+            [(ngModel)]="selectedStatus"
+            (change)="onStatusFilterChange()"
+          >
+            <option *ngFor="let option of statusOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="fieldFilter" class="form-label">Job Field</label>
+          <select 
+            id="fieldFilter"
+            class="form-select" 
+            [(ngModel)]="selectedField"
+            (change)="onFieldFilterChange()"
+          >
+            <option value="all">All Fields</option>
+            <option *ngFor="let field of jobFields" [value]="field">
+              {{ field }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3 text-muted">Loading your consultations...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="alert alert-danger" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    {{ error }}
+  </div>
+
+  <!-- Jobs Table -->
+  <div *ngIf="!isLoading && !error" class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-0 py-3">
+      <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">
+            <i class="fas fa-table me-2"></i>
+            Consultations & Jobs ({{ filteredJobs.length }} of {{ totalItems }})
+            <span *ngIf="selectedStatus !== 'all' || searchTerm || selectedField !== 'all'" 
+                  class="badge bg-warning text-dark ms-2">
+              <i class="fas fa-filter me-1"></i>Filtered
+            </span>
+          </h5>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-secondary btn-sm" (click)="loadJobs()">
+            <i class="fas fa-sync-alt me-1"></i>Refresh
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="px-3">Job ID</th>
+              <th class="px-3">Title & Description</th>
+              <th class="px-3">Status</th>
+              <th class="px-3">Budget</th>
+              <th class="px-3">Field</th>
+              <th class="px-3">Lawyer</th>
+              <th class="px-3">Proposals</th>
+              <th class="px-3">Appointments</th>
+              <th class="px-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let job of filteredJobs" class="align-middle">
+              <!-- Job ID -->
+              <td class="px-3">
+                <span class="fw-bold text-primary">#{{ job.id }}</span>
+              </td>
+              
+              <!-- Title & Description -->
+              <td class="px-3">
+                <div class="job-info">
+                  <h6 class="mb-1 text-truncate" style="max-width: 200px;">
+                    {{ job.header }}
+                  </h6>
+                  <p class="text-muted small mb-0 text-truncate" style="max-width: 200px;">
+                    {{ job.description }}
+                  </p>
+                  <small class="text-info" *ngIf="job.isAnonymus">
+                    <i class="fas fa-user-secret me-1"></i>Anonymous
+                  </small>
+                </div>
+              </td>
+              
+              <!-- Status -->
+              <td class="px-3">
+                <span [class]="getStatusBadgeClass(job.status)">
+                  {{ getStatusLabel(job.status) }}
+                </span>
+              </td>
+              
+              <!-- Budget -->
+              <td class="px-3">
+                <span class="fw-bold text-success">
+                  {{ formatCurrency(job.budget) }}
+                </span>
+              </td>
+              
+              <!-- Field -->
+              <td class="px-3">
+                <span class="badge bg-light text-dark">
+                  {{ job.jobFieldName }}
+                </span>
+              </td>
+              
+              <!-- Lawyer -->
+              <td class="px-3">
+                <div *ngIf="job.lawyerId; else noLawyer" class="d-flex align-items-center">
+                  <img 
+                    [src]="job.clientProfilePictureUrl" 
+                    alt="Lawyer" 
+                    class="rounded-circle me-2"
+                    style="width: 32px; height: 32px; object-fit: cover;"
+                    onerror="this.src='assets/images/default-avatar.png'"
+                  >
+                  <span class="fw-medium">Assigned</span>
+                </div>
+                <ng-template #noLawyer>
+                  <span class="text-muted">
+                    <i class="fas fa-user-slash me-1"></i>Not Assigned
+                  </span>
+                </ng-template>
+              </td>
+              
+              <!-- Proposals -->
+              <td class="px-3">
+                <span class="badge bg-info">
+                  {{ getProposalsCount(job) }} proposals
+                </span>
+              </td>
+              
+              <!-- Appointments -->
+              <td class="px-3">
+                <span class="badge bg-warning text-dark">
+                  {{ getAppointmentsCount(job) }} appointments
+                </span>
+              </td>
+              
+              <!-- Actions -->
+              <td class="px-3">
+                <div class="btn-group" role="group">
+                  <button 
+                    class="btn btn-outline-primary btn-sm" 
+                    [routerLink]="['/jobs', job.id]"
+                    title="View Details"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button 
+                    *ngIf="job.status === JobStatus.NotAssigned"
+                    class="btn btn-outline-success btn-sm" 
+                    [routerLink]="['/jobs', job.id]"
+                    title="View Proposals"
+                  >
+                    <i class="fas fa-file-contract"></i>
+                  </button>
+                  <button 
+                    *ngIf="job.status === JobStatus.WaitingAppointment || job.status === JobStatus.LawyerRequestedAppointment"
+                    class="btn btn-outline-info btn-sm" 
+                    [routerLink]="['/jobs', job.id]"
+                    title="Manage Appointments"
+                  >
+                    <i class="fas fa-calendar-alt"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Empty State -->
+      <div *ngIf="filteredJobs.length === 0 && !isLoading" class="text-center py-5">
+        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+        <h5 class="text-muted">No consultations found</h5>
+        <p class="text-muted">Try adjusting your filters or create a new job posting.</p>
+        <button class="btn btn-primary" routerLink="/jobs/create">
+          <i class="fas fa-plus me-2"></i>Create New Job
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="totalPages > 1 && !isLoading" class="d-flex justify-content-center mt-4">
+    <nav aria-label="Jobs pagination">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        </li>
+        
+        <li *ngFor="let page of [].constructor(totalPages); let i = index" 
+            class="page-item" 
+            [class.active]="currentPage === i + 1">
+          <button class="page-link" (click)="onPageChange(i + 1)">
+            {{ i + 1 }}
+          </button>
+        </li>
+        
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

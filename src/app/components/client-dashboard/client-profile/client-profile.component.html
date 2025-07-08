@@ -1,0 +1,299 @@
+<div class="profile-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading profile...</p>
+  </div>
+
+  <!-- Profile Content -->
+  <div *ngIf="!isLoading && client" class="profile-content">
+    <!-- Header Section -->
+    <div class="profile-header">
+      <div class="profile-cover">
+        <div class="profile-avatar-container">
+          <div class="profile-avatar" [class.has-image]="client.imageUrl || imagePreview">
+            <img 
+              *ngIf="client.imageUrl || imagePreview" 
+              [src]="imagePreview || 'https://localhost:44302'+client.imageUrl" 
+              [alt]="client.userName"
+              class="avatar-image"
+            >
+
+            <div *ngIf="!client.imageUrl && !imagePreview" class="avatar-initials">
+              {{ getInitials(client.userName) }}
+            </div>
+          </div>
+        </div>
+        
+        <div class="profile-info">
+          <h1 class="profile-name">{{ client.userName }}</h1>
+          <p class="profile-email">{{ client.email }}</p>
+          <div class="profile-actions">
+            <button 
+              *ngIf="!isEditing" 
+              (click)="setEditMode(true)" 
+              class="btn btn-primary"
+            >
+              <i class="fas fa-edit"></i>
+              Edit Profile
+            </button>
+            <div *ngIf="isEditing" class="edit-actions">
+              <button (click)="saveProfile()" class="btn btn-success">
+                <i class="fas fa-save"></i>
+                Save Changes
+              </button>
+              <button (click)="cancelEdit()" class="btn btn-secondary">
+                <i class="fas fa-times"></i>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="profile-main">
+      <div class="profile-grid">
+        <!-- Profile Details Card -->
+        <div class="profile-card">
+          <div class="card-header">
+            <h3><i class="fas fa-user"></i> Profile Information</h3>
+          </div>
+          <div class="card-content">
+            <!-- Success Message -->
+            <div *ngIf="successMsg" class="alert alert-success">
+              <i class="fas fa-check-circle"></i>
+              {{ successMsg }}
+            </div>
+
+            <!-- Error Message -->
+            <div *ngIf="errorMsg" class="alert alert-error">
+              <i class="fas fa-exclamation-circle"></i>
+              {{ errorMsg }}
+            </div>
+
+            <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-form">
+              <div class="form-grid">
+                <!-- Profile Image Section -->
+                <div class="image-section">
+                  <div class="profile-image-container">
+                    <div class="profile-image-wrapper">
+                      <img 
+                        [src]="imagePreview || 'https://localhost:44302'+client?.imageUrl || 'assets/images/default-profile.png'" 
+                        alt="Profile Picture" 
+                        class="profile-image"
+                        (error)="onImageError($event)"
+                      >
+                      <div class="image-overlay" *ngIf="isEditing">
+                        <label for="profile-image-input" class="upload-btn">
+                          <i class="fas fa-camera"></i>
+                          <span>Change Photo</span>
+                        </label>
+                      </div>
+                    </div>
+                    <input 
+                      type="file" 
+                      id="profile-image-input" 
+                      accept="image/*" 
+                      (change)="onImageChange($event)"
+                      style="display: none;"
+                    >
+                    <p class="image-hint" *ngIf="isEditing">Click to upload a new profile picture (JPG, PNG, max 2MB)</p>
+                  </div>
+                </div>
+
+                <!-- Form Fields Section -->
+                <div class="form-fields">
+                  <div class="form-section">
+                    <h3>Personal Information</h3>
+                    
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="userName">User Name *</label>
+                        <input 
+                          type="text" 
+                          id="userName" 
+                          formControlName="userName" 
+                          placeholder="Enter your user name"
+                          [class.error]="profileForm.get('userName')?.invalid && profileForm.get('userName')?.touched"
+                        >
+                        <span class="error-message" *ngIf="getErrorMessage('userName')">
+                          {{ getErrorMessage('userName') }}
+                        </span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input 
+                          type="email" 
+                          id="email" 
+                          formControlName="email" 
+                          placeholder="Enter your email address"
+                          [class.error]="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
+                        >
+                        <span class="error-message" *ngIf="getErrorMessage('email')">
+                          {{ getErrorMessage('email') }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="countryCode">Country Code</label>
+                        <input 
+                          type="text" 
+                          id="countryCode" 
+                          formControlName="countryCode" 
+                          placeholder="e.g., 20"
+                          [class.error]="profileForm.get('countryCode')?.invalid && profileForm.get('countryCode')?.touched"
+                        >
+                        <span class="error-message" *ngIf="getErrorMessage('countryCode')">
+                          {{ getErrorMessage('countryCode') }}
+                        </span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input 
+                          type="tel" 
+                          id="phoneNumber" 
+                          formControlName="phoneNumber" 
+                          placeholder="e.g., 01012345678"
+                          [class.error]="profileForm.get('phoneNumber')?.invalid && profileForm.get('phoneNumber')?.touched"
+                        >
+                        <span class="error-message" *ngIf="getErrorMessage('phoneNumber')">
+                          {{ getErrorMessage('phoneNumber') }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="nationalityId">National ID *</label>
+                        <input 
+                          type="text" 
+                          id="nationalityId" 
+                          formControlName="nationalityId" 
+                          placeholder="14-digit national ID"
+                          maxlength="14"
+                          [class.error]="profileForm.get('nationalityId')?.invalid && profileForm.get('nationalityId')?.touched"
+                        >
+                        <span class="error-message" *ngIf="getErrorMessage('nationalityId')">
+                          {{ getErrorMessage('nationalityId') }}
+                        </span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="gender">Gender *</label>
+                        <select 
+                          id="gender" 
+                          formControlName="gender"
+                          [class.error]="profileForm.get('gender')?.invalid && profileForm.get('gender')?.touched"
+                        >
+                          <option *ngFor="let option of genderOptions" [value]="option.value">
+                            {{ option.label }}
+                          </option>
+                        </select>
+                        <span class="error-message" *ngIf="getErrorMessage('gender')">
+                          {{ getErrorMessage('gender') }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-section">
+                    <h3>Address Information</h3>
+                    
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="city">City *</label>
+                        <input 
+                          type="text" 
+                          id="city" 
+                          formControlName="city" 
+                          placeholder="Enter your city"
+                          [class.error]="profileForm.get('city')?.invalid && profileForm.get('city')?.touched"
+                        >
+                        <span class="error-message" *ngIf="getErrorMessage('city')">
+                          {{ getErrorMessage('city') }}
+                        </span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="country">Country *</label>
+                        <input 
+                          type="text" 
+                          id="country" 
+                          formControlName="country" 
+                          placeholder="Enter your country"
+                          [class.error]="profileForm.get('country')?.invalid && profileForm.get('country')?.touched"
+                        >
+                        <span class="error-message" *ngIf="getErrorMessage('country')">
+                          {{ getErrorMessage('country') }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="postalCode">Postal Code</label>
+                        <input 
+                          type="text" 
+                          id="postalCode" 
+                          formControlName="postalCode" 
+                          placeholder="Enter postal code"
+                          [class.error]="profileForm.get('postalCode')?.invalid && profileForm.get('postalCode')?.touched"
+                        >
+                        <span class="error-message" *ngIf="getErrorMessage('postalCode')">
+                          {{ getErrorMessage('postalCode') }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="form-actions" *ngIf="isEditing">
+                <button 
+                  type="button" 
+                  class="btn btn-secondary" 
+                  (click)="cancelEdit()"
+                  [disabled]="isLoading"
+                >
+                  <i class="fas fa-undo"></i>
+                  Reset
+                </button>
+                <button 
+                  type="submit" 
+                  class="btn btn-success" 
+                  [disabled]="profileForm.invalid || isLoading"
+                >
+                  <i class="fas fa-save"></i>
+                  <span *ngIf="!isLoading">Save Changes</span>
+                  <span *ngIf="isLoading">Saving...</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!isLoading && !client" class="error-container">
+    <i class="fas fa-exclamation-triangle"></i>
+    <h3>Profile Not Found</h3>
+    <p>Unable to load your profile information. Please try again later.</p>
+    <button (click)="loadProfileData()" class="btn btn-primary">
+      <i class="fas fa-refresh"></i>
+      Retry
+    </button>
+  </div>
+</div>
