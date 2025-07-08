@@ -17,11 +17,11 @@
             <li class="nav-item">
               <a  class="nav-link" routerLink="overview" routerLinkActive="active"><i class="fa-solid fa-house"></i> Overview</a>
             </li>
-            <li  class="nav-item">
-              <a  class="nav-link" routerLink="consults" routerLinkActive="active"><i class="fa-solid fa-calendar-check"></i> Consultations</a>
+            <li class="nav-item">
+              <a  class="nav-link" routerLink="profile" routerLinkActive="active"><i class="fa-solid fa-house"></i> My Profile</a>
             </li>
             <li  class="nav-item">
-              <a  class="nav-link"  routerLink="settings" routerLinkActive="active"><i class="fa-solid fa-gear"></i> Settings</a>
+              <a  class="nav-link" routerLink="consults" routerLinkActive="active"><i class="fa-solid fa-calendar-check"></i> Consultations</a>
             </li>
             <li  class="nav-item">
               <a  class="nav-link"  routerLink="chats" routerLinkActive="active"><i class="fa-regular fa-message"></i> Chats</a>
@@ -29,6 +29,7 @@
             <li  class="nav-item">
               <a  class="nav-link" routerLink="payments" routerLinkActive="active"><i class="fa-solid fa-money-check"></i> Payments</a>
             </li>
+          
           </ul>
         </div>
       </nav>
@@ -43,11 +44,11 @@
             <li class="nav-item" (click)="closeNavbar()">
               <a  class="nav-link" routerLink="overview" routerLinkActive="active" ><i class="fa-solid fa-house"></i> Overview</a>
             </li>
+            <li class="nav-item" (click)="closeNavbar()">
+              <a  class="nav-link" routerLink="profile" routerLinkActive="active" ><i class="fa-solid fa-house"></i> My Profile</a>
+            </li>
             <li  class="nav-item" (click)="closeNavbar()">
               <a  class="nav-link" routerLink="consults" routerLinkActive="active"><i class="fa-solid fa-calendar-check"></i> Consultations</a>
-            </li>
-            <li class="nav-item" (click)="closeNavbar()">
-              <a  class="nav-link" routerLink="settings" routerLinkActive="active"><i class="fa-solid fa-gear"></i> Settings</a>
             </li>
             <li class="nav-item" (click)="closeNavbar()">
               <a  class="nav-link"  routerLink="chats" routerLinkActive="active"><i class="fa-regular fa-message"></i> Chats</a>
@@ -55,6 +56,7 @@
             <li class="nav-item" (click)="closeNavbar()">
               <a  class="nav-link" routerLink="payments" routerLinkActive="active"><i class="fa-solid fa-money-check"></i> Payments</a>
             </li>
+           
           </ul>
         </div>
       </div>

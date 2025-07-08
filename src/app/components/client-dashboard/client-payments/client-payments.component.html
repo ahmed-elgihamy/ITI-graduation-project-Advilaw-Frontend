@@ -1,2 +1,555 @@
- <h2>Payments</h2>
-      <p>Access your Payments here.</p>
+<div class="payments-container">
+  <!-- Header -->
+  <div class="payments-header mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h2 class="mb-2">Payments & Balance</h2>
+        <p class="text-muted mb-0">Manage your payments, view balance, and request withdrawals</p>
+      </div>
+      <button class="btn btn-primary" (click)="openWithdrawalModal()">
+        <i class="fas fa-money-bill-wave me-2"></i>Request Withdrawal
+      </button>
+    </div>
+  </div>
+
+  <!-- Balance Cards -->
+  <div class="row g-4 mb-4">
+    <!-- Available Balance -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card balance-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-4">
+          <div class="balance-icon mb-3">
+            <i class="fas fa-wallet text-success fa-2x"></i>
+          </div>
+          <h3 class="balance-amount mb-2" *ngIf="!isLoadingBalance">
+            {{ formatCurrency(balance.availableBalance) }}
+          </h3>
+          <div class="spinner-border spinner-border-sm text-success" *ngIf="isLoadingBalance" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="balance-label text-muted mb-0">Available Balance</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Balance -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card balance-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-4">
+          <div class="balance-icon mb-3">
+            <i class="fas fa-clock text-warning fa-2x"></i>
+          </div>
+          <h3 class="balance-amount mb-2" *ngIf="!isLoadingBalance">
+            {{ formatCurrency(balance.pendingBalance) }}
+          </h3>
+          <div class="spinner-border spinner-border-sm text-warning" *ngIf="isLoadingBalance" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="balance-label text-muted mb-0">Pending Balance</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Balance -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card balance-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-4">
+          <div class="balance-icon mb-3">
+            <i class="fas fa-chart-line text-primary fa-2x"></i>
+          </div>
+          <h3 class="balance-amount mb-2" *ngIf="!isLoadingBalance">
+            {{ formatCurrency(balance.totalBalance) }}
+          </h3>
+          <div class="spinner-border spinner-border-sm text-primary" *ngIf="isLoadingBalance" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="balance-label text-muted mb-0">Total Balance</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Rate -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card balance-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-4">
+          <div class="balance-icon mb-3">
+            <i class="fas fa-check-circle text-info fa-2x"></i>
+          </div>
+          <h3 class="balance-amount mb-2" *ngIf="!isLoadingStatistics">
+            {{ statistics.successRate }}%
+          </h3>
+          <div class="spinner-border spinner-border-sm text-info" *ngIf="isLoadingStatistics" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="balance-label text-muted mb-0">Success Rate</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="row g-4 mb-4">
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-credit-card text-primary fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1" *ngIf="!isLoadingStatistics">{{ statistics.totalPayments }}</h4>
+          <div class="spinner-border spinner-border-sm text-primary" *ngIf="isLoadingStatistics" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="stat-label text-muted mb-0">Total Payments</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-dollar-sign text-success fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1" *ngIf="!isLoadingStatistics">{{ formatCurrency(statistics.totalAmount) }}</h4>
+          <div class="spinner-border spinner-border-sm text-success" *ngIf="isLoadingStatistics" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="stat-label text-muted mb-0">Total Amount</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-check text-success fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1" *ngIf="!isLoadingStatistics">{{ formatCurrency(statistics.completedAmount) }}</h4>
+          <div class="spinner-border spinner-border-sm text-success" *ngIf="isLoadingStatistics" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="stat-label text-muted mb-0">Completed</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-exclamation-triangle text-warning fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1" *ngIf="!isLoadingStatistics">{{ formatCurrency(statistics.pendingAmount) }}</h4>
+          <div class="spinner-border spinner-border-sm text-warning" *ngIf="isLoadingStatistics" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="stat-label text-muted mb-0">Pending</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-undo text-info fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1" *ngIf="!isLoadingStatistics">{{ formatCurrency(statistics.withdrawalAmount) }}</h4>
+          <div class="spinner-border spinner-border-sm text-info" *ngIf="isLoadingStatistics" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="stat-label text-muted mb-0">Withdrawn</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center p-3">
+          <div class="stat-icon mb-2">
+            <i class="fas fa-times-circle text-danger fa-2x"></i>
+          </div>
+          <h4 class="stat-number mb-1" *ngIf="!isLoadingStatistics">{{ formatCurrency(statistics.failedAmount) }}</h4>
+          <div class="spinner-border spinner-border-sm text-danger" *ngIf="isLoadingStatistics" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="stat-label text-muted mb-0">Failed</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Messages -->
+  <div *ngIf="statisticsError" class="alert alert-danger mb-4" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>{{ statisticsError }}
+  </div>
+  <div *ngIf="balanceError" class="alert alert-danger mb-4" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>{{ balanceError }}
+  </div>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-4" id="paymentsTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments" type="button" role="tab">
+        <i class="fas fa-credit-card me-2"></i>Payment History
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="withdrawals-tab" data-bs-toggle="tab" data-bs-target="#withdrawals" type="button" role="tab">
+        <i class="fas fa-money-bill-wave me-2"></i>Withdrawals
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content" id="paymentsTabsContent">
+    <!-- Payments Tab -->
+    <div class="tab-pane fade show active" id="payments" role="tabpanel">
+      <!-- Filters -->
+      <div class="card mb-4 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-lg-3 col-md-6">
+              <label class="form-label">Status</label>
+              <select class="form-select" [(ngModel)]="selectedStatus">
+                <option *ngFor="let option of statusOptions" [value]="option.value">{{ option.label }}</option>
+              </select>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <label class="form-label">Payment Type</label>
+              <select class="form-select" [(ngModel)]="selectedType">
+                <option *ngFor="let option of typeOptions" [value]="option.value">{{ option.label }}</option>
+              </select>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <label class="form-label">Date Range</label>
+              <select class="form-select" [(ngModel)]="dateRange">
+                <option *ngFor="let option of dateRangeOptions" [value]="option.value">{{ option.label }}</option>
+              </select>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <label class="form-label">Search</label>
+              <input type="text" class="form-control" placeholder="Search payments..." [(ngModel)]="searchTerm">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <button class="btn btn-primary me-2" (click)="applyFilters()">
+                <i class="fas fa-filter me-1"></i>Apply Filters
+              </button>
+              <button class="btn btn-outline-secondary" (click)="clearFilters()">
+                <i class="fas fa-times me-1"></i>Clear Filters
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payments Table -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0">
+          <h5 class="mb-0">
+            <i class="fas fa-list me-2"></i>Payment History
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <!-- Loading State -->
+          <div *ngIf="isLoading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-muted">Loading payments...</p>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="error && !isLoading" class="alert alert-danger m-3" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+          </div>
+
+          <!-- Payments Table -->
+          <div *ngIf="!isLoading && !error" class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="px-3">Transaction ID</th>
+                  <th class="px-3">Type</th>
+                  <th class="px-3">Amount</th>
+                  <th class="px-3">Status</th>
+                  <th class="px-3">Recipient</th>
+                  <th class="px-3">Job</th>
+                  <th class="px-3">Date</th>
+                  <th class="px-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let payment of payments" class="align-middle">
+                  <!-- Transaction ID -->
+                  <td class="px-3">
+                    <span class="fw-bold text-primary">{{ payment.transactionId }}</span>
+                  </td>
+                  
+                  <!-- Type -->
+                  <td class="px-3">
+                    <span [class]="getTypeBadgeClass(payment.type)">
+                      {{ payment.type }}
+                    </span>
+                  </td>
+                  
+                  <!-- Amount -->
+                  <td class="px-3">
+                    <div class="payment-amount">
+                      <span class="fw-bold text-success">{{ formatCurrency(payment.amount) }}</span>
+                      <small class="text-muted d-block" *ngIf="payment.fees">
+                        Fees: {{ formatCurrency(payment.fees) }}
+                      </small>
+                      <small class="text-muted d-block" *ngIf="payment.netAmount">
+                        Net: {{ formatCurrency(payment.netAmount) }}
+                      </small>
+                    </div>
+                  </td>
+                  
+                  <!-- Status -->
+                  <td class="px-3">
+                    <span [class]="getStatusBadgeClass(payment.status)">
+                      {{ payment.status }}
+                    </span>
+                  </td>
+                  
+                  <!-- Recipient -->
+                  <td class="px-3">
+                    <div class="d-flex align-items-center">
+                      <img [src]="payment.recipientImgUrl" alt="Recipient" class="rounded-circle me-2" width="32" height="32">
+                      <span>{{ payment.recipientName }}</span>
+                    </div>
+                  </td>
+                  
+                  <!-- Job -->
+                  <td class="px-3">
+                    <div *ngIf="payment.jobId">
+                      <span class="fw-bold text-primary">#{{ payment.jobId }}</span>
+                      <small class="text-muted d-block">{{ payment.jobTitle }}</small>
+                    </div>
+                    <span class="text-muted" *ngIf="!payment.jobId">-</span>
+                  </td>
+                  
+                  <!-- Date -->
+                  <td class="px-3">
+                    <small>{{ formatDate(payment.createdAt) }}</small>
+                  </td>
+                  
+                  <!-- Actions -->
+                  <td class="px-3">
+                    <button class="btn btn-sm btn-outline-primary" title="View Details">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="!isLoading && !error && payments.length === 0" class="text-center py-5">
+            <i class="fas fa-credit-card fa-3x text-muted mb-3"></i>
+            <h5 class="text-muted">No payments found</h5>
+            <p class="text-muted">You haven't made any payments yet.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center mt-4" *ngIf="totalPages > 1">
+        <div class="text-muted">
+          Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ Math.min(currentPage * pageSize, totalItems) }} of {{ totalItems }} payments
+        </div>
+        <nav>
+          <ul class="pagination mb-0">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </li>
+            <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" 
+                [class.active]="currentPage === i + 1">
+              <button class="page-link" (click)="onPageChange(i + 1)">{{ i + 1 }}</button>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <button class="page-link" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Withdrawals Tab -->
+    <div class="tab-pane fade" id="withdrawals" role="tabpanel">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="fas fa-money-bill-wave me-2"></i>Withdrawal History
+          </h5>
+          <button class="btn btn-primary btn-sm" (click)="openWithdrawalModal()">
+            <i class="fas fa-plus me-1"></i>New Withdrawal
+          </button>
+        </div>
+        <div class="card-body p-0">
+          <!-- Loading State -->
+          <div *ngIf="isLoadingWithdrawals" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-muted">Loading withdrawals...</p>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="withdrawalsError && !isLoadingWithdrawals" class="alert alert-danger m-3" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>{{ withdrawalsError }}
+          </div>
+
+          <!-- Withdrawals Table -->
+          <div *ngIf="!isLoadingWithdrawals && !withdrawalsError" class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="px-3">ID</th>
+                  <th class="px-3">Amount</th>
+                  <th class="px-3">Status</th>
+                  <th class="px-3">Method</th>
+                  <th class="px-3">Fees</th>
+                  <th class="px-3">Net Amount</th>
+                  <th class="px-3">Requested</th>
+                  <th class="px-3">Processed</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let withdrawal of withdrawals" class="align-middle">
+                  <!-- ID -->
+                  <td class="px-3">
+                    <span class="fw-bold text-primary">#{{ withdrawal.id }}</span>
+                  </td>
+                  
+                  <!-- Amount -->
+                  <td class="px-3">
+                    <span class="fw-bold text-success">{{ formatCurrency(withdrawal.amount) }}</span>
+                  </td>
+                  
+                  <!-- Status -->
+                  <td class="px-3">
+                    <span [class]="getWithdrawalStatusBadgeClass(withdrawal.status)">
+                      {{ withdrawal.status }}
+                    </span>
+                  </td>
+                  
+                  <!-- Method -->
+                  <td class="px-3">
+                    <div>
+                      <span>{{ withdrawal.paymentMethod }}</span>
+                      <small class="text-muted d-block" *ngIf="withdrawal.bankAccount">
+                        {{ withdrawal.bankAccount }}
+                      </small>
+                    </div>
+                  </td>
+                  
+                  <!-- Fees -->
+                  <td class="px-3">
+                    <span class="text-muted">{{ formatCurrency(withdrawal.fees) }}</span>
+                  </td>
+                  
+                  <!-- Net Amount -->
+                  <td class="px-3">
+                    <span class="fw-bold">{{ formatCurrency(withdrawal.netAmount) }}</span>
+                  </td>
+                  
+                  <!-- Requested -->
+                  <td class="px-3">
+                    <small>{{ formatDate(withdrawal.requestedAt) }}</small>
+                  </td>
+                  
+                  <!-- Processed -->
+                  <td class="px-3">
+                    <small *ngIf="withdrawal.processedAt">{{ formatDate(withdrawal.processedAt) }}</small>
+                    <span class="text-muted" *ngIf="!withdrawal.processedAt">-</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="!isLoadingWithdrawals && !withdrawalsError && withdrawals.length === 0" class="text-center py-5">
+            <i class="fas fa-money-bill-wave fa-3x text-muted mb-3"></i>
+            <h5 class="text-muted">No withdrawals found</h5>
+            <p class="text-muted">You haven't made any withdrawal requests yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Withdrawal Modal -->
+<div class="modal fade" id="withdrawalModal" tabindex="-1" [class.show]="showWithdrawalModal" [style.display]="showWithdrawalModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-money-bill-wave me-2"></i>Request Withdrawal
+        </h5>
+        <button type="button" class="btn-close" (click)="closeWithdrawalModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Available Balance</label>
+            <div class="form-control-plaintext fw-bold text-success">
+              {{ formatCurrency(balance.availableBalance) }}
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="withdrawalAmount" class="form-label">Withdrawal Amount *</label>
+            <input type="number" class="form-control" id="withdrawalAmount" 
+                   [(ngModel)]="withdrawalAmount" name="withdrawalAmount" 
+                   min="1" [max]="balance.availableBalance" step="0.01" required>
+            <div class="form-text">Maximum withdrawal amount: {{ formatCurrency(balance.availableBalance) }}</div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="withdrawalMethod" class="form-label">Payment Method *</label>
+            <select class="form-select" id="withdrawalMethod" [(ngModel)]="withdrawalMethod" name="withdrawalMethod" required>
+              <option value="bank">Bank Transfer</option>
+              <option value="paypal">PayPal</option>
+              <option value="stripe">Stripe</option>
+            </select>
+          </div>
+          
+          <div class="mb-3" *ngIf="withdrawalMethod === 'bank'">
+            <label for="bankAccount" class="form-label">Bank Account Number</label>
+            <input type="text" class="form-control" id="bankAccount" 
+                   [(ngModel)]="bankAccount" name="bankAccount" 
+                   placeholder="Enter your bank account number">
+          </div>
+          
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Processing Time:</strong> Withdrawals are typically processed within 2-3 business days.
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeWithdrawalModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="submitWithdrawal()" 
+                [disabled]="isSubmittingWithdrawal || withdrawalAmount <= 0 || withdrawalAmount > balance.availableBalance">
+          <span class="spinner-border spinner-border-sm me-2" *ngIf="isSubmittingWithdrawal" role="status"></span>
+          {{ isSubmittingWithdrawal ? 'Submitting...' : 'Submit Request' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade show" *ngIf="showWithdrawalModal"></div>

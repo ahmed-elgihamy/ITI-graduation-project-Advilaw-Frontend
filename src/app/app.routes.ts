@@ -37,6 +37,12 @@ import { AdminProfileEdit } from './components/admin-dashboard/admin-profile-edi
 import { AdminProfileViewComponent } from './components/admin-dashboard/admin-profile-view/admin-profile-view.component';
 import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
+import { ClientDashboardComponent } from './components/client-dashboard/client-dashboard.component';
+import { ClientOverviewComponent } from './components/client-dashboard/client-overview/client-overview.component';
+import { ClientConsultsComponent } from './components/client-dashboard/client-consults/client-consults.component';
+import { ClientChatsComponent } from './components/client-dashboard/client-chats/client-chats.component';
+import { ClientPaymentsComponent } from './components/client-dashboard/client-payments/client-payments.component';
+import { ClientProfileComponent } from './components/client-dashboard/client-profile/client-profile.component';
 
 
 
@@ -62,6 +68,7 @@ export const routes: Routes = [
       { path: 'allLawyers', component: AllLawyerComponent },
 
       { path: 'chat', component: ChatComponent },
+      { path: 'chat/:id', component: ChatComponent },
 
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },
@@ -94,7 +101,7 @@ export const routes: Routes = [
       {
         path: 'admin-dashboard',
         component: MainLayoutComponent,
-        canActivate: [adminGuard],
+         canActivate: [adminGuard],
         children: [
           {
             path: '',
@@ -104,43 +111,53 @@ export const routes: Routes = [
           {
             path: 'pending-lawyers',
             component: PendingLawyersList,
-            canActivate: [adminGuard],
+               canActivate: [adminGuard],
           },
           {
             path: 'pending-clients',
             component: PendingClientsList,
-            canActivate: [adminGuard],
+             canActivate: [adminGuard],
           },
           {
             path: 'admins-list',
             component: AdminsList,
-            canActivate: [adminGuard],
+              canActivate: [adminGuard],
           },
           {
             path: 'profile-edit',
             component: AdminProfileEdit,
-            canActivate: [adminGuard],
+              canActivate: [adminGuard],
           },
           {
             path: 'admin/profile',
             component: AdminProfileViewComponent,
-            canActivate: [adminGuard],
+             canActivate: [adminGuard],
           },
           {
             path: 'lawyers/:id',
             component: LawyerDetailsComponent,
-            canActivate: [adminGuard],
+             canActivate: [adminGuard],
           },
           {
             path: 'clients/:id',
             component: ClientDetailsComponent,
-            canActivate: [adminGuard],
+             canActivate: [adminGuard],
           },
         ],
       },
 
       { path: 'reviews', component: ReviewsContentComponent },
     ],
+  },
+  {
+    path: 'client', component: ClientDashboardComponent, children: [
+      {path:'',redirectTo:'overview',pathMatch:'full'},
+      { path: 'overview', component: ClientOverviewComponent },
+      { path: 'consults', component: ClientConsultsComponent },
+      { path: 'chats', component: ClientChatsComponent },
+      { path: 'payments', component: ClientPaymentsComponent },
+      { path: 'profile', component: ClientProfileComponent }
+    ]
   },
 
   { path: '**', redirectTo: '/login' },

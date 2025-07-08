@@ -1,9 +1,11 @@
-import { NgClass } from '@angular/common';
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConsultationHeaderComponent } from '../consultation-header/consultation-header.component';
-import { ConsultationDetailsComponent } from '../consultation-details/consultation-details.component';
-import { MessageInpuComponent } from '../message-inpu/message-inpu.component';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { ClientService } from '../../../core/services/client.service';
+import { MockDataService } from '../../../core/services/mock-data.service';
+import { ChatDTO } from '../../../types/Chat/ChatDTO';
+import { ApiResponse } from '../../../types/ApiResponse';
 
 interface Message {
   id: string;
@@ -17,19 +19,18 @@ interface Message {
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [
-    // NgClass,
-    FormsModule,
-    // ConsultationHeaderComponent,
-    // ConsultationDetailsComponent,
-    // MessageInpuComponent,
-  ],
+  imports: [ FormsModule],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
 })
-export class ChatComponent implements AfterViewInit {
+export class ChatComponent implements AfterViewInit, OnInit {
   @ViewChild('chatContainer') chatContainerRef!: ElementRef;
   @ViewChild('inputField') inputFieldRef!: ElementRef;
+
+  chatId?: number;
+  chatData?: ChatDTO;
+  isLoading = false;
+  error = '';
 
   messages: Message[] = [
     {
@@ -41,10 +42,50 @@ export class ChatComponent implements AfterViewInit {
         'https://readdy.ai/api/search-image?query=professional%20female%20lawyer...&seq=1',
       senderName: 'Rebecca Johnson',
     },
-    // ممكن تضيف باقي الرسائل هنا...
+   
   ];
 
   newMessage: string = '';
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientService: ClientService,
+    private mockDataService: MockDataService
+  ) {}
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.chatId = params['id'] ? +params['id'] : undefined;
+      if (this.chatId) {
+        this.loadChatData();
+      }
+    });
+  }
+
+  loadChatData(): void {
+    if (!this.chatId) return;
+
+    this.isLoading = true;
+    this.error = '';
+
+    // Use mock data service for testing
+    this.mockDataService.getMockChatById(this.chatId).subscribe({
+      next: (response: ApiResponse<ChatDTO>) => {
+        if (response.succeeded) {
+          this.chatData = response.data;
+        } else {
+          this.error = response.message;
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading chat:', error);
+        this.error = 'Failed to load chat. Please try again.';
+        this.isLoading = false;
+      }
+    });
+  }
 
   ngAfterViewInit(): void {
     this.scrollToBottom();
@@ -86,5 +127,9 @@ export class ChatComponent implements AfterViewInit {
   scrollToBottom(): void {
     const container = this.chatContainerRef.nativeElement as HTMLElement;
     container.scrollTop = container.scrollHeight;
+  }
+
+  goBack(): void {
+    this.router.navigate(['/client/chats']);
   }
 }
