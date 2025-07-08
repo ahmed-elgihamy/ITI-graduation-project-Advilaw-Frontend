@@ -42,10 +42,10 @@ export class JobDetailsComponent {
     this.id = this.activeRoute.snapshot.params['id'];
   }
   userId: string = '';
+  foreignKey: number = 0;
   role: string = '';
   isClient: boolean = false;
   isLawyer: boolean = false;
-  foreignKey: number = 0;
   myJob: boolean = false;
   alreadyApplied: boolean = false; // for future use
   canMakeAppointment: boolean = false;
