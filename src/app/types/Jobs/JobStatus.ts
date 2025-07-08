@@ -5,6 +5,8 @@ export enum JobStatus {
   NotStarted = 'NotStarted',
   LawyerRequestedAppointment = 'LawyerRequestedAppointment',
   ClientRequestedAppointment = 'ClientRequestedAppointment',
+  Accepted = 'Accepted',
+  Rejected = 'Rejected',
   Started = 'Started',
   Ended = 'Ended',
 }

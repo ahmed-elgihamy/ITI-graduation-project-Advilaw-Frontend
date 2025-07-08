@@ -6,4 +6,5 @@ export interface LawyerProfile {
   bio: string;
   photoUrl: string;
   hourlyRate: number;
+  rating?: number;
 }

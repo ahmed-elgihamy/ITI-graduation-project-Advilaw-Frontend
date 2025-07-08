@@ -1,135 +1,94 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 
-import { ClientService } from '../../../core/services/client.service';
-import { MockDataService } from '../../../core/services/mock-data.service';
-import { ChatDTO } from '../../../types/Chat/ChatDTO';
-import { ApiResponse } from '../../../types/ApiResponse';
+import { UserInfo } from './../../../types/UserInfo';
+import { CommonModule, NgClass } from "@angular/common";
+import { Component, effect, ElementRef, inject, signal, ViewChild } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { ChatService } from "../../../core/services/chat.service";
+import { AuthService } from '../../../core/services/auth.service';
+import { SessionService } from '../../../core/services/session.service';
+import { SecondsToTimePipe } from '../../../core/Pipe/seconds-to-time.pipe';
 
-interface Message {
+export interface Message {
   id: string;
-  sender: 'lawyer' | 'client';
+  senderId: string;
   content: string;
-  timestamp: string;
-  avatar: string;
-  senderName: string;
+  sentAt: Date;
+  type?: 'text' | 'file';
+  fileName?: string;
 }
+
 
 @Component({
   selector: 'app-chat',
-  standalone: true,
-  imports: [ FormsModule],
+
+  imports: [FormsModule, NgClass, CommonModule, SecondsToTimePipe],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
 })
-export class ChatComponent implements AfterViewInit, OnInit {
-  @ViewChild('chatContainer') chatContainerRef!: ElementRef;
-  @ViewChild('inputField') inputFieldRef!: ElementRef;
+export class ChatComponent {
+  // === Signals ===
+  messages = signal<Message[]>([]);
+  messageText = signal<string>('');
+  clientAvatar = 'https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&w=400';
+  lawyerAvatar = 'https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=400';
 
-  chatId?: number;
-  chatData?: ChatDTO;
-  isLoading = false;
-  error = '';
+  // === Session Info ===
+  sessionId: number = 98498;
 
-  messages: Message[] = [
-    {
-      id: '1',
-      sender: 'lawyer',
-      content: 'Hello, how can I help you today?',
-      timestamp: '2:35 PM',
-      avatar:
-        'https://readdy.ai/api/search-image?query=professional%20female%20lawyer...&seq=1',
-      senderName: 'Rebecca Johnson',
-    },
-   
-  ];
+  senderId = this.getOrCreateSenderId();
 
-  newMessage: string = '';
+  getOrCreateSenderId(): string {
+    const key = 'sender-id';
+    let id = sessionStorage.getItem(key);
+    if (!id) {
+      id = crypto.randomUUID();
+      sessionStorage.setItem(key, id);
+    }
+    return id;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private clientService: ClientService,
-    private mockDataService: MockDataService
-  ) {}
+  }
 
+  chatService = inject(ChatService);
+  UserInfo = inject(AuthService);
+  sessionService = inject(SessionService);
+
+  data = this.UserInfo.getUserInfo() as UserInfo;
+  userName = this.data?.name || 'User';
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.chatId = params['id'] ? +params['id'] : undefined;
-      if (this.chatId) {
-        this.loadChatData();
-      }
+    //this.sessionService.startSession(0.10);
+
+    this.chatService.startConnection(this.sessionId, this.senderId);
+
+    effect(() => {
+      console.log("📥 Updated messages in component:", this.chatService.messages());
     });
   }
-
-  loadChatData(): void {
-    if (!this.chatId) return;
-
-    this.isLoading = true;
-    this.error = '';
-
-    // Use mock data service for testing
-    this.mockDataService.getMockChatById(this.chatId).subscribe({
-      next: (response: ApiResponse<ChatDTO>) => {
-        if (response.succeeded) {
-          this.chatData = response.data;
-        } else {
-          this.error = response.message;
-        }
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error loading chat:', error);
-        this.error = 'Failed to load chat. Please try again.';
-        this.isLoading = false;
-      }
-    });
+  handleSend() {
+    this.sessionService.unlockAudio();
+    this.sendMessage();
   }
 
-  ngAfterViewInit(): void {
-    this.scrollToBottom();
+  sendMessage() {
+    if (this.sessionService.sessionEnded()) return;
+    const text = this.messageText().trim();
+    if (!text) return;
 
-    const inputField = this.inputFieldRef.nativeElement as HTMLInputElement;
-    inputField.addEventListener('keypress', (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        this.sendMessage();
-      }
-    });
+    // this.chatService.sendMessage(this.sessionId, this.senderId, text);
+    this.chatService.sendMessage(this.sessionId, this.senderId, text);
+
+    this.messageText.set('');
   }
 
-  sendMessage(): void {
-    const message = this.newMessage.trim();
-    if (!message) return;
 
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const formattedTime = `${hours % 12 || 12}:${minutes
-      .toString()
-      .padStart(2, '0')} ${ampm}`;
-
-    this.messages.push({
-      id: 1 + Math.random().toString(36).substring(2, 9), // Generate a random ID
-      sender: 'client',
-      content: message,
-      timestamp: formattedTime,
-      avatar:
-        'https://readdy.ai/api/search-image?query=professional%20business%20person...&seq=2',
-      senderName: 'You',
-    });
-
-    this.newMessage = '';
-    setTimeout(() => this.scrollToBottom(), 0);
-  }
-
-  scrollToBottom(): void {
-    const container = this.chatContainerRef.nativeElement as HTMLElement;
-    container.scrollTop = container.scrollHeight;
+  ngOnDestroy(): void {
+    this.chatService.stopConnection();
   }
 
   goBack(): void {
     this.router.navigate(['/client/chats']);
   }
+
 }
+
+
+

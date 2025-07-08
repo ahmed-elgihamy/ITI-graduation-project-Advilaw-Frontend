@@ -1,0 +1,178 @@
+<div class="container-fluid h-100 d-flex flex-column">
+    <div class="row flex-grow-1 h-100">
+
+        <!-- Sidebar -->
+        <aside class="col-md-4 col-lg-3 bg-white border-end d-flex flex-column p-3">
+            <!-- Logo & Header -->
+            <div class="mb-4 bg-success text-white rounded p-3 d-flex align-items-center gap-2">
+                <div class="bg-white bg-opacity-25 rounded-circle p-2">
+                    <i class="bi bi-shield-check fs-4"></i>
+                </div>
+                <div>
+                    <h5 class="mb-0">AdviLaw</h5>
+                    <small>Professional Legal Services</small>
+                </div>
+            </div>
+
+            <!-- Client Info -->
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <img [src]="clientAvatar" class="rounded-circle" style="width: 48px; height: 48px;" alt="Client">
+                <div>
+                    <h6 class="mb-0">John Doe</h6>
+                    <small class="text-muted">Client</small>
+                </div>
+            </div>
+
+            <!-- Consultation Info -->
+            <div class="border rounded p-3 mb-4 bg-light">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="position-relative">
+                        <img [src]="lawyerAvatar" class="rounded-circle" style="width: 40px; height: 40px;"
+                            alt="Lawyer">
+                        <span
+                            class="position-absolute bottom-0 end-0 translate-middle p-1 bg-success border border-white rounded-circle"></span>
+                    </div>
+                    <div>
+                        <h6 class="mb-0">Laura Smith</h6>
+                        <small class="text-success">★★★★☆ 4.9</small>
+                    </div>
+                </div>
+
+                <p class="fw-semibold mb-2">Business Law Consultation</p>
+                <div class="mb-2 d-flex justify-content-between small text-muted">
+                    <span><i class="bi bi-calendar3 me-1"></i>Oct 14</span>
+                    <span><i class="bi bi-clock me-1"></i>1:00 - 2:00 PM</span>
+                </div>
+                <div class="d-flex justify-content-between small">
+                    <span><i class="bi bi-currency-dollar me-1"></i>$100</span>
+                    <span class="badge bg-success text-dark">Pending</span>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <!-- <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="bi bi-chat-dots me-2"></i>Active Chat
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="bi bi-calendar-check me-2"></i>Schedule
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="bi bi-file-text me-2"></i>Documents
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="bi bi-person me-2"></i>Profile
+                </a>
+            </div> -->
+        </aside>
+
+        <!-- Chat Area -->
+        <main class="col-md-8 col-lg-9 d-flex flex-column bg-light p-0">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center bg-white p-3 border-bottom">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="position-relative">
+                        <img src="https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&w=400"
+                            class="rounded-circle" style="width: 40px; height: 40px;" alt="Lawyer">
+                        <span
+                            class="position-absolute bottom-0 end-0 translate-middle p-1 bg-success border border-white rounded-circle"></span>
+                    </div>
+                    <div>
+                        <h6 class="mb-0">Laura Smith</h6>
+                        <small class="text-muted">Business Law • Online</small>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-light me-2"><i class="bi bi-telephone"></i></button>
+                    <button class="btn btn-light me-2"><i class="bi bi-camera-video"></i></button>
+                    <button class="btn btn-light"><i class="bi bi-paperclip"></i></button>
+                </div>
+            </div>
+            <ng-container *ngIf="!sessionService.sessionEnded(); else sessionEndedBlock">
+
+                <div *ngIf="sessionService.showFinalWarning()"
+                    class="alert alert-warning d-flex align-items-center gap-2" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <div>⚠️ 5 minutes remaining in your consultation session.</div>
+                </div>
+            </ng-container>
+
+
+            <ng-template #sessionEndedBlock>
+                <div class="alert alert-danger mt-2 d-flex align-items-center gap-2" role="alert">
+                    <i class="bi bi-stopwatch"></i>
+                    <div>The consultation session has ended. You can no longer send messages.</div>
+                </div>
+            </ng-template>
+
+            <!-- Session Info -->
+            <div
+                class="bg-success bg-opacity-10 text-success p-2 px-3 d-flex justify-content-between align-items-center small border-bottom">
+
+                <ng-container>
+                    <span>
+                        <i class="bi bi-clock me-1"></i>
+                        Session time remaining: {{ sessionService.timeLeft() | secondsToTime }}
+                    </span>
+                    <button class="btn btn-outline-danger btn-sm">
+                        End Consultation
+                    </button>
+                </ng-container>
+
+                <ng-template #sessionEnded>
+                    <span class="text-danger">Session ended</span>
+                    <button class="btn btn-outline-secondary btn-sm" disabled>
+                        End Consultation
+                    </button>
+                </ng-template>
+            </div>
+
+
+            <div class="d-flex flex-column h-100">
+                <div class="flex-grow-1 overflow-auto p-3">
+                    <div *ngFor="let msg of  chatService.messages()" class="mb-3"
+                        [ngClass]="{'text-end': msg.senderId === senderId}">
+                        <div>
+                            <small class="text-muted">
+                                {{ msg.senderId === senderId ? '' : '' }}
+                            </small>
+
+                            <div [ngClass]="{
+                            'bg-success text-color   ': msg.senderId === senderId,
+                            'bg-dark text-white': msg.senderId !== senderId
+                          }" class="d-inline-block p-2 rounded mt-1 " style="max-width: 75%; word-wrap: break-word;">
+                                {{ msg.content }}
+                                <br>
+                                <small class="text-mut">
+                                    {{ msg.sentAt | date:'shortTime' }}
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="p-3 bg-white border-top">
+                    <div class="input-group">
+                        <textarea class="form-control" [disabled]="sessionService.sessionEnded()"
+                            [ngModel]="messageText()" (ngModelChange)="messageText.set($event)"
+                            placeholder="Type your message..." (focus)="sessionService.unlockAudio()"></textarea>
+
+                        <button class="btn btn-success" (click)="sendMessage()"
+                            [disabled]="sessionService.sessionEnded() || !messageText()">
+                            <i class="fa-solid fa-share text-white"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+        </main>
+
+    </div>
+</div>

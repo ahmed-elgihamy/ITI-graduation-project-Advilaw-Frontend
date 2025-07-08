@@ -1,0 +1,151 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center" style="background: var(--color-sand-beige); border-bottom: 2px solid var(--color-mustard);">
+          <h5 class="mb-0" style="color: var(--color-navy-blue);">
+            <i class="fas fa-calendar-check me-2" style="color: var(--color-mustard);"></i>
+            Pending Consultations
+          </h5>
+        </div>
+        
+        <div class="card-body">
+          <!-- Loading State -->
+          <div *ngIf="loading" class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading consultations...</p>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="error && !loading" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            {{ error }}
+          </div>
+
+          <!-- Consultations Table -->
+          <div *ngIf="!loading && !error">
+            <div *ngIf="!hasConsultations" class="text-center py-4">
+              <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+              <h5 class="text-muted">No Pending Consultations</h5>
+              <p class="text-muted">You don't have any pending consultation requests at the moment.</p>
+              <small class="text-muted">Total consultations found: {{ consultationCount }}</small>
+            </div>
+
+            <div *ngIf="hasConsultations" class="row g-4">
+              <div class="col-md-6 col-lg-4" *ngFor="let consultation of consultations">
+                <div class="card h-100 shadow-sm" style="border: 2px solid var(--color-mustard); background: white; color: var(--color-navy-blue);">
+                  <div class="card-body d-flex flex-column p-4">
+                    <div class="d-flex align-items-center mb-3">
+                      <img [src]="consultation.clientImageUrl || 'assets/client4.jpg'" class="rounded-circle me-3" style="width: 64px; height: 64px; border: 2px solid var(--color-mustard); object-fit: cover; background: var(--color-sand-beige);">
+                      <div>
+                        <h5 class="mb-0 fw-bold" style="color: var(--color-navy-blue);">{{ consultation.clientName }}</h5>
+                        <small class="text-muted">Job: <span style="color: var(--color-mustard);">{{ consultation.header }}</span></small>
+                      </div>
+                    </div>
+                    <div class="mb-2">
+                      <span class="fw-bold" style="color: var(--color-mustard);">Duration:</span>
+                      <span>{{ consultation.duration != null ? consultation.duration : 'N/A' }}</span>
+                    </div>
+                    <div class="mb-2">
+                      <span class="fw-bold" style="color: var(--color-mustard);">Appointment:</span>
+                      <span>{{ consultation.appointmentTime ? (consultation.appointmentTime | date:'short') : 'N/A' }}</span>
+                    </div>
+                    <div class="mb-3">
+                      <span class="fw-bold" style="color: var(--color-mustard);">Status:</span>
+                      <span [ngClass]="{
+                        'badge bg-warning text-dark': getStatusText(asJobStatus(consultation.status || '')) === 'Pending',
+                        'badge bg-success': getStatusText(asJobStatus(consultation.status || '')) === 'Accepted',
+                        'badge bg-danger': getStatusText(asJobStatus(consultation.status || '')) === 'Rejected'
+                      }" style="font-size: 1rem; vertical-align: middle;">
+                        {{ getStatusText(asJobStatus(consultation.status || '')) }}
+                      </span>
+                    </div>
+                    <div class="mt-auto d-flex gap-2">
+                      <button class="main-btn flex-fill fw-bold" (click)="acceptConsultation(consultation)" title="Accept Consultation">
+                        <i class="fas fa-check me-1"></i> Accept
+                      </button>
+                      <button class="btn btn-danger flex-fill fw-bold" (click)="openRejectModal(consultation)" title="Reject Consultation">
+                        <i class="fas fa-times me-1"></i> Reject
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div *ngIf="totalPages > 1" class="d-flex justify-content-center mt-4">
+              <nav aria-label="Consultations pagination">
+                <ul class="pagination">
+                  <li class="page-item" [class.disabled]="currentPage === 1">
+                    <button class="page-link" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                      <i class="fas fa-chevron-left"></i>
+                    </button>
+                  </li>
+                  
+                  <li *ngFor="let page of [].constructor(totalPages); let i = index" 
+                      class="page-item" 
+                      [class.active]="currentPage === i + 1">
+                    <button class="page-link" (click)="onPageChange(i + 1)">
+                      {{ i + 1 }}
+                    </button>
+                  </li>
+                  
+                  <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <button class="page-link" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+                      <i class="fas fa-chevron-right"></i>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reject Modal -->
+<div class="modal fade" [class.show]="showRejectModal" [style.display]="showRejectModal ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-times-circle text-danger me-2"></i>
+          Reject Consultation
+        </h5>
+        <button type="button" class="btn-close" (click)="closeRejectModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p *ngIf="selectedConsultation">
+          Are you sure you want to reject the consultation for <strong>"{{ selectedConsultation.header }}"</strong>?
+        </p>
+        <div class="mb-3">
+          <label for="rejectReason" class="form-label">Reason for Rejection *</label>
+          <textarea 
+            id="rejectReason"
+            class="form-control" 
+            rows="3" 
+            [(ngModel)]="rejectReason"
+            placeholder="Please provide a reason for rejecting this consultation...">
+          </textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeRejectModal()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger" (click)="rejectConsultation()">
+          <i class="fas fa-times me-1"></i>
+          Reject
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div *ngIf="showRejectModal" class="modal-backdrop fade show"></div> 

@@ -1,19 +1,316 @@
 
+*{
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+  }
 
-.hero-section{
-    background-image: url('/assets/images/landing-page.jpg');
+  .hero-section {
+    background-image: linear-gradient(to right, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.7)), url('/assets/images/heroo.jpg');
     background-size: cover;
     background-position: center;
-    color: var(--color-navy-blue);
-    padding: 2rem;
-    padding-block: 80px;
+    }
+.family-law{
+    background-image: url('/assets/images/Family.jpg');
+}
+.Business-law{
+    background-image: url('/assets/images/Business.jpg');
+}
+.criminal-lawyer{
+    background-image: url('/assets/images/Criminal .jpg');
+}
+.Personal-injury{
+    background-image: url('/assets/images/Personal.jpg');
+}
+.Immigration
+{
+    background-image: url('/assets/images/Immigration.jpg');
 }
 
-.CoverAreasSection{
-    background-image: url('/assets/images/Area.jpg');
+.RealEstate{
+    background-image: url('/assets/images/RealEstate.jpg');
+}
+
+  .hero-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  .hero-section p {
+    font-size: 1.25rem;
+    color: #d1d5db;
+  }
+
+  .hero-section .btn-primary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    padding: 0.75rem 2rem;
+    font-weight: bold;
+  }
+
+  .hero-section .btn-outline-light {
+    padding: 0.75rem 2rem;
+    font-weight: bold;
+  }
+.practice-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    min-height: 250px;
     background-size: cover;
     background-position: center;
-    color: var(--color-navy-blue);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .practice-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,0.9));
+    z-index: 1;
+  }
+
+  .practice-card-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .practice-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffc107;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .practice-card a {
+    color: #ffc107;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .practice-card a:hover {
+    color: #fd7e14;
+  }
+
+  .cases-badge {
+    font-size: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+  }
+  
+
+  .lawyer-card {
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+  }
+
+  .lawyer-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+
+  .rating-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: #ffc107;
+    color: #fff;
+    padding: 0.3rem 0.6rem;
+    font-weight: bold;
+    border-radius: 50rem;
+    font-size: 0.9rem;
+  }
+
+  .lawyer-info {
+    padding: 1.25rem;
+  }
+
+  .lawyer-info .location {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .tag {
+    display: inline-block;
+    background-color: #f1f1f1;
+    color: #555;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    margin-right: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn-dark-custom {
+    background-color: #1d1f2b;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 0.4rem;
+    padding: 0.5rem 1.2rem;
+    width: 100%;
+  }
+
+  .btn-dark-custom:hover {
+    background-color: #33354a;
+  }
+
+  .step-box {
+    background: #fff;
+    border-radius: 1rem;
     padding: 2rem;
-    padding-block: 80px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .step-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #fff3cd;
+    color: #f4b400;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+  }
+
+  .metric-box {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    text-align: center;
+  }
+
+  .metric-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #fff3cd;
+    color: #f4b400;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+  }
+
+  .metric-value {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .why-section {
+    background-color: var(--light-color);
+    padding: 5rem 0;
+    text-align: center;
 }
+
+.feature-card {
+    border: none;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.testimonial-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.rating {
+    color: #f39c12;
+    margin-bottom: 1rem;
+}
+
+.client-name {
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.client-type {
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
+.cta-section {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    padding: 0.75rem 2rem;
+    font-weight: bold;
+}
+
+.btn-outline-light {
+    padding: 0.75rem 2rem;
+    font-weight: bold;
+}
+
+.newsletter-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.section-title {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.section-title:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--secondary-color);
+}
+
+hr.divider {
+    border-top: 2px solid var(--secondary-color);
+    width: 80px;
+    margin: 2rem auto;
+}
+

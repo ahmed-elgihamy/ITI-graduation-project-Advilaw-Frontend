@@ -1,95 +1,280 @@
-<div class="container py-4">
-  <h2 class="mb-4">Book a Consultation</h2>
-
-  <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
-    <!-- Header -->
-    <div class="mb-3">
-      <label class="form-label" for="header">Header</label>
-      <input
-        id="header"
-        formControlName="header"
-        class="form-control"
-        type="text"
-        [ngClass]="{ 'is-invalid': isInvalid('header') }"
-      />
-      <div *ngIf="isInvalid('header')" class="invalid-feedback">Header is required.</div>
+<div class="consultation-page">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="d-flex flex-column align-items-center justify-content-center loading-overlay">
+    <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
+    <p class="mt-3 fw-medium text-dark">Loading lawyer information...</p>
+  </div>
 
-    <!-- Description -->
-    <div class="mb-3">
-      <label class="form-label" for="description">Description</label>
-      <textarea
-        id="description"
-        formControlName="description"
-        class="form-control"
-        [ngClass]="{ 'is-invalid': isInvalid('description') }"
-      ></textarea>
-      <div *ngIf="isInvalid('description')" class="invalid-feedback">Description is required.</div>
+  <!-- Error State -->
+  <div *ngIf="errorMessage && !isLoading" class="d-flex flex-column align-items-center justify-content-center error-container">
+    <div class="alert alert-danger" role="alert">
+      <i class="fas fa-exclamation-triangle me-2"></i>
+      {{ errorMessage }}
     </div>
+    <button class="btn btn-outline-primary mt-3" (click)="loadLawyerProfile()">
+      <i class="fas fa-redo me-2"></i>Try Again
+    </button>
+  </div>
 
-    <!-- Appointment Time -->
-    <div class="mb-3">
-      <label class="form-label" for="appointmentTime">Appointment Time</label>
-      <input
-        id="appointmentTime"
-        formControlName="appointmentTime"
-        type="datetime-local"
-        class="form-control"
-        [ngClass]="{ 'is-invalid': isInvalid('appointmentTime') }"
-      />
-      <div *ngIf="isInvalid('appointmentTime')" class="invalid-feedback">
-        Appointment time is required.
+  <!-- Main Content -->
+  <div *ngIf="!isLoading && !errorMessage" class="consultation-content">
+    <!-- Header Section -->
+    <section class="consultation-header">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-8 text-center">
+            <!-- Name -->
+            <h1 class="fw-bold mb-3 text-uppercase">{{ lawyerProfile?.name || 'Lawyer' }}</h1>
+
+            <!-- Title, Experience, and Hourly Rate -->
+            <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-2 meta">
+              <span class="fw-semibold">{{ lawyerProfile?.title || 'Business Law' }}</span>
+              <span class="divider">|</span>
+              <span>Experience: {{ lawyerProfile?.experience || 'N/A' }} yrs</span>
+              <span class="divider">|</span>
+              <span class="fw-bold">EGP {{ hourlyRate }}/hr</span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-center gap-3 flex-wrap mt-4 actions">
+              <button type="button" class="btn main-btn fw-semibold px-4 py-2" (click)="onCancel()">
+                <i class="fas fa-arrow-left me-2"></i>Back to Lawyers
+              </button>
+              <button type="button" class="btn consult-btn fw-semibold px-4 py-2" (click)="scrollToForm()">
+                <i class="fas fa-calendar-plus me-2"></i>Book Consultation
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Start Time -->
-    <div class="mb-3">
-      <label class="form-label" for="startTime">Start Time</label>
-      <input id="startTime" formControlName="startTime" type="time" class="form-control" />
-    </div>
+    <!-- Main Content Container -->
+    <div class="container pb-5">
+      <!-- Bio Section (Full Width) -->
+      <section class="bio-section" *ngIf="lawyerProfile?.bio">
+        <h2 class="fw-bold text-uppercase mb-3">ABOUT LAWYER</h2>
+        <p class="mb-0">{{ lawyerProfile?.bio }}</p>
+      </section>
 
-    <!-- End Time -->
-    <div class="mb-3">
-      <label class="form-label" for="endTime">End Time</label>
-      <input id="endTime" formControlName="endTime" type="time" class="form-control" />
-    </div>
+      <!-- Consultation Form Section -->
+      <section class="consultation-form-section text-center">
+        <h2 class="fw-bold text-uppercase mb-4">BOOK CONSULTATION</h2>
+        
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-8">
+            <div class="form-card">
+              <!-- Success Message -->
+              <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>
+                {{ successMessage }}
+                <button type="button" class="btn-close" (click)="clearMessages()"></button>
+              </div>
 
-    <!-- Duration -->
-    <div class="mb-3">
-      <label class="form-label" for="durationHours">Duration (hours)</label>
-      <input id="durationHours" formControlName="durationHours" type="number" class="form-control" readonly />
-    </div>
+              <!-- Error Message -->
+              <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                {{ errorMessage }}
+                <button type="button" class="btn-close" (click)="clearMessages()"></button>
+              </div>
 
-    <!-- Budget -->
-    <div class="mb-3">
-      <label class="form-label" for="budget">Calculated Budget</label>
-      <input id="budget" formControlName="budget" type="number" class="form-control" readonly />
-    </div>
+              <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+                <!-- Header -->
+                <div class="mb-4">
+                  <label class="form-label fw-semibold" for="header">
+                    <i class="fas fa-heading me-2"></i>Consultation Title
+                  </label>
+                  <input
+                    id="header"
+                    formControlName="header"
+                    class="form-control form-control-lg"
+                    type="text"
+                    placeholder="Enter a brief title for your consultation"
+                    [ngClass]="{ 'is-invalid': isInvalid('header') }"
+                  />
+                  <div *ngIf="isInvalid('header')" class="invalid-feedback">
+                    {{ getErrorMessage('header') }}
+                  </div>
+                </div>
 
-    <!-- Job Field -->
-    <div class="mb-3">
-      <label class="form-label" for="jobFieldId">Job Field</label>
-      <select
-        formControlName="jobFieldId"
-        class="form-control"
-        [ngClass]="{ 'is-invalid': isInvalid('jobFieldId') }"
-      >
-        <option [value]="null" disabled>Select a Job Field</option>
-        <option *ngFor="let field of jobFields" [value]="field.id">{{ field.name }}</option>
-      </select>
-      <div *ngIf="isInvalid('jobFieldId')" class="invalid-feedback">Please select a job field.</div>
-    </div>
+                <!-- Description -->
+                <div class="mb-4">
+                  <label class="form-label fw-semibold" for="description">
+                    <i class="fas fa-align-left me-2"></i>Description
+                  </label>
+                  <textarea
+                    id="description"
+                    formControlName="description"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Describe your legal issue or consultation needs in detail"
+                    [ngClass]="{ 'is-invalid': isInvalid('description') }"
+                  ></textarea>
+                  <div *ngIf="isInvalid('description')" class="invalid-feedback">
+                    {{ getErrorMessage('description') }}
+                  </div>
+                  <small class="form-text text-muted">
+                    Minimum 20 characters, maximum 1000 characters
+                  </small>
+                </div>
 
-    <!-- Anonymous -->
-    <div class="form-check mb-3">
-      <input id="isAnonymus" type="checkbox" class="form-check-input" formControlName="isAnonymus" />
-      <label for="isAnonymus" class="form-check-label">Post Anonymously</label>
-    </div>
+                <!-- Job Field -->
+                <div class="mb-4">
+                  <label class="form-label fw-semibold" for="jobFieldId">
+                    <i class="fas fa-briefcase me-2"></i>Legal Field
+                  </label>
+                  <select
+                    formControlName="jobFieldId"
+                    class="form-select form-select-lg"
+                    [ngClass]="{ 'is-invalid': isInvalid('jobFieldId') }"
+                  >
+                    <option [value]="null" disabled selected>Select a legal field</option>
+                    <option *ngFor="let field of jobFields" [value]="field.id">{{ field.name }}</option>
+                  </select>
+                  <div *ngIf="isInvalid('jobFieldId')" class="invalid-feedback">
+                    {{ getErrorMessage('jobFieldId') }}
+                  </div>
+                </div>
 
-    <!-- Submit/Cancel -->
-    <div class="d-flex gap-2">
-      <button class="btn btn-primary" type="submit" [disabled]="jobForm.invalid">Request Consultation</button>
-      <a class="btn btn-secondary" routerLink="/lawyers">Cancel</a>
+                <!-- Appointment Date and Time -->
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="appointmentTime">
+                      <i class="fas fa-calendar me-2"></i>Appointment Date & Time
+                    </label>
+                    <input
+                      id="appointmentTime"
+                      formControlName="appointmentTime"
+                      type="datetime-local"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': isInvalid('appointmentTime') }"
+                    />
+                    <div *ngIf="isInvalid('appointmentTime')" class="invalid-feedback">
+                      {{ getErrorMessage('appointmentTime') }}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Time Range -->
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="startTime">
+                      <i class="fas fa-clock me-2"></i>Start Time
+                    </label>
+                    <input 
+                      id="startTime" 
+                      formControlName="startTime" 
+                      type="time" 
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': isInvalid('startTime') }"
+                    />
+                    <div *ngIf="isInvalid('startTime')" class="invalid-feedback">
+                      {{ getErrorMessage('startTime') }}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="endTime">
+                      <i class="fas fa-clock me-2"></i>End Time
+                    </label>
+                    <input 
+                      id="endTime" 
+                      formControlName="endTime" 
+                      type="time" 
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': isInvalid('endTime') }"
+                    />
+                    <div *ngIf="isInvalid('endTime')" class="invalid-feedback">
+                      {{ getErrorMessage('endTime') }}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Duration and Budget Display -->
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="durationHours">
+                      <i class="fas fa-hourglass-half me-2"></i>Duration (hours)
+                    </label>
+                    <input 
+                      id="durationHours" 
+                      formControlName="durationHours" 
+                      type="number" 
+                      class="form-control" 
+                      readonly 
+                      [ngClass]="{ 'is-invalid': isInvalid('durationHours') }"
+                    />
+                    <div *ngIf="isInvalid('durationHours')" class="invalid-feedback">
+                      {{ getErrorMessage('durationHours') }}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="budget">
+                      <i class="fas fa-money-bill-wave me-2"></i>Total Cost (EGP)
+                    </label>
+                    <input 
+                      id="budget" 
+                      formControlName="budget" 
+                      type="number" 
+                      class="form-control" 
+                      readonly 
+                      [ngClass]="{ 'is-invalid': isInvalid('budget') }"
+                    />
+                    <div *ngIf="isInvalid('budget')" class="invalid-feedback">
+                      {{ getErrorMessage('budget') }}
+                    </div>
+                    <small class="form-text text-muted">
+                      Calculated based on hourly rate: EGP {{ hourlyRate }}/hr
+                    </small>
+                  </div>
+                </div>
+
+                <!-- Anonymous Option -->
+                <div class="form-check mb-4">
+                  <input 
+                    id="isAnonymus" 
+                    type="checkbox" 
+                    class="form-check-input" 
+                    formControlName="isAnonymus" 
+                  />
+                  <label for="isAnonymus" class="form-check-label fw-semibold">
+                    <i class="fas fa-user-secret me-2"></i>Request Anonymously
+                  </label>
+                  <small class="form-text text-muted d-block">
+                    Your name will be hidden from the lawyer
+                  </small>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-3 justify-content-center">
+                  <button 
+                    class="btn consult-btn fw-semibold px-4 py-2" 
+                    type="submit" 
+                    [disabled]="jobForm.invalid || isSubmitting"
+                  >
+                    <span *ngIf="!isSubmitting">
+                      <i class="fas fa-paper-plane me-2"></i>Request Consultation
+                    </span>
+                    <span *ngIf="isSubmitting">
+                      <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                      Submitting...
+                    </span>
+                  </button>
+                  <button 
+                    type="button" 
+                    class="btn main-btn fw-semibold px-4 py-2" 
+                    (click)="onCancel()"
+                    [disabled]="isSubmitting"
+                  >
+                    <i class="fas fa-times me-2"></i>Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </form>
+  </div>
 </div>

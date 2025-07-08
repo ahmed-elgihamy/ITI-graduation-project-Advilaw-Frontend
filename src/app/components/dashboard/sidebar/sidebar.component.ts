@@ -33,6 +33,11 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  isLawyer(): boolean {
+    const user = this.authService.getUserInfo();
+    return user?.role === 'Lawyer';
+  }
+
   toggleSidebar() {
     this.isOpendsidebar.set(!this.isOpendsidebar());
   }
