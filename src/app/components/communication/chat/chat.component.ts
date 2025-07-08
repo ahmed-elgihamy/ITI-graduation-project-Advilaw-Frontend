@@ -7,6 +7,7 @@ import { ChatService } from "../../../core/services/chat.service";
 import { AuthService } from '../../../core/services/auth.service';
 import { SessionService } from '../../../core/services/session.service';
 import { SecondsToTimePipe } from '../../../core/Pipe/seconds-to-time.pipe';
+import { Router } from '@angular/router';
 
 export interface Message {
   id: string;
@@ -26,6 +27,7 @@ export interface Message {
   styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent {
+  constructor(private router:Router){}
   // === Signals ===
   messages = signal<Message[]>([]);
   messageText = signal<string>('');
