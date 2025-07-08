@@ -6,20 +6,43 @@ import { PagedResponse } from '../../types/PagedResponse';
 import { LawyersService } from '../../core/services/lawyer/lawyers.service';
 import { LawyerListDTO } from '../../types/Lawyers/LawyerListDTO';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-lawyers',
-  imports: [DashboardTableComponent, PaginationComponent, RouterLink],
+  imports: [
+    DashboardTableComponent,
+    PaginationComponent,
+    RouterLink,
+    CommonModule,
+  ],
   templateUrl: './lawyers.component.html',
   styleUrl: './lawyers.component.css',
 })
 export class LawyersComponent {
+  userId: string = '';
+  foreignKey: number = 0;
+  role: string = '';
+  isClient: boolean = false;
+  isLawyer: boolean = false;
   ApiService: any;
-  constructor(private lawyersService: LawyersService) {
+  constructor(
+    private lawyersService: LawyersService,
+    private authService: AuthService
+  ) {
     this.ApiService = lawyersService;
   }
   ngOnInit(): void {
     this.loadData(1);
+    const userInfo = this.authService.getUserInfo();
+    if (userInfo) {
+      this.userId = userInfo.userId;
+      this.foreignKey = userInfo.foreignKey;
+      this.role = userInfo.role;
+      this.isClient = this.role === 'Client';
+      this.isLawyer = this.role === 'Lawyer';
+    }
   }
 
   lawyersColumns = [
