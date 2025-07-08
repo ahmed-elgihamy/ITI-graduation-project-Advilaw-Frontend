@@ -25,6 +25,7 @@ export class MockDataService {
       lastMessageTime: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
       unreadCount: 2,
       status: ChatStatus.Active,
+      statusCode:200,
       createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
       updatedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
     },
@@ -43,7 +44,9 @@ export class MockDataService {
       unreadCount: 0,
       status: ChatStatus.Completed,
       createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days ago
-      updatedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+      updatedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+            statusCode:200,
+
     },
     {
       id: 3,
@@ -59,6 +62,8 @@ export class MockDataService {
       lastMessageTime: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
       unreadCount: 1,
       status: ChatStatus.Pending,
+            statusCode:200,
+
       createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
       updatedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()
     },
@@ -76,6 +81,8 @@ export class MockDataService {
       lastMessageTime: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // 30 minutes ago
       unreadCount: 5,
       status: ChatStatus.Active,
+            statusCode:200,
+
       createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
       updatedAt: new Date(Date.now() - 30 * 60 * 1000).toISOString()
     },
@@ -93,6 +100,8 @@ export class MockDataService {
       lastMessageTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
       unreadCount: 0,
       status: ChatStatus.Completed,
+            statusCode:200,
+
       createdAt: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(), // 21 days ago
       updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
     }
@@ -113,10 +122,10 @@ export class MockDataService {
 
     const response: ApiResponse<PagedResponse<ChatDTO>> = {
       data: pagedResponse,
-      statusCode: '200',
+      statusCode: 200,
       succeeded: true,
       message: 'Chats retrieved successfully',
-      errors: null,
+      errors: [],
       meta: null
     };
 
@@ -129,17 +138,17 @@ export class MockDataService {
     if (chat) {
       const response: ApiResponse<ChatDTO> = {
         data: chat,
-        statusCode: '200',
+        statusCode: 200,
         succeeded: true,
         message: 'Chat retrieved successfully',
-        errors: null,
+        errors: [],
         meta: null
       };
       return of(response).pipe(delay(300));
     } else {
       const errorResponse: ApiResponse<ChatDTO> = {
         data: {} as ChatDTO,
-        statusCode: '404',
+        statusCode: 404,
         succeeded: false,
         message: 'Chat not found',
         errors: ['Chat not found'],

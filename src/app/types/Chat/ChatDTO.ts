@@ -12,6 +12,7 @@ export interface ChatDTO {
   lastMessageTime: string;
   unreadCount: number;
   status: ChatStatus;
+  statusCode:number;
   createdAt: string;
   updatedAt: string;
 }
