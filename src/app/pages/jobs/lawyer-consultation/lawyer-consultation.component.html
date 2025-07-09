@@ -89,7 +89,7 @@
 
       <!-- Consultation Form Section -->
       <section class="consultation-form-section text-center">
-        <h2 class="fw-bold text-uppercase mb-4">BOOK CONSULTATION</h2>
+        <h2 fclass="fw-bold text-uppercase mb-4">BOOK CONSULTATION</h2>
 
         <div class="row justify-content-center">
           <div class="col-12 col-lg-8">
@@ -318,6 +318,7 @@
                     class="btn consult-btn fw-semibold px-4 py-2"
                     type="submit"
                     [disabled]="jobForm.invalid || isSubmitting"
+                    *ngIf="isClient"
                   >
                     <span *ngIf="!isSubmitting">
                       <i class="fas fa-paper-plane me-2"></i>Request

@@ -46,7 +46,6 @@ import { SessionGuard } from './core/guards/session.guard';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { ConsultationReviewComponent } from './components/reviews/consultation-review/consultation-review.component';
 
-
 export const routes: Routes = [
   {
     path: '',
@@ -73,7 +72,7 @@ export const routes: Routes = [
 
       {
         path: 'chat',
-        component: ChatComponent
+        component: ChatComponent,
         //  canActivate: [SessionGuard]
       },
       { path: 'countdown', component: CountdownTimerComponentComponent },
@@ -116,7 +115,6 @@ export const routes: Routes = [
         component: MainLayoutComponent,
         // canActivate: [adminGuard],
         children: [
-
           {
             path: '',
             component: AdminDashboardWelcome,

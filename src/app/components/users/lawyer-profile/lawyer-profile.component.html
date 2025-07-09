@@ -1,15 +1,24 @@
 <div class="profile-page">
-
   <!-- Loading State -->
-  <div *ngIf="isLoading" class="d-flex flex-column align-items-center justify-content-center loading-overlay">
-    <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+  <div
+    *ngIf="isLoading"
+    class="d-flex flex-column align-items-center justify-content-center loading-overlay"
+  >
+    <div
+      class="spinner-border text-warning"
+      style="width: 3rem; height: 3rem"
+      role="status"
+    >
       <span class="visually-hidden">Loading...</span>
     </div>
     <p class="mt-3 fw-medium text-dark">Loading profile...</p>
   </div>
 
   <!-- Error State -->
-  <div *ngIf="errorMessage && !isLoading" class="d-flex flex-column align-items-center justify-content-center error-container">
+  <div
+    *ngIf="errorMessage && !isLoading"
+    class="d-flex flex-column align-items-center justify-content-center error-container"
+  >
     <div class="alert alert-danger" role="alert">
       <i class="fas fa-exclamation-triangle me-2"></i>
       {{ errorMessage }}
@@ -18,7 +27,6 @@
 
   <!-- Main Profile Content -->
   <div *ngIf="!isLoading && !errorMessage && lawyer" class="profile-content">
-
     <!-- Profile Header Section -->
     <section class="profile-header">
       <div class="container">
@@ -29,15 +37,20 @@
               <img
                 [src]="avatarUrl || 'assets/client4.jpg'"
                 class="profile-avatar"
-                loading="lazy">
+                loading="lazy"
+              />
             </div>
 
             <!-- Name -->
             <h1 class="fw-bold mb-3 text-uppercase">{{ lawyer.name }}</h1>
 
             <!-- Title, Experience, and Hourly Rate -->
-            <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-2 meta">
-              <span class="fw-semibold">{{ lawyer.title || 'Business Law' }}</span>
+            <div
+              class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-2 meta"
+            >
+              <span class="fw-semibold">{{
+                lawyer.title || "Business Law"
+              }}</span>
               <span class="divider">|</span>
               <span>Experience: {{ lawyer.experience }} yrs</span>
               <span class="divider">|</span>
@@ -45,11 +58,22 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="d-flex justify-content-center gap-3 flex-wrap mt-4 actions">
-              <button type="button" class="btn main-btn fw-semibold px-4 py-2" (click)="onFollowClick()">
+            <div
+              class="d-flex justify-content-center gap-3 flex-wrap mt-4 actions"
+            >
+              <button
+                type="button"
+                class="btn main-btn fw-semibold px-4 py-2"
+                (click)="onFollowClick()"
+              >
                 <i class="fas fa-plus me-2"></i>Follow
               </button>
-              <button type="button" class="btn consult-btn fw-semibold px-4 py-2" [routerLink]="['/client/consultation', lawyer.id]">
+              <button
+                *ngIf="isClient"
+                type="button"
+                class="btn consult-btn fw-semibold px-4 py-2"
+                [routerLink]="['/client/consultation', lawyer.id]"
+              >
                 Request Consultation
               </button>
             </div>
@@ -60,7 +84,6 @@
 
     <!-- Main Content Container -->
     <div class="container pb-5">
-
       <!-- Bio Section (Full Width) -->
       <section class="bio-section">
         <h2 class="fw-bold text-uppercase mb-3">BIO</h2>
@@ -68,16 +91,16 @@
       </section>
 
       <div class="row">
-
         <!-- Left Column -->
         <div class="col-12 col-lg-6">
-
           <!-- Rating Overview Section -->
           <section class="rating-overview mb-5">
             <h2 class="fw-bold text-uppercase mb-3">RATING OVERVIEW</h2>
 
             <!-- Progress Bars -->
-            <div class="rating-bars p-4 bg-white rounded border border-warning border-2">
+            <div
+              class="rating-bars p-4 bg-white rounded border border-warning border-2"
+            >
               <ng-container *ngFor="let s of STAR_LEVELS">
                 <div class="rating-row">
                   <div class="label">
@@ -85,7 +108,11 @@
                   </div>
                   <div class="bar">
                     <div class="progress">
-                      <div class="progress-bar" [style.width.%]="getRatingPercent(s)" role="progressbar"></div>
+                      <div
+                        class="progress-bar"
+                        [style.width.%]="getRatingPercent(s)"
+                        role="progressbar"
+                      ></div>
                     </div>
                   </div>
                   <div class="percent">
@@ -99,14 +126,23 @@
           <!-- Schedule Section -->
           <section class="schedule mb-5">
             <h2 class="fw-bold text-uppercase mb-3">SCHEDULE</h2>
-            <div class="bg-white rounded border border-warning border-2 overflow-hidden">
+            <div
+              class="bg-white rounded border border-warning border-2 overflow-hidden"
+            >
               <table class="table table-sm mb-0">
                 <tbody>
-                  <tr *ngFor="let item of schedule; trackBy: trackByScheduleDay">
+                  <tr
+                    *ngFor="let item of schedule; trackBy: trackByScheduleDay"
+                  >
                     <td class="fw-semibold py-3 ps-4">{{ item.day }}</td>
                     <td class="py-3 pe-4">
-                      <ng-container *ngIf="item.timeRanges.length > 0; else unavailable">
-                        <span *ngFor="let range of item.timeRanges" class="badge rounded-pill me-2 mb-1">
+                      <ng-container
+                        *ngIf="item.timeRanges.length > 0; else unavailable"
+                      >
+                        <span
+                          *ngFor="let range of item.timeRanges"
+                          class="badge rounded-pill me-2 mb-1"
+                        >
                           {{ range.start }} - {{ range.end }}
                         </span>
                       </ng-container>
@@ -119,21 +155,24 @@
               </table>
             </div>
           </section>
-
         </div>
 
         <!-- Right Column -->
         <div class="col-12 col-lg-6">
-
           <!-- Client Reviews Section -->
           <section class="reviews mb-5">
             <h2 class="fw-bold text-uppercase mb-3">CLIENT REVIEWS</h2>
             <ng-container *ngIf="reviews.length > 0; else noReviews">
-              <div class="review-card" *ngFor="let rev of reviews; trackBy: trackByReviewId">
-                <img [src]="rev.reviewerPhotoUrl || 'assets/client4.jpg'"
-                     (error)="rev.reviewerPhotoUrl = 'assets/client4.jpg'"
-                     alt="Client photo"
-                     class="review-avatar">
+              <div
+                class="review-card"
+                *ngFor="let rev of reviews; trackBy: trackByReviewId"
+              >
+                <img
+                  [src]="rev.reviewerPhotoUrl || 'assets/client4.jpg'"
+                  (error)="rev.reviewerPhotoUrl = 'assets/client4.jpg'"
+                  alt="Client photo"
+                  class="review-avatar"
+                />
 
                 <div class="review-content">
                   <div class="header">
@@ -155,7 +194,6 @@
               </div>
             </ng-template>
           </section>
-
         </div>
       </div>
     </div>

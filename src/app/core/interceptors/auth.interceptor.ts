@@ -16,7 +16,6 @@ export const authInterceptor: HttpInterceptorFn = (
 ): Observable<HttpEvent<any>> => {
   const authService = inject(AuthService);
 
-  console.log('hi from interceptor');
   // Skip interception for certain requests
   if (shouldSkipInterceptor(req)) {
     return next(req);

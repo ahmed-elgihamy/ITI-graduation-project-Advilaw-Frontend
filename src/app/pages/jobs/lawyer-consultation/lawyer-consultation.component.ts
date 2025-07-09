@@ -1,3 +1,4 @@
+import { UserInfo } from './../../../types/UserInfo';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -34,6 +35,10 @@ export class LawyerConsultationComponent implements OnInit {
   errorMessage = '';
   successMessage = '';
 
+  isLawyer = false;
+  isClient = false;
+  userInfo: UserInfo | null = null;
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -59,6 +64,10 @@ export class LawyerConsultationComponent implements OnInit {
         this.isLoading = false;
       }
     });
+    this.userInfo = this.authService.getUserInfo();
+    console.log(this.userInfo);
+    this.isLawyer = this.userInfo?.role === 'Lawyer';
+    this.isClient = this.userInfo?.role === 'Client';
   }
 
   loadLawyerProfile(): void {
@@ -271,8 +280,10 @@ export class LawyerConsultationComponent implements OnInit {
     let appointmentDate: Date;
     try {
       appointmentDate = new Date(formData.appointmentTime);
-      const [hours, minutes] = formData.startTime.split(':');
-      appointmentDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      console.log(appointmentDate);
+      // const [hours, minutes] = formData.startTime.split(':');
+      // appointmentDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      console.log('Combined date and time:', appointmentDate);
 
       // Validate the appointment date is in the future
       if (appointmentDate <= new Date()) {
@@ -300,8 +311,8 @@ export class LawyerConsultationComponent implements OnInit {
       !formData.header ||
       !formData.description ||
       !formData.appointmentTime ||
-      !formData.startTime ||
-      !formData.endTime ||
+      // !formData.startTime ||
+      // !formData.endTime ||
       !formData.jobFieldId ||
       !formData.lawyerId
     ) {
@@ -331,8 +342,8 @@ export class LawyerConsultationComponent implements OnInit {
       header: this.jobForm.get('header')?.errors,
       description: this.jobForm.get('description')?.errors,
       appointmentTime: this.jobForm.get('appointmentTime')?.errors,
-      startTime: this.jobForm.get('startTime')?.errors,
-      endTime: this.jobForm.get('endTime')?.errors,
+      // startTime: this.jobForm.get('startTime')?.errors,
+      // endTime: this.jobForm.get('endTime')?.errors,
       durationHours: this.jobForm.get('durationHours')?.errors,
       budget: this.jobForm.get('budget')?.errors,
       jobFieldId: this.jobForm.get('jobFieldId')?.errors,
