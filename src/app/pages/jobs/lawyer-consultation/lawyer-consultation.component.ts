@@ -269,9 +269,9 @@ export class LawyerConsultationComponent implements OnInit {
         this.successMessage = 'Consultation request submitted successfully!';
         this.isSubmitting = false;
         
-        // Navigate to jobs page after a short delay
+        // Navigate to client consults page after a short delay
         setTimeout(() => {
-          this.router.navigate(['/jobs']);
+          this.router.navigate(['/client/consults']);
         }, 2000);
       },
       error: (err) => {

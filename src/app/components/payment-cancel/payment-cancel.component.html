@@ -1,0 +1,43 @@
+<div class="payment-cancel-container">
+  <div class="cancel-card">
+    <div class="text-center py-5">
+      <div class="cancel-icon mb-4">
+        <i class="fas fa-times-circle text-warning fa-4x"></i>
+      </div>
+      
+      <h2 class="text-warning mb-3">Payment Cancelled</h2>
+      
+      <div class="cancel-message mb-4">
+        <p class="text-muted mb-3">You have cancelled the payment process.</p>
+        <p class="text-muted">No charges have been made to your account.</p>
+      </div>
+
+      <div class="help-info mb-4">
+        <div class="alert alert-info">
+          <h6><i class="fas fa-info-circle me-2"></i>Need Help?</h6>
+          <p class="mb-0 small">If you encountered any issues during payment, please contact our support team or try again.</p>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <button class="btn btn-warning w-100" (click)="tryAgain()">
+              <i class="fas fa-redo me-2"></i>Try Again
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-outline-primary w-100" (click)="goToConsultations()">
+              <i class="fas fa-briefcase me-2"></i>My Consultations
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-outline-secondary w-100" (click)="goToDashboard()">
+              <i class="fas fa-home me-2"></i>Dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

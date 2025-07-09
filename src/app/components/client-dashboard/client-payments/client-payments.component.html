@@ -188,6 +188,20 @@
     <i class="fas fa-exclamation-triangle me-2"></i>{{ balanceError }}
   </div>
 
+  <!-- Escrow Payments Alert -->
+  <div *ngIf="getPendingEscrowPayments().length > 0" class="alert alert-info mb-4 escrow-alert" role="alert">
+    <div class="d-flex align-items-center">
+      <i class="fas fa-lock me-3 fa-2x"></i>
+      <div class="flex-grow-1">
+        <h6 class="mb-1">Pending Escrow Payments</h6>
+        <p class="mb-0">You have {{ getPendingEscrowPayments().length }} escrow payment(s) pending. Complete these payments to proceed with your consultations.</p>
+      </div>
+      <button class="btn btn-primary btn-sm" (click)="scrollToPayments()">
+        <i class="fas fa-arrow-down me-1"></i>View Payments
+      </button>
+    </div>
+  </div>
+
   <!-- Tabs -->
   <ul class="nav nav-tabs mb-4" id="paymentsTabs" role="tablist">
     <li class="nav-item" role="presentation">
@@ -205,7 +219,7 @@
   <!-- Tab Content -->
   <div class="tab-content" id="paymentsTabsContent">
     <!-- Payments Tab -->
-    <div class="tab-pane fade show active" id="payments" role="tabpanel">
+    <div class="tab-pane fade show active" id="payments" role="tabpanel" #paymentsSection>
       <!-- Filters -->
       <div class="card mb-4 border-0 shadow-sm">
         <div class="card-body">
@@ -283,7 +297,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let payment of payments" class="align-middle">
+                <tr *ngFor="let payment of payments" 
+                    class="align-middle"
+                    [class.escrow-pending]="canPayEscrow(payment)">
                   <!-- Transaction ID -->
                   <td class="px-3">
                     <span class="fw-bold text-primary">{{ payment.transactionId }}</span>
@@ -340,9 +356,21 @@
                   
                   <!-- Actions -->
                   <td class="px-3">
+                    <div class="d-flex gap-1">
+                      <!-- Pay Now button for pending escrow payments -->
+                      <button 
+                        *ngIf="canPayEscrow(payment)"
+                        class="btn btn-sm btn-success" 
+                        title="Pay Now"
+                        (click)="initiateEscrowPayment(payment)">
+                        <i class="fas fa-credit-card me-1"></i>Pay Now
+                      </button>
+                      
+                      <!-- View Details button -->
                     <button class="btn btn-sm btn-outline-primary" title="View Details">
                       <i class="fas fa-eye"></i>
                     </button>
+                    </div>
                   </td>
                 </tr>
               </tbody>
