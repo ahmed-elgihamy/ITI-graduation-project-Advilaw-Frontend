@@ -6,7 +6,8 @@
   --color-mustard: #f0b35a;
   --color-navy-blue: #313f4c;
   --color-medium-brown: #87603f;
-  --color-sand-beige: #f9f1e3;
+  --color-sand-beige: #bfbfbe;
+  --color-semi-white: #d3d3d1;
 }
 
 body {
@@ -92,3 +93,12 @@ body {
     padding: 1rem;
   }
 }
+.p-rating .p-rating-icon {
+  font-size: 1.5rem !important;
+  width: 2.5rem !important;
+  height: 1.8rem !important;
+}
+.p-rating .p-rating-icon {
+  color: var(--color-mustard) !important;
+}
+

@@ -28,7 +28,6 @@ export class LawyersComponent {
       label: 'Profile Image',
       type: 'image',
     },
-    { key: 'id', label: 'Lawyer ID' },
     { key: 'userName', label: 'Name' },
     { key: 'city', label: 'City' },
     { key: 'country', label: 'Country' },
@@ -44,11 +43,14 @@ export class LawyersComponent {
     this.currentPage = page;
     this.ApiService.GetLawyers(page).subscribe({
       next: (res: ApiResponse<PagedResponse<LawyerListDTO>>) => {
+        // change LawyerId to UserId
         const pagedData = res.data;
         this.lawyers = pagedData.data; // actual lawyer list
+        this.lawyers.map((lawyer) => (lawyer.id = lawyer.userId));
         this.totalPages = pagedData.totalPages;
         this.pageSize = pagedData.pageSize;
         this.currentPage = pagedData.pageNumber;
+
         console.log(res);
       },
       error: (err: any) => {

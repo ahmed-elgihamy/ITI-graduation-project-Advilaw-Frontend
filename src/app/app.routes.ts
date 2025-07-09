@@ -42,7 +42,6 @@ import { SubscriptionPlansComponent } from './components/subscriptions/subscript
 import { SubscriptionManagementComponent } from './components/subscriptions/subscription-management/subscription-management.component';
 
 
-
 export const routes: Routes = [
   {
     path: '',
@@ -64,7 +63,16 @@ export const routes: Routes = [
       { path: 'lawyers', component: LawyersComponent },
       { path: 'allLawyers', component: AllLawyerComponent },
 
-      { path: 'chat', component: ChatComponent },
+      { path: 'not-allowed', component: AccessDeniedComponent },
+      { path: 'ConsultationReview', component: ConsultationReviewComponent },
+
+      {
+        path: 'chat',
+        component: ChatComponent,
+        //  canActivate: [SessionGuard]
+      },
+      { path: 'countdown', component: CountdownTimerComponentComponent },
+
 
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },

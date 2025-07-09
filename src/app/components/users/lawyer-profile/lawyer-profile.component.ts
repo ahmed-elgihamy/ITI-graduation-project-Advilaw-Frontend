@@ -10,9 +10,10 @@ import { CommonModule } from '@angular/common';
 import { LawyerProfile } from '../../models/LawyerProfile';
 import { Review } from '../../models/Review';
 import { LawyerSchedule } from '../../models/Lawyer Schedule';
-import { LawyerService } from '../../../core/services/lawyer.service'
+import { LawyerService } from '../../../core/services/lawyer.service';
 import { Subject, forkJoin, throwError } from 'rxjs';
 import { takeUntil, catchError } from 'rxjs/operators';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-lawyer-profile',
@@ -27,6 +28,8 @@ export class LawyerProfileComponent implements OnInit, OnDestroy {
   schedule: LawyerSchedule[] = [];
   isLoading = true;
   errorMessage = '';
+  isLawyer = false;
+  isClient = false;
 
   readonly STAR_LEVELS = [5, 4, 3, 2, 1];
 
@@ -36,11 +39,15 @@ export class LawyerProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private lawyerService: LawyerService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.loadLawyerData();
+    console.log('User role:', this.authService.getUserInfo()?.role);
+    this.isLawyer = this.authService.getUserInfo()?.role === 'Lawyer';
+    this.isClient = this.authService.getUserInfo()?.role === 'Client';
   }
 
   ngOnDestroy(): void {
@@ -49,7 +56,7 @@ export class LawyerProfileComponent implements OnInit, OnDestroy {
   }
 
   get avatarUrl(): string {
-    return this.lawyer?.photoUrl || 'assets/default-avatar.png';
+    return this.lawyer?.photoUrl || 'assets/images/default-profile.png';
   }
 
   private loadLawyerData(): void {

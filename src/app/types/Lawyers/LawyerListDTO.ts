@@ -20,4 +20,5 @@ export interface LawyerListDTO {
   imageUrl: string;
   role: UserRole;
   gender: Gender;
+  userId: string;
 }
