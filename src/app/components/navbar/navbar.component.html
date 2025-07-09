@@ -1,14 +1,46 @@
 <app-lawyer-or-client-modal></app-lawyer-or-client-modal>
-<nav class="navbar navbar-expand-lg ">
+<nav class="navbar navbar-expand-lg">
   <div class="container">
-    <a class="navbar-brand" routerLink="/"><img src="assets/images/logo.png" /></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon" style="background-image: none; width: 50px; height: 40px">
-        <svg width="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 18L20 18" stroke="#f9f1e3" stroke-width="2" stroke-linecap="round" />
-          <path d="M4 12L20 12" stroke="#f9f1e3" stroke-width="2" stroke-linecap="round" />
-          <path d="M4 6L20 6" stroke="#f9f1e3" stroke-width="2" stroke-linecap="round" />
+    <a class="navbar-brand" routerLink="/"
+      ><img src="assets/images/logo.png"
+    /></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span
+        class="navbar-toggler-icon"
+        style="background-image: none; width: 50px; height: 40px"
+      >
+        <svg
+          width="40px"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 18L20 18"
+            stroke="#f9f1e3"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M4 12L20 12"
+            stroke="#f9f1e3"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M4 6L20 6"
+            stroke="#f9f1e3"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
         </svg>
       </span>
     </button>
@@ -17,12 +49,12 @@
         <li class="nav-item mx-2">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
-        <li class="nav-item mx-2">
+        <!-- <li class="nav-item mx-2">
           <a class="nav-link" href="#">How It Works</a>
         </li>
         <li class="nav-item mx-2">
           <a class="nav-link" href="#">Contact Us</a>
-        </li>
+        </li> -->
         <li class="nav-item mx-2">
           <a class="nav-link" routerLink="/dashboard">Dashboard</a>
         </li>
@@ -30,20 +62,36 @@
           <a class="nav-link" routerLink="/jobs">Jobs</a>
         </li>
         <li class="nav-item mx-2">
-          <a class="nav-link" routerLink="/lawyers">Lawyers</a>
+          <a class="nav-link" routerLink="/allLawyers">Lawyers</a>
         </li>
       </ul>
       <form class="d-flex justify-content-center" role="search">
-        <a *ngIf="!isLogged" routerLink="/login" type="button" class="btn mx-1 py-2 px-5 signInBtn">
+        <a
+          *ngIf="!isLogged"
+          routerLink="/login"
+          type="button"
+          class="btn mx-1 py-2 px-5 signInBtn"
+        >
           Sign In
         </a>
-        <button *ngIf="!isLogged" id="signOutBtn" type="button" class="btn main-btn mx-1 py-2 px-5 signOutBtn"
-          data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button
+          *ngIf="!isLogged"
+          id="signOutBtn"
+          type="button"
+          class="btn main-btn mx-1 py-2 px-5 signOutBtn"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
           Sign Out
         </button>
 
-        <button *ngIf="isLogged" (click)="_auth.logOut()" id="signOutBtn" type="button"
-          class="btn main-btn mx-1 py-2 px-5 signOutBtn">
+        <button
+          *ngIf="isLogged"
+          (click)="_auth.logOut()"
+          id="signOutBtn"
+          type="button"
+          class="btn main-btn mx-1 py-2 px-5 signOutBtn"
+        >
           LogOut
         </button>
       </form>

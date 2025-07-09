@@ -32,7 +32,7 @@ export class JobsComponent implements OnInit {
       this.IsLawyer = true;
       // Add Lawyer-specific columns
       this.jobsColumns.push(
-        { key: 'clientId', label: 'Client ID' },
+        // { key: 'clientId', label: 'Client ID' },
         { key: 'clientName', label: 'Client Name' }
       );
       // this.router.navigate(['/dashboard/jobs']);
@@ -49,19 +49,19 @@ export class JobsComponent implements OnInit {
       label: 'Image',
       type: 'image',
     },
-    {
-      key: 'id',
-      label: 'Job ID',
-      type: 'link',
-      link: '/jobs/', // base path
-      linkKey: 'id', // value from the row to append
-    },
+    // {
+    //   key: 'id',
+    //   label: 'Job ID',
+    //   type: 'link',
+    //   link: '/jobs/', // base path
+    //   linkKey: 'id', // value from the row to append
+    // },
     { key: 'header', label: 'Header' },
     { key: 'description', label: 'Description' },
     { key: 'budget', label: 'Budget' },
-    { key: 'isAnonymus', label: 'Anonymous', type: 'boolean' },
+    // { key: 'isAnonymus', label: 'Anonymous', type: 'boolean' },
 
-    { key: 'jobFieldId', label: 'Job Field ID' },
+    // { key: 'jobFieldId', label: 'Job Field ID' },
     { key: 'jobFieldName', label: 'Job Field Name' },
     { key: 'status', label: 'Status', type: 'enum', enumType: 'JobStatus' },
   ];

@@ -69,7 +69,9 @@ export class LawyerConsultationComponent implements OnInit {
           this.hourlyRate = profile.hourlyRate;
           console.log('Loaded lawyer profile:', profile);
         } else {
-          console.warn('Lawyer profile is null or hourlyRate missing. Using default.');
+          console.warn(
+            'Lawyer profile is null or hourlyRate missing. Using default.'
+          );
           this.hourlyRate = 500;
         }
         this.buildForm();
@@ -101,12 +103,29 @@ export class LawyerConsultationComponent implements OnInit {
 
   buildForm(): void {
     this.jobForm = this.fb.group({
-      header: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(1000)]],
+      header: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(100),
+        ],
+      ],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(20),
+          Validators.maxLength(1000),
+        ],
+      ],
       appointmentTime: ['', [Validators.required, this.futureDateValidator()]],
-      startTime: ['', [Validators.required]],
-      endTime: ['', [Validators.required]],
-      durationHours: [0, [Validators.required, Validators.min(0.5), Validators.max(8)]],
+      // startTime: ['', [Validators.required]],
+      // endTime: ['', [Validators.required]],
+      durationHours: [
+        0,
+        [Validators.required, Validators.min(0.5), Validators.max(8)],
+      ],
       budget: [0, [Validators.required, Validators.min(1)]],
       isAnonymus: [false],
       jobFieldId: [null, [Validators.required]],
@@ -115,53 +134,83 @@ export class LawyerConsultationComponent implements OnInit {
     });
 
     // Subscribe to time changes for automatic calculation
-    this.jobForm.get('startTime')?.valueChanges.subscribe(() =>
-      this.calculateDurationAndBudget()
-    );
-    this.jobForm.get('endTime')?.valueChanges.subscribe(() =>
-      this.calculateDurationAndBudget()
-    );
+    // this.jobForm.get('startTime')?.valueChanges.subscribe(() =>
+    //   this.calculateDurationAndBudget()
+    // );
+    // this.jobForm.get('endTime')?.valueChanges.subscribe(() =>
+    //   this.calculateDurationAndBudget()
+    // );
+    this.jobForm
+      .get('appointmentTime')
+      ?.valueChanges.subscribe(() => this.calculateDurationAndBudget());
+
+    this.jobForm
+      .get('durationHours')
+      ?.valueChanges.subscribe(() => this.calculateDurationAndBudget());
+
+    this.jobForm
+      .get('budget')
+      ?.valueChanges.subscribe(() => this.calculateDurationAndBudget());
   }
 
   futureDateValidator() {
     return (control: AbstractControl): { [key: string]: any } | null => {
       if (!control.value) return null;
-      
+
       const selectedDate = new Date(control.value);
       const now = new Date();
-      
+
       if (selectedDate <= now) {
-        return { 'futureDate': { value: control.value } };
+        return { futureDate: { value: control.value } };
       }
-      
+
       return null;
     };
-}
+  }
 
   calculateDurationAndBudget(): void {
-    const startValue = this.jobForm.get('startTime')?.value;
-    const endValue = this.jobForm.get('endTime')?.value;
+    const appointmentDateStr = this.jobForm.get('appointmentTime')?.value;
+    const duration = this.jobForm.get('durationHours')?.value;
 
-    if (!startValue || !endValue) return;
+    if (!appointmentDateStr || !duration) return;
 
-    const start = new Date(`1970-01-01T${startValue}`);
-    const end = new Date(`1970-01-01T${endValue}`);
+    const appointmentDate = new Date(appointmentDateStr);
 
-    if (end > start) {
-      const diffMs = end.getTime() - start.getTime();
-      const hours = diffMs / (1000 * 60 * 60);
-
-      if (hours >= 0.5 && hours <= 8) {
-      this.jobForm.patchValue(
-        {
-            durationHours: Math.round(hours * 10) / 10, // Round to 1 decimal place
-            budget: Math.ceil(this.hourlyRate * hours),
-        },
-        { emitEvent: false }
-      );
-      }
+    if (appointmentDate.getTime() > Date.now()) {
+      const budget = Math.ceil(this.hourlyRate * duration);
+      this.jobForm.patchValue({ budget }, { emitEvent: false });
     }
+
+    console.log(
+      `Duration: ${duration}, Budget: ${this.jobForm.get('budget')?.value}`
+    );
   }
+
+  // calculateDurationAndBudget(): void {
+  //   // const startValue = this.jobForm.get('startTime')?.value;
+  //   // const endValue = this.jobForm.get('endTime')?.value;
+  //   const duration = this.jobForm.get('durationHours')?.value;
+
+  //   if (!duration) return;
+
+  //   // const start = new Date(`1970-01-01T${startValue}`);
+  //   // const end = new Date(`1970-01-01T${endValue}`);
+
+  //   if (appointmentTime.getTime() > Date.now()) {
+  //     const diffMs = end.getTime() - start.getTime();
+  //     const hours = diffMs / (1000 * 60 * 60);
+
+  //     if (hours >= 0.5 && hours <= 8) {
+  //       this.jobForm.patchValue(
+  //         {
+  //           // durationHours: Math.round(hours * 10) / 10, // Round to 1 decimal place
+  //           budget: Math.ceil(this.hourlyRate * hours),
+  //         },
+  //         { emitEvent: false }
+  //       );
+  //     }
+  //   }
+  // }
 
   isInvalid(controlName: string): boolean {
     const control = this.jobForm.get(controlName);
@@ -172,12 +221,32 @@ export class LawyerConsultationComponent implements OnInit {
     const control = this.jobForm.get(controlName);
     if (!control || !control.errors) return '';
 
-    if (control.errors['required']) return `${controlName.charAt(0).toUpperCase() + controlName.slice(1)} is required.`;
-    if (control.errors['minlength']) return `${controlName.charAt(0).toUpperCase() + controlName.slice(1)} must be at least ${control.errors['minlength'].requiredLength} characters.`;
-    if (control.errors['maxlength']) return `${controlName.charAt(0).toUpperCase() + controlName.slice(1)} must not exceed ${control.errors['maxlength'].requiredLength} characters.`;
-    if (control.errors['min']) return `${controlName.charAt(0).toUpperCase() + controlName.slice(1)} must be at least ${control.errors['min'].min}.`;
-    if (control.errors['max']) return `${controlName.charAt(0).toUpperCase() + controlName.slice(1)} must not exceed ${control.errors['max'].max}.`;
-    if (control.errors['futureDate']) return 'Appointment time must be in the future.';
+    if (control.errors['required'])
+      return `${
+        controlName.charAt(0).toUpperCase() + controlName.slice(1)
+      } is required.`;
+    if (control.errors['minlength'])
+      return `${
+        controlName.charAt(0).toUpperCase() + controlName.slice(1)
+      } must be at least ${
+        control.errors['minlength'].requiredLength
+      } characters.`;
+    if (control.errors['maxlength'])
+      return `${
+        controlName.charAt(0).toUpperCase() + controlName.slice(1)
+      } must not exceed ${
+        control.errors['maxlength'].requiredLength
+      } characters.`;
+    if (control.errors['min'])
+      return `${
+        controlName.charAt(0).toUpperCase() + controlName.slice(1)
+      } must be at least ${control.errors['min'].min}.`;
+    if (control.errors['max'])
+      return `${
+        controlName.charAt(0).toUpperCase() + controlName.slice(1)
+      } must not exceed ${control.errors['max'].max}.`;
+    if (control.errors['futureDate'])
+      return 'Appointment time must be in the future.';
 
     return 'Invalid input.';
   }
@@ -185,7 +254,7 @@ export class LawyerConsultationComponent implements OnInit {
   onSubmit(): void {
     console.log('Form submitted. Form valid:', this.jobForm.valid);
     console.log('Form values:', this.jobForm.value);
-    
+
     if (this.jobForm.invalid) {
       console.log('Form is invalid. Marking all fields as touched.');
       ValidateForm.validateAllFormsFields(this.jobForm);
@@ -204,7 +273,7 @@ export class LawyerConsultationComponent implements OnInit {
       appointmentDate = new Date(formData.appointmentTime);
       const [hours, minutes] = formData.startTime.split(':');
       appointmentDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-      
+
       // Validate the appointment date is in the future
       if (appointmentDate <= new Date()) {
         this.errorMessage = 'Appointment time must be in the future.';
@@ -217,7 +286,7 @@ export class LawyerConsultationComponent implements OnInit {
       this.isSubmitting = false;
       return;
     }
-    
+
     // Get user ID from auth service
     const userInfo = this.authService.getUserInfo();
     if (!userInfo?.userId) {
@@ -227,8 +296,15 @@ export class LawyerConsultationComponent implements OnInit {
     }
 
     // Validate required fields
-    if (!formData.header || !formData.description || !formData.appointmentTime || 
-        !formData.startTime || !formData.endTime || !formData.jobFieldId || !formData.lawyerId) {
+    if (
+      !formData.header ||
+      !formData.description ||
+      !formData.appointmentTime ||
+      !formData.startTime ||
+      !formData.endTime ||
+      !formData.jobFieldId ||
+      !formData.lawyerId
+    ) {
       this.errorMessage = 'Please fill in all required fields.';
       this.isSubmitting = false;
       return;
@@ -245,7 +321,7 @@ export class LawyerConsultationComponent implements OnInit {
       lawyerId: formData.lawyerId,
       appointmentTime: appointmentDate.toISOString(), // Format as ISO string for backend
       durationHours: formData.durationHours,
-      UserId: userInfo.userId // Add user ID for backend (capital U to match C# property)
+      UserId: userInfo.userId, // Add user ID for backend (capital U to match C# property)
     };
 
     console.log('Submitting job data:', jobData);
@@ -260,7 +336,7 @@ export class LawyerConsultationComponent implements OnInit {
       durationHours: this.jobForm.get('durationHours')?.errors,
       budget: this.jobForm.get('budget')?.errors,
       jobFieldId: this.jobForm.get('jobFieldId')?.errors,
-      lawyerId: this.jobForm.get('lawyerId')?.errors
+      lawyerId: this.jobForm.get('lawyerId')?.errors,
     });
 
     this.jobsService.CreateJob(jobData).subscribe({
@@ -268,7 +344,7 @@ export class LawyerConsultationComponent implements OnInit {
         console.log('Job created successfully:', response);
         this.successMessage = 'Consultation request submitted successfully!';
         this.isSubmitting = false;
-        
+
         // Navigate to jobs page after a short delay
         setTimeout(() => {
           this.router.navigate(['/jobs']);
@@ -276,7 +352,9 @@ export class LawyerConsultationComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error creating job:', err);
-        this.errorMessage = err.error?.message || 'Failed to submit consultation request. Please try again.';
+        this.errorMessage =
+          err.error?.message ||
+          'Failed to submit consultation request. Please try again.';
         this.isSubmitting = false;
       },
     });
@@ -297,6 +375,4 @@ export class LawyerConsultationComponent implements OnInit {
       formSection.scrollIntoView({ behavior: 'smooth' });
     }
   }
-
-
 }
