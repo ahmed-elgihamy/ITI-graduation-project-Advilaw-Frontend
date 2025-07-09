@@ -1,34 +1,16 @@
-<div class="background">
-  <div class="container pt-4">
-    <div class="row justify-content-center">
-      <div class="col-md-8 text-center">
-        <h2 class="fw-bold text-black" *ngIf="IsClient; else lawyerTemplate">
-          <i class="bi bi-briefcase-fill me-2"></i> My Jobs
-        </h2>
-
-        <ng-template #lawyerTemplate>
-          <h2 *ngIf="IsLawyer" class="fw-bold text-success">
-            <i class="bi bi-list-check me-2"></i> All Jobs
-          </h2>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-
-  <div class="container py-4">
-    <app-dashboard-table
-      [data]="jobs"
-      [columns]="jobsColumns"
-      title="Job Listings"
-      url="jobs"
-    ></app-dashboard-table>
-    <div class="d-flex justify-content-center align-items-center">
-      <app-pagination
-        [currentPage]="currentPage"
-        [totalPages]="totalPages"
-        (pageChanged)="loadData($event)"
-      >
-      </app-pagination>
-    </div>
+<div class="container py-4">
+  <app-dashboard-table
+    [data]="jobs"
+    [columns]="jobsColumns"
+    title="Job Listings"
+    url="jobs"
+  ></app-dashboard-table>
+  <div class="d-flex justify-content-center align-items-center">
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChanged)="loadData($event)"
+    >
+    </app-pagination>
   </div>
 </div>
