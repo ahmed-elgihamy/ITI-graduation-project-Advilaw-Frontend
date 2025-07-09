@@ -93,7 +93,6 @@ body {
     padding: 1rem;
   }
 }
-
 .p-rating .p-rating-icon {
   font-size: 1.5rem !important;
   width: 2.5rem !important;
@@ -102,3 +101,4 @@ body {
 .p-rating .p-rating-icon {
   color: var(--color-mustard) !important;
 }
+

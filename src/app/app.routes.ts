@@ -41,10 +41,6 @@ import { ClientDetailsComponent } from './components/admin-dashboard/client-deta
 import { SubscriptionPlansComponent } from './components/subscriptions/subscription-plans/subscription-plans.component';
 import { SubscriptionManagementComponent } from './components/subscriptions/subscription-management/subscription-management.component';
 
-import { CountdownTimerComponentComponent } from './components/countdown-timer-component/countdown-timer-component.component';
-import { SessionGuard } from './core/guards/session.guard';
-import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
-import { ConsultationReviewComponent } from './components/reviews/consultation-review/consultation-review.component';
 
 export const routes: Routes = [
   {
@@ -76,6 +72,7 @@ export const routes: Routes = [
         //  canActivate: [SessionGuard]
       },
       { path: 'countdown', component: CountdownTimerComponentComponent },
+
 
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },

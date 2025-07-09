@@ -5,25 +5,17 @@ import { PagedResponse } from '../../../types/PagedResponse';
 import { JobListDTO } from '../../../types/Jobs/JobListDTO';
 import { DashboardTableComponent } from '../../../components/dashboard/dashboard-table/dashboard-table.component';
 import { PaginationComponent } from '../../../components/dashboard/pagination/pagination.component';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
-import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-jobs',
-  imports: [DashboardTableComponent, PaginationComponent, CommonModule],
+  imports: [DashboardTableComponent, PaginationComponent],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.css',
 })
 export class JobsComponent implements OnInit {
   ApiService: any;
-  IsClient: boolean = false;
-  IsLawyer: boolean = false;
-  constructor(
-    private jobsService: JobsService,
-    private router: Router,
-    private authService: AuthService
-  ) {
+  constructor(private jobsService: JobsService) {
     this.ApiService = jobsService;
   }
   ngOnInit(): void {
@@ -59,11 +51,8 @@ export class JobsComponent implements OnInit {
     { key: 'header', label: 'Header' },
     { key: 'description', label: 'Description' },
     { key: 'budget', label: 'Budget' },
-    // { key: 'isAnonymus', label: 'Anonymous', type: 'boolean' },
-
-    // { key: 'jobFieldId', label: 'Job Field ID' },
+    { key: 'clientName', label: 'Client Name' },
     { key: 'jobFieldName', label: 'Job Field Name' },
-    { key: 'status', label: 'Status', type: 'enum', enumType: 'JobStatus' },
   ];
 
   jobs: any[] = [];

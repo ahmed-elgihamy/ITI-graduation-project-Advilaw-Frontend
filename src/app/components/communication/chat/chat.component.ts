@@ -1,88 +1,90 @@
-import { UserInfo } from './../../../types/UserInfo';
-import { CommonModule, NgClass } from "@angular/common";
-import { Component, effect, ElementRef, inject, signal, ViewChild } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { ChatService } from "../../../core/services/chat.service";
-import { AuthService } from '../../../core/services/auth.service';
-import { SessionService } from '../../../core/services/session.service';
-import { SecondsToTimePipe } from '../../../core/Pipe/seconds-to-time.pipe';
+import { NgClass } from '@angular/common';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ConsultationHeaderComponent } from '../consultation-header/consultation-header.component';
+import { ConsultationDetailsComponent } from '../consultation-details/consultation-details.component';
+import { MessageInpuComponent } from '../message-inpu/message-inpu.component';
 
-export interface Message {
+interface Message {
   id: string;
-  senderId: string;
+  sender: 'lawyer' | 'client';
   content: string;
-  sentAt: Date;
-  type?: 'text' | 'file';
-  fileName?: string;
+  timestamp: string;
+  avatar: string;
+  senderName: string;
 }
-
 
 @Component({
   selector: 'app-chat',
-  imports: [FormsModule, NgClass, CommonModule, SecondsToTimePipe],
+  standalone: true,
+  imports: [
+    // NgClass,
+    FormsModule,
+    // ConsultationHeaderComponent,
+    // ConsultationDetailsComponent,
+    // MessageInpuComponent,
+  ],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
 })
-export class ChatComponent {
-  // === Signals ===
-  messages = signal<Message[]>([]);
-  messageText = signal<string>('');
-  clientAvatar = 'https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&w=400';
-  lawyerAvatar = 'https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=400';
+export class ChatComponent implements AfterViewInit {
+  @ViewChild('chatContainer') chatContainerRef!: ElementRef;
+  @ViewChild('inputField') inputFieldRef!: ElementRef;
 
-  // === Session Info ===
-  sessionId: number = 98498;
+  messages: Message[] = [
+    {
+      id: '1',
+      sender: 'lawyer',
+      content: 'Hello, how can I help you today?',
+      timestamp: '2:35 PM',
+      avatar:
+        'https://readdy.ai/api/search-image?query=professional%20female%20lawyer...&seq=1',
+      senderName: 'Rebecca Johnson',
+    },
+    // ممكن تضيف باقي الرسائل هنا...
+  ];
 
-  senderId = this.getOrCreateSenderId();
+  newMessage: string = '';
 
-  getOrCreateSenderId(): string {
-    const key = 'sender-id';
-    let id = sessionStorage.getItem(key);
-    if (!id) {
-      id = crypto.randomUUID();
-      sessionStorage.setItem(key, id);
-    }
-    return id;
-  }
+  ngAfterViewInit(): void {
+    this.scrollToBottom();
 
-  chatService = inject(ChatService);
-  UserInfo = inject(AuthService);
-  sessionService = inject(SessionService);
-
-  data = this.UserInfo.getUserInfo() as UserInfo;
-  userName = this.data?.name || 'User';
-  ngOnInit(): void {
-    //this.sessionService.startSession(0.10);
-
-    this.chatService.startConnection(this.sessionId, this.senderId);
-
-    effect(() => {
-      console.log("📥 Updated messages in component:", this.chatService.messages());
+    const inputField = this.inputFieldRef.nativeElement as HTMLInputElement;
+    inputField.addEventListener('keypress', (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        this.sendMessage();
+      }
     });
   }
-  handleSend() {
-    this.sessionService.unlockAudio();
-    this.sendMessage();
+
+  sendMessage(): void {
+    const message = this.newMessage.trim();
+    if (!message) return;
+
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedTime = `${hours % 12 || 12}:${minutes
+      .toString()
+      .padStart(2, '0')} ${ampm}`;
+
+    this.messages.push({
+      id: 1 + Math.random().toString(36).substring(2, 9), // Generate a random ID
+      sender: 'client',
+      content: message,
+      timestamp: formattedTime,
+      avatar:
+        'https://readdy.ai/api/search-image?query=professional%20business%20person...&seq=2',
+      senderName: 'You',
+    });
+
+    this.newMessage = '';
+    setTimeout(() => this.scrollToBottom(), 0);
   }
 
-  sendMessage() {
-    if (this.sessionService.sessionEnded()) return;
-    const text = this.messageText().trim();
-    if (!text) return;
-
-    // this.chatService.sendMessage(this.sessionId, this.senderId, text);
-    this.chatService.sendMessage(this.sessionId, this.senderId, text);
-
-    this.messageText.set('');
+  scrollToBottom(): void {
+    const container = this.chatContainerRef.nativeElement as HTMLElement;
+    container.scrollTop = container.scrollHeight;
   }
-
-
-  ngOnDestroy(): void {
-    this.chatService.stopConnection();
-  }
-
-
 }
-
-
-
