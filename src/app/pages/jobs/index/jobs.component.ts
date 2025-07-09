@@ -6,6 +6,7 @@ import { JobListDTO } from '../../../types/Jobs/JobListDTO';
 import { DashboardTableComponent } from '../../../components/dashboard/dashboard-table/dashboard-table.component';
 import { PaginationComponent } from '../../../components/dashboard/pagination/pagination.component';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-jobs',
@@ -15,7 +16,12 @@ import { RouterLink } from '@angular/router';
 })
 export class JobsComponent implements OnInit {
   ApiService: any;
-  constructor(private jobsService: JobsService) {
+  IsLawyer = false;
+  IsClient = false;
+  constructor(
+    private jobsService: JobsService,
+    private authService: AuthService
+  ) {
     this.ApiService = jobsService;
   }
   ngOnInit(): void {
