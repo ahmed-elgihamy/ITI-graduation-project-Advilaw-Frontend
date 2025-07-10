@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../../core/services/client.service';
+import { EscrowService } from '../../../core/services/escrow.service';
 import { ClientPaymentDTO, ClientPaymentStatistics, ClientBalance, WithdrawalRequest, ClientPaymentType, PaymentStatus, WithdrawalStatus } from '../../../types/Clients/ClientPaymentDTO';
 import { PagedResponse } from '../../../types/PagedResponse';
 import { ApiResponse } from '../../../types/ApiResponse';
@@ -14,6 +15,8 @@ import { ApiResponse } from '../../../types/ApiResponse';
   styleUrl: './client-payments.component.css'
 })
 export class ClientPaymentsComponent implements OnInit {
+  @ViewChild('paymentsSection', { static: false }) paymentsSection!: ElementRef;
+  
   // Payment data
   payments: ClientPaymentDTO[] = [];
   withdrawals: WithdrawalRequest[] = [];
@@ -103,10 +106,16 @@ export class ClientPaymentsComponent implements OnInit {
   WithdrawalStatus = WithdrawalStatus;
   Math = Math;
 
-  constructor(private clientService: ClientService) {}
+  constructor(
+    private clientService: ClientService,
+    private escrowService: EscrowService
+  ) {}
 
   ngOnInit(): void {
     this.loadAllData();
+    this.checkPaymentUpdates();
+    // Start polling for payment status updates (optional)
+    // this.startPaymentStatusPolling();
   }
 
   loadAllData(): void {
@@ -462,5 +471,136 @@ export class ClientPaymentsComponent implements OnInit {
 
   onPageChange(page: number): void {
     this.loadPayments(page);
+  }
+
+  // Escrow Payment Methods
+  initiateEscrowPayment(payment: ClientPaymentDTO): void {
+    if (payment.type !== ClientPaymentType.EscrowPayment || payment.status !== PaymentStatus.Pending) {
+      console.error('Invalid payment type or status for escrow payment');
+      return;
+    }
+
+    // Get current user ID from localStorage
+    const user = localStorage.getItem('user');
+    if (!user) {
+      alert('User not authenticated');
+      return;
+    }
+
+    const userData = JSON.parse(user);
+    const clientId = userData.id || userData.userId || '';
+
+    if (!clientId) {
+      alert('User ID not found');
+      return;
+    }
+
+    // Create payment request
+    const paymentRequest = {
+      jobId: payment.jobId || 0,
+      clientId: clientId
+    };
+
+    // Call escrow service to create payment session
+    this.escrowService.createSessionPayment(paymentRequest).subscribe({
+      next: (response) => {
+        if (response && response.checkoutUrl) {
+          window.location.href = response.checkoutUrl;
+        } else {
+          alert('Failed to initiate payment.');
+          console.error('Payment response error:', response);
+        }
+      },
+      error: (error) => {
+        console.error('Error creating escrow payment session:', error);
+        alert('Failed to initiate payment. Please try again.');
+      }
+    });
+  }
+
+  canPayEscrow(payment: ClientPaymentDTO): boolean {
+    return payment.type === ClientPaymentType.EscrowPayment && 
+           payment.status === PaymentStatus.Pending;
+  }
+
+  getCurrentUserId(): string {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userData = JSON.parse(user);
+      return userData.id || userData.userId || '';
+    }
+    return '';
+  }
+
+  // Helper methods for escrow payments
+  getPendingEscrowPayments(): ClientPaymentDTO[] {
+    return this.payments.filter(payment => 
+      payment.type === ClientPaymentType.EscrowPayment && 
+      payment.status === PaymentStatus.Pending
+    );
+  }
+
+  scrollToPayments(): void {
+    if (this.paymentsSection) {
+      this.paymentsSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  // Payment Status Update Methods
+  checkPaymentUpdates(): void {
+    const paymentUpdates = JSON.parse(localStorage.getItem('paymentUpdates') || '[]');
+    if (paymentUpdates.length > 0) {
+      this.updatePaymentStatuses(paymentUpdates);
+      // Clear processed updates
+      localStorage.removeItem('paymentUpdates');
+    }
+  }
+
+  updatePaymentStatuses(updates: any[]): void {
+    updates.forEach(update => {
+      // Find and update the corresponding payment
+      const paymentIndex = this.payments.findIndex(p => 
+        p.transactionId === update.sessionId || 
+        p.id === parseInt(update.escrowId)
+      );
+      
+      if (paymentIndex !== -1) {
+        this.payments[paymentIndex].status = PaymentStatus.Completed;
+        this.payments[paymentIndex].updatedAt = update.confirmedAt;
+        
+        // Show success notification
+        this.showPaymentUpdateNotification('Payment completed successfully!');
+      }
+    });
+  }
+
+  showPaymentUpdateNotification(message: string): void {
+    // Create a simple notification
+    const notification = document.createElement('div');
+    notification.className = 'payment-notification';
+    notification.innerHTML = `
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Remove after 5 seconds
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 5000);
+  }
+
+  // Poll for payment status updates (optional)
+  startPaymentStatusPolling(): void {
+    setInterval(() => {
+      this.checkPaymentUpdates();
+    }, 10000); // Check every 10 seconds
   }
 }

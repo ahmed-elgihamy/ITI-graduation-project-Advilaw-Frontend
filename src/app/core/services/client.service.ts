@@ -37,6 +37,11 @@ export class ClientService {
     return this.http.get<ApiResponse<PagedResponse<ClientPaymentDTO>>>(`${this.apiUrl}/client/me/payments?page=${page}&pageSize=${pageSize}`);
   }
 
+  // Get client escrow payments
+  getClientEscrowPayments(page: number = 1, pageSize: number = 10): Observable<ApiResponse<PagedResponse<ClientPaymentDTO>>> {
+    return this.http.get<ApiResponse<PagedResponse<ClientPaymentDTO>>>(`${this.apiUrl}/client/me/escrow-payments?page=${page}&pageSize=${pageSize}`);
+  }
+
   // Get client payment by ID
   getClientPaymentById(paymentId: number): Observable<ApiResponse<ClientPaymentDTO>> {
     return this.http.get<ApiResponse<ClientPaymentDTO>>(`${this.apiUrl}/dummy/${paymentId}`);

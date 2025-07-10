@@ -26,7 +26,5 @@ export class LawyerPaymentsService {
     return this.http.get(`${this.apiUrl}/stripe-dashboard-link`);
   }
 
-  getStripeStatusAndRemediationLink(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/stripe-status-and-remediation-link`);
-  }
+
 }

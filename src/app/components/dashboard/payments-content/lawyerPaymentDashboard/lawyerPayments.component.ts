@@ -21,7 +21,6 @@ export class LawyerPaymentsComponent implements OnInit {
   ApiService: any;
   Role: string | null = null;
   stripeAccountStatus: any = null;
-  remediationLink: string | null = null;
   loading = false;
   error: string | null = null;
   constructor(
@@ -78,21 +77,20 @@ export class LawyerPaymentsComponent implements OnInit {
 
   checkStripeAccountStatus() {
     this.loading = true;
-    this.lawyerPaymentsService.getStripeStatusAndRemediationLink().subscribe({
+    this.lawyerPaymentsService.getStripeAccountStatus().subscribe({
       next: (status) => {
         this.stripeAccountStatus = status;
-        this.remediationLink = status.RemediationLink || null;
+
         this.loading = false;
         // Log ChargesEnabled to the console
         console.log('Stripe chargesEnabled:', status.chargesEnabled);
-        console.log('Stripe ChargesEnabled:', status.charges_enabled);
 
         // Optionally, log the whole status object for more details
         console.log('Stripe Account Status:', status);
       },
       error: (err) => {
         this.stripeAccountStatus = null;
-        this.remediationLink = null;
+
         this.loading = false;
         if (err.status === 400 || err.status === 404) {
           // No Stripe account yet

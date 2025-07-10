@@ -14,7 +14,7 @@
     <div *ngIf="isStripeOnboardingRequired">
       <p class="warning">⚠️ You have not set up your Stripe account for payouts.</p>
       <button (click)="setupStripeAccount()">Start Stripe Onboarding</button>
-      <button (click)="startOnboarding()">Complete Stripe Setup</button>
+    
     </div>
     <div *ngIf="isStripePending">
       <p class="info">⏳ Your Stripe account setup is in progress. Please complete onboarding.</p>

@@ -143,24 +143,13 @@
     {{ error }}
   </div>
 
-  <!-- Jobs Table -->
-  <div *ngIf="!isLoading && !error" class="card border-0 shadow-sm">
+  <!-- Table 1: ClientPublishing Jobs -->
+  <div class="card border-0 shadow-sm mb-4">
     <div class="card-header bg-white border-0 py-3">
-      <div class="d-flex justify-content-between align-items-center">
                   <h5 class="mb-0">
             <i class="fas fa-table me-2"></i>
-            Consultations & Jobs ({{ filteredJobs.length }} of {{ totalItems }})
-            <span *ngIf="selectedStatus !== 'all' || searchTerm || selectedField !== 'all'" 
-                  class="badge bg-warning text-dark ms-2">
-              <i class="fas fa-filter me-1"></i>Filtered
-            </span>
+        My Job Postings ({{ clientPublishingJobs.length }})
           </h5>
-        <div class="d-flex gap-2">
-          <button class="btn btn-outline-secondary btn-sm" (click)="loadJobs()">
-            <i class="fas fa-sync-alt me-1"></i>Refresh
-          </button>
-        </div>
-      </div>
     </div>
     <div class="card-body p-0">
       <div class="table-responsive">
@@ -179,7 +168,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let job of filteredJobs" class="align-middle">
+            <tr *ngFor="let job of clientPublishingJobs" class="align-middle">
               <!-- Job ID -->
               <td class="px-3">
                 <span class="fw-bold text-primary">#{{ job.id }}</span>
@@ -256,45 +245,112 @@
               
               <!-- Actions -->
               <td class="px-3">
-                <div class="btn-group" role="group">
-                  <button 
-                    class="btn btn-outline-primary btn-sm" 
-                    [routerLink]="['/jobs', job.id]"
-                    title="View Details"
-                  >
-                    <i class="fas fa-eye"></i>
+                <ng-container *ngIf="job.status === JobStatus.WaitingPayment; else noAction">
+                  <button class="btn btn-success btn-sm" (click)="payNow(job)" title="Pay Now">
+                    <i class="fas fa-credit-card"></i> Pay Now
                   </button>
-                  <button 
-                    *ngIf="job.status === JobStatus.NotAssigned"
-                    class="btn btn-outline-success btn-sm" 
-                    [routerLink]="['/jobs', job.id]"
-                    title="View Proposals"
-                  >
-                    <i class="fas fa-file-contract"></i>
-                  </button>
-                  <button 
-                    *ngIf="job.status === JobStatus.WaitingAppointment || job.status === JobStatus.LawyerRequestedAppointment"
-                    class="btn btn-outline-info btn-sm" 
-                    [routerLink]="['/jobs', job.id]"
-                    title="Manage Appointments"
-                  >
-                    <i class="fas fa-calendar-alt"></i>
-                  </button>
-                </div>
+                </ng-container>
+                <ng-template #noAction></ng-template>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+    </div>
+      </div>
       
-      <!-- Empty State -->
-      <div *ngIf="filteredJobs.length === 0 && !isLoading" class="text-center py-5">
-        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-        <h5 class="text-muted">No consultations found</h5>
-        <p class="text-muted">Try adjusting your filters or create a new job posting.</p>
-        <button class="btn btn-primary" routerLink="/jobs/create">
-          <i class="fas fa-plus me-2"></i>Create New Job
-        </button>
+  <!-- Table 2: LawyerProposal Jobs (Consultations) -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white border-0 py-3">
+      <h5 class="mb-0">
+        <i class="fas fa-user-tie me-2"></i>
+        My Consultation Requests ({{ lawyerProposalJobs.length }})
+      </h5>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead class="table-light">
+            <tr>
+              <th class="px-3">Header</th>
+              <th class="px-3">Budget</th>
+              <th class="px-3">Status</th>
+              <th class="px-3">Lawyer</th>
+              <th class="px-3">Duration</th>
+              <th class="px-3">Appointment</th>
+              <th class="px-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let job of lawyerProposalJobs" class="align-middle">
+              <td class="px-3">
+                <div class="job-info">
+                  <h6 class="mb-1 text-truncate" style="max-width: 200px;">
+                    {{ job.header }}
+                  </h6>
+                  <p class="text-muted small mb-0 text-truncate" style="max-width: 200px;">
+                    {{ job.description }}
+                  </p>
+                </div>
+              </td>
+              <td class="px-3">
+                <span class="fw-bold text-success">
+                  {{ formatCurrency(job.budget) }}
+                </span>
+              </td>
+              <td class="px-3">
+                <span [ngClass]="{
+                  'badge bg-warning text-dark px-3 py-2': job.statusLabel === 'Pending',
+                  'badge bg-success px-3 py-2': job.statusLabel === 'Accepted',
+                  'badge bg-danger px-3 py-2': job.statusLabel === 'Rejected'
+                }">
+                  <i *ngIf="job.statusLabel === 'Pending'" class="fas fa-clock me-1"></i>
+                  <i *ngIf="job.statusLabel === 'Accepted'" class="fas fa-check-circle me-1"></i>
+                  <i *ngIf="job.statusLabel === 'Rejected'" class="fas fa-times-circle me-1"></i>
+                  {{ job.statusLabel }}
+                </span>
+              </td>
+              <td class="px-3">
+                <div *ngIf="job.lawyerName; else noLawyer" class="d-flex align-items-center">
+                  <span class="fw-medium text-primary">{{ job.lawyerName }}</span>
+                </div>
+                <ng-template #noLawyer>
+                  <span class="text-muted">
+                    <i class="fas fa-user-slash me-1"></i>Not Assigned
+                  </span>
+                </ng-template>
+              </td>
+              <td class="px-3">
+                <span *ngIf="job.duration != null" class="badge bg-info">
+                  {{ job.duration }} hours
+                </span>
+                <span *ngIf="job.duration == null" class="text-muted">-</span>
+              </td>
+              <td class="px-3">
+                <span *ngIf="job.appointmentTime" class="text-primary">
+                  {{ job.appointmentTime | date:'MMM dd, yyyy HH:mm' }}
+                </span>
+                <span *ngIf="!job.appointmentTime" class="text-muted">-</span>
+              </td>
+              <td class="px-3">
+                <ng-container [ngSwitch]="job.statusLabel">
+                  <!-- Pending Status -->
+                  <span *ngSwitchCase="'Pending'" class="badge bg-secondary text-light px-3 py-2">
+                    <i class="fas fa-hourglass-half me-1"></i> Waiting for lawyer...
+                  </span>
+                  <!-- Accepted Status -->
+                  <button *ngSwitchCase="'Waiting for Payment'" class="btn btn-success btn-sm" (click)="payNow(job)" title="Pay Now">
+                    <i class="fas fa-credit-card me-1"></i>Pay Now
+                  </button>
+                  <!-- Rejected Status -->
+                  <span *ngSwitchCase="'Rejected'" class="text-danger small">Rejected</span>
+                  <!-- Default case -->
+                  <span *ngSwitchDefault class="text-muted">-</span>
+                </ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

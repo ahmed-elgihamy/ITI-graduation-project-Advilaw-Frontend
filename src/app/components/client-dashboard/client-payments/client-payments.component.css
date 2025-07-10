@@ -194,6 +194,96 @@
   border-radius: 20px;
 }
 
+/* Escrow Payment Styles */
+.escrow-alert {
+  background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+  border: 1px solid #bee5eb;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.escrow-alert:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(13, 202, 240, 0.2);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.btn-success:active {
+  transform: translateY(0);
+}
+
+/* Action buttons container */
+.d-flex.gap-1 {
+  gap: 0.25rem !important;
+}
+
+/* Escrow payment row highlighting */
+.table tbody tr.escrow-pending {
+  background-color: rgba(13, 202, 240, 0.05);
+  border-left: 4px solid #17a2b8;
+}
+
+.table tbody tr.escrow-pending:hover {
+  background-color: rgba(13, 202, 240, 0.1);
+}
+
+/* Payment Status Update Notifications */
+.payment-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  max-width: 400px;
+  animation: slideInRight 0.3s ease-out;
+}
+
+.payment-notification .alert {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Payment Status Badge Enhancements */
+.badge.bg-success {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+}
+
+.badge.bg-warning {
+  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%) !important;
+  color: #212529 !important;
+}
+
+.badge.bg-danger {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+}
+
+.badge.bg-info {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+}
+
 /* Forms */
 .form-control, .form-select {
   border-radius: 8px;
