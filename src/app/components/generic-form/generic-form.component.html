@@ -1,0 +1,60 @@
+<form
+  [formGroup]="registerForm"
+  (ngSubmit)="onSubmit()"
+  class="p-4 bg-light rounded shadow"
+>
+  <div *ngFor="let field of formFields" class="mb-3">
+    <label class="form-label fw-semibold">{{ field.label }}</label>
+
+    <!-- Input -->
+    <input
+      *ngIf="field.type !== 'select'"
+      [type]="field.type"
+      [formControlName]="field.name"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid':
+          registerForm.get(field.name)?.touched &&
+          registerForm.get(field.name)?.invalid,
+        'is-valid':
+          registerForm.get(field.name)?.touched &&
+          registerForm.get(field.name)?.valid
+      }"
+    />
+
+    <!-- Select -->
+    <select
+      *ngIf="field.type === 'select'"
+      [formControlName]="field.name"
+      class="form-select"
+      [ngClass]="{
+        'is-invalid':
+          registerForm.get(field.name)?.touched &&
+          registerForm.get(field.name)?.invalid,
+        'is-valid':
+          registerForm.get(field.name)?.touched &&
+          registerForm.get(field.name)?.valid
+      }"
+    >
+      <option value="">Select {{ field.label }}</option>
+      <option *ngFor="let opt of field.options" [value]="opt">
+        {{ opt }}
+      </option>
+    </select>
+
+    <!-- Validation Errors -->
+    <div
+      class="invalid-feedback d-block"
+      *ngIf="
+        registerForm.get(field.name)?.touched &&
+        registerForm.get(field.name)?.invalid
+      "
+    >
+      <small *ngFor="let errorKey of getErrorKeys(field.name)">
+        {{ field.errors?.[errorKey] }}
+      </small>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>
