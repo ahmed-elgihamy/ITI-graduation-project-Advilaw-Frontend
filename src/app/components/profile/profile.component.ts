@@ -10,9 +10,11 @@ import { CommonModule } from '@angular/common';
 import { LawyerProfile } from '../models/LawyerProfile';
 import { Review } from '../models/Review';
 import { LawyerSchedule } from '../models/Lawyer Schedule';
-import { LawyerService } from'../../core/services/lawyer.service'
+import { LawyerService } from '../../core/services/lawyer.service';
 import { Subject, forkJoin, throwError } from 'rxjs';
 import { takeUntil, catchError } from 'rxjs/operators';
+import { AuthService } from '../../core/services/auth.service';
+import { UserInfo } from '../../types/UserInfo';
 
 @Component({
   selector: 'app-profile',
@@ -28,6 +30,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   schedule: LawyerSchedule[] = [];
   isLoading = true;
   errorMessage = '';
+  userInfo: UserInfo | null = null;
+  isLawyer = false;
+  isClient = false;
+  isMe = false;
+  urlId = '';
 
   readonly STAR_LEVELS = [5, 4, 3, 2, 1];
 
@@ -37,11 +44,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private lawyerService: LawyerService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.loadLawyerData();
+    this.userInfo = this.authService.getUserInfo();
+    this.isLawyer = this.userInfo?.role === 'Lawyer';
+    this.isClient = this.userInfo?.role === 'Client';
+    this.urlId = this.route.snapshot.paramMap.get('id') || '';
+    this.isMe = this.isLawyer && this.userInfo?.userId === this.urlId;
   }
 
   ngOnDestroy(): void {
@@ -50,7 +63,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   get avatarUrl(): string {
-    return this.lawyer?.photoUrl || 'assets/default-avatar.png';
+    return this.lawyer?.photoUrl || 'assets/images/default-profile.png';
   }
 
   private loadLawyerData(): void {
