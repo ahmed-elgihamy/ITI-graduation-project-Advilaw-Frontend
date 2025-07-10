@@ -61,4 +61,11 @@ export class PlatformSubscriptionService {
       data
     );
   }
+
+  buySubscription(id: number): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(
+      `${env.baseUrl}/PlatformSubscription/${id}/buy`,
+      {}
+    );
+  }
 }

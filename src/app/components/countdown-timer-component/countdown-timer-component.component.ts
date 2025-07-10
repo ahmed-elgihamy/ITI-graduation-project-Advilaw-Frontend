@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, computed, OnDestroy, OnInit, signal, inject } from '@angular/core';
 import { interval, takeWhile } from 'rxjs';
 import { SessionService } from '../../core/services/session.service';
@@ -19,8 +19,10 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
   sessionDate: string = '';
   isSessionReady: boolean = false;
   isBlinking: boolean = false;
+  sessionId: number | null = null;
 
   _route = inject(Router)
+  _activatedRoute = inject(ActivatedRoute)
   sessionService = inject(SessionService)
 
   // Progress ring properties
@@ -32,6 +34,12 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
   private targetTime: Date = new Date();
 
   ngOnInit() {
+    
+    this._activatedRoute.queryParams.subscribe(params => {
+      this.sessionId = params['sessionId'] ? parseInt(params['sessionId']) : null;
+      console.log('Countdown component received session ID:', this.sessionId);
+    });
+
     this.initializeTimer();
     this.startTimer();
     this.startBlinking();
@@ -96,9 +104,17 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
       this.isSessionReady = true;
       this.waitingMessage = 'Session is ready now! You can enter';
       this.strokeDashoffset = 0;
-      this._route.navigate(['/chat']);
-      this.sessionService.startSession(1);
-
+      
+      // Navigate to chat with session ID if available
+      if (this.sessionId) {
+        this._route.navigate(['/chat'], { 
+          queryParams: { sessionId: this.sessionId } 
+        });
+        this.sessionService.startSession(this.sessionId);
+      } else {
+        this._route.navigate(['/chat']);
+        this.sessionService.startSession(1);
+      }
 
       if (this.intervalId) {
         clearInterval(this.intervalId);
