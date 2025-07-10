@@ -1,6 +1,8 @@
 <div class="container py-5">
     <div class="card border-0 shadow rounded-4 p-4">
+
         <div class="mb-4 text-center">
+            <p class="text-danger" *ngIf="ErrorText">**{{ErrorText}}**</p>
             <h2 class="fw-bold h4">How was your consultation?</h2>
             <p class="text-muted mb-0">Your feedback helps us improve our service.</p>
         </div>

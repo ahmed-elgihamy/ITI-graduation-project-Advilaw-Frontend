@@ -76,10 +76,10 @@ export const routes: Routes = [
 
 
       { path: 'not-allowed', component: AccessDeniedComponent },
-      { path: 'ConsultationReview', component: ConsultationReviewComponent },
+      { path: 'ConsultationReview/:id', component: ConsultationReviewComponent },
 
       {
-        path: 'chat',
+        path: 'chat/:id',
         component: ChatComponent
         //  canActivate: [SessionGuard]
       },
@@ -185,7 +185,7 @@ export const routes: Routes = [
   },
   {
     path: 'client', component: ClientDashboardComponent, children: [
-      {path:'',redirectTo:'overview',pathMatch:'full'},
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: ClientOverviewComponent },
       { path: 'consults', component: ClientConsultsComponent },
       { path: 'chats', component: ClientChatsComponent },
