@@ -18,6 +18,7 @@ export interface JobDetailsForLawyerDTO {
   jobFieldId: number;
   jobFieldName: string;
   lawyerId?: number | null;
+  lawyerName: string;
   clientId: number;
   clientName: string;
   clientProfilePictureUrl: string;

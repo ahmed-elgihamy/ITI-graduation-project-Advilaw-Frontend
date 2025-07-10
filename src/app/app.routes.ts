@@ -42,7 +42,12 @@ import { SubscriptionPlansComponent } from './components/subscriptions/subscript
 import { SubscriptionManagementComponent } from './components/subscriptions/subscription-management/subscription-management.component';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { ConsultationReviewComponent } from './components/reviews/consultation-review/consultation-review.component';
+
+import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
+import { PaymentCancelComponent } from './components/payment-cancel/payment-cancel.component';
+
 import { CountdownTimerComponentComponent } from './components/countdown-timer-component/countdown-timer-component.component';
+
 
 export const routes: Routes = [
   {
@@ -67,6 +72,8 @@ export const routes: Routes = [
 
       { path: 'not-allowed', component: AccessDeniedComponent },
       { path: 'ConsultationReview', component: ConsultationReviewComponent },
+      { path: 'payment-success', component: PaymentSuccessComponent },
+      { path: 'payment-cancel', component: PaymentCancelComponent },
 
       {
         path: 'chat',

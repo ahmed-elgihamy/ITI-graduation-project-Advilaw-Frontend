@@ -1,0 +1,108 @@
+.payment-cancel-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+  padding: 20px;
+}
+
+.cancel-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.cancel-icon {
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.cancel-message {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.help-info .alert {
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+  color: #0c5460;
+}
+
+.help-info .alert h6 {
+  color: #0c5460;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.action-buttons {
+  padding: 20px;
+}
+
+.btn {
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+  border: none;
+  color: #212529;
+}
+
+.btn-warning:hover {
+  background: linear-gradient(135deg, #e0a800 0%, #d39e00 100%);
+  color: #212529;
+}
+
+.btn-outline-primary:hover {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  border-color: #007bff;
+}
+
+.btn-outline-secondary:hover {
+  background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
+  border-color: #6c757d;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .payment-cancel-container {
+    padding: 10px;
+  }
+  
+  .cancel-card {
+    border-radius: 15px;
+  }
+  
+  .action-buttons .row {
+    flex-direction: column;
+  }
+  
+  .action-buttons .col-md-4 {
+    margin-bottom: 10px;
+  }
+} 
