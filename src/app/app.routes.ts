@@ -43,6 +43,7 @@ import { SubscriptionManagementComponent } from './components/subscriptions/subs
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { ConsultationReviewComponent } from './components/reviews/consultation-review/consultation-review.component';
 import { CountdownTimerComponentComponent } from './components/countdown-timer-component/countdown-timer-component.component';
+import { EditLawyerProfileComponent } from './components/edit-lawyer-profile/edit-lawyer-profile.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +62,7 @@ export const routes: Routes = [
 
       { path: 'profile/:id', component: ProfileComponent },
       { path: 'lawyer-profile/:id', component: ProfileComponent },
+      { path: 'profile-edit', component: EditLawyerProfileComponent },
 
       { path: 'lawyers', component: LawyersComponent },
       { path: 'allLawyers', component: AllLawyerComponent },
