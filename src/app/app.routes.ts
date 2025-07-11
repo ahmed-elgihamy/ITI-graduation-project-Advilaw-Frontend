@@ -28,7 +28,6 @@ import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-c
 import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
 // Update the import to match the actual exported member from the file
 import { LawyerPaymentsComponent } from './components/dashboard/payments-content/lawyerPaymentDashboard/lawyerPayments.component';
-import { PaymentsContentComponent } from './components/dashboard/payments-content/payments-content.component';
 // import { LawyerPaymentsComponent } from './components/dashboard/payments-content/lawyerPaymentDashboard/lawyerPayments.component';
 import { ReviewsContentComponent } from './components/dashboard/reviews-content/reviews-content.component';
 import { ConsultationsContentComponent } from './components/dashboard/consultations-content/consultations-content.component';
@@ -148,7 +147,7 @@ export const routes: Routes = [
       { path: 'lawyer-payments', component: LawyerPaymentsComponent },
       // { path: 'lawyer-payments', component: LawyerPaymentsComponent },
       { path: 'consultations', component: ConsultationsContentComponent },
-      { path: 'payments', component: PaymentsContentComponent },
+      // { path: 'payments', component: PaymentsContentComponent },
       { path: 'reviews', component: ReviewsContentComponent },
 
       {
