@@ -1,5 +1,5 @@
 import { AppointmentDetailsDTO } from './../../types/Appointments/AppointmentDetailsDTO';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, computed, OnDestroy, OnInit, signal, inject } from '@angular/core';
 import { interval, takeWhile } from 'rxjs';
 import { SessionService } from '../../core/services/session.service';
@@ -23,7 +23,7 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
 
   _route = inject(Router)
   sessionService = inject(SessionService)
-
+  route = inject(ActivatedRoute);
   // Progress ring properties
   circumference: number = 2 * Math.PI * 90;
   strokeDashoffset: number = 0;
@@ -35,6 +35,13 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
   appointmentTime: any;
   sessionDetails: any;
   ngOnInit() {
+
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('sesstionId');
+      if (id) {
+        this.sessionId = +id;
+      }
+    });
     this.sessionService.getSessionDetails(this.sessionId).subscribe({
       next: (details) => {
         this.sessionDetails = details;

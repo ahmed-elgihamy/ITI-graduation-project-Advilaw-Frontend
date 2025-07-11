@@ -83,7 +83,7 @@ export const routes: Routes = [
         component: ChatComponent
         //  canActivate: [SessionGuard]
       },
-      { path: 'countdown', component: CountdownTimerComponentComponent },
+      { path: 'countdown/:sesstionId', component: CountdownTimerComponentComponent },
 
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },
