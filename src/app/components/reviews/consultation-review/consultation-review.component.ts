@@ -64,7 +64,7 @@ export class ConsultationReviewComponent implements OnInit {
     }
 
     const reviewerId = this.UserInfo?.userId;
-    const revieweeId = this.getRevieweeId();
+    const revieweeId = "fe5a73f7-bdf4-4427-adaa-223a653ffe1d";
 
     const review: ReviewDto = {
       sessionId: this.sessionId,
@@ -81,7 +81,7 @@ export class ConsultationReviewComponent implements OnInit {
       next: () => {
         console.log('✅ Review submitted to backend');
         confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
-        setTimeout(() => this.router.navigate(['/home']), 3000);
+        setTimeout(() => this.router.navigate(['/home']), 5000);
       },
       error: (err) => {
 
@@ -127,7 +127,5 @@ export class ConsultationReviewComponent implements OnInit {
 
     this.previousRating = newRating;
 
-    console.log('Updated Rating Counts:', this.ratingCounts);
-    console.log('Updated Total Ratings:', this.totalRatings);
   }
 }

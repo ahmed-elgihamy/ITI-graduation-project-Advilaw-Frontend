@@ -121,7 +121,7 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
       this.isSessionReady = true;
       this.waitingMessage = 'Session is ready now! You can enter';
       this.strokeDashoffset = 0;
-      this._route.navigate(['/chat']);
+      this._route.navigate(['/chat/' + this.sessionId]);
       this.sessionService.startSession(this.sessionDetails.durationHours, this.appointmentTime);
 
 

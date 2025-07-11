@@ -10,22 +10,9 @@ import { ChatService } from "../../../core/services/chat.service";
 import { SessionService } from '../../../core/services/session.service';
 import { SecondsToTimePipe } from '../../../core/Pipe/seconds-to-time.pipe';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ChatMessage } from '../../../core/models/chat-message';
 
-export interface Message {
-  id: string;
-  senderId: string;
-  content: string;
-  sentAt: Date;
-  type?: 'text' | 'file';
-  fileName?: string;
-}
-export interface ChatMessage {
-  id: string;
-  sessionId: number;
-  senderId: string;
-  text: string;
-  sentAt: string;
-}
+
 
 
 @Component({
@@ -38,7 +25,7 @@ export interface ChatMessage {
 export class ChatComponent implements OnInit {
   constructor(private router: Router) { }
   // === Signals ===
-  messages = signal<Message[]>([]);
+  // messages = signal<Message[]>([]);
   messageText = signal<string>('');
   clientAvatar = 'https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&w=400';
   lawyerAvatar = 'https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -83,7 +70,7 @@ export class ChatComponent implements OnInit {
         this.chatService.getMessages(this.sessionId).subscribe({
           next: (msgs) => {
             console.log("🔵 Messages loaded:", msgs);
-            this.messages.set(msgs);
+            // this.chatService.messages.set(msgs);
             this.chatService.messages.set(
               msgs.map((d: ChatMessage) => ({
                 ...d,

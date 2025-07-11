@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Message } from '../../components/models/message';
 import { Observable } from 'rxjs';
+import { ChatMessage } from '../models/chat-message';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,28 +29,50 @@ export class ChatService {
         .catch(err => console.error('❌ JoinSession Error:', err));
 
       this.hubConnection.on('ReceiveMessage', (message) => {
-        this.messages.update((msgs) => [...msgs, message]);
+        const formattedMessage: ChatMessage = {
+          id: crypto.randomUUID(),
+          sessionId,
+          senderId: message.senderId,
+          text: message.text ?? message.content,
+          sentAt: new Date(message.sentAt).toISOString(),
+
+        };
+
+        console.log("📥 Received message:", formattedMessage);
+
+        this.messages.update((msgs) => [...msgs, formattedMessage]);
       });
 
 
     }).catch(err => console.error('❌ SignalR connection error:', err));
   }
-
   sendMessage(
     sessionId: number,
     senderId: string,
-    content: string,
+    text: string,
     receiverId?: string
   ) {
-    this.hubConnection.invoke('SendMessage', sessionId, senderId, content, receiverId)
+
+    this.hubConnection.invoke('SendMessage', sessionId, senderId, text, receiverId)
       .catch(err => console.error("❌ SendMessage Error:", err));
   }
+
+
+
   stopConnection() {
-    this.hubConnection.stop();
+    if (this.hubConnection?.state === signalR.HubConnectionState.Connected) {
+      this.hubConnection.stop().then(() => {
+        console.log('🔌 SignalR disconnected.');
+      }).catch(err => {
+        console.error('❌ Error while stopping connection:', err);
+      });
+    }
+
     setTimeout(() => {
       this.router.navigate(['/ConsultationReview']);
     }, 4000);
   }
+
   // playEndSound() {
   //   const audio = new Audio('/assets/sounds/soundend.mp3');
   //   audio.play().catch(err => {
