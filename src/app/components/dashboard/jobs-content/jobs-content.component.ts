@@ -4,10 +4,11 @@ import { DashboardTableComponent } from '../dashboard-table/dashboard-table.comp
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ApiResponse } from '../../../types/ApiResponse';
 import { PagedResponse } from '../../../types/PagedResponse';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-jobs-content',
-  imports: [DashboardTableComponent, PaginationComponent],
+  imports: [DashboardTableComponent, PaginationComponent,CommonModule],
   templateUrl: './jobs-content.component.html',
   styleUrl: './jobs-content.component.css',
 })

@@ -1,10 +1,9 @@
 import { AuthService } from './../../core/services/auth.service';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { LawyerOrClientModalComponent } from '../../shared/lawyer-or-client-modal/lawyer-or-client-modal.component';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { UserInfo } from '../../types/UserInfo';
 
 @Component({
   selector: 'app-navbar',
@@ -21,17 +20,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isLogged: boolean = false;
   private sub!: Subscription;
   readonly _auth = inject(AuthService);
-  readonly router = inject(Router);
-  userInfo: UserInfo | null = null;
 
   ngOnInit(): void {
     this.sub = this._auth.isLoggedIn$.subscribe((res) => (this.isLogged = res));
-    this.userInfo = this._auth.getUserInfo();
-  }
-
-  GoToProfile() {
-    // console.log(`link to go: /profile/${this.userInfo?.userId}`);
-    this.router.navigate(['/profile', this.userInfo?.userId]);
   }
 
   ngOnDestroy(): void {

@@ -1,125 +1,50 @@
+
+
+
 .navbar {
-  background-color: var(--color-navy-blue);
+    background-color: var(--color-navy-blue);
 }
 
 .navbar-nav .nav-link {
-  color: var(--color-sand-beige);
-  border: 1px solid transparent;
-  border-radius: 15px;
+    color: var(--color-sand-beige);
+    border: 1px solid transparent;
+    border-radius: 15px;
 }
 
 .navbar-nav .nav-link.active {
-  border-color: var(--color-sand-beige);
-  background-color: var(--color-sand-beige);
-  color: var(--color-navy-blue);
+    border-color: var(--color-sand-beige);
+    background-color: var(--color-sand-beige);
+    color: var(--color-navy-blue);
 }
 
 .navbar .nav-link:hover {
-  border-color: var(--color-sand-beige);
+    border-color: var(--color-sand-beige);
 }
 
 .navbar .navbar-brand img {
-  width: 5rem;
-  border-radius: 50%;
+    width: 5rem;
+    border-radius: 50%;
 }
 
 .navbar .navbar-toggler {
-  border-color: var(--color-sand-beige);
+    border-color: var(--color-sand-beige);
 }
 
 .signOutBtn:hover {
-  color: var(--color-mustard);
-  border-color: var(--color-mustard);
+    color: var(--color-mustard);
+    border-color: var(--color-mustard);
 }
 
 .signInBtn {
-  color: var(--color-sand-beige);
-  border: 1px solid var(--color-sand-beige);
-  transition: all 0.5s;
+    color: var(--color-sand-beige);
+    border: 1px solid var(--color-sand-beige);
+    transition: all 0.5s;
+
 }
 
 .signInBtn:hover {
-  background-color: var(--color-sand-beige);
-  color: var(--color-navy-blue);
-  border-radius: 15px;
-}
+    background-color: var(--color-sand-beige);
+    color: var(--color-navy-blue);
+    border-radius: 15px;
 
-.pointer {
-  cursor: pointer;
-}
-
-@media (min-width: 992px) {
-  .navbar-collapse {
-    display: hidden !important;
-  }
-}
-.navbar-custom-collapse {
-  flex-grow: 1;
-  flex-basis: 100%;
-  align-items: center;
-}
-
-.semi-white {
-  color: var(--color-semi-white);
-}
-
-.active {
-  color: white;
-  font-weight: 600;
-}
-
-ul.main-navbar {
-  margin: 0px;
-  padding: 0px;
-}
-ul.main-navbar li a:hover {
-  color: white;
-}
-ul.main-navbar li {
-  position: relative;
-}
-
-ul.main-navbar li a.active::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background-color: white;
-
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-ul.main-navbar li a::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background-color: white;
-
-  transform: scaleX(0);
-  transform-origin: right; /* start drawing from left */
-  transition: transform 0.3s ease-in-out;
-}
-
-ul.main-navbar li a:hover::before {
-  transform: scaleX(1); /* animate to full width */
-  transform-origin: left; /* keep origin on the left */
-}
-
-.dropdown-menu {
-  min-width: 200px;
-  transition: all 0.2s ease-in-out;
-}
-
-.dropdown-menu .dropdown-item {
-  border-radius: 8px;
-}
-
-.dropdown-menu .dropdown-item:hover {
-  background-color: #f1f1f1;
 }
