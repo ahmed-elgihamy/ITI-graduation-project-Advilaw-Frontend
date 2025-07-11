@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { env } from '../env/env';
 import { ApiResponse } from '../../types/ApiResponse';
 
@@ -19,8 +20,8 @@ export interface ConfirmSessionPaymentRequest {
 }
 
 export interface ConfirmSessionPaymentResponse {
+  message: string;
   sessionId: number;
-  stripeSessionId: string;
 }
 
 export interface ReleaseSessionFundsRequest {
@@ -44,9 +45,18 @@ export class EscrowService {
 
 
   confirmSessionPayment(request: ConfirmSessionPaymentRequest): Observable<ApiResponse<ConfirmSessionPaymentResponse>> {
-    return this.http.post<ApiResponse<ConfirmSessionPaymentResponse>>(
+    return this.http.post<ConfirmSessionPaymentResponse>(
       `${this.baseUrl}/confirm-session`,
       request
+    ).pipe(
+      map(response => ({
+        data: response,
+        succeeded: true,
+        message: response.message || 'Payment confirmed successfully',
+        statusCode: 200,
+        errors: [],
+        meta: null
+      } as ApiResponse<ConfirmSessionPaymentResponse>))
     );
   }
 

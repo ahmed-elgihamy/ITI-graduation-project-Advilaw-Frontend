@@ -18,7 +18,7 @@
             <div class="d-flex align-items-center gap-3 mb-4">
                 <img [src]="clientAvatar" class="rounded-circle" style="width: 48px; height: 48px;" alt="Client">
                 <div>
-                    <h6 class="mb-0">John Doe</h6>
+                    <h6 class="mb-0">{{ClientName}}</h6>
                     <small class="text-muted">Client</small>
                 </div>
             </div>
@@ -33,20 +33,35 @@
                             class="position-absolute bottom-0 end-0 translate-middle p-1 bg-success border border-white rounded-circle"></span>
                     </div>
                     <div>
-                        <h6 class="mb-0">Laura Smith</h6>
+                        <h6 class="mb-0">{{LawyerName}}</h6>
                         <small class="text-success">★★★★☆ 4.9</small>
                     </div>
                 </div>
 
-                <p class="fw-semibold mb-2">Business Law Consultation</p>
+                <p class="fw-semibold mb-2">{{ sessionDetails.jobHeader }}</p>
+
                 <div class="mb-2 d-flex justify-content-between small text-muted">
-                    <span><i class="bi bi-calendar3 me-1"></i>Oct 14</span>
-                    <span><i class="bi bi-clock me-1"></i>1:00 - 2:00 PM</span>
+                    <span>
+                        <i class="bi bi-calendar3 me-1"></i>
+                        {{ sessionDetails.appointmentTime | date:'MMM d' }}
+                        <!-- {{ formatTimeRange(sessionDetails.appointmentTime, sessionDetails.durationHours) }} -->
+
+                    </span>
+                    <span>
+                        <i class="bi bi-clock me-1"></i>
+                        {{ sessionDetails.appointmentTime | date:'h:mm a' }}
+                        <!-- // {{ formatTimeRange(sessionDetails.appointmentTime, sessionDetails.durationHours) }} -->
+                    </span>
                 </div>
+
                 <div class="d-flex justify-content-between small">
-                    <span><i class="bi bi-currency-dollar me-1"></i>$100</span>
+                    <span>
+                        <i class="bi bi-currency-dollar me-1"></i>
+                        ${{ sessionDetails.budget }}
+                    </span>
                     <span class="badge bg-success text-dark">Pending</span>
                 </div>
+
             </div>
 
             <!-- Navigation -->
@@ -78,8 +93,10 @@
                             class="position-absolute bottom-0 end-0 translate-middle p-1 bg-success border border-white rounded-circle"></span>
                     </div>
                     <div>
-                        <h6 class="mb-0">Laura Smith</h6>
-                        <small class="text-muted">Business Law • Online</small>
+                        <div>
+                            <h6 class="mb-0">{{ chatPartnerName }}</h6>
+                        </div>
+
                     </div>
                 </div>
                 <div>
@@ -88,6 +105,10 @@
                     <button class="btn btn-light"><i class="bi bi-paperclip"></i></button>
                 </div>
             </div>
+
+
+
+
             <ng-container *ngIf="!sessionService.sessionEnded(); else sessionEndedBlock">
 
                 <div *ngIf="sessionService.showFinalWarning()"
@@ -112,9 +133,9 @@
                 <ng-container>
                     <span>
                         <i class="bi bi-clock me-1"></i>
-                        Session time remaining: {{ sessionService.timeLeft() | secondsToTime }}
+                        Session time remaining: {{ sessionService.timeLeft()| secondsToTime }}
                     </span>
-                    <button class="btn btn-outline-danger btn-sm">
+                    <button class="btn btn-outline-danger btn-sm" (click)="chatService.stopConnection()">
                         End Consultation
                     </button>
                 </ng-container>
@@ -129,7 +150,7 @@
 
 
             <div class="d-flex flex-column h-100">
-                <div class="flex-grow-1 overflow-auto p-3">
+                <div class="flex-grow-1 overflow-auto p-3" #chatContainer>
                     <div *ngFor="let msg of  chatService.messages()" class="mb-3"
                         [ngClass]="{'text-end': msg.senderId === senderId}">
                         <div>
@@ -141,7 +162,9 @@
                             'bg-success text-color   ': msg.senderId === senderId,
                             'bg-dark text-white': msg.senderId !== senderId
                           }" class="d-inline-block p-2 rounded mt-1 " style="max-width: 75%; word-wrap: break-word;">
-                                {{ msg.content }}
+                                {{ msg.text }}
+
+
                                 <br>
                                 <small class="text-mut">
                                     {{ msg.sentAt | date:'shortTime' }}
@@ -151,6 +174,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Debug -->
 
 
                 <div class="p-3 bg-white border-top">

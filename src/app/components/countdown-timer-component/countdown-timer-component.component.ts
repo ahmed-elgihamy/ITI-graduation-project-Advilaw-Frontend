@@ -1,4 +1,5 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { AppointmentDetailsDTO } from './../../types/Appointments/AppointmentDetailsDTO';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, computed, OnDestroy, OnInit, signal, inject } from '@angular/core';
 import { interval, takeWhile } from 'rxjs';
 import { SessionService } from '../../core/services/session.service';
@@ -19,12 +20,10 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
   sessionDate: string = '';
   isSessionReady: boolean = false;
   isBlinking: boolean = false;
-  sessionId: number | null = null;
 
   _route = inject(Router)
-  _activatedRoute = inject(ActivatedRoute)
   sessionService = inject(SessionService)
-
+  route = inject(ActivatedRoute);
   // Progress ring properties
   circumference: number = 2 * Math.PI * 90;
   strokeDashoffset: number = 0;
@@ -32,17 +31,41 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
   private intervalId: any;
   private blinkIntervalId: any;
   private targetTime: Date = new Date();
-
+  sessionId: number = 1;
+  appointmentTime: any;
+  sessionDetails: any;
   ngOnInit() {
-    
-    this._activatedRoute.queryParams.subscribe(params => {
-      this.sessionId = params['sessionId'] ? parseInt(params['sessionId']) : null;
-      console.log('Countdown component received session ID:', this.sessionId);
-    });
 
-    this.initializeTimer();
-    this.startTimer();
-    this.startBlinking();
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('sesstionId');
+      if (id) {
+        this.sessionId = +id;
+      }
+    });
+    this.sessionService.getSessionDetails(this.sessionId).subscribe({
+      next: (details) => {
+        this.sessionDetails = details;
+        this.appointmentTime = details.appointmentTime;
+        const appointmentTime = this.appointmentTime;
+        const durationMs = (details.durationHours || 0) * 60 * 60 * 1000;
+        const now = Date.now();
+        const start = new Date(appointmentTime).getTime();
+
+        this.initializeTimer(appointmentTime);
+
+        const delayUntilStart = start - now;
+
+        if (delayUntilStart > 0) {
+          this.startTimer();
+          this.startBlinking();
+        } else {
+          this._route.navigate([`/chat/${this.sessionId}`]);
+          this.sessionService.startSession(details.durationHours, this.appointmentTime);
+
+
+        }
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -54,9 +77,9 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initializeTimer() {
-    // Set target time to 30 minutes from now (you can adjust this)
-    this.targetTime = new Date(Date.now() + 0.20 * 60 * 1000);
+  private initializeTimer(startTimeStr: string) {
+    this.targetTime = new Date(startTimeStr);
+
     this.sessionDate = this.targetTime.toLocaleString('en-US', {
       year: 'numeric',
       month: 'long',
@@ -65,6 +88,7 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
       minute: '2-digit'
     });
   }
+
 
   private startTimer() {
     this.intervalId = setInterval(() => {
@@ -104,17 +128,9 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
       this.isSessionReady = true;
       this.waitingMessage = 'Session is ready now! You can enter';
       this.strokeDashoffset = 0;
-      
-      // Navigate to chat with session ID if available
-      if (this.sessionId) {
-        this._route.navigate(['/chat'], { 
-          queryParams: { sessionId: this.sessionId } 
-        });
-        this.sessionService.startSession(this.sessionId);
-      } else {
-        this._route.navigate(['/chat']);
-        this.sessionService.startSession(1);
-      }
+      this._route.navigate(['/chat/' + this.sessionId]);
+      this.sessionService.startSession(this.sessionDetails.durationHours, this.appointmentTime);
+
 
       if (this.intervalId) {
         clearInterval(this.intervalId);

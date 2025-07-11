@@ -6,6 +6,7 @@ import { LawyerReviewListDTO } from '../../types/Lawyers/LawyerReviewListDTO';
 import { PagedResponse } from '../../types/PagedResponse';
 import { ApiResponse } from '../../types/ApiResponse';
 import { Observable } from 'rxjs';
+import { ReviewDto } from '../models/review-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -25,4 +26,16 @@ export class ReviewsService {
       `${this.apiUrl}/lawyer/me/payments?pageNumber=${page}`
     );
   }
+
+
+
+
+  submitReview(review: ReviewDto): Observable<any> {
+    if (!review.sessionId || !review.reviewerId || !review.revieweeId || review.rate === 0) {
+      console.error('❌ Invalid review data:', review);
+    }
+    console.log('Submitting review:', review);
+    return this.http.post(`${env.baseUrl}/reviews`, review);
+  }
+
 }

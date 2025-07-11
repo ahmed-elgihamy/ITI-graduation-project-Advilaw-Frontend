@@ -1,14 +1,24 @@
 <div class="consultation-page">
   <!-- Loading State -->
-  <div *ngIf="isLoading" class="d-flex flex-column align-items-center justify-content-center loading-overlay">
-    <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+  <div
+    *ngIf="isLoading"
+    class="d-flex flex-column align-items-center justify-content-center loading-overlay"
+  >
+    <div
+      class="spinner-border text-warning"
+      style="width: 3rem; height: 3rem"
+      role="status"
+    >
       <span class="visually-hidden">Loading...</span>
     </div>
     <p class="mt-3 fw-medium text-dark">Loading lawyer information...</p>
   </div>
 
   <!-- Error State -->
-  <div *ngIf="errorMessage && !isLoading" class="d-flex flex-column align-items-center justify-content-center error-container">
+  <div
+    *ngIf="errorMessage && !isLoading"
+    class="d-flex flex-column align-items-center justify-content-center error-container"
+  >
     <div class="alert alert-danger" role="alert">
       <i class="fas fa-exclamation-triangle me-2"></i>
       {{ errorMessage }}
@@ -26,23 +36,41 @@
         <div class="row justify-content-center">
           <div class="col-12 col-lg-8 text-center">
             <!-- Name -->
-            <h1 class="fw-bold mb-3 text-uppercase">{{ lawyerProfile?.name || 'Lawyer' }}</h1>
+            <h1 class="fw-bold mb-3 text-uppercase">
+              {{ lawyerProfile?.name || "Lawyer" }}
+            </h1>
 
             <!-- Title, Experience, and Hourly Rate -->
-            <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-2 meta">
-              <span class="fw-semibold">{{ lawyerProfile?.title || 'Business Law' }}</span>
+            <div
+              class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-2 meta"
+            >
+              <span class="fw-semibold">{{
+                lawyerProfile?.title || "Business Law"
+              }}</span>
               <span class="divider">|</span>
-              <span>Experience: {{ lawyerProfile?.experience || 'N/A' }} yrs</span>
+              <span
+                >Experience: {{ lawyerProfile?.experience || "N/A" }} yrs</span
+              >
               <span class="divider">|</span>
               <span class="fw-bold">EGP {{ hourlyRate }}/hr</span>
             </div>
 
             <!-- Action Buttons -->
-            <div class="d-flex justify-content-center gap-3 flex-wrap mt-4 actions">
-              <button type="button" class="btn main-btn fw-semibold px-4 py-2" (click)="onCancel()">
+            <div
+              class="d-flex justify-content-center gap-3 flex-wrap mt-4 actions"
+            >
+              <button
+                type="button"
+                class="btn main-btn fw-semibold px-4 py-2"
+                (click)="onCancel()"
+              >
                 <i class="fas fa-arrow-left me-2"></i>Back to Lawyers
               </button>
-              <button type="button" class="btn consult-btn fw-semibold px-4 py-2" (click)="scrollToForm()">
+              <button
+                type="button"
+                class="btn consult-btn fw-semibold px-4 py-2"
+                (click)="scrollToForm()"
+              >
                 <i class="fas fa-calendar-plus me-2"></i>Book Consultation
               </button>
             </div>
@@ -61,23 +89,39 @@
 
       <!-- Consultation Form Section -->
       <section class="consultation-form-section text-center">
-        <h2 class="fw-bold text-uppercase mb-4">BOOK CONSULTATION</h2>
-        
+        <h2 fclass="fw-bold text-uppercase mb-4">BOOK CONSULTATION</h2>
+
         <div class="row justify-content-center">
           <div class="col-12 col-lg-8">
             <div class="form-card">
               <!-- Success Message -->
-              <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+              <div
+                *ngIf="successMessage"
+                class="alert alert-success alert-dismissible fade show"
+                role="alert"
+              >
                 <i class="fas fa-check-circle me-2"></i>
                 {{ successMessage }}
-                <button type="button" class="btn-close" (click)="clearMessages()"></button>
+                <button
+                  type="button"
+                  class="btn-close"
+                  (click)="clearMessages()"
+                ></button>
               </div>
 
               <!-- Error Message -->
-              <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+              <div
+                *ngIf="errorMessage"
+                class="alert alert-danger alert-dismissible fade show"
+                role="alert"
+              >
                 <i class="fas fa-exclamation-triangle me-2"></i>
                 {{ errorMessage }}
-                <button type="button" class="btn-close" (click)="clearMessages()"></button>
+                <button
+                  type="button"
+                  class="btn-close"
+                  (click)="clearMessages()"
+                ></button>
               </div>
 
               <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
@@ -95,7 +139,7 @@
                     [ngClass]="{ 'is-invalid': isInvalid('header') }"
                   />
                   <div *ngIf="isInvalid('header')" class="invalid-feedback">
-                    {{ getErrorMessage('header') }}
+                    {{ getErrorMessage("header") }}
                   </div>
                 </div>
 
@@ -112,8 +156,11 @@
                     placeholder="Describe your legal issue or consultation needs in detail"
                     [ngClass]="{ 'is-invalid': isInvalid('description') }"
                   ></textarea>
-                  <div *ngIf="isInvalid('description')" class="invalid-feedback">
-                    {{ getErrorMessage('description') }}
+                  <div
+                    *ngIf="isInvalid('description')"
+                    class="invalid-feedback"
+                  >
+                    {{ getErrorMessage("description") }}
                   </div>
                   <small class="form-text text-muted">
                     Minimum 20 characters, maximum 1000 characters
@@ -130,11 +177,15 @@
                     class="form-select form-select-lg"
                     [ngClass]="{ 'is-invalid': isInvalid('jobFieldId') }"
                   >
-                    <option [value]="null" disabled selected>Select a legal field</option>
-                    <option *ngFor="let field of jobFields" [value]="field.id">{{ field.name }}</option>
+                    <option [value]="null" disabled selected>
+                      Select a legal field
+                    </option>
+                    <option *ngFor="let field of jobFields" [value]="field.id">
+                      {{ field.name }}
+                    </option>
                   </select>
                   <div *ngIf="isInvalid('jobFieldId')" class="invalid-feedback">
-                    {{ getErrorMessage('jobFieldId') }}
+                    {{ getErrorMessage("jobFieldId") }}
                   </div>
                 </div>
 
@@ -142,7 +193,8 @@
                 <div class="row mb-4">
                   <div class="col-md-6">
                     <label class="form-label fw-semibold" for="appointmentTime">
-                      <i class="fas fa-calendar me-2"></i>Appointment Date & Time
+                      <i class="fas fa-calendar me-2"></i>Appointment Date &
+                      Time
                     </label>
                     <input
                       id="appointmentTime"
@@ -151,22 +203,25 @@
                       class="form-control"
                       [ngClass]="{ 'is-invalid': isInvalid('appointmentTime') }"
                     />
-                    <div *ngIf="isInvalid('appointmentTime')" class="invalid-feedback">
-                      {{ getErrorMessage('appointmentTime') }}
+                    <div
+                      *ngIf="isInvalid('appointmentTime')"
+                      class="invalid-feedback"
+                    >
+                      {{ getErrorMessage("appointmentTime") }}
                     </div>
                   </div>
                 </div>
 
                 <!-- Time Range -->
-                <div class="row mb-4">
+                <!-- <div class="row mb-4">
                   <div class="col-md-6">
                     <label class="form-label fw-semibold" for="startTime">
                       <i class="fas fa-clock me-2"></i>Start Time
                     </label>
-                    <input 
-                      id="startTime" 
-                      formControlName="startTime" 
-                      type="time" 
+                    <input
+                      id="startTime"
+                      formControlName="startTime"
+                      type="time"
                       class="form-control"
                       [ngClass]="{ 'is-invalid': isInvalid('startTime') }"
                     />
@@ -178,10 +233,10 @@
                     <label class="form-label fw-semibold" for="endTime">
                       <i class="fas fa-clock me-2"></i>End Time
                     </label>
-                    <input 
-                      id="endTime" 
-                      formControlName="endTime" 
-                      type="time" 
+                    <input
+                      id="endTime"
+                      formControlName="endTime"
+                      type="time"
                       class="form-control"
                       [ngClass]="{ 'is-invalid': isInvalid('endTime') }"
                     />
@@ -189,7 +244,7 @@
                       {{ getErrorMessage('endTime') }}
                     </div>
                   </div>
-                </div>
+                </div> -->
 
                 <!-- Duration and Budget Display -->
                 <div class="row mb-4">
@@ -197,32 +252,43 @@
                     <label class="form-label fw-semibold" for="durationHours">
                       <i class="fas fa-hourglass-half me-2"></i>Duration (hours)
                     </label>
-                    <input 
-                      id="durationHours" 
-                      formControlName="durationHours" 
-                      type="number" 
-                      class="form-control" 
-                      readonly 
+                    <input
+                      id="durationHours"
+                      formControlName="durationHours"
+                      type="number"
+                      class="form-control"
                       [ngClass]="{ 'is-invalid': isInvalid('durationHours') }"
                     />
-                    <div *ngIf="isInvalid('durationHours')" class="invalid-feedback">
-                      {{ getErrorMessage('durationHours') }}
+                    <!-- <input
+                      id="durationHours"
+                      formControlName="durationHours"
+                      type="number"
+                      class="form-control"
+                      readonly
+                      [ngClass]="{ 'is-invalid': isInvalid('durationHours') }"
+                    /> -->
+                    <div
+                      *ngIf="isInvalid('durationHours')"
+                      class="invalid-feedback"
+                    >
+                      {{ getErrorMessage("durationHours") }}
                     </div>
                   </div>
                   <div class="col-md-6">
                     <label class="form-label fw-semibold" for="budget">
-                      <i class="fas fa-money-bill-wave me-2"></i>Total Cost (EGP)
+                      <i class="fas fa-money-bill-wave me-2"></i>Total Cost
+                      (EGP)
                     </label>
-                    <input 
-                      id="budget" 
-                      formControlName="budget" 
-                      type="number" 
-                      class="form-control" 
-                      readonly 
+                    <input
+                      id="budget"
+                      formControlName="budget"
+                      type="number"
+                      class="form-control"
+                      readonly
                       [ngClass]="{ 'is-invalid': isInvalid('budget') }"
                     />
                     <div *ngIf="isInvalid('budget')" class="invalid-feedback">
-                      {{ getErrorMessage('budget') }}
+                      {{ getErrorMessage("budget") }}
                     </div>
                     <small class="form-text text-muted">
                       Calculated based on hourly rate: EGP {{ hourlyRate }}/hr
@@ -232,11 +298,11 @@
 
                 <!-- Anonymous Option -->
                 <div class="form-check mb-4">
-                  <input 
-                    id="isAnonymus" 
-                    type="checkbox" 
-                    class="form-check-input" 
-                    formControlName="isAnonymus" 
+                  <input
+                    id="isAnonymus"
+                    type="checkbox"
+                    class="form-check-input"
+                    formControlName="isAnonymus"
                   />
                   <label for="isAnonymus" class="form-check-label fw-semibold">
                     <i class="fas fa-user-secret me-2"></i>Request Anonymously
@@ -248,22 +314,27 @@
 
                 <!-- Action Buttons -->
                 <div class="d-flex gap-3 justify-content-center">
-                  <button 
-                    class="btn consult-btn fw-semibold px-4 py-2" 
-                    type="submit" 
+                  <button
+                    class="btn consult-btn fw-semibold px-4 py-2"
+                    type="submit"
                     [disabled]="jobForm.invalid || isSubmitting"
+                    *ngIf="isClient"
                   >
                     <span *ngIf="!isSubmitting">
-                      <i class="fas fa-paper-plane me-2"></i>Request Consultation
+                      <i class="fas fa-paper-plane me-2"></i>Request
+                      Consultation
                     </span>
                     <span *ngIf="isSubmitting">
-                      <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                      <span
+                        class="spinner-border spinner-border-sm me-2"
+                        role="status"
+                      ></span>
                       Submitting...
                     </span>
                   </button>
-                  <button 
-                    type="button" 
-                    class="btn main-btn fw-semibold px-4 py-2" 
+                  <button
+                    type="button"
+                    class="btn main-btn fw-semibold px-4 py-2"
                     (click)="onCancel()"
                     [disabled]="isSubmitting"
                   >

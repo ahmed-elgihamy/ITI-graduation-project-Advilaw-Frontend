@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LawyerResponse, LawyerService } from '../../core/services/lawyer.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 interface Lawyer {
   id: number;
@@ -21,6 +21,7 @@ interface Lawyer {
 
 @Component({
   selector: 'app-all-lawyer',
+  standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './all-lawyer.component.html',
   styleUrl: './all-lawyer.component.css'
@@ -42,7 +43,7 @@ export class AllLawyerComponent implements OnInit {
       specialty: 'Business Law • Civil Litigation',
       experience: '25 years',
       rating: 5,
-      image: '/assets/images/Family.jpg',
+      image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150',
       cases: 350,
       location: 'New York, USA',
       country: 'USA',
@@ -189,15 +190,9 @@ export class AllLawyerComponent implements OnInit {
   ];
 
   lawyerService = inject(LawyerService);
-  route = inject(ActivatedRoute);
+
   ngOnInit(): void {
     this.loadLawyers();
-    this.route.queryParams.subscribe(params => {
-      this.selectedField = params['specialization'];
-      console.log('Received specialization:', this.selectedField);
-
-
-    });
   }
 
   loadLawyers() {
@@ -312,15 +307,16 @@ export class AllLawyerComponent implements OnInit {
     this.loadLawyers();
   }
 
-  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
 
-  scroll(direction: 'left' | 'right') {
-    const container = this.scrollContainer.nativeElement;
-    const scrollAmount = 300;
 
-    container.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth'
-    });
+  scrollLeft(direction: 'left' | 'right') {
+    const container = document.querySelector('.row.flex-nowrap');
+    if (container) {
+      const scrollAmount = 300;
+      container.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
   }
 }

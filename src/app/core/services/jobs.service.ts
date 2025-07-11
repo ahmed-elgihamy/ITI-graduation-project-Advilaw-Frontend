@@ -33,7 +33,7 @@ export class JobsService {
   GetActiveJobs(page: number): Observable<ApiResponse<PagedResponse<any>>> {
     return this.http.get<ApiResponse<PagedResponse<any>>>(
       `${this.apiUrl}/Job/me/ActiveJobs?pageNumber=${page}`
-    ); 
+    );
   }
 
   CreateJob(data: any): Observable<ApiResponse<any>> {
