@@ -56,6 +56,8 @@ import { ConsultationReviewComponent } from './components/reviews/consultation-r
 
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { PaymentCancelComponent } from './components/payment-cancel/payment-cancel.component';
+import { SubscriptionSuccessComponent } from './components/subscription-success/subscription-success.component';
+import { SubscriptionCancelComponent } from './components/subscription-cancel/subscription-cancel.component';
 
 import { CountdownTimerComponentComponent } from './components/countdown-timer-component/countdown-timer-component.component';
 
@@ -86,6 +88,8 @@ export const routes: Routes = [
       { path: 'ConsultationReview', component: ConsultationReviewComponent },
       { path: 'payment-success', component: PaymentSuccessComponent },
       { path: 'payment-cancel', component: PaymentCancelComponent },
+      { path: 'subscription-success', component: SubscriptionSuccessComponent },
+      { path: 'subscription-cancel', component: SubscriptionCancelComponent },
 
       {
         path: 'chat',

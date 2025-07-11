@@ -1,39 +1,27 @@
 <div class="container py-4">
-  <h2 class="mb-4 text-center">Subscription Plans</h2>
-
-  <ng-container *ngIf="subscriptionPlans$ | async as plans">
-    <ng-container *ngIf="plans.length > 0; else noPlans">
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4" *ngFor="let plan of plans">
-          <div class="card shadow-sm h-100 border-primary">
-            <div class="card-header bg-primary text-white text-center">
-              <h5 class="card-title mb-0">{{ plan.name }}</h5>
-            </div>
-            <div class="card-body">
-              <p class="card-text">
-                <strong>Price:</strong> {{ plan.price }} EGP
-              </p>
-              <p class="card-text">
-                <strong>Points:</strong> {{ plan.points }}
-              </p>
-            </div>
-            <div class="card-footer text-center">
-              <button
-                (click)="choosePlan(plan)"
-                class="btn btn-outline-primary w-100"
-              >
-                Choose Plan
-              </button>
-            </div>
-          </div>
+  <h2 class="mb-4 text-center">Available Subscription Plans</h2>
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-4" *ngFor="let plan of subscriptionPlans$ | async">
+      <div class="card shadow-sm h-100">
+        <div class="card-header text-center">
+          <h5 class="card-title mb-0">{{ plan.name }}</h5>
+        </div>
+        <div class="card-body text-center">
+          <p><strong>Price:</strong> {{ plan.price }} EGP</p>
+          <p><strong>Points:</strong> {{ plan.points }}</p>
+          <ul class="list-unstyled mb-4">
+            <li *ngFor="let feature of getPlanFeatures(plan)">
+              <i class="fa fa-check text-success me-1"></i> {{ feature }}
+            </li>
+          </ul>
+          <button type="button" class="btn btn-primary w-100" (click)="choosePlan(plan)">
+            Choose Plan
+          </button>
         </div>
       </div>
-    </ng-container>
-  </ng-container>
-
-  <ng-template #noPlans>
-    <div class="alert alert-warning text-center mt-4">
-      No plans available at the moment.
     </div>
-  </ng-template>
+  </div>
+  <div *ngIf="(subscriptionPlans$ | async)?.length === 0" class="alert alert-warning text-center mt-4">
+    No plans available at the moment.
+  </div>
 </div>
