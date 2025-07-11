@@ -18,7 +18,7 @@ export class ChatService {
   private _http = inject(HttpClient);
   startConnection(sessionId: number, senderId: string) {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${env.publicUrl}/chathub`)
+      .withUrl(`${env.publicImgUrl}/chathub`)
       .withAutomaticReconnect()
       .build();
 

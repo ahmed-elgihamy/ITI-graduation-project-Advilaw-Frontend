@@ -6,6 +6,7 @@ import { env } from '../env/env';
 import { JobListDTO } from '../../types/Jobs/JobListDTO';
 import { PagedResponse } from '../../types/PagedResponse';
 import { ApiResponse, BackendResponse } from '../../types/ApiResponse';
+import { ClientConsultationDTO } from '../../types/Jobs/ClientConsultationDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,8 @@ export class ConsultationService {
   // Reject consultation
   rejectConsultation(consultationId: number, reason: string): Observable<ApiResponse<boolean>> {
     const url = `${env.baseUrl}/Job/consultation/${consultationId}/reject`;
-    return this.http.post<BackendResponse<boolean>>(url, reason, {
+    const requestBody = { reason: reason };
+    return this.http.post<BackendResponse<boolean>>(url, requestBody, {
       headers: { 'Content-Type': 'application/json' }
     })
       .pipe(
@@ -82,6 +84,31 @@ export class ConsultationService {
           errors: backendResponse.errors || [],
           meta: null
         } as ApiResponse<PagedResponse<JobListDTO>>)),
+        catchError(this.handleError)
+      );
+  }
+
+  // Get consultations for client (LawyerProposal jobs)
+  getConsultationsForClient(page: number = 1, pageSize: number = 10): Observable<ApiResponse<PagedResponse<ClientConsultationDTO>>> {
+    const url = `${env.baseUrl}/Job/me/client-consultations?page=${page}&pageSize=${pageSize}`;
+    return this.http.get<BackendResponse<PagedResponse<ClientConsultationDTO>>>(url)
+      .pipe(
+        tap(rawResponse => {
+          console.log('Raw API response:', rawResponse);
+          console.log('Raw response data:', rawResponse.data);
+          if (rawResponse.data?.data) {
+            console.log('First item in raw response:', rawResponse.data.data[0]);
+            console.log('Raw response item keys:', Object.keys(rawResponse.data.data[0] || {}));
+          }
+        }),
+        map(backendResponse => ({
+          data: backendResponse.data,
+          succeeded: backendResponse.succeeded,
+          message: backendResponse.message,
+          statusCode: backendResponse.succeeded ? 200 : 400,
+          errors: backendResponse.errors || [],
+          meta: null
+        }) as ApiResponse<PagedResponse<ClientConsultationDTO>>),
         catchError(this.handleError)
       );
   }

@@ -1,0 +1,115 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center mt-3">
+          <h5 class="mb-0">
+            <i class="fas fa-money-bill-transfer me-2"></i>
+            Admin Fund Releases
+          </h5>
+          <button class="btn btn-outline-dark btn-sm" (click)="loadSessions()" [disabled]="loading">
+            <i class="fas fa-sync-alt me-1"></i>Refresh
+          </button>
+        </div>
+        <div class="card-body">
+          <!-- Loading State -->
+          <div *ngIf="loading" class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading sessions...</p>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="error && !loading" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            {{ error }}
+            <button type="button" class="btn-close" (click)="clearMessages()"></button>
+          </div>
+
+          <!-- Success Message -->
+          <div *ngIf="successMessage && !loading" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            {{ successMessage }}
+            <button type="button" class="btn-close" (click)="clearMessages()"></button>
+          </div>
+
+          <!-- Sessions Table -->
+          <div *ngIf="!loading && !error">
+            <div *ngIf="sessions.length === 0" class="text-center py-4">
+              <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+              <h5 class="text-muted">No Completed Sessions</h5>
+              <p class="text-muted">There are no completed sessions ready for fund release at the moment.</p>
+            </div>
+
+            <div *ngIf="sessions.length > 0" class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead class="table-primary">
+                  <tr>
+                    <th>Session ID</th>
+                    <th>Job Title</th>
+                    <th>Lawyer</th>
+                    <th>Client</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Completed</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let session of sessions">
+                    <td>
+                      <span class="badge bg-secondary">{{ session.sessionId }}</span>
+                    </td>
+                    <td>
+                      <span class="fw-bold">{{ session.jobTitle }}</span>
+                    </td>
+                    <td>
+                      <span class="fw-medium text-primary">{{ session.lawyerName }}</span>
+                    </td>
+                    <td>
+                      <span class="fw-medium text-secondary">{{ session.clientName }}</span>
+                    </td>
+                    <td>
+                      <span class="fw-bold text-success">
+                        {{ formatCurrency(session.amount) }}
+                      </span>
+                    </td>
+                    <td>
+                      <span [ngClass]="{
+                        'badge bg-success': session.status === 'Completed',
+                        'badge bg-warning text-dark': session.status === 'ClientReady',
+                        'badge bg-info': session.status === 'LawyerReady'
+                      }">
+                        {{ session.status }}
+                      </span>
+                    </td>
+                    <td>
+                      <small class="text-muted">{{ formatDate(session.createdAt) }}</small>
+                    </td>
+                    <td>
+                      <small class="text-muted" *ngIf="session.completedAt">{{ formatDate(session.completedAt) }}</small>
+                      <small class="text-muted" *ngIf="!session.completedAt">-</small>
+                    </td>
+                    <td>
+                      <button 
+                        class="btn btn-success btn-sm" 
+                        (click)="releaseFunds(session.sessionId)"
+                        [disabled]="loading"
+                        title="Release Funds"
+                      >
+                        <i class="fas fa-money-bill-transfer me-1"></i>
+                        Release
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

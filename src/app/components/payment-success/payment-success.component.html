@@ -1,0 +1,103 @@
+<div class="payment-success-container">
+  <div class="success-card">
+    <!-- Loading State -->
+    <div *ngIf="isConfirming" class="text-center py-5">
+      <div class="spinner-border text-primary mb-3" role="status">
+        <span class="visually-hidden">Confirming payment...</span>
+      </div>
+      <h4>Confirming Your Payment</h4>
+      <p class="text-muted">Please wait while we verify your payment with our system...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isConfirming" class="text-center py-5">
+      <div class="error-icon mb-3">
+        <i class="fas fa-exclamation-triangle text-danger fa-3x"></i>
+      </div>
+      <h4 class="text-danger">Payment Confirmation Failed</h4>
+      <p class="text-muted mb-4">{{ error }}</p>
+      <div class="d-flex justify-content-center gap-3">
+        <button class="btn btn-outline-primary" (click)="retryConfirmation()">
+          <i class="fas fa-redo me-2"></i>Try Again
+        </button>
+        <button class="btn btn-primary" (click)="goToPayments()">
+          <i class="fas fa-credit-card me-2"></i>Check Payments
+        </button>
+      </div>
+    </div>
+
+    <!-- Success State -->
+    <div *ngIf="!isConfirming && !error" class="text-center py-5">
+      <div class="success-icon mb-4">
+        <i class="fas fa-check-circle text-success fa-4x"></i>
+      </div>
+      
+      <h2 class="text-success mb-3">Payment Successful!</h2>
+      
+      <div class="success-details mb-4">
+        <p class="text-muted mb-2">Your payment has been processed and confirmed successfully</p>
+        <div class="payment-info">
+          <div class="info-item" *ngIf="confirmedSessionId">
+            <span class="label">Session ID:</span>
+            <span class="value">{{ confirmedSessionId }}</span>
+          </div>
+          <div class="info-item" *ngIf="escrowId">
+            <span class="label">Escrow ID:</span>
+            <span class="value">{{ escrowId }}</span>
+          </div>
+          <div class="info-item" *ngIf="paymentDetails">
+            <span class="label">Status:</span>
+            <span class="value text-success">Confirmed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="next-steps mb-4">
+        <h5>What's Next?</h5>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h6>Payment Confirmed</h6>
+              <p>Your payment has been securely processed and held in escrow</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h6>Consultation Scheduled</h6>
+              <p>Your lawyer will contact you to schedule the consultation</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h6>Funds Released</h6>
+              <p>After the consultation, funds will be released to your lawyer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <button class="btn btn-outline-primary w-100" (click)="goToDashboard()">
+              <i class="fas fa-home me-2"></i>Dashboard
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-outline-success w-100" (click)="goToConsultations()">
+              <i class="fas fa-briefcase me-2"></i>My Consultations
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-outline-info w-100" (click)="goToPayments()">
+              <i class="fas fa-credit-card me-2"></i>Payment History
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

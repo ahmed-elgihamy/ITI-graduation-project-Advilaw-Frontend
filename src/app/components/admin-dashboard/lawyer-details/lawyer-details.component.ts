@@ -59,8 +59,8 @@ export class LawyerDetailsComponent implements OnInit {
             // Patch other fields as needed
           });
           this.lawyerImageUrl = data.imageUrl;
-          this.barCardImageUrl = data.barCardImagePath ? env.publicUrl + data.barCardImagePath : '';
-          this.nationalIDImageUrl = data.nationalIDImagePath ? env.publicUrl + data.nationalIDImagePath : '';
+          this.barCardImageUrl = data.barCardImagePath ? env.publicImgUrl + data.barCardImagePath : '';
+          this.nationalIDImageUrl = data.nationalIDImagePath ? env.publicImgUrl + data.nationalIDImagePath : '';
         },
         error: (err) => {
           console.error('Error loading lawyer:', err);

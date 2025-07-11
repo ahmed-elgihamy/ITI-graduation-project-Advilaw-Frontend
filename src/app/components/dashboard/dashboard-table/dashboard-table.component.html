@@ -1,46 +1,31 @@
-<div class="table-responsive mt-4">
-  <table
-    class="table table-hover table-bordered align-middle shadow-sm rounded"
-  >
-    <thead class="table-light text-center">
+<div class="table-responsive">
+  <table class="table">
+    <thead>
       <tr>
-        <th *ngFor="let col of columns" class="text-capitalize">
-          {{ col.label }}
-        </th>
+        <th *ngFor="let col of columns">{{ col.label }}</th>
       </tr>
     </thead>
     <tbody>
       <tr
         *ngFor="let item of data"
         (click)="goToDetailsPage(item.id)"
-        class="clickable-row text-center"
+        class="clickable-row"
         style="cursor: pointer"
       >
         <td *ngFor="let col of columns">
           <!-- Image column -->
           <ng-container *ngIf="col.type === 'image'; else nonImage">
-            <img
-              [src]="item[col.key]"
-              alt="image"
-              class="rounded-circle border"
-              width="50"
-              height="50"
-            />
+            <img [src]="item[col.key]" alt="image" width="50" height="50" />
           </ng-container>
 
           <!-- Other columns -->
           <ng-template #nonImage>
             <!-- Boolean -->
             <ng-container *ngIf="col.type === 'boolean'; else nonBoolean">
-              <span
-                class="badge"
-                [ngClass]="item[col.key] ? 'bg-success' : 'bg-danger'"
-              >
-                {{ item[col.key] ? "Yes" : "No" }}
-              </span>
+              {{ item[col.key] ? "Yes" : "No" }}
             </ng-container>
 
-            <!-- Text / Link -->
+            <!-- Link (text only, row is now clickable) -->
             <ng-template #nonBoolean>
               {{ item[col.key] }}
             </ng-template>

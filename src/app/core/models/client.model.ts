@@ -4,13 +4,5 @@ export interface Client {
   email: string;
   imageUrl?: string;
   nationalIDImagePath: string;
-  phoneNumber?: string;
-  city?: string;
-  country?: string;
-  countryCode?: string;
-  postalCode?: string;
-  nationalityId?: string;
-  gender?: string;
-  profilePictureUrl?: string;
   // Add other fields as needed
 } 

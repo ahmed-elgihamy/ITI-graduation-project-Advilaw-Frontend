@@ -1,8 +1,6 @@
 <div class="container py-4">
   <div class="create-btn d-flex justify-content-end">
-    <a *ngIf="isClient" routerLink="/jobs/create" class="btn btn-primary"
-      >Create Job</a
-    >
+    <a routerLink="/jobs/create" class="btn btn-primary">Create Job</a>
   </div>
   <app-dashboard-table
     [data]="lawyers"

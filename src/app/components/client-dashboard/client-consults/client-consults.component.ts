@@ -8,6 +8,13 @@ import { JobStatus } from '../../../types/Jobs/JobStatus';
 import { JobDetailsForLawyerDTO } from '../../../types/Jobs/JobDetailsDTO';
 import { PagedResponse } from '../../../types/PagedResponse';
 import { ApiResponse } from '../../../types/ApiResponse';
+import { HttpClient } from '@angular/common/http';
+import { JobType } from '../../../types/Jobs/JobType';
+import { JobDetailsForClientDTO } from '../../../types/Jobs/JobDetailsForClientDTO';
+import { ClientConsultationDTO } from '../../../types/Jobs/ClientConsultationDTO';
+import { ConsultationService } from '../../../core/services/consultation.service';
+import { EscrowService } from '../../../core/services/escrow.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-client-consults',
@@ -58,24 +65,31 @@ export class ClientConsultsComponent implements OnInit {
   // Expose JobStatus enum to template
   JobStatus = JobStatus;
 
+  clientPublishingJobs: JobDetailsForLawyerDTO[] = [];
+  lawyerProposalJobs: ClientConsultationDTO[] = [];
+
   constructor(
     private jobsService: JobsService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private http: HttpClient,
+    private consultationService: ConsultationService,
+    private escrowService: EscrowService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.loadJobs();
+    this.loadClientPublishingJobs();
+    this.loadConsultations();
     this.loadStatistics();
   }
 
-  loadJobs(): void {
+  loadClientPublishingJobs(): void {
     this.isLoading = true;
     this.error = '';
-
     this.jobsService.GetJobs(this.currentPage).subscribe({
       next: (response: ApiResponse<PagedResponse<JobDetailsForLawyerDTO>>) => {
         const pagedData = response.data;
-        this.jobs = pagedData.data;
+        this.clientPublishingJobs = pagedData.data.filter(job => job.type === JobType.ClientPublishing);
         this.totalPages = pagedData.totalPages;
         this.pageSize = pagedData.pageSize;
         this.currentPage = pagedData.pageNumber;
@@ -90,6 +104,30 @@ export class ClientConsultsComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  loadConsultations(): void {
+    this.consultationService.getConsultationsForClient(this.currentPage, this.pageSize)
+      .subscribe({
+        next: (response) => {
+          console.log('Full API response:', response);
+          console.log('Response data:', response.data);
+          console.log('Response data.data:', response.data?.data);
+          
+          if (response.data && response.data.data) {
+            this.lawyerProposalJobs = response.data.data;
+            console.log('Loaded consultations:', this.lawyerProposalJobs);
+            console.log('First consultation details:', this.lawyerProposalJobs[0]);
+            console.log('All consultation fields:', this.lawyerProposalJobs.map(c => Object.keys(c)));
+          } else {
+            this.lawyerProposalJobs = [];
+          }
+        },
+        error: (error) => {
+          console.error('Error loading consultations:', error);
+          this.lawyerProposalJobs = [];
+        }
+      });
   }
 
   loadStatistics(): void {
@@ -195,7 +233,8 @@ export class ClientConsultsComponent implements OnInit {
 
   onPageChange(page: number): void {
     this.currentPage = page;
-    this.loadJobs();
+    this.loadClientPublishingJobs();
+    this.loadConsultations();
   }
 
   getStatusBadgeClass(status: JobStatus): string {
@@ -219,14 +258,10 @@ export class ClientConsultsComponent implements OnInit {
     }
   }
 
-  getStatusLabel(status: JobStatus): string {
+  getStatusLabel(status: string | JobStatus): string {
+    if (status === JobStatus.WaitingPayment) return 'Waiting for Payment';
+    if (status === JobStatus.NotAssigned || status === JobStatus.WaitingAppointment) return 'Pending';
     switch (status) {
-      case JobStatus.NotAssigned:
-        return 'Not Assigned';
-      case JobStatus.WaitingAppointment:
-        return 'Waiting Appointment';
-      case JobStatus.WaitingPayment:
-        return 'Waiting Payment';
       case JobStatus.NotStarted:
         return 'Not Started';
       case JobStatus.LawyerRequestedAppointment:
@@ -237,8 +272,12 @@ export class ClientConsultsComponent implements OnInit {
         return 'In Progress';
       case JobStatus.Ended:
         return 'Completed';
+      case JobStatus.Accepted:
+        return 'Accepted';
+      case JobStatus.Rejected:
+        return 'Rejected';
       default:
-        return status;
+        return status.toString();
     }
   }
 
@@ -259,5 +298,62 @@ export class ClientConsultsComponent implements OnInit {
       style: 'currency',
       currency: 'USD'
     }).format(amount);
+  }
+
+  refreshAll() {
+    this.loadConsultations();
+    this.loadClientPublishingJobs();
+    this.loadStatistics();
+  }
+
+  acceptConsultation(job: ClientConsultationDTO) {
+    this.consultationService.acceptConsultation(job.id).subscribe({
+      next: () => {
+        this.refreshAll();
+      },
+      error: () => {
+        alert('Failed to accept consultation.');
+      }
+    });
+  }
+
+  rejectConsultation(job: ClientConsultationDTO) {
+    const reason = prompt('Please provide a reason for rejection:');
+    if (reason === null) return; // Cancelled
+    this.consultationService.rejectConsultation(job.id, reason).subscribe({
+      next: () => {
+        this.refreshAll();
+      },
+      error: () => {
+        alert('Failed to reject consultation.');
+      }
+    });
+  }
+
+  payNow(job: any) {
+    const userInfo = this.authService.getUserInfo();
+    const clientId = userInfo?.userId;
+    if (!clientId) {
+      alert('You must be logged in to pay.');
+      return;
+    }
+    this.escrowService.createSessionPayment({
+      jobId: job.id,
+      clientId: clientId
+    }).subscribe({
+      next: (res) => {
+        console.log('Payment API response:', res);
+        if (res && res.checkoutUrl) {
+          window.location.href = res.checkoutUrl;
+        } else {
+          alert('Failed to initiate payment.');
+          console.error('Payment response error:', res);
+        }
+      },
+      error: (err) => {
+        alert('Payment initiation failed.');
+        console.error('Payment error', err);
+      }
+    });
   }
 }
