@@ -53,11 +53,14 @@ export class LawyerConsultationComponent implements OnInit {
     this.isLoading = true;
     this.route.paramMap.subscribe((params) => {
       const id = params.get('lawyerId');
+
       if (id) {
         this.lawyerId = id;
         this.lawyerService.getHourlyRate(this.lawyerId).subscribe({
-          next: (res) => {
-            this.hourlyRate = res.hourlyRate;
+          next: (res: any) => {
+            console.log(res);
+            this.hourlyRate = res.data.hourlyRate;
+            console.log(this.hourlyRate);
             this.isLoading = false;
             this.buildForm();
           },
@@ -66,7 +69,7 @@ export class LawyerConsultationComponent implements OnInit {
             this.hourlyRate = 0;
             this.isLoading = false;
             this.buildForm();
-          }
+          },
         });
         this.loadJobFields();
       } else {
@@ -167,9 +170,10 @@ export class LawyerConsultationComponent implements OnInit {
     if (!appointmentDateStr || !duration) return;
 
     const appointmentDate = new Date(appointmentDateStr);
-
     if (appointmentDate.getTime() > Date.now()) {
       const budget = Math.ceil(this.hourlyRate * duration);
+      // console.log(`Hourly: ${this.hourlyRate}`);
+      // console.log(`Duration: ${duration}`);
       this.jobForm.patchValue({ budget }, { emitEvent: false });
     }
 
@@ -339,9 +343,7 @@ export class LawyerConsultationComponent implements OnInit {
         this.successMessage = 'Consultation request submitted successfully!';
         this.isSubmitting = false;
 
-        
         // Navigate to client consults page after a short delay
-
 
         // Navigate to jobs page after a short delay
 
