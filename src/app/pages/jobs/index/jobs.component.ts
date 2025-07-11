@@ -7,10 +7,16 @@ import { DashboardTableComponent } from '../../../components/dashboard/dashboard
 import { PaginationComponent } from '../../../components/dashboard/pagination/pagination.component';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-jobs',
-  imports: [DashboardTableComponent, PaginationComponent],
+  imports: [
+    DashboardTableComponent,
+    PaginationComponent,
+    RouterLink,
+    CommonModule,
+  ],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.css',
 })

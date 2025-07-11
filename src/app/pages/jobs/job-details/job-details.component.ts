@@ -1,7 +1,8 @@
+import { EscrowService } from './../../../core/services/escrow.service';
 import { Component, NgModule } from '@angular/core';
 import { JobsService } from '../../../core/services/jobs.service';
 import { ApiResponse } from '../../../types/ApiResponse';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { JobDetailsForLawyerDTO } from '../../../types/Jobs/JobDetailsDTO';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
@@ -36,7 +37,9 @@ export class JobDetailsComponent {
     private jobsService: JobsService,
     private activeRoute: ActivatedRoute,
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+    private EscrowService: EscrowService
   ) {
     this.ApiService = jobsService;
     this.id = this.activeRoute.snapshot.params['id'];
@@ -51,6 +54,9 @@ export class JobDetailsComponent {
   canMakeAppointment: boolean = false;
   canAcceptAppointment: boolean = false;
   canMakeProposal: boolean = false;
+  escrowId: number = 0;
+  checkoutUrl: string = '';
+  canMakePayment: boolean = false;
 
   //For Appointment
   showAppointmentModal = false;
@@ -69,11 +75,11 @@ export class JobDetailsComponent {
       this.isClient = this.role === 'Client';
       this.isLawyer = this.role === 'Lawyer';
     }
-    console.log(`User ID: ${this.userId}`);
-    console.log(`Foreign Key: ${this.foreignKey}`);
-    console.log(`Role: ${this.role}`);
-    console.log(`isClient: ${this.isClient}`);
-    console.log(`isLawyer: ${this.isLawyer}`);
+    // console.log(`User ID: ${this.userId}`);
+    // console.log(`Foreign Key: ${this.foreignKey}`);
+    // console.log(`Role: ${this.role}`);
+    // console.log(`isClient: ${this.isClient}`);
+    // console.log(`isLawyer: ${this.isLawyer}`);
 
     this.loadData(this.id);
     this.initializeForm();
@@ -106,6 +112,7 @@ export class JobDetailsComponent {
     }).subscribe({
       next: (res) => {
         console.log('Appointment created:', res);
+        this.loadData(this.id);
       },
       error: (err) => {
         console.error('Failed to create appointment:', err);
@@ -156,6 +163,12 @@ export class JobDetailsComponent {
             }
           }
         }
+        if (this.isClient && this.job.status === JobStatus.WaitingAppointment) {
+          this.openMakeAppointmentModal();
+        }
+        if (this.isClient && this.job.status === JobStatus.WaitingPayment) {
+          this.canMakePayment = true;
+        }
       },
 
       error: (err: any) => {
@@ -189,10 +202,32 @@ export class JobDetailsComponent {
     });
   }
 
+  makePayment() {
+    if (this.isClient) {
+      this.EscrowService.createSessionPayment({
+        jobId: this.job.id,
+        clientId: this.userId,
+      }).subscribe({
+        next: (res) => {
+          console.log('Payment API response:', res);
+          if (res && res.checkoutUrl) {
+            this.escrowId = res.escrowId;
+            this.checkoutUrl = res.checkoutUrl;
+            window.location.href = this.checkoutUrl;
+          } else {
+            alert('Failed to initiate payment.');
+            console.error('Payment response error:', res);
+          }
+        },
+      });
+    }
+  }
+
   acceptAppointment(appointment: AppointmentDetailsDTO | null): void {
     this.ApiService.AcceptAppointment(appointment?.id).subscribe({
       next: (res: any) => {
         console.log('Appointment accepted:', res);
+        this.makePayment();
       },
       error: (err: any) => {
         console.error('Failed to accept appointment:', err);

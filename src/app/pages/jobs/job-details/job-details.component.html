@@ -140,6 +140,14 @@
           >
             Respond to Last Appointment
           </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            *ngIf="canMakePayment"
+            (click)="makePayment()"
+          >
+            Pay For The Job
+          </button>
           <!-- Optional disabled state -->
           <button
             type="button"

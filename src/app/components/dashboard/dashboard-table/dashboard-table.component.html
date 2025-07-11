@@ -1,5 +1,8 @@
 <div class="table-responsive">
-  <table class="table table-bordered table-hover align-middle">
+  <table
+    class="table table-bordered table-hover align-middle"
+    *ngIf="data.length > 0; else noData"
+  >
     <thead class="table-light">
       <tr>
         <th *ngFor="let col of columns" class="text-capitalize text-center">
@@ -47,3 +50,7 @@
     </tbody>
   </table>
 </div>
+
+<ng-template #noData>
+  <p class="text-center my-3 fw-semibold">No data available.</p>
+</ng-template>

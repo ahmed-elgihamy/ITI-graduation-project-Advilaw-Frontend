@@ -21,18 +21,19 @@ import { JobType } from '../../../types/Jobs/JobType';
 export class CreateJobComponent implements OnInit {
   jobForm!: FormGroup;
   jobFields: JobFieldDTO[] = [];
-  lawyerId: number | null = null; 
+  lawyerId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
     private jobFieldsService: JobFieldsService,
     private jobsService: JobsService,
     private router: Router,
-    private route: ActivatedRoute 
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.lawyerId = Number(this.route.snapshot.paramMap.get('lawyerId')) || null;
+    this.lawyerId =
+      Number(this.route.snapshot.paramMap.get('lawyerId')) || null;
 
     this.jobForm = this.fb.group({
       header: ['', Validators.required],
@@ -50,6 +51,7 @@ export class CreateJobComponent implements OnInit {
     this.jobFieldsService.GetJobFields().subscribe({
       next: (res: any) => {
         this.jobFields = res.data;
+        console.log('Loaded job fields:', this.jobFields);
       },
       error: (err: any) => {
         console.error('Failed to load job fields', err);
