@@ -27,6 +27,7 @@ import { AnalysisContentComponent } from './components/dashboard/analysis-conten
 import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-content.component';
 import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
 import { PaymentsContentComponent } from './components/dashboard/payments-content/payments-content.component';
+// import { LawyerPaymentsComponent } from './components/dashboard/payments-content/lawyerPaymentDashboard/lawyerPayments.component';
 import { ReviewsContentComponent } from './components/dashboard/reviews-content/reviews-content.component';
 import { ConsultationsContentComponent } from './components/dashboard/consultations-content/consultations-content.component';
 
@@ -114,6 +115,7 @@ export const routes: Routes = [
       { path: 'analytics', component: AnalysisContentComponent },
       { path: 'profile', component: ProfileContentComponent },
       { path: 'jobs', component: JobsContentComponent },
+      // { path: 'lawyer-payments', component: LawyerPaymentsComponent },
       { path: 'consultations', component: ConsultationsContentComponent },
       { path: 'payments', component: PaymentsContentComponent },
       { path: 'reviews', component: ReviewsContentComponent },
