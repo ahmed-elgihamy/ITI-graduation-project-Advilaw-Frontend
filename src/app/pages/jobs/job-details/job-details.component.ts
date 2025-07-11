@@ -121,6 +121,10 @@ export class JobDetailsComponent {
         if (this.isLawyer && this.job.status === JobStatus.NotAssigned) {
           this.canMakeProposal = true;
         }
+        if (this.isClient && this.job.status === JobStatus.WaitingAppointment) {
+          this.canAcceptAppointment = false;
+          this.canMakeAppointment = true;
+        }
         if (
           (this.job.status === JobStatus.ClientRequestedAppointment &&
             this.isLawyer) ||
@@ -129,6 +133,7 @@ export class JobDetailsComponent {
         ) {
           this.canAcceptAppointment = true;
           this.canMakeAppointment = false;
+          console.log(`Status: ${this.job.status}, Client: ${this.isClient}`);
         }
         console.log(`My job: ${this.myJob}`);
         console.log(res);
@@ -139,12 +144,14 @@ export class JobDetailsComponent {
           ) {
             this.lastAppointment =
               this.job.appointments[this.job.appointments.length - 1];
+            console.log(this.lastAppointment);
             if (
               (this.isLawyer &&
                 this.lastAppointment.type === AppointmentType.FromClient) ||
               (this.isClient &&
                 this.lastAppointment.type === AppointmentType.FromLawyer)
             ) {
+              console.log('object');
               this.showReplyToLastAppointmentModal();
             }
           }

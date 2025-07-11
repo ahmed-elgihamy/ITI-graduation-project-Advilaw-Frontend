@@ -1,8 +1,10 @@
 <div class="table-responsive">
-  <table class="table">
-    <thead>
+  <table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
       <tr>
-        <th *ngFor="let col of columns">{{ col.label }}</th>
+        <th *ngFor="let col of columns" class="text-capitalize text-center">
+          {{ col.label }}
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -12,17 +14,27 @@
         class="clickable-row"
         style="cursor: pointer"
       >
-        <td *ngFor="let col of columns">
+        <td *ngFor="let col of columns" class="text-center">
           <!-- Image column -->
           <ng-container *ngIf="col.type === 'image'; else nonImage">
-            <img [src]="item[col.key]" alt="image" width="50" height="50" />
+            <img
+              [src]="item[col.key]"
+              alt="image"
+              class="rounded-circle object-fit-cover"
+              style="width: 50px; height: 50px"
+            />
           </ng-container>
 
           <!-- Other columns -->
           <ng-template #nonImage>
             <!-- Boolean -->
             <ng-container *ngIf="col.type === 'boolean'; else nonBoolean">
-              {{ item[col.key] ? "Yes" : "No" }}
+              <span
+                class="badge"
+                [ngClass]="item[col.key] ? 'bg-success' : 'bg-danger'"
+              >
+                {{ item[col.key] ? "Yes" : "No" }}
+              </span>
             </ng-container>
 
             <!-- Link (text only, row is now clickable) -->

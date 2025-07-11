@@ -92,7 +92,7 @@ export class EditLawyerProfileComponent implements OnInit {
       },
     },
     {
-      name: 'NationalityId',
+      name: 'nationalityId',
       label: 'National ID',
       type: 'text',
       validators: [Validators.required, Validators.pattern(/^\d{14}$/)],
@@ -101,16 +101,16 @@ export class EditLawyerProfileComponent implements OnInit {
         pattern: 'National ID must be 14 digits.',
       },
     },
-    {
-      name: 'barAssociationCardNumber',
-      label: 'Bar Card Number',
-      type: 'text',
-      validators: [Validators.required, Validators.pattern(/^[0-9]{5,6}$/)],
-      errors: {
-        required: 'Bar card number is required.',
-        pattern: 'Bar card number must be 5 or 6 digits.',
-      },
-    },
+    // {
+    //   name: 'barAssociationCardNumber',
+    //   label: 'Bar Card Number',
+    //   type: 'text',
+    //   validators: [Validators.required, Validators.pattern(/^[0-9]{5,6}$/)],
+    //   errors: {
+    //     required: 'Bar card number is required.',
+    //     pattern: 'Bar card number must be 5 or 6 digits.',
+    //   },
+    // },
     {
       name: 'hourlyRate',
       label: 'Hourly Rate',

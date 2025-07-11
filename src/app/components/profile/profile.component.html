@@ -134,7 +134,18 @@
 
           <!-- Schedule Section -->
           <section class="schedule mb-5">
-            <h2 class="fw-bold text-uppercase mb-3">SCHEDULE</h2>
+            <div class="d-flex">
+              <h2 class="fw-bold text-uppercase mb-3">SCHEDULE</h2>
+              <div class="ms-auto">
+                <button
+                  type="button"
+                  class="btn main-btn fw-semibold px-4 py-2"
+                  [routerLink]="['/lawyers', urlId, 'schedule']"
+                >
+                  <i class="fas fa-calendar me-2"></i>Edit Schedule
+                </button>
+              </div>
+            </div>
             <div
               class="bg-white rounded border border-warning border-2 overflow-hidden"
             >
