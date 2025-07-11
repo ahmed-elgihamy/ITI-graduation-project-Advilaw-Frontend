@@ -83,4 +83,8 @@ export class LawyerService {
   editLawyerProfile(data: LawyerDetails): Observable<any> {
     return this.http.put(`${env.baseUrl}/Lawyer/me/profile`, data);
   }
+
+  getHourlyRate(lawyerId: string) {
+    return this.http.get(`${env.baseUrl}/Lawyer/${lawyerId}/hourly-rate`);
+  }
 }

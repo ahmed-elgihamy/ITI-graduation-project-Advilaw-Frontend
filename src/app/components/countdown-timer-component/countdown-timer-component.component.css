@@ -194,6 +194,98 @@ body {
   border-top: 1px solid #ecf0f1;
 }
 
+/* Loading State Styles */
+.loading-state {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading-state .spinner-border {
+  width: 3rem;
+  height: 3rem;
+  color: #dbc834;
+}
+
+.loading-state h4 {
+  color: #2c3e50;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+
+.loading-state p {
+  color: #7f8c8d;
+  font-size: 1rem;
+}
+
+/* Error State Styles */
+.error-state {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-state .error-icon {
+  margin-bottom: 1rem;
+}
+
+.error-state .error-icon i {
+  color: #e74c3c;
+}
+
+.error-state h4 {
+  color: #e74c3c;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+
+.error-state p {
+  color: #7f8c8d;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.error-state .btn {
+  border-radius: 10px;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+  margin: 0 0.5rem;
+}
+
+.error-state .btn-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  border: none;
+}
+
+.error-state .btn-primary:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+}
+
+.error-state .btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+.error-state .btn-outline-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+}
+
+/* Enhanced button styles */
+.btn {
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 768px) {
   .timer-display {
     font-size: 2.5rem;

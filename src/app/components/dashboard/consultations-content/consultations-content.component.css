@@ -141,3 +141,50 @@
 .modal.show .modal-dialog {
   transform: none;
 } 
+
+.btn-disabled {
+  background: #e0e0e0 !important;
+  color: #aaa !important;
+  border: 1px solid #ccc !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+  box-shadow: none !important;
+}
+
+.main-btn {
+  background: linear-gradient(90deg, #f7c873 0%, #f4b942 100%);
+  color: #222;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.main-btn:hover:not(.btn-disabled) {
+  background: linear-gradient(90deg, #f4b942 0%, #f7c873 100%);
+  color: #111;
+  box-shadow: 0 4px 16px rgba(244, 185, 66, 0.15);
+}
+
+.card {
+  border-radius: 18px !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07) !important;
+  border: 2px solid var(--color-mustard) !important;
+}
+
+.card-header {
+  background: var(--color-sand-beige) !important;
+  border-bottom: 2px solid var(--color-mustard) !important;
+  border-radius: 18px 18px 0 0 !important;
+}
+
+.card-body {
+  background: #fff !important;
+  border-radius: 0 0 18px 18px !important;
+}
+
+.badge {
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+} 

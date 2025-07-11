@@ -115,10 +115,9 @@ export const routes: Routes = [
 
         //  canActivate: [SessionGuard]
       },
-      {
-        path: 'countdown/:sesstionId',
-        component: CountdownTimerComponentComponent,
-      },
+
+    { path: 'countdown/:sessionId', component: CountdownTimerComponentComponent },
+
 
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },

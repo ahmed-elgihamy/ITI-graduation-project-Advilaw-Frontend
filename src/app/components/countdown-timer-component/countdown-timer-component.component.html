@@ -1,52 +1,82 @@
 <div class="container-fluid vh-30 d-flex align-items-center justify-content-center">
     <div class="timer-container">
-        <div class="law-logo ">
+        <div class="law-logo">
             ⚖️ AdviLaw
         </div>
 
-        <div class="waiting-message" [class.pulse]="isBlinking">
-            {{ waitingMessage }}
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="loading-state">
+            <div class="spinner-border text-primary mb-3" role="status">
+                <span class="visually-hidden">Loading session details...</span>
+            </div>
+            <h4>Loading Session Details</h4>
+            <p class="text-muted">Please wait while we prepare your consultation...</p>
         </div>
 
-        <div class="progress-ring">
-            <svg width="200" height="200">
-                <circle class="progress-ring-circle" cx="100" cy="100" r="90">
-                </circle>
-                <circle class="progress-ring-circle-active" cx="100" cy="100" r="90"
-                    [style.stroke-dasharray]="circumference" [style.stroke-dashoffset]="strokeDashoffset">
-                </circle>
-            </svg>
+        <!-- Error State -->
+        <div *ngIf="error && !isLoading" class="error-state">
+            <div class="error-icon mb-3">
+                <i class="fas fa-exclamation-triangle text-danger fa-3x"></i>
+            </div>
+            <h4 class="text-danger">Session Error</h4>
+            <p class="text-muted mb-4">{{ error }}</p>
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-primary" (click)="retry()">
+                    <i class="fas fa-redo me-2"></i>Retry
+                </button>
+                <button class="btn btn-outline-secondary" (click)="goToDashboard()">
+                    <i class="fas fa-home me-2"></i>Go to Dashboard
+                </button>
+            </div>
         </div>
 
-        <div class="timer-display">
-            <span class="timer-unit">
-                {{ formatTime(hours) }}
-                <div class="timer-label">Hours</div>
-            </span>
-            <span class="timer-unit">
-                {{ formatTime(minutes) }}
-                <div class="timer-label">Minutes</div>
-            </span>
-            <span class="timer-unit">
-                {{ formatTime(seconds) }}
-                <div class="timer-label">Seconds</div>
-            </span>
-        </div>
+        <!-- Main Timer Content -->
+        <div *ngIf="!isLoading && !error">
+            <div class="waiting-message" [class.pulse]="isBlinking">
+                {{ waitingMessage }}
+            </div>
 
-        <div class="session-info">
-            <h5>Session Information</h5>
-            <p>Session Date: {{ sessionDate }}</p>
-            <p>Remaining Wait Time: {{ totalMinutes }} minutes</p>
-        </div>
+            <div class="progress-ring">
+                <svg width="200" height="200">
+                    <circle class="progress-ring-circle" cx="100" cy="100" r="90">
+                    </circle>
+                    <circle class="progress-ring-circle-active" cx="100" cy="100" r="90"
+                        [style.stroke-dasharray]="circumference" [style.stroke-dashoffset]="strokeDashoffset">
+                    </circle>
+                </svg>
+            </div>
 
-        <div class="text-center">
-            <span class="status-badge" [class]="isSessionReady ? 'status-ready' : 'status-waiting'">
-                {{ isSessionReady ? 'Session Ready Now' : 'Waiting for Session to Begin' }}
-            </span>
-        </div>
+            <div class="timer-display">
+                <span class="timer-unit">
+                    {{ formatTime(hours) }}
+                    <div class="timer-label">Hours</div>
+                </span>
+                <span class="timer-unit">
+                    {{ formatTime(minutes) }}
+                    <div class="timer-label">Minutes</div>
+                </span>
+                <span class="timer-unit">
+                    {{ formatTime(seconds) }}
+                    <div class="timer-label">Seconds</div>
+                </span>
+            </div>
 
-        <div class="footer-note">
-            <p>You will be notified when the session begins • Professional Law Office</p>
+            <div class="session-info">
+                <h5>Session Information</h5>
+                <p>Session Date: {{ sessionDate }}</p>
+                <p>Remaining Wait Time: {{ totalMinutes }} minutes</p>
+                <p *ngIf="sessionId">Session ID: {{ sessionId }}</p>
+            </div>
+
+            <div class="text-center">
+                <span class="status-badge" [class]="isSessionReady ? 'status-ready' : 'status-waiting'">
+                    {{ isSessionReady ? 'Session Ready Now' : 'Waiting for Session to Begin' }}
+                </span>
+            </div>
+
+            <div class="footer-note">
+                <p>You will be notified when the session begins • Professional Law Office</p>
+            </div>
         </div>
     </div>
 </div>
