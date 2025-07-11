@@ -82,6 +82,7 @@ export const routes: Routes = [
       { path: 'allLawyers', component: AllLawyerComponent },
 
       { path: 'not-allowed', component: AccessDeniedComponent },
+
       { path: 'ConsultationReview', component: ConsultationReviewComponent },
       { path: 'payment-success', component: PaymentSuccessComponent },
       { path: 'payment-cancel', component: PaymentCancelComponent },
@@ -89,9 +90,16 @@ export const routes: Routes = [
       {
         path: 'chat',
         component: ChatComponent,
+      },
+      { path: 'ConsultationReview/:id', component: ConsultationReviewComponent },
+
+      {
+        path: 'chat/:id',
+        component: ChatComponent
+
         //  canActivate: [SessionGuard]
       },
-      { path: 'countdown', component: CountdownTimerComponentComponent },
+      { path: 'countdown/:sesstionId', component: CountdownTimerComponentComponent },
 
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },
@@ -197,6 +205,18 @@ export const routes: Routes = [
       { path: 'reviews', component: ReviewsContentComponent },
     ],
   },
+
+  {
+    path: 'client', component: ClientDashboardComponent, children: [
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+      { path: 'overview', component: ClientOverviewComponent },
+      { path: 'consults', component: ClientConsultsComponent },
+      { path: 'chats', component: ClientChatsComponent },
+      { path: 'payments', component: ClientPaymentsComponent },
+      { path: 'profile', component: ClientProfileComponent }
+    ]
+  },
+
 
   { path: '**', redirectTo: '/login' },
   
