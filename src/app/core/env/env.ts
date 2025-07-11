@@ -1,8 +1,6 @@
 export const env = {
   baseUrl: 'https://localhost:44302/api',
-
-  publicImgUrl: 'https://localhost:44302'
-
-
+  publicUrl: 'https://localhost:44302',
+  publicimageUrl: 'https://localhost:44302'
 };
 
