@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EscrowService } from '../../core/services/escrow.service';
+import { EscrowService, ConfirmSessionPaymentResponse } from '../../core/services/escrow.service';
 
 @Component({
   selector: 'app-payment-success',
@@ -13,10 +13,11 @@ import { EscrowService } from '../../core/services/escrow.service';
 export class PaymentSuccessComponent implements OnInit {
   sessionId: string = '';
   escrowId: string = '';
+  confirmedSessionId: number | null = null;
   isConfirming = false;
   isConfirmed = false;
   error = '';
-  paymentDetails: any = null;
+  paymentDetails: ConfirmSessionPaymentResponse | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,6 +48,7 @@ export class PaymentSuccessComponent implements OnInit {
         this.isConfirming = false;
         this.isConfirmed = true;
         this.paymentDetails = response.data;
+        this.confirmedSessionId = response.data.sessionId;
         console.log('Payment confirmed successfully:', response);
         
         // Update payment status in localStorage for dashboard refresh
@@ -63,7 +65,7 @@ export class PaymentSuccessComponent implements OnInit {
   updatePaymentStatus(): void {
     // Store payment confirmation in localStorage for dashboard to pick up
     const paymentUpdate = {
-      sessionId: this.sessionId,
+      sessionId: this.confirmedSessionId || this.sessionId,
       escrowId: this.escrowId,
       status: 'completed',
       confirmedAt: new Date().toISOString(),

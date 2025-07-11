@@ -18,6 +18,11 @@ export interface ConfirmSessionPaymentRequest {
   stripeSessionId: string;
 }
 
+export interface ConfirmSessionPaymentResponse {
+  sessionId: number;
+  stripeSessionId: string;
+}
+
 export interface ReleaseSessionFundsRequest {
   sessionId: number;
 }
@@ -38,8 +43,8 @@ export class EscrowService {
   }
 
 
-  confirmSessionPayment(request: ConfirmSessionPaymentRequest): Observable<ApiResponse<any>> {
-    return this.http.post<ApiResponse<any>>(
+  confirmSessionPayment(request: ConfirmSessionPaymentRequest): Observable<ApiResponse<ConfirmSessionPaymentResponse>> {
+    return this.http.post<ApiResponse<ConfirmSessionPaymentResponse>>(
       `${this.baseUrl}/confirm-session`,
       request
     );
