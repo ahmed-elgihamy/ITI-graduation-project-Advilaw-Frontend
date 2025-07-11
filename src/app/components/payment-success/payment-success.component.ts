@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EscrowService, ConfirmSessionPaymentResponse } from '../../core/services/escrow.service';
+import { ApiResponse } from '../../types/ApiResponse';
 
 @Component({
   selector: 'app-payment-success',
@@ -44,36 +45,28 @@ export class PaymentSuccessComponent implements OnInit {
     this.escrowService.confirmSessionPayment({
       stripeSessionId: this.sessionId
     }).subscribe({
-      next: (response) => {
-        try {
-          console.log('Raw response:', response);
-          this.isConfirming = false;
-          
-          // Check if response and response.data exist
-          if (!response || !response.data) {
-            console.error('Response or response.data is null/undefined:', response);
-            this.error = 'Invalid response from server';
-            return;
-          }
+      next: (response: any) => {
+        this.isConfirming = false;
+        this.isConfirmed = true;
+        console.log('Payment confirmation response:', response);
 
-          // Check if sessionId exists in response and is valid
-          if (response.data.sessionId === undefined || response.data.sessionId === null || response.data.sessionId === 0) {
-            console.error('sessionId is null/undefined/zero in response.data:', response.data);
-            this.error = 'Session ID not found in response or is invalid';
-            return;
-          }
-
-          this.isConfirmed = true;
+        // Accept both { data: { sessionId } } and { sessionId }
+        let sessionId: number | null = null;
+        if (response && response.data && typeof response.data.sessionId !== 'undefined') {
           this.paymentDetails = response.data;
-          this.confirmedSessionId = response.data.sessionId;
-          console.log('Payment confirmed successfully:', response);
-          
-          // Update payment status in localStorage for dashboard refresh
+          sessionId = Number(response.data.sessionId);
+        } else if (typeof response.sessionId !== 'undefined') {
+          this.paymentDetails = response;
+          sessionId = Number(response.sessionId);
+        }
+
+        if (sessionId) {
+          this.confirmedSessionId = sessionId;
           this.updatePaymentStatus();
-        } catch (error) {
-          console.error('Error processing payment confirmation response:', error);
-          this.error = 'Error processing payment confirmation';
-          this.isConfirming = false;
+          this.goToCountdown();
+        } else {
+          this.error = 'Payment confirmed, but no session ID was returned. Please contact support.';
+          this.confirmedSessionId = null;
         }
       },
       error: (error) => {
@@ -97,6 +90,17 @@ export class PaymentSuccessComponent implements OnInit {
     const existingUpdates = JSON.parse(localStorage.getItem('paymentUpdates') || '[]');
     existingUpdates.push(paymentUpdate);
     localStorage.setItem('paymentUpdates', JSON.stringify(existingUpdates));
+  }
+
+  goToCountdown(): void {
+    if (this.confirmedSessionId) {
+      this.router.navigate(['/countdown'], { 
+        queryParams: { sessionId: this.confirmedSessionId } 
+      });
+    } else {
+      console.error('No confirmed session ID available');
+      this.goToDashboard();
+    }
   }
 
   goToDashboard(): void {
