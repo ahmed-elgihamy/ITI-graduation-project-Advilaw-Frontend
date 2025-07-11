@@ -91,13 +91,18 @@ export const routes: Routes = [
       { path: 'subscription-success', component: SubscriptionSuccessComponent },
       { path: 'subscription-cancel', component: SubscriptionCancelComponent },
 
+      { path: 'ConsultationReview/:id', component: ConsultationReviewComponent },
+
+
       {
+
         path: 'chat',
         component: ChatComponent,
       },
       { path: 'ConsultationReview/:id', component: ConsultationReviewComponent },
 
       {
+
         path: 'chat/:id',
         component: ChatComponent
 

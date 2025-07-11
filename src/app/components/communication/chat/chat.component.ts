@@ -147,6 +147,7 @@ export class ChatComponent implements OnInit {
     const startTime = new Date(start);
     const endTime = new Date(startTime.getTime() + durationHours * 60 * 60 * 1000);
 
+
     const options: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: '2-digit' };
 
     const startStr = startTime.toLocaleTimeString('en-US', options);
@@ -160,6 +161,7 @@ export class ChatComponent implements OnInit {
   }
 
 
+
   scrollToBottom(): void {
     try {
       setTimeout(() => {
@@ -171,4 +173,8 @@ export class ChatComponent implements OnInit {
   }
 
 
+
 }
+
+
+
