@@ -1,0 +1,91 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-warning text-dark text-white mt-3 ">
+          <h4 class="mb-0 text-dark">
+            <i class="fas fa-history me-2 text-dark"></i>
+            Session History
+          </h4>
+          <p class="text-dark mb-0">Completed sessions with released funds</p>
+        </div>
+        <div class="card-body">
+          <!-- Loading State -->
+          <div *ngIf="loading" class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading session history...</p>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="error && !loading" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            {{ error }}
+            <button type="button" class="btn-close ms-auto" (click)="clearMessages()"></button>
+          </div>
+
+          <!-- Content -->
+          <div *ngIf="!loading && !error">
+            <div *ngIf="sessions.length === 0" class="text-center py-4">
+              <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+              <h5 class="text-muted">No Session History</h5>
+              <p class="text-muted">No sessions with released funds found.</p>
+            </div>
+
+            <div *ngIf="sessions.length > 0" class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead class="table-primary">
+                  <tr>
+                    <th>Session ID</th>
+                    <th>Job Title</th>
+                    <th>Lawyer</th>
+                    <th>Client</th>
+                    <th>Amount</th>
+                    <th>Payment ID</th>
+                    <th>Funds Released</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let session of sessions">
+                    <td>
+                      <span class="badge bg-secondary">#{{ session.sessionId }}</span>
+                    </td>
+                    <td>
+                      <strong>{{ session.jobTitle }}</strong>
+                    </td>
+                    <td>{{ session.lawyerName }}</td>
+                    <td>{{ session.clientName }}</td>
+                    <td>
+                      <span class="text-success fw-bold">
+                        {{ formatCurrency(session.amount) }}
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge bg-info">#{{ session.paymentId }}</span>
+                    </td>
+                    <td>
+                      <small class="text-muted" *ngIf="session.paymentCreatedAt">
+                        {{ formatDate(session.paymentCreatedAt) }}
+                      </small>
+                      <small class="text-muted" *ngIf="!session.paymentCreatedAt">
+                        N/A
+                      </small>
+                    </td>
+                    <td>
+                      <span class="badge bg-success">
+                        <i class="fas fa-check-circle me-1"></i>
+                        Released
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -27,23 +27,34 @@ export class SubscriptionManagementComponent implements OnInit {
   );
   public subscriptionPlans$: Observable<PlatformSubscriptionDTO[]> =
     this.platFormSubscriptionSubject.asObservable();
+  deleteError: string = '';
+  editError: string = '';
+  isLoading: boolean = false;
+  isDeleting: boolean = false;
+  isUpdating: boolean = false;
+  successMessage: string = '';
+
   constructor(
     private fb: FormBuilder,
     private PlatformSubscriptionService: PlatformSubscriptionService
   ) {}
+  
   ngOnInit(): void {
     this.initializeFormGroup();
     this.loadSubscriptionPlans();
   }
 
   loadSubscriptionPlans(): void {
+    this.isLoading = true;
     this.PlatformSubscriptionService.GetAllPlatformSubscription().subscribe({
       next: (res: ApiResponse<PlatformSubscriptionDTO[]>) => {
         console.log(res);
         this.platFormSubscriptionSubject.next(res.data);
+        this.isLoading = false;
       },
       error: (err: any) => {
-        console.error('Failed to load jobs:', err);
+        console.error('Failed to load subscription plans:', err);
+        this.isLoading = false;
       },
     });
   }
@@ -68,96 +79,129 @@ export class SubscriptionManagementComponent implements OnInit {
         next: (res: ApiResponse<PlatformSubscriptionDTO>) => {
           console.log(res);
           this.loadSubscriptionPlans();
+          this.showSuccessMessage('Subscription plan created successfully!');
+          this.resetForm();
         },
         error: (err: any) => {
-          console.error('Failed to load jobs:', err);
+          console.error('Failed to create subscription plan:', err);
+          this.showErrorMessage('Failed to create subscription plan. Please try again.');
         },
       });
       // Close modal
       const modalEl = document.getElementById('addPlanModal');
       const modal = bootstrap.Modal.getInstance(modalEl!);
       modal?.hide();
-
-      // Reset form
-      this.addPlanForm.reset({
-        name: '',
-        price: 0,
-        points: 0,
-        isActive: false,
-      });
-
-      // Refresh list
-      this.loadSubscriptionPlans(); // if available
     }
   }
 
   openDeleteConfirmationModal(planId: number) {
+    this.selectedPlanId = planId;
+    this.deleteError = '';
     const modal = new bootstrap.Modal(
-      document.getElementById('deletePlanConfirmationModal')!
+      document.getElementById('deletePlanModal')!
     );
     modal.show();
   }
 
   deletePlan(planId: number) {
-    this.PlatformSubscriptionService.DeletePlatformSubscription(
-      planId
-    ).subscribe({
-      next: (res: ApiResponse<PlatformSubscriptionDTO>) => {
-        console.log(res);
+    if (!planId) {
+      this.deleteError = 'Invalid plan ID';
+      return;
+    }
+
+    this.isDeleting = true;
+    this.deleteError = '';
+    
+    this.PlatformSubscriptionService.DeletePlatformSubscription(planId).subscribe({
+      next: (response) => {
+        console.log('Delete response:', response);
+        this.isDeleting = false;
         this.loadSubscriptionPlans();
+        this.showSuccessMessage('Subscription plan deleted successfully!');
+        
+        // Close modal manually if needed
         const modalEl = document.getElementById('deletePlanModal');
         const modal = bootstrap.Modal.getInstance(modalEl!);
-        console.log(modalEl);
-        console.log(modal);
-        modal?.hide();
+        if (modal) {
+          modal.hide();
+        }
       },
-      error: (err: any) => {
-        console.error('Failed to load jobs:', err);
-      },
+      error: (err) => {
+        console.error('Delete error:', err);
+        this.isDeleting = false;
+        
+        // Handle different types of errors
+        if (err?.error?.message) {
+          this.deleteError = err.error.message;
+        } else if (err?.status === 400) {
+          this.deleteError = 'Cannot delete this plan because it has active user subscriptions.';
+        } else if (err?.status === 404) {
+          this.deleteError = 'Subscription plan not found.';
+        } else {
+          this.deleteError = 'Failed to delete subscription plan. Please try again.';
+        }
+      }
     });
   }
 
   openEditModelPlan(planId: number) {
     this.selectedPlanId = planId;
-    // change form values
-    this.platFormSubscriptionSubject.subscribe((plans) => {
-      const selectedPlan = plans.find((plan) => plan.id === planId);
-      if (selectedPlan) {
-        this.addPlanForm.patchValue({
-          name: selectedPlan.name,
-          price: selectedPlan.price,
-          points: selectedPlan.points,
-          isActive: selectedPlan.isActive,
-        });
-      }
-    });
+    this.editError = '';
+    // Find the plan and patch the form
+    const plan = this.platFormSubscriptionSubject.value.find(p => p.id === planId);
+    if (plan) {
+      this.addPlanForm.patchValue({
+        name: plan.name,
+        price: plan.price,
+        points: plan.points,
+        isActive: plan.isActive
+      });
+    }
   }
 
   closeEditModelPlan() {
     this.addPlanForm.reset();
     this.selectedPlanId = null;
+    this.editError = '';
     console.log(this.addPlanForm.value);
   }
 
   updatePlan(planId: number) {
-    const updatedPlan = this.addPlanForm.value;
-    let { isActive, ...UpdatePlanData } = updatedPlan;
-    // console.log(UpdatePlanData);
-    this.PlatformSubscriptionService.UpdatePlatformSubscription(
-      planId,
-      UpdatePlanData
-    ).subscribe({
-      next: (res: ApiResponse<PlatformSubscriptionDTO>) => {
-        console.log(res);
-        this.loadSubscriptionPlans();
-        const modalEl = document.getElementById('editPlanModal');
-        const modal = bootstrap.Modal.getInstance(modalEl!);
-        modal?.hide();
-      },
-      error: (err: any) => {
-        console.error('Failed to load jobs:', err);
-      },
-    });
+    if (this.addPlanForm.valid && planId) {
+      this.isUpdating = true;
+      this.editError = '';
+      
+      const updatedPlan = this.addPlanForm.value;
+      let { isActive, ...UpdatePlanData } = updatedPlan;
+      
+      this.PlatformSubscriptionService.UpdatePlatformSubscription(
+        planId,
+        UpdatePlanData
+      ).subscribe({
+        next: () => {
+          this.isUpdating = false;
+          this.loadSubscriptionPlans();
+          this.showSuccessMessage('Subscription plan updated successfully!');
+          
+          // Close modal manually if needed
+          const modalEl = document.getElementById('editPlanModal');
+          const modal = bootstrap.Modal.getInstance(modalEl!);
+          if (modal) {
+            modal.hide();
+          }
+        },
+        error: (err: any) => {
+          console.error('Update error:', err);
+          this.isUpdating = false;
+          
+          if (err?.error?.message) {
+            this.editError = err.error.message;
+          } else {
+            this.editError = 'Failed to update subscription plan. Please try again.';
+          }
+        },
+      });
+    }
   }
 
   toggleActivation(planId: number) {
@@ -165,10 +209,33 @@ export class SubscriptionManagementComponent implements OnInit {
       next: (res: ApiResponse<PlatformSubscriptionDTO[]>) => {
         console.log(res);
         this.loadSubscriptionPlans();
+        this.showSuccessMessage('Subscription plan status updated successfully!');
       },
       error: (err: any) => {
-        console.error('Failed to load jobs:', err);
+        console.error('Failed to toggle activation:', err);
+        this.showErrorMessage('Failed to update subscription plan status. Please try again.');
       },
     });
+  }
+
+  private resetForm() {
+    this.addPlanForm.reset({
+      name: '',
+      price: 0,
+      points: 0,
+      isActive: false,
+    });
+  }
+
+  private showSuccessMessage(message: string) {
+    this.successMessage = message;
+    setTimeout(() => {
+      this.successMessage = '';
+    }, 3000);
+  }
+
+  private showErrorMessage(message: string) {
+    // You can implement a toast notification here
+    console.error(message);
   }
 }

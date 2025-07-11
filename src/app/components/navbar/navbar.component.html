@@ -1,223 +1,64 @@
+
 <app-lawyer-or-client-modal></app-lawyer-or-client-modal>
-<nav class="navbar navbar-expand-md">
+<nav class="navbar navbar-expand-lg ">
   <div class="container">
-    <!-- Left links section (only visible on md and up) -->
-    <ul class="d-none d-md-flex w-50 justify-content-start main-navbar">
-      <li class="text-decoration-none list-unstyled semi-white mx-2">
-        <a
-          class="nav-link"
-          aria-current="page"
-          routerLinkActive="active"
-          routerLink="/"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Home</a
-        >
-      </li>
-      <li class="text-decoration-none list-unstyled semi-white mx-2">
-        <a class="nav-link" routerLinkActive="active" routerLink="/dashboard"
-          >Dashboard</a
-        >
-      </li>
-      <li class="text-decoration-none list-unstyled semi-white mx-2">
-        <a class="nav-link" routerLinkActive="active" routerLink="/jobs"
-          >Jobs</a
-        >
-      </li>
-      <li class="text-decoration-none list-unstyled semi-white mx-2">
-        <a class="nav-link" routerLinkActive="active" routerLink="/allLawyers"
-          >Lawyers</a
-        >
-      </li>
-    </ul>
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+      <img src="assets/images/logooo.jpeg" alt="Logo" width="250" height="90" />
+      <span style="font-family: 'Pacifico', cursive; color: #d4af6e;" class="fs-4 ">AdviLaw</span>
+    </a>
 
-    <!-- Logo (always centered) -->
-    <a class="navbar-brand" routerLink="/"
-      ><img src="assets/images/logos/dark_logo-new.png"
-    /></a>
-
-    <!-- Right buttons section (only visible on md and up) -->
-    <div class="d-none d-md-flex btns justify-content-end w-50">
-      <a
-        *ngIf="!isLogged"
-        routerLink="/login"
-        type="button"
-        class="btn mx-1 py-2 px-4 signInBtn"
-      >
-        Sign In
-      </a>
-      <button
-        *ngIf="!isLogged"
-        id="signUpBtn"
-        type="button"
-        class="btn main-btn mx-1 py-2 px-4 signUpBtn"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Sign Up
-      </button>
-      <!-- <button
-        *ngIf="isLogged"
-        (click)="_auth.logOut()"
-        id="signOutBtn"
-        type="button"
-        class="btn main-btn mx-1 py-2 px-4 signOutBtn"
-      >
-        LogOut
-      </button> -->
-      <div class="dropdown pointer" *ngIf="isLogged">
-        <div
-          class="rounded-circle"
-          alt="Profile"
-          style="
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-            margin-right: 8px;
-            aspect-ratio: 1/1;
-          "
-          id="profileDropdown"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <img
-            class="rounded-circle w-100 h-100 object-fit-cover"
-            src="assets/images/male.jpg"
-            alt=""
-          />
-        </div>
-        <ul
-          class="dropdown-menu dropdown-menu-end shadow rounded"
-          aria-labelledby="profileDropdown"
-        >
-          <li>
-            <a class="dropdown-item" (click)="GoToProfile()">
-              <i class="bi bi-person me-2"></i> My Profile
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" routerLink="/dashboard">
-              <i class="bi bi-speedometer2 me-2"></i> Dashboard
-            </a>
-          </li>
-          <!-- separator -->
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
-          <li>
-            <button
-              *ngIf="isLogged"
-              (click)="_auth.logOut()"
-              id="signOutBtn"
-              type="button"
-              class="main-btn py-2 dropdown-item rounded-0 border-0"
-            >
-              <i class="bi bi-speedometer2 me-2"></i> Log Out
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Toggler for small screens -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span
-        class="navbar-toggler-icon d-flex"
-        style="background-image: none; width: 30px; height: 30px"
-      >
-        <svg
-          width="30px"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M4 18L20 18"
-            stroke="#f9f1e3"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-          <path
-            d="M4 12L20 12"
-            stroke="#f9f1e3"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-          <path
-            d="M4 6L20 6"
-            stroke="#f9f1e3"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon" style="background-image: none; width: 50px; height: 40px">
+        <svg width="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 18L20 18" stroke="#f9f1e3" stroke-width="2" stroke-linecap="round" />
+          <path d="M4 12L20 12" stroke="#f9f1e3" stroke-width="2" stroke-linecap="round" />
+          <path d="M4 6L20 6" stroke="#f9f1e3" stroke-width="2" stroke-linecap="round" />
         </svg>
       </span>
     </button>
-
-    <!-- Collapse menu for small screens -->
-    <div
-      class="collapse navbar-custom-collapse d-md-none mt-3"
-      id="navbarSupportedContent"
-    >
-      <ul class="navbar-nav text-center mb-3">
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLinkActive="active"
-            routerLink="/"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Home</a
-          >
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
+        <li class="nav-item mx-2">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/dashboard"
-            >Dashboard</a
-          >
+        <li class="nav-item mx-2">
+          <a class="nav-link" href="#">How It Works</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/jobs"
-            >Jobs</a
-          >
+        <li class="nav-item mx-2">
+          <a class="nav-link" routerLink="/countdown/1">Chat</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/allLawyers"
-            >Lawyers</a
-          >
+        <li class="nav-item mx-2">
+          <a class="nav-link" href="#">How It Works</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link" href="#">Contact Us</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link" routerLink="/jobs">Jobs</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link" routerLink="/lawyers">Lawyers</a>
         </li>
       </ul>
-      <div class="text-center">
-        <a
-          *ngIf="!isLogged"
-          routerLink="/login"
-          type="button"
-          class="btn mx-1 py-2 px-5 signInBtn"
-        >
+      <form class="d-flex justify-content-center" role="search">
+        <a *ngIf="!isLogged" routerLink="/login" type="button" class="btn mx-1 py-2 px-5 signInBtn">
           Sign In
         </a>
-        <button
-          *ngIf="!isLogged"
-          type="button"
-          class="btn main-btn mx-1 py-2 px-5"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          Sign Up
+
+        <button *ngIf="!isLogged" id="signOutBtn" type="button" class="btn main-btn mx-1 py-2 px-5 signOutBtn"
+          data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Sign Out
         </button>
-        <button
-          *ngIf="isLogged"
-          (click)="_auth.logOut()"
-          type="button"
-          class="btn main-btn mx-1 py-2 px-5"
-        >
+
+        <button *ngIf="isLogged" (click)="_auth.logOut()" id="signOutBtn" type="button"
+          class="btn main-btn mx-1 py-2 px-5 signOutBtn">
           LogOut
         </button>
-      </div>
+      </form>
     </div>
   </div>
 </nav>

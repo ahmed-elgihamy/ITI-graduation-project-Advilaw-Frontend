@@ -26,6 +26,8 @@ import { ProposalDetailsComponent } from './pages/proposals/details/details.comp
 import { AnalysisContentComponent } from './components/dashboard/analysis-content/analysis-content.component';
 import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-content.component';
 import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
+// Update the import to match the actual exported member from the file
+import { LawyerPaymentsComponent } from './components/dashboard/payments-content/lawyerPaymentDashboard/lawyerPayments.component';
 import { PaymentsContentComponent } from './components/dashboard/payments-content/payments-content.component';
 // import { LawyerPaymentsComponent } from './components/dashboard/payments-content/lawyerPaymentDashboard/lawyerPayments.component';
 import { ReviewsContentComponent } from './components/dashboard/reviews-content/reviews-content.component';
@@ -39,6 +41,16 @@ import { AdminProfileEdit } from './components/admin-dashboard/admin-profile-edi
 import { AdminProfileViewComponent } from './components/admin-dashboard/admin-profile-view/admin-profile-view.component';
 import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
+
+import { AdminFundReleasesComponent } from './components/admin-dashboard/admin-fund-releases/admin-fund-releases.component';
+import { AdminSessionHistoryComponent } from './components/admin-dashboard/admin-session-history/admin-session-history.component';
+import { ClientDashboardComponent } from './components/client-dashboard/client-dashboard.component';
+import { ClientOverviewComponent } from './components/client-dashboard/client-overview/client-overview.component';
+import { ClientConsultsComponent } from './components/client-dashboard/client-consults/client-consults.component';
+import { ClientChatsComponent } from './components/client-dashboard/client-chats/client-chats.component';
+import { ClientPaymentsComponent } from './components/client-dashboard/client-payments/client-payments.component';
+import { ClientProfileComponent } from './components/client-dashboard/client-profile/client-profile.component';
+
 import { SubscriptionPlansComponent } from './components/subscriptions/subscription-plans/subscription-plans.component';
 import { SubscriptionManagementComponent } from './components/subscriptions/subscription-management/subscription-management.component';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
@@ -46,6 +58,8 @@ import { ConsultationReviewComponent } from './components/reviews/consultation-r
 
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { PaymentCancelComponent } from './components/payment-cancel/payment-cancel.component';
+import { SubscriptionSuccessComponent } from './components/subscription-success/subscription-success.component';
+import { SubscriptionCancelComponent } from './components/subscription-cancel/subscription-cancel.component';
 
 import { CountdownTimerComponentComponent } from './components/countdown-timer-component/countdown-timer-component.component';
 import { EditLawyerProfileComponent } from './components/edit-lawyer-profile/edit-lawyer-profile.component';
@@ -75,16 +89,32 @@ export const routes: Routes = [
       { path: 'allLawyers', component: AllLawyerComponent },
 
       { path: 'not-allowed', component: AccessDeniedComponent },
+
       { path: 'ConsultationReview', component: ConsultationReviewComponent },
       { path: 'payment-success', component: PaymentSuccessComponent },
       { path: 'payment-cancel', component: PaymentCancelComponent },
+      { path: 'subscription-success', component: SubscriptionSuccessComponent },
+      { path: 'subscription-cancel', component: SubscriptionCancelComponent },
 
       {
         path: 'chat',
         component: ChatComponent,
+      },
+      {
+        path: 'ConsultationReview/:id',
+        component: ConsultationReviewComponent,
+      },
+
+      {
+        path: 'chat/:id',
+        component: ChatComponent,
+
         //  canActivate: [SessionGuard]
       },
-      { path: 'countdown', component: CountdownTimerComponentComponent },
+      {
+        path: 'countdown/:sesstionId',
+        component: CountdownTimerComponentComponent,
+      },
 
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },
@@ -115,6 +145,7 @@ export const routes: Routes = [
       { path: 'analytics', component: AnalysisContentComponent },
       { path: 'profile', component: ProfileContentComponent },
       { path: 'jobs', component: JobsContentComponent },
+      { path: 'lawyer-payments', component: LawyerPaymentsComponent },
       // { path: 'lawyer-payments', component: LawyerPaymentsComponent },
       { path: 'consultations', component: ConsultationsContentComponent },
       { path: 'payments', component: PaymentsContentComponent },
@@ -170,10 +201,33 @@ export const routes: Routes = [
             component: SubscriptionManagementComponent,
             // canActivate: [adminGuard],
           },
+          {
+            path: 'fund-releases',
+            component: AdminFundReleasesComponent,
+            // canActivate: [adminGuard],
+          },
+          {
+            path: 'session-history',
+            component: AdminSessionHistoryComponent,
+            // canActivate: [adminGuard],
+          },
         ],
       },
 
       { path: 'reviews', component: ReviewsContentComponent },
+    ],
+  },
+
+  {
+    path: 'client',
+    component: ClientDashboardComponent,
+    children: [
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+      { path: 'overview', component: ClientOverviewComponent },
+      { path: 'consults', component: ClientConsultsComponent },
+      { path: 'chats', component: ClientChatsComponent },
+      { path: 'payments', component: ClientPaymentsComponent },
+      { path: 'profile', component: ClientProfileComponent },
     ],
   },
 

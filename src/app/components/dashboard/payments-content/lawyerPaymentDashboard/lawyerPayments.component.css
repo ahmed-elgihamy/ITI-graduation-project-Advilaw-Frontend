@@ -1,0 +1,17 @@
+.lawyer-payments-dashboard {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.stripe-status {
+  margin-bottom: 1.5rem;
+}
+.success { color: green; }
+.warning { color: orange; }
+.info { color: #007bff; }
+.error { color: red; margin-bottom: 1rem; }
+button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+}

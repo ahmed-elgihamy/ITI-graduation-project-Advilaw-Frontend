@@ -37,9 +37,9 @@
       <div class="success-details mb-4">
         <p class="text-muted mb-2">Your payment has been processed and confirmed successfully</p>
         <div class="payment-info">
-          <div class="info-item">
+          <div class="info-item" *ngIf="confirmedSessionId">
             <span class="label">Session ID:</span>
-            <span class="value">{{ sessionId }}</span>
+            <span class="value">{{ confirmedSessionId }}</span>
           </div>
           <div class="info-item" *ngIf="escrowId">
             <span class="label">Escrow ID:</span>
@@ -81,19 +81,24 @@
 
       <div class="action-buttons">
         <div class="row g-3">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <button class="btn btn-outline-primary w-100" (click)="goToDashboard()">
               <i class="fas fa-home me-2"></i>Dashboard
             </button>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <button class="btn btn-outline-success w-100" (click)="goToConsultations()">
               <i class="fas fa-briefcase me-2"></i>My Consultations
             </button>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <button class="btn btn-outline-info w-100" (click)="goToPayments()">
               <i class="fas fa-credit-card me-2"></i>Payment History
+            </button>
+          </div>
+          <div class="col-md-3" *ngIf="confirmedSessionId">
+            <button class="btn btn-outline-warning w-100" (click)="goToCountdown()">
+              <i class="fas fa-clock me-2"></i>Go to Countdown
             </button>
           </div>
         </div>
