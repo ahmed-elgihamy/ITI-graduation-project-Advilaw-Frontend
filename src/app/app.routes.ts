@@ -80,18 +80,22 @@ export const routes: Routes = [
 
 
       { path: 'not-allowed', component: AccessDeniedComponent },
+
       { path: 'ConsultationReview', component: ConsultationReviewComponent },
       { path: 'payment-success', component: PaymentSuccessComponent },
       { path: 'payment-cancel', component: PaymentCancelComponent },
       { path: 'subscription-success', component: SubscriptionSuccessComponent },
       { path: 'subscription-cancel', component: SubscriptionCancelComponent },
 
+      { path: 'ConsultationReview/:id', component: ConsultationReviewComponent },
+
+
       {
-        path: 'chat',
+        path: 'chat/:id',
         component: ChatComponent
         //  canActivate: [SessionGuard]
       },
-      { path: 'countdown', component: CountdownTimerComponentComponent },
+      { path: 'countdown/:sesstionId', component: CountdownTimerComponentComponent },
 
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },
@@ -193,7 +197,7 @@ export const routes: Routes = [
   },
   {
     path: 'client', component: ClientDashboardComponent, children: [
-      {path:'',redirectTo:'overview',pathMatch:'full'},
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: ClientOverviewComponent },
       { path: 'consults', component: ClientConsultsComponent },
       { path: 'chats', component: ClientChatsComponent },
