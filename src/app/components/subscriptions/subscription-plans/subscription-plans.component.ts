@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { PlatformSubscriptionService } from '../../../core/services/platform-subscription.service';
+import { PlatformSubscriptionService, CreateLawyerSubscriptionRequest, SingleSubscriptionRequest } from '../../../core/services/platform-subscription.service';
 import { PlatformSubscriptionDTO } from '../../../types/PlatformSubscription/PlatformSubscriptionDTO';
 import { ApiResponse } from '../../../types/ApiResponse';
 import { CommonModule } from '@angular/common';
@@ -71,10 +71,58 @@ export class SubscriptionPlansComponent implements OnInit {
       return;
     }
 
-    // Proceed with subscription purchase
-    this.purchaseSubscription(plan);
+    // Proceed with Stripe checkout for subscription purchase
+    this.createCheckoutSession(plan);
   }
 
+  createCheckoutSession(plan: PlatformSubscriptionDTO) {
+    this.isProcessingPayment = true;
+    this.error = '';
+    
+    const userInfo = this.authService.getUserInfo();
+    if (!userInfo) {
+      this.error = 'User not authenticated';
+      this.isProcessingPayment = false;
+      return;
+    }
+
+    // Use the correct property for lawyerId
+    const lawyerId = userInfo.userId; // <-- FIXED: use userId instead of id
+
+    const subscriptionRequest: SingleSubscriptionRequest = {
+      subscriptionTypeId: plan.id,
+      amount: plan.price,
+      subscriptionName: plan.name
+    };
+
+    const checkoutRequest: CreateLawyerSubscriptionRequest = {
+      lawyerId: lawyerId,
+      subscriptions: [subscriptionRequest]
+    };
+
+    console.log('Creating checkout session:', checkoutRequest);
+    
+    this.platFormSubscriptionService.createSubscriptionCheckoutSession(checkoutRequest).subscribe({
+      next: (response: { url: string }) => {
+        console.log('Checkout session created:', response);
+        this.isProcessingPayment = false;
+        
+        // Redirect to Stripe checkout
+        if (response.url) {
+          window.location.href = response.url;
+        } else {
+          this.error = 'Failed to create checkout session';
+        }
+      },
+      error: (error: any) => {
+        console.error('Checkout session creation error:', error);
+        this.error = 'Failed to create checkout session. Please try again.';
+        this.isProcessingPayment = false;
+      }
+    });
+  }
+
+  // Legacy method - keeping for reference but not used
   purchaseSubscription(plan: PlatformSubscriptionDTO) {
     this.isProcessingPayment = true;
     this.error = '';

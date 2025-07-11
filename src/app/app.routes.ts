@@ -53,6 +53,8 @@ import { AccessDeniedComponent } from './components/access-denied/access-denied.
 import { ConsultationReviewComponent } from './components/reviews/consultation-review/consultation-review.component';
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { PaymentCancelComponent } from './components/payment-cancel/payment-cancel.component';
+import { SubscriptionSuccessComponent } from './components/subscription-success/subscription-success.component';
+import { SubscriptionCancelComponent } from './components/subscription-cancel/subscription-cancel.component';
 
 
 export const routes: Routes = [
@@ -81,6 +83,8 @@ export const routes: Routes = [
       { path: 'ConsultationReview', component: ConsultationReviewComponent },
       { path: 'payment-success', component: PaymentSuccessComponent },
       { path: 'payment-cancel', component: PaymentCancelComponent },
+      { path: 'subscription-success', component: SubscriptionSuccessComponent },
+      { path: 'subscription-cancel', component: SubscriptionCancelComponent },
 
       {
         path: 'chat',
