@@ -24,7 +24,7 @@ export interface LawyerResponse {
 
 @Injectable({ providedIn: 'root' })
 export class LawyerService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getProfile(id: string): Observable<LawyerProfile> {
     return this.http
@@ -68,20 +68,16 @@ export class LawyerService {
       );
   }
 
-  getAllLawyers(
-    page: number,
-    size: number,
-    searchPhrase: string = ''
-  ): Observable<LawyerResponse> {
-    let params = new HttpParams().set('PageNumber', page).set('PageSize', size);
+  getAllLawyers(page: number, size: number, searchPhrase: string = ''): Observable<LawyerResponse> {
+    let params = new HttpParams()
+      .set('PageNumber', page)
+      .set('PageSize', size);
 
     if (searchPhrase) {
       params = params.set('SearchPhrase', searchPhrase);
     }
 
-    return this.http.get<LawyerResponse>(`${env.baseUrl}/lawyer/all`, {
-      params,
-    });
+    return this.http.get<LawyerResponse>(`${env.baseUrl}/lawyer/all`, { params });
   }
 
   editLawyerProfile(data: LawyerDetails): Observable<any> {
