@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="spacing my-4">
+    <h1 class="text-center">Edit Lawyer Profile</h1>
+    <app-generic-form
+      [formFields]="formFields"
+      [onSubmitFn]="handleSubmit"
+      [data]="lawyerDetails"
+      *ngIf="lawyerDetails && isDataLoaded"
+    ></app-generic-form>
+  </div>
+</div>

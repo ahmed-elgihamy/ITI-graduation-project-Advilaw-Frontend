@@ -1,0 +1,214 @@
+<div class="container mt-4">
+  <!-- Header -->
+  <div class="text-center mb-4">
+    <h2 class="text-primary">Weekly Schedule</h2>
+    <p class="text-muted">Legal Practice Free Time Overview</p>
+
+    <!-- Stats -->
+    <div class="d-flex justify-content-center gap-3 mb-3">
+      <span class="badge bg-secondary">
+        <i class="fas fa-clock me-1"></i> {{ totalFreeHours }} Free Hours This
+        Week
+      </span>
+      <span class="badge bg-success text-white"
+        >Available for Consultations</span
+      >
+    </div>
+  </div>
+
+  <!-- Weekly Grid -->
+  <div class="card p-3">
+    <div class="d-flex gap-2 justify-content-center align-items-center">
+      <h5 class="text-center text-primary">Business Hours Schedule</h5>
+
+      <button
+        class="btn btn-sm"
+        (click)="toggleOnlyValidDates()"
+        [ngClass]="{
+          'btn-success': onlyValidDates,
+          'btn-danger': !onlyValidDates
+        }"
+      >
+        <i
+          class="fas me-1 fa-toggle-off"
+          [ngClass]="{ 'fa-toggle-on': onlyValidDates }"
+        ></i>
+        Only Valid
+      </button>
+      <div class="btns">
+        <div class="text-center my-4">
+          <button class="btn btn-primary" (click)="openModal()">
+            Edit Schedule
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <!-- Time column -->
+      <div class="col text-center">
+        <div class="bg-success text-white rounded p-2 mb-2">
+          <strong class="d-block">Time</strong>
+          <small>Hours</small>
+        </div>
+        <button *ngFor="let hour of HOURS" class="mb-1 small btn btn-sm w-100">
+          {{ formatHour(hour) }}
+        </button>
+      </div>
+
+      <!-- day columns -->
+      <div class="col text-center" *ngFor="let day of days">
+        <div class="bg-primary text-white rounded p-2 mb-2">
+          <div>{{ day }}</div>
+          <small>{{ calculateFreeHours(day) }}h free</small>
+        </div>
+
+        <div *ngFor="let hour of HOURS; let i = index" class="mb-1">
+          <button
+            type="button"
+            class="btn btn-sm w-100"
+            [ngClass]="{
+              'btn-success':
+                SCHEDULE[day][i] && !isSelected(day, hour) && onlyValidDates,
+              'text-white':
+                SCHEDULE[day][i] && !isSelected(day, hour) && onlyValidDates,
+              'btn-outline-success': SCHEDULE[day][i] && !isSelected(day, hour),
+              'btn-outline-danger': !SCHEDULE[day][i] && !isSelected(day, hour),
+              'btn-success text-white': isSelected(day, hour)
+            }"
+            (click)="setSelectedSlot(day, hour)"
+          >
+            {{ SCHEDULE[day][i] ? "✓ Available" : "✗ Not Available" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected Slot -->
+  <div *ngIf="selectedSlot" class="alert alert-info mt-4">
+    <h5 class="mb-2">
+      Selected: {{ selectedSlot.day }} at {{ formatHour(selectedSlot.hour) }}
+    </h5>
+    <p class="mb-0">
+      {{
+        SCHEDULE[selectedSlot.day][HOURS.indexOf(selectedSlot.hour)]
+          ? "✅ Available for appointments"
+          : "❌ Currently booked"
+      }}
+    </p>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="scheduleModal"
+  tabindex="-1"
+  aria-labelledby="scheduleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="scheduleModalLabel">Schedule List</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Schedule List -->
+        <ul class="list-group mb-4">
+          <li
+            *ngFor="let entry of scheduleListFromDB; let i = index"
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <span
+              ><strong>{{ entry.day }}</strong
+              >: {{ entry.startTime }} - {{ entry.endTime }}</span
+            >
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="removeSchedule(i, entry.UserId)"
+            >
+              Remove
+            </button>
+          </li>
+        </ul>
+
+        <!-- Added Schedule List -->
+        <h5 class="mb-3">Added Schedule</h5>
+        <p *ngIf="schedulesToAdd.length === 0" class="text-muted">
+          No schedules have been added.
+        </p>
+        <ul class="list-group mb-4">
+          <li
+            *ngFor="let entry of schedulesToAdd; let i = index"
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <span
+              ><strong>{{ entry.day }}</strong
+              >: {{ entry.startTime }}:00 - {{ entry.endTime }}:00</span
+            >
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="removeAddedSchedule(i)"
+            >
+              Remove
+            </button>
+          </li>
+        </ul>
+
+        <!-- Add Schedule Form -->
+        <div class="mb-3">
+          <label class="form-label">day</label>
+          <select class="form-select" [(ngModel)]="newEntry.day">
+            <option value="" disabled selected>Select day</option>
+            <option *ngFor="let day of days" [value]="day">{{ day }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Start Time</label>
+          <input
+            type="time"
+            class="form-control"
+            [(ngModel)]="newEntry.startTime"
+            step="3600"
+            placeholder="e.g., 09:00"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">End Time</label>
+          <input
+            type="time"
+            class="form-control"
+            [(ngModel)]="newEntry.endTime"
+            step="3600"
+            placeholder="e.g., 17:00"
+          />
+        </div>
+
+        <div class="d-flex gap-3 justify-content-between">
+          <div class="text-end">
+            <button class="btn btn-primary" (click)="saveSchedule()">
+              Save
+            </button>
+          </div>
+          <div class="text-end">
+            <button class="btn btn-success" (click)="addSchedule()">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

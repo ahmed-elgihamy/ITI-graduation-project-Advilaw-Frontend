@@ -1,0 +1,19 @@
+<div [ngClass]="containerClasses" (click)="onClick()">
+  <!-- Gradient overlay -->
+  <div [ngClass]="gradientOverlayClasses"></div>
+
+  <!-- Status dot -->
+  <div [ngClass]="statusIndicatorClasses"></div>
+
+  <!-- Slot content -->
+  <div class="relative z-10 text-center">
+    <div class="font-semibold">{{ isFree ? "✓" : "✗" }}</div>
+  </div>
+
+  <!-- Tooltip -->
+  <div
+    class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-foreground text-background px-2 py-1 text-xs rounded opacity-0 hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-20"
+  >
+    {{ formatHour(hour) }} - {{ isFree ? "Available" : "Booked" }}
+  </div>
+</div>

@@ -1,4 +1,11 @@
 <div class="container py-4">
+  <div class="create-btn d-flex justify-content-between align-items-center">
+    <h2>Job Listings</h2>
+    <a routerLink="/jobs/create" *ngIf="IsClient" class="btn btn-primary"
+      >Create Job</a
+    >
+  </div>
+
   <app-dashboard-table
     [data]="jobs"
     [columns]="jobsColumns"
@@ -7,6 +14,7 @@
   ></app-dashboard-table>
   <div class="d-flex justify-content-center align-items-center">
     <app-pagination
+      *ngIf="jobs.length > 0"
       [currentPage]="currentPage"
       [totalPages]="totalPages"
       (pageChanged)="loadData($event)"

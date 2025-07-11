@@ -1,4 +1,4 @@
 export enum AppointmentType {
-  FromClient = 0,
-  FromLawyer = 1,
+  FromClient = 'FromClient',
+  FromLawyer = 'FromLawyer',
 }

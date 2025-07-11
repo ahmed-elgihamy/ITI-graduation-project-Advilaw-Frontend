@@ -55,6 +55,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.isClient = this.userInfo?.role === 'Client';
     this.urlId = this.route.snapshot.paramMap.get('id') || '';
     this.isMe = this.isLawyer && this.userInfo?.userId === this.urlId;
+    console.log(this.userInfo);
+    console.log(`url id : ${this.urlId}`);
   }
 
   ngOnDestroy(): void {
