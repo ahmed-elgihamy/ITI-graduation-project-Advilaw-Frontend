@@ -53,11 +53,21 @@ export class LawyerConsultationComponent implements OnInit {
     this.isLoading = true;
     this.route.paramMap.subscribe((params) => {
       const id = params.get('lawyerId');
-      console.log('Captured lawyerId from route:', id);
-
       if (id) {
         this.lawyerId = id;
-        this.loadLawyerProfile();
+        this.lawyerService.getHourlyRate(this.lawyerId).subscribe({
+          next: (res) => {
+            this.hourlyRate = res.hourlyRate;
+            this.isLoading = false;
+            this.buildForm();
+          },
+          error: () => {
+            this.errorMessage = 'Could not load hourly rate.';
+            this.hourlyRate = 0;
+            this.isLoading = false;
+            this.buildForm();
+          }
+        });
         this.loadJobFields();
       } else {
         this.errorMessage = 'Lawyer ID not found in route';
@@ -65,35 +75,8 @@ export class LawyerConsultationComponent implements OnInit {
       }
     });
     this.userInfo = this.authService.getUserInfo();
-    console.log(this.userInfo);
     this.isLawyer = this.userInfo?.role === 'Lawyer';
     this.isClient = this.userInfo?.role === 'Client';
-  }
-
-  loadLawyerProfile(): void {
-    this.lawyerService.getProfile(this.lawyerId).subscribe({
-      next: (profile) => {
-        if (profile && profile.hourlyRate) {
-          this.lawyerProfile = profile;
-          this.hourlyRate = profile.hourlyRate;
-          console.log('Loaded lawyer profile:', profile);
-        } else {
-          console.warn(
-            'Lawyer profile is null or hourlyRate missing. Using default.'
-          );
-          this.hourlyRate = 500;
-        }
-        this.buildForm();
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Failed to load lawyer profile', err);
-        this.errorMessage = 'Failed to load lawyer profile. Please try again.';
-        this.hourlyRate = 500;
-        this.buildForm();
-        this.isLoading = false;
-      },
-    });
   }
 
   loadJobFields(): void {

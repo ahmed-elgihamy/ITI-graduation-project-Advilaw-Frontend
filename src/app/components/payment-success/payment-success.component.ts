@@ -63,7 +63,6 @@ export class PaymentSuccessComponent implements OnInit {
         if (sessionId) {
           this.confirmedSessionId = sessionId;
           this.updatePaymentStatus();
-          this.goToCountdown();
         } else {
           this.error = 'Payment confirmed, but no session ID was returned. Please contact support.';
           this.confirmedSessionId = null;
@@ -94,9 +93,7 @@ export class PaymentSuccessComponent implements OnInit {
 
   goToCountdown(): void {
     if (this.confirmedSessionId) {
-      this.router.navigate(['/countdown'], { 
-        queryParams: { sessionId: this.confirmedSessionId } 
-      });
+      this.router.navigate(['/countdown', this.confirmedSessionId]);
     } else {
       console.error('No confirmed session ID available');
       this.goToDashboard();

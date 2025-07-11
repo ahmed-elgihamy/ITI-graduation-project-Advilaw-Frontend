@@ -203,3 +203,66 @@
     margin-bottom: 10px;
   }
 } 
+
+/* Consultation CTA Styles */
+.consultation-cta {
+  margin-top: 30px;
+}
+
+.consultation-cta .alert {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(40, 167, 69, 0.1);
+}
+
+.consultation-cta .alert-success {
+  color: #155724;
+}
+
+.consultation-cta .btn-success {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+}
+
+.consultation-cta .btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+  background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+}
+
+.consultation-cta h5 {
+  color: #155724;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.consultation-cta p {
+  color: #155724;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.consultation-cta small {
+  color: #6c757d;
+  font-size: 0.85rem;
+}
+
+/* Enhanced button styles for consultation */
+.btn-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+} 

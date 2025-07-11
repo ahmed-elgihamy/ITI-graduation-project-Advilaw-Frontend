@@ -63,10 +63,16 @@
                       </span>
                     </div>
                     <div class="mt-auto d-flex gap-2">
-                      <button class="main-btn flex-fill fw-bold" (click)="acceptConsultation(consultation)" title="Accept Consultation">
-                        <i class="fas fa-check me-1"></i> Accept
+                      <button class="main-btn flex-fill fw-bold"
+                        (click)="acceptConsultation(consultation)"
+                        title="Accept Consultation"
+                        [disabled]="getStatusText(asJobStatus(consultation.status || '')) === 'Accepted'"
+                        [ngClass]="{'btn-disabled': getStatusText(asJobStatus(consultation.status || '')) === 'Accepted'}">
+                        <i class="fas fa-check me-1"></i> 
+                        {{ getStatusText(asJobStatus(consultation.status || '')) === 'Accepted' ? 'Accepted' : 'Accept' }}
                       </button>
-                      <button class="btn btn-danger flex-fill fw-bold" (click)="openRejectModal(consultation)" title="Reject Consultation">
+                      <button class="btn btn-danger flex-fill fw-bold" (click)="openRejectModal(consultation)" title="Reject Consultation"
+                        [disabled]="getStatusText(asJobStatus(consultation.status || '')) === 'Accepted'">
                         <i class="fas fa-times me-1"></i> Reject
                       </button>
                     </div>

@@ -66,4 +66,8 @@ export class LawyerService {
 
     return this.http.get<LawyerResponse>(`${env.baseUrl}/lawyer/all`, { params });
   }
+
+  getHourlyRate(lawyerId: string) {
+    return this.http.get<{ hourlyRate: number }>(`${env.baseUrl}/Lawyer/${lawyerId}/hourly-rate`);
+  }
 }

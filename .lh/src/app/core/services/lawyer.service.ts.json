@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/core/services/lawyer.service.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1752265626248,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1752265626248,
+            "name": "Commit-0",
+            "content": "import { Injectable } from '@angular/core';\r\nimport { HttpClient, HttpParams } from '@angular/common/http';\r\nimport { LawyerProfile } from '../../components/models/LawyerProfile';\r\nimport { Review } from '../../components/models/Review';\r\nimport { LawyerSchedule } from '../../components/models/Lawyer Schedule';\r\nimport { Observable, throwError } from 'rxjs';\r\nimport { map, catchError } from 'rxjs/operators';\r\nimport { env } from '../env/env';\r\n\r\ninterface ApiResponse<T> {\r\n  data: T;\r\n}\r\n\r\nexport interface LawyerResponse {G\r\n  items: any[];\r\n  totalPages: number;\r\n  totalItemsCount: number;\r\n  itemsFrom: number;\r\n  itemsTo: number;\r\n  pageNumber: number;\r\n  pageSize: number;\r\n}\r\n\r\n@Injectable({ providedIn: 'root' })\r\nexport class LawyerService {\r\n\r\n  constructor(private http: HttpClient) { }\r\n\r\n  getProfile(id: string): Observable<LawyerProfile> {\r\n    return this.http\r\n      .get<ApiResponse<LawyerProfile>>(`${env.baseUrl}/lawyers/${id}/profile`)\r\n      .pipe(\r\n        map((res) => res.data),\r\n        catchError(() => {\r\n          throw new Error('Profile load failed');\r\n        })\r\n      );\r\n  }\r\n\r\n  getReviews(id: string): Observable<Review[]> {\r\n    return this.http\r\n      .get<ApiResponse<Review[]>>(`${env.baseUrl}/lawyers/${id}/reviews`)\r\n      .pipe(\r\n        map((res) => res.data),\r\n        catchError((err) => throwError(() => new Error('Reviews load failed')))\r\n      );\r\n  }\r\n\r\n  getSchedule(id: string): Observable<LawyerSchedule[]> {\r\n    return this.http\r\n      .get<ApiResponse<LawyerSchedule[]>>(`${env.baseUrl}/lawyers/${id}/schedule`)\r\n      .pipe(\r\n        map((res) => res.data),\r\n        catchError((err) => throwError(() => new Error('Schedule load failed')))\r\n      );\r\n  }\r\n\r\n  getAllLawyers(page: number, size: number, searchPhrase: string = ''): Observable<LawyerResponse> {\r\n    let params = new HttpParams()\r\n      .set('PageNumber', page)\r\n      .set('PageSize', size);\r\n\r\n    if (searchPhrase) {\r\n      params = params.set('SearchPhrase', searchPhrase);\r\n    }\r\n\r\n    return this.http.get<LawyerResponse>(`${env.baseUrl}/lawyer/all`, { params });\r\n  }\r\n\r\n  getHourlyRate(lawyerId: string) {\r\n    return this.http.get<{ hourlyRate: number }>(`${env.baseUrl}/Lawyer/${lawyerId}/hourly-rate`);\r\n  }\r\n}\r\n"
+        }
+    ]
+}

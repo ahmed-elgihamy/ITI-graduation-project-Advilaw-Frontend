@@ -97,9 +97,26 @@
             </button>
           </div>
           <div class="col-md-3" *ngIf="confirmedSessionId">
-            <button class="btn btn-outline-warning w-100" (click)="goToCountdown()">
-              <i class="fas fa-clock me-2"></i>Go to Countdown
+            <button class="btn btn-primary w-100" (click)="goToCountdown()">
+              <i class="fas fa-clock me-2"></i>Start Consultation
             </button>
+          </div>
+        </div>
+        
+        <!-- Consultation Call-to-Action -->
+        <div *ngIf="confirmedSessionId" class="consultation-cta mt-4">
+          <div class="alert alert-success border-0">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-check-circle fa-2x me-3 text-success"></i>
+              <div class="flex-grow-1">
+                <h5 class="mb-1">Ready for Your Consultation!</h5>
+                <p class="mb-2">Your payment has been confirmed. Click "Start Consultation" to begin your session.</p>
+                <small class="text-muted">Session ID: {{ confirmedSessionId }}</small>
+              </div>
+              <button class="btn btn-success btn-lg" (click)="goToCountdown()">
+                <i class="fas fa-play me-2"></i>Start Consultation
+              </button>
+            </div>
           </div>
         </div>
       </div>

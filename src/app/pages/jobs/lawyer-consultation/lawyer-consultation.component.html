@@ -23,7 +23,7 @@
       <i class="fas fa-exclamation-triangle me-2"></i>
       {{ errorMessage }}
     </div>
-    <button class="btn btn-outline-primary mt-3" (click)="loadLawyerProfile()">
+    <button class="btn btn-outline-primary mt-3" (click)="ngOnInit()">
       <i class="fas fa-redo me-2"></i>Try Again
     </button>
   </div>
@@ -52,7 +52,14 @@
                 >Experience: {{ lawyerProfile?.experience || "N/A" }} yrs</span
               >
               <span class="divider">|</span>
-              <span class="fw-bold">EGP {{ hourlyRate }}/hr</span>
+              <span class="fw-bold">
+                <ng-container *ngIf="!isLoading; else loadingRate">
+                  EGP {{ hourlyRate }}/hr
+                </ng-container>
+                <ng-template #loadingRate>
+                  Loading hourly rate...
+                </ng-template>
+              </span>
             </div>
 
             <!-- Action Buttons -->
