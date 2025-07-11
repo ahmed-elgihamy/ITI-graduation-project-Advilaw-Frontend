@@ -39,6 +39,8 @@ import { AdminProfileEdit } from './components/admin-dashboard/admin-profile-edi
 import { AdminProfileViewComponent } from './components/admin-dashboard/admin-profile-view/admin-profile-view.component';
 import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
+import { AdminFundReleasesComponent } from './components/admin-dashboard/admin-fund-releases/admin-fund-releases.component';
+import { AdminSessionHistoryComponent } from './components/admin-dashboard/admin-session-history/admin-session-history.component';
 import { ClientDashboardComponent } from './components/client-dashboard/client-dashboard.component';
 import { ClientOverviewComponent } from './components/client-dashboard/client-overview/client-overview.component';
 import { ClientConsultsComponent } from './components/client-dashboard/client-consults/client-consults.component';
@@ -121,7 +123,13 @@ export const routes: Routes = [
       { path: 'jobs', component: JobsContentComponent },
       { path: 'lawyer-payments', component: LawyerPaymentsComponent },
       { path: 'reviews', component: ReviewsContentComponent },
+      { path: 'consultations', component: ConsultationsContentComponent },
 
+
+
+
+
+      
       {
         path: 'admin-dashboard',
         component: MainLayoutComponent,
@@ -181,6 +189,16 @@ export const routes: Routes = [
             component: SubscriptionManagementComponent,
             // canActivate: [adminGuard],
           },
+          {
+            path: 'fund-releases',
+            component: AdminFundReleasesComponent,
+            // canActivate: [adminGuard],
+          },
+          {
+            path: 'session-history',
+            component: AdminSessionHistoryComponent,
+            // canActivate: [adminGuard],
+          },
         ],
       },
 
@@ -199,4 +217,6 @@ export const routes: Routes = [
   },
 
   { path: '**', redirectTo: '/login' },
+  
+  
 ];

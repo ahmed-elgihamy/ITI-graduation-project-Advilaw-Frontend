@@ -97,6 +97,22 @@
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
 
+    <app-nav-item
+      *ngIf="isAdmin"
+      [iconClass]="'fa-money-bill-transfer'"
+      [name]="'Fund Releases'"
+      [toLink]="'/dashboard/admin-dashboard/fund-releases'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+
+    <app-nav-item
+      *ngIf="isAdmin"
+      [iconClass]="'fa-history'"
+      [name]="'Session History'"
+      [toLink]="'/dashboard/admin-dashboard/session-history'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+
   </div>
 
   

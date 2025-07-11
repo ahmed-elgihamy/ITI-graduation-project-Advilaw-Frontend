@@ -45,14 +45,36 @@ export class PaymentSuccessComponent implements OnInit {
       stripeSessionId: this.sessionId
     }).subscribe({
       next: (response) => {
-        this.isConfirming = false;
-        this.isConfirmed = true;
-        this.paymentDetails = response.data;
-        this.confirmedSessionId = response.data.sessionId;
-        console.log('Payment confirmed successfully:', response);
-        
-        // Update payment status in localStorage for dashboard refresh
-        this.updatePaymentStatus();
+        try {
+          console.log('Raw response:', response);
+          this.isConfirming = false;
+          
+          // Check if response and response.data exist
+          if (!response || !response.data) {
+            console.error('Response or response.data is null/undefined:', response);
+            this.error = 'Invalid response from server';
+            return;
+          }
+
+          // Check if sessionId exists in response and is valid
+          if (response.data.sessionId === undefined || response.data.sessionId === null || response.data.sessionId === 0) {
+            console.error('sessionId is null/undefined/zero in response.data:', response.data);
+            this.error = 'Session ID not found in response or is invalid';
+            return;
+          }
+
+          this.isConfirmed = true;
+          this.paymentDetails = response.data;
+          this.confirmedSessionId = response.data.sessionId;
+          console.log('Payment confirmed successfully:', response);
+          
+          // Update payment status in localStorage for dashboard refresh
+          this.updatePaymentStatus();
+        } catch (error) {
+          console.error('Error processing payment confirmation response:', error);
+          this.error = 'Error processing payment confirmation';
+          this.isConfirming = false;
+        }
       },
       error: (error) => {
         console.error('Error confirming payment:', error);
