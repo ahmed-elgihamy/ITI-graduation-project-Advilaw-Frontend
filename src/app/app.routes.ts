@@ -39,6 +39,7 @@ import { AdminProfileEdit } from './components/admin-dashboard/admin-profile-edi
 import { AdminProfileViewComponent } from './components/admin-dashboard/admin-profile-view/admin-profile-view.component';
 import { LawyerDetailsComponent } from './components/admin-dashboard/lawyer-details/lawyer-details.component';
 import { ClientDetailsComponent } from './components/admin-dashboard/client-details/client-details.component';
+<<<<<<< HEAD
 import { AdminFundReleasesComponent } from './components/admin-dashboard/admin-fund-releases/admin-fund-releases.component';
 import { AdminSessionHistoryComponent } from './components/admin-dashboard/admin-session-history/admin-session-history.component';
 import { ClientDashboardComponent } from './components/client-dashboard/client-dashboard.component';
@@ -47,15 +48,17 @@ import { ClientConsultsComponent } from './components/client-dashboard/client-co
 import { ClientChatsComponent } from './components/client-dashboard/client-chats/client-chats.component';
 import { ClientPaymentsComponent } from './components/client-dashboard/client-payments/client-payments.component';
 import { ClientProfileComponent } from './components/client-dashboard/client-profile/client-profile.component';
+=======
+>>>>>>> 855156d3b7c81c821b3dd556645d1637a7f444b6
 import { SubscriptionPlansComponent } from './components/subscriptions/subscription-plans/subscription-plans.component';
 import { SubscriptionManagementComponent } from './components/subscriptions/subscription-management/subscription-management.component';
-
-import { CountdownTimerComponentComponent } from './components/countdown-timer-component/countdown-timer-component.component';
-import { SessionGuard } from './core/guards/session.guard';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { ConsultationReviewComponent } from './components/reviews/consultation-review/consultation-review.component';
+
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { PaymentCancelComponent } from './components/payment-cancel/payment-cancel.component';
+
+import { CountdownTimerComponentComponent } from './components/countdown-timer-component/countdown-timer-component.component';
 
 
 export const routes: Routes = [
@@ -79,7 +82,6 @@ export const routes: Routes = [
       { path: 'lawyers', component: LawyersComponent },
       { path: 'allLawyers', component: AllLawyerComponent },
 
-
       { path: 'not-allowed', component: AccessDeniedComponent },
       { path: 'ConsultationReview', component: ConsultationReviewComponent },
       { path: 'payment-success', component: PaymentSuccessComponent },
@@ -87,7 +89,7 @@ export const routes: Routes = [
 
       {
         path: 'chat',
-        component: ChatComponent
+        component: ChatComponent,
         //  canActivate: [SessionGuard]
       },
       { path: 'countdown', component: CountdownTimerComponentComponent },
@@ -133,10 +135,8 @@ export const routes: Routes = [
       {
         path: 'admin-dashboard',
         component: MainLayoutComponent,
-
         // canActivate: [adminGuard],
         children: [
-
           {
             path: '',
             component: AdminDashboardWelcome,
@@ -145,43 +145,36 @@ export const routes: Routes = [
           {
             path: 'pending-lawyers',
             component: PendingLawyersList,
-
             // canActivate: [adminGuard],
           },
           {
             path: 'pending-clients',
             component: PendingClientsList,
-
             // canActivate: [adminGuard],
           },
           {
             path: 'admins-list',
             component: AdminsList,
-
             // canActivate: [adminGuard],
           },
           {
             path: 'profile-edit',
             component: AdminProfileEdit,
-
             // canActivate: [adminGuard],
           },
           {
             path: 'admin/profile',
             component: AdminProfileViewComponent,
-
             // canActivate: [adminGuard],
           },
           {
             path: 'lawyers/:id',
             component: LawyerDetailsComponent,
-
             // canActivate: [adminGuard],
           },
           {
             path: 'clients/:id',
             component: ClientDetailsComponent,
-
             // canActivate: [adminGuard],
           },
           {
@@ -204,16 +197,6 @@ export const routes: Routes = [
 
       { path: 'reviews', component: ReviewsContentComponent },
     ],
-  },
-  {
-    path: 'client', component: ClientDashboardComponent, children: [
-      {path:'',redirectTo:'overview',pathMatch:'full'},
-      { path: 'overview', component: ClientOverviewComponent },
-      { path: 'consults', component: ClientConsultsComponent },
-      { path: 'chats', component: ClientChatsComponent },
-      { path: 'payments', component: ClientPaymentsComponent },
-      { path: 'profile', component: ClientProfileComponent }
-    ]
   },
 
   { path: '**', redirectTo: '/login' },

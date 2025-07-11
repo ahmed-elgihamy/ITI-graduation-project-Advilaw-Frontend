@@ -6,43 +6,20 @@ import { PagedResponse } from '../../types/PagedResponse';
 import { LawyersService } from '../../core/services/lawyer/lawyers.service';
 import { LawyerListDTO } from '../../types/Lawyers/LawyerListDTO';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-lawyers',
-  imports: [
-    DashboardTableComponent,
-    PaginationComponent,
-    RouterLink,
-    CommonModule,
-  ],
+  imports: [DashboardTableComponent, PaginationComponent, RouterLink],
   templateUrl: './lawyers.component.html',
   styleUrl: './lawyers.component.css',
 })
 export class LawyersComponent {
-  userId: string = '';
-  foreignKey: number = 0;
-  role: string = '';
-  isClient: boolean = false;
-  isLawyer: boolean = false;
   ApiService: any;
-  constructor(
-    private lawyersService: LawyersService,
-    private authService: AuthService
-  ) {
+  constructor(private lawyersService: LawyersService) {
     this.ApiService = lawyersService;
   }
   ngOnInit(): void {
     this.loadData(1);
-    const userInfo = this.authService.getUserInfo();
-    if (userInfo) {
-      this.userId = userInfo.userId;
-      this.foreignKey = userInfo.foreignKey;
-      this.role = userInfo.role;
-      this.isClient = this.role === 'Client';
-      this.isLawyer = this.role === 'Lawyer';
-    }
   }
 
   lawyersColumns = [
@@ -51,7 +28,6 @@ export class LawyersComponent {
       label: 'Profile Image',
       type: 'image',
     },
-    { key: 'id', label: 'Lawyer ID' },
     { key: 'userName', label: 'Name' },
     { key: 'city', label: 'City' },
     { key: 'country', label: 'Country' },
@@ -67,11 +43,14 @@ export class LawyersComponent {
     this.currentPage = page;
     this.ApiService.GetLawyers(page).subscribe({
       next: (res: ApiResponse<PagedResponse<LawyerListDTO>>) => {
+        // change LawyerId to UserId
         const pagedData = res.data;
         this.lawyers = pagedData.data; // actual lawyer list
+        this.lawyers.map((lawyer) => (lawyer.id = lawyer.userId));
         this.totalPages = pagedData.totalPages;
         this.pageSize = pagedData.pageSize;
         this.currentPage = pagedData.pageNumber;
+
         console.log(res);
       },
       error: (err: any) => {

@@ -1,4 +1,5 @@
 export enum JobStatus {
+  WaitingApproval = 'WaitingApproval',
   NotAssigned = 'NotAssigned',
   WaitingAppointment = 'WaitingAppointment',
   WaitingPayment = 'WaitingPayment',
