@@ -1,0 +1,38 @@
+<div class="p-3 border rounded shadow-sm">
+  <!-- Header with Navigation -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <button class="btn btn-outline-secondary btn-sm" (click)="prevMonth()">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <h5 class="m-0">
+      {{ currentDate | date : "MMMM yyyy" }}
+    </h5>
+    <button class="btn btn-outline-secondary btn-sm" (click)="nextMonth()">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- Week Days Header -->
+  <div class="row text-center fw-bold border-bottom pb-2 mb-2">
+    <div class="col" *ngFor="let day of daysShort">{{ day }}</div>
+  </div>
+
+  <!-- Calendar Grid -->
+  <div *ngFor="let week of weeks" class="row text-center mb-2">
+    <div class="col" *ngFor="let day of week">
+      <button
+        class="btn btn-sm w-100"
+        [ngClass]="{
+          'btn-outline-primary': day && !isSelected(day),
+          'btn-primary text-white': day && isSelected(day),
+          'text-muted': !day,
+          'fw-bold': day && isToday(day)
+        }"
+        [disabled]="!day"
+        (click)="selectDate(day)"
+      >
+        {{ day?.getDate() || "" }}
+      </button>
+    </div>
+  </div>
+</div>

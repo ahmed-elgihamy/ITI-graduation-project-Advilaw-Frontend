@@ -28,6 +28,7 @@ import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-c
 import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
 // Update the import to match the actual exported member from the file
 import { LawyerPaymentsComponent } from './components/dashboard/payments-content/lawyerPaymentDashboard/lawyerPayments.component';
+// import { LawyerPaymentsComponent } from './components/dashboard/payments-content/lawyerPaymentDashboard/lawyerPayments.component';
 import { ReviewsContentComponent } from './components/dashboard/reviews-content/reviews-content.component';
 import { ConsultationsContentComponent } from './components/dashboard/consultations-content/consultations-content.component';
 
@@ -60,7 +61,8 @@ import { SubscriptionSuccessComponent } from './components/subscription-success/
 import { SubscriptionCancelComponent } from './components/subscription-cancel/subscription-cancel.component';
 
 import { CountdownTimerComponentComponent } from './components/countdown-timer-component/countdown-timer-component.component';
-
+import { EditLawyerProfileComponent } from './components/edit-lawyer-profile/edit-lawyer-profile.component';
+import { LawyerScheduleComponent } from './components/lawyer-schedule/lawyer-schedule.component';
 
 export const routes: Routes = [
   {
@@ -79,6 +81,8 @@ export const routes: Routes = [
 
       { path: 'profile/:id', component: ProfileComponent },
       { path: 'lawyer-profile/:id', component: ProfileComponent },
+      { path: 'profile-edit', component: EditLawyerProfileComponent },
+      { path: 'lawyers/:id/schedule', component: LawyerScheduleComponent },
 
       { path: 'lawyers', component: LawyersComponent },
       { path: 'allLawyers', component: AllLawyerComponent },
@@ -99,16 +103,21 @@ export const routes: Routes = [
         path: 'chat',
         component: ChatComponent,
       },
-      { path: 'ConsultationReview/:id', component: ConsultationReviewComponent },
+      {
+        path: 'ConsultationReview/:id',
+        component: ConsultationReviewComponent,
+      },
 
       {
 
         path: 'chat/:id',
-        component: ChatComponent
+        component: ChatComponent,
 
         //  canActivate: [SessionGuard]
       },
+
     { path: 'countdown/:sessionId', component: CountdownTimerComponentComponent },
+
 
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },
@@ -140,14 +149,11 @@ export const routes: Routes = [
       { path: 'profile', component: ProfileContentComponent },
       { path: 'jobs', component: JobsContentComponent },
       { path: 'lawyer-payments', component: LawyerPaymentsComponent },
+      // { path: 'lawyer-payments', component: LawyerPaymentsComponent },
+      { path: 'consultations', component: ConsultationsContentComponent },
+      // { path: 'payments', component: PaymentsContentComponent },
       { path: 'reviews', component: ReviewsContentComponent },
-      { path: 'consultations', component: ConsultationsContentComponent },
 
-
-
-
-
-      
       {
         path: 'admin-dashboard',
         component: MainLayoutComponent,
@@ -216,18 +222,17 @@ export const routes: Routes = [
   },
 
   {
-    path: 'client', component: ClientDashboardComponent, children: [
+    path: 'client',
+    component: ClientDashboardComponent,
+    children: [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: ClientOverviewComponent },
       { path: 'consults', component: ClientConsultsComponent },
       { path: 'chats', component: ClientChatsComponent },
       { path: 'payments', component: ClientPaymentsComponent },
-      { path: 'profile', component: ClientProfileComponent }
-    ]
+      { path: 'profile', component: ClientProfileComponent },
+    ],
   },
 
-
   { path: '**', redirectTo: '/login' },
-  
-  
 ];

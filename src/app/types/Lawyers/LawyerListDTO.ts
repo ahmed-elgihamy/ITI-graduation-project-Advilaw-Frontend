@@ -6,10 +6,8 @@ export enum UserRole {
 }
 
 export enum Gender {
-  Male = 0,
-  Female = 1,
-  Other = 2,
-  // Add others as needed
+  Male = 'Male',
+  Female = 'Female',
 }
 
 export interface LawyerListDTO {
