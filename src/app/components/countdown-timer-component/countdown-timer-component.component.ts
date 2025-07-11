@@ -1,9 +1,5 @@
-
-import { Router, ActivatedRoute } from '@angular/router';
-
 import { AppointmentDetailsDTO } from './../../types/Appointments/AppointmentDetailsDTO';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { Component, computed, OnDestroy, OnInit, signal, inject } from '@angular/core';
 import { interval, takeWhile } from 'rxjs';
 import { SessionService } from '../../core/services/session.service';
@@ -24,10 +20,8 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
   sessionDate: string = '';
   isSessionReady: boolean = false;
   isBlinking: boolean = false;
-  sessionId: number | null = null;
 
   _route = inject(Router)
-  _activatedRoute = inject(ActivatedRoute)
   sessionService = inject(SessionService)
   route = inject(ActivatedRoute);
   // Progress ring properties
@@ -41,17 +35,6 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
   appointmentTime: any;
   sessionDetails: any;
   ngOnInit() {
-
-    
-    this._activatedRoute.queryParams.subscribe(params => {
-      this.sessionId = params['sessionId'] ? parseInt(params['sessionId']) : null;
-      console.log('Countdown component received session ID:', this.sessionId);
-    });
-
-    this.initializeTimer();
-    this.startTimer();
-    this.startBlinking();
-
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('sesstionId');
@@ -83,7 +66,6 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
         }
       }
     });
-
   }
 
   ngOnDestroy() {
@@ -146,22 +128,8 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
       this.isSessionReady = true;
       this.waitingMessage = 'Session is ready now! You can enter';
       this.strokeDashoffset = 0;
-
-      
-      // Navigate to chat with session ID if available
-      if (this.sessionId) {
-        this._route.navigate(['/chat'], { 
-          queryParams: { sessionId: this.sessionId } 
-        });
-        this.sessionService.startSession(this.sessionId);
-      } else {
-        this._route.navigate(['/chat']);
-        this.sessionService.startSession(1);
-      }
-
       this._route.navigate(['/chat/' + this.sessionId]);
       this.sessionService.startSession(this.sessionDetails.durationHours, this.appointmentTime);
-
 
 
       if (this.intervalId) {

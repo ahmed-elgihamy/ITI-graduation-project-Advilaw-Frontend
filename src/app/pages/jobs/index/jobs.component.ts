@@ -5,23 +5,21 @@ import { PagedResponse } from '../../../types/PagedResponse';
 import { JobListDTO } from '../../../types/Jobs/JobListDTO';
 import { DashboardTableComponent } from '../../../components/dashboard/dashboard-table/dashboard-table.component';
 import { PaginationComponent } from '../../../components/dashboard/pagination/pagination.component';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-jobs',
-  imports: [DashboardTableComponent, PaginationComponent, CommonModule],
+  imports: [DashboardTableComponent, PaginationComponent],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.css',
 })
 export class JobsComponent implements OnInit {
   ApiService: any;
-  IsClient: boolean = false;
-  IsLawyer: boolean = false;
+  IsLawyer = false;
+  IsClient = false;
   constructor(
     private jobsService: JobsService,
-    private router: Router,
     private authService: AuthService
   ) {
     this.ApiService = jobsService;
@@ -32,7 +30,7 @@ export class JobsComponent implements OnInit {
       this.IsLawyer = true;
       // Add Lawyer-specific columns
       this.jobsColumns.push(
-        { key: 'clientId', label: 'Client ID' },
+        // { key: 'clientId', label: 'Client ID' },
         { key: 'clientName', label: 'Client Name' }
       );
       // this.router.navigate(['/dashboard/jobs']);
@@ -49,21 +47,18 @@ export class JobsComponent implements OnInit {
       label: 'Image',
       type: 'image',
     },
-    {
-      key: 'id',
-      label: 'Job ID',
-      type: 'link',
-      link: '/jobs/', // base path
-      linkKey: 'id', // value from the row to append
-    },
+    // {
+    //   key: 'id',
+    //   label: 'Job ID',
+    //   type: 'link',
+    //   link: '/jobs/', // base path
+    //   linkKey: 'id', // value from the row to append
+    // },
     { key: 'header', label: 'Header' },
     { key: 'description', label: 'Description' },
     { key: 'budget', label: 'Budget' },
-    { key: 'isAnonymus', label: 'Anonymous', type: 'boolean' },
-
-    { key: 'jobFieldId', label: 'Job Field ID' },
+    { key: 'clientName', label: 'Client Name' },
     { key: 'jobFieldName', label: 'Job Field Name' },
-    { key: 'status', label: 'Status', type: 'enum', enumType: 'JobStatus' },
   ];
 
   jobs: any[] = [];

@@ -31,7 +31,7 @@ export class ClientDetailsComponent implements OnInit {
       this.adminService.getClientById(id).subscribe({
         next: (data: Client) => {
           this.client = data;
-          this.nationalIDImageUrl = data.nationalIDImagePath ? env.publicUrl + data.nationalIDImagePath : '';
+          this.nationalIDImageUrl = data.nationalIDImagePath ? env.publicImgUrl + data.nationalIDImagePath : '';
         },
         error: (err) => {
           console.error('Error loading client:', err);
