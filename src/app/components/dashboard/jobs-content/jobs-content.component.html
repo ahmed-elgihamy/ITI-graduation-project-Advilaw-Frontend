@@ -1,14 +1,21 @@
-<app-dashboard-table
-  [data]="jobs"
-  [columns]="jobColumns"
-  title="Job Listings"
-  url="jobs"
-></app-dashboard-table>
-<div class="d-flex justify-content-center align-items-center mt-3">
-  <app-pagination
-    [currentPage]="currentPage"
-    [totalPages]="totalPages"
-    (pageChanged)="loadData($event)"
+<div
+  class="d-flex align-items-center justify-content-center p-4 flex-column h-100"
+>
+  <app-dashboard-table
+    [data]="jobs"
+    [columns]="jobColumns"
+    title="Job Listings"
+    url="jobs"
+  ></app-dashboard-table>
+  <div
+    class="d-flex justify-content-center align-items-center mt-3"
+    *ngIf="jobs.length > 0"
   >
-  </app-pagination>
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChanged)="loadData($event)"
+    >
+    </app-pagination>
+  </div>
 </div>

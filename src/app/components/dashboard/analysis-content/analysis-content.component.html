@@ -1,46 +1,48 @@
-<h4 class="fw-light mb-4">Analytics</h4>
+<div class="p-4">
+  <h4 class="fw-light mb-4">Analytics</h4>
 
-<div
-  class="d-grid gap-4"
-  style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))"
->
-  <app-analysis-card
-    [Name]="'Money'"
-    [Value]="0"
-    [IconClass]="'fas fa-wallet'"
-    [Color]="'border-primary'"
-  ></app-analysis-card>
-  <app-analysis-card
-    [Name]="'Number Of Jobs'"
-    [Value]="13"
-    [IconClass]="'fas fa-briefcase'"
-    [Color]="'border-danger'"
-  ></app-analysis-card>
-  <app-analysis-card
-    [Name]="'Active Jobs'"
-    [Value]="0"
-    [IconClass]="'fas fa-user'"
-    [Color]="'border-secondary'"
-  ></app-analysis-card>
-  <app-analysis-card
-    [Name]="'Proposals'"
-    [Value]="0"
-    [IconClass]="'fas fa-music'"
-    [Color]="'border-black'"
-  ></app-analysis-card>
-</div>
-
-<div
-  class="d-grid gap-4 my-4"
-  style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"
->
-  <div class="card shadow-lg border-start rounded-3 h-100 bg-white">
-    <div class="bg-light p-4 fw-semibold fs-5 border-bottom">Jobs</div>
-    <app-progress-bar [data]="data"></app-progress-bar>
+  <div
+    class="d-grid gap-4"
+    style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))"
+  >
+    <app-analysis-card
+      [Name]="'Money'"
+      [Value]="0"
+      [IconClass]="'fas fa-wallet'"
+      [Color]="'border-primary'"
+    ></app-analysis-card>
+    <app-analysis-card
+      [Name]="'Number Of Jobs'"
+      [Value]="13"
+      [IconClass]="'fas fa-briefcase'"
+      [Color]="'border-danger'"
+    ></app-analysis-card>
+    <app-analysis-card
+      [Name]="'Active Jobs'"
+      [Value]="0"
+      [IconClass]="'fas fa-user'"
+      [Color]="'border-secondary'"
+    ></app-analysis-card>
+    <app-analysis-card
+      [Name]="'Proposals'"
+      [Value]="0"
+      [IconClass]="'fas fa-music'"
+      [Color]="'border-black'"
+    ></app-analysis-card>
   </div>
 
-  <div class="card shadow-lg border-start rounded-3 h-100 bg-white">
-    <div class="bg-light p-4 fw-semibold fs-5 border-bottom">Revenues</div>
-    <app-revenue-line-chart [revenueData]="revenues"></app-revenue-line-chart>
+  <div
+    class="d-grid gap-4 my-4"
+    style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"
+  >
+    <div class="card shadow-lg border-start rounded-3 h-100 bg-white">
+      <div class="bg-light p-4 fw-semibold fs-5 border-bottom">Jobs</div>
+      <app-progress-bar [data]="data"></app-progress-bar>
+    </div>
+
+    <div class="card shadow-lg border-start rounded-3 h-100 bg-white">
+      <div class="bg-light p-4 fw-semibold fs-5 border-bottom">Revenues</div>
+      <app-revenue-line-chart [revenueData]="revenues"></app-revenue-line-chart>
+    </div>
   </div>
 </div>

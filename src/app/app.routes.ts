@@ -95,11 +95,12 @@ export const routes: Routes = [
       { path: 'subscription-success', component: SubscriptionSuccessComponent },
       { path: 'subscription-cancel', component: SubscriptionCancelComponent },
 
-      { path: 'ConsultationReview/:id', component: ConsultationReviewComponent },
-
+      {
+        path: 'ConsultationReview/:id',
+        component: ConsultationReviewComponent,
+      },
 
       {
-
         path: 'chat',
         component: ChatComponent,
       },
@@ -109,15 +110,16 @@ export const routes: Routes = [
       },
 
       {
-
         path: 'chat/:id',
         component: ChatComponent,
 
         //  canActivate: [SessionGuard]
       },
 
-    { path: 'countdown/:sessionId', component: CountdownTimerComponentComponent },
-
+      {
+        path: 'countdown/:sessionId',
+        component: CountdownTimerComponentComponent,
+      },
 
       { path: 'jobs', component: JobsComponent },
       { path: 'jobs/create', component: CreateJobComponent },
@@ -156,12 +158,14 @@ export const routes: Routes = [
 
       {
         path: 'admin-dashboard',
-        component: MainLayoutComponent,
+        // component: MainLayoutComponent,
         // canActivate: [adminGuard],
         children: [
           {
             path: '',
-            component: AdminDashboardWelcome,
+            redirectTo: 'admin/profile',
+            // component: AdminDashboardWelcome,
+            pathMatch: 'full',
             // canActivate: [adminGuard],
           },
           {

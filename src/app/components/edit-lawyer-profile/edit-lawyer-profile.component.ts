@@ -1,9 +1,10 @@
 import { LawyerService } from './../../core/services/lawyer.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { GenericFormComponent } from '../generic-form/generic-form.component';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-edit-lawyer-profile',
@@ -13,10 +14,14 @@ import { CommonModule } from '@angular/common';
 })
 export class EditLawyerProfileComponent implements OnInit {
   registerForm!: FormGroup;
-  lawyerDetails = {};
+  lawyerDetails: any = {};
   isDataLoaded = false;
 
-  constructor(private lawyerService: LawyerService) {}
+  constructor(
+    private lawyerService: LawyerService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
   formFields = [
     {
       name: 'userName',
@@ -139,6 +144,7 @@ export class EditLawyerProfileComponent implements OnInit {
         console.log(res);
         this.lawyerDetails = res;
         this.isDataLoaded = true;
+        console.log(this.lawyerDetails);
       },
       error: (err) => {
         console.log(err);
@@ -147,7 +153,11 @@ export class EditLawyerProfileComponent implements OnInit {
   }
   handleSubmit = (formValue: any) => {
     this.lawyerService.editLawyerProfile(formValue).subscribe({
-      next: (res) => console.log(res),
+      next: (res) => {
+        console.log('hello');
+        console.log(this.lawyerDetails.userId);
+        this.router.navigate(['/profile', this.lawyerDetails.userId]);
+      },
       error: (err) => console.error(err),
     });
   };
