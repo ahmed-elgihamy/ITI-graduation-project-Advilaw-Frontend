@@ -39,7 +39,7 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
   private intervalId: any;
   private blinkIntervalId: any;
   private targetTime: Date = new Date();
-  sessionId: number = 0;
+  sessionId: number = 4;
   appointmentTime: any;
   sessionDetails: any;
 
@@ -96,7 +96,7 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
   private handleSessionDetails(details: any): void {
     this.sessionDetails = details;
     this.appointmentTime = details.appointmentTime;
-    
+
     if (!this.appointmentTime) {
       this.handleError('Invalid appointment time');
       return;
@@ -120,7 +120,7 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
     } else {
       this.navigateToChat();
     }
-    
+
     this.isLoading = false;
   }
 
@@ -205,7 +205,7 @@ export class CountdownTimerComponentComponent implements OnInit, OnDestroy {
     this.isSessionReady = true;
     this.waitingMessage = 'Session is ready now! You can enter';
     this.strokeDashoffset = 0;
-    
+
     this.cleanupTimers();
     this.navigateToChat();
   }

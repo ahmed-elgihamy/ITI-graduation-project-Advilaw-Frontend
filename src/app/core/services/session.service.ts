@@ -30,6 +30,10 @@ export class SessionService {
     return this._http.get<any>(`${env.baseUrl}/session/${sessionId}`);
   }
 
+  markSessionAsCompleted(sessionId: number): Observable<any> {
+    console.log("📌 Marking session as completed:", sessionId);
+    return this._http.post(`${env.baseUrl}/session/${sessionId}/complete`, { sessionId });
+  }
 
   // startSession(minutes: number): void {
 
@@ -80,6 +84,11 @@ export class SessionService {
         this.remainingSeconds.set(0);
         clearInterval(this.intervalId);
         this.playEndSound();
+        this.markSessionAsCompleted(this.sesstionId).subscribe({
+          next: () => console.log("✅ Session marked as completed."),
+          error: (err) => console.error("❌ Failed to mark session as completed:", err)
+        });
+
         setTimeout(() => {
           this.route.navigate([`/ConsultationReview/${this.sesstionId}`]);
         }, 9000);
