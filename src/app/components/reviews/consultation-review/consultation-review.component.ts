@@ -64,7 +64,7 @@ export class ConsultationReviewComponent implements OnInit {
     }
 
     const reviewerId = this.UserInfo?.userId;
-    const revieweeId = "fe5a73f7-bdf4-4427-adaa-223a653ffe1d";
+    const revieweeId = this.getRevieweeId();
 
     const review: ReviewDto = {
       sessionId: this.sessionId,

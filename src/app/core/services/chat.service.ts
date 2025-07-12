@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Message } from '../../components/models/message';
 import { Observable } from 'rxjs';
 import { ChatMessage } from '../models/chat-message';
+import { SessionService } from './session.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +17,7 @@ export class ChatService {
   public messages: WritableSignal<any[]> = signal([]);
   private router = inject(Router);
   private _http = inject(HttpClient);
+  private sessionService = inject(SessionService);
   startConnection(sessionId: number, senderId: string) {
     this.hubConnection = new signalR.HubConnectionBuilder()
 
@@ -70,11 +72,20 @@ export class ChatService {
       });
     }
 
-    setTimeout(() => {
-      this.router.navigate(['/ConsultationReview']);
-    }, 4000);
-  }
 
+    const sessionId = 5//this.messages()[0]?.sessionId;
+
+    if (sessionId) {
+      this.sessionService.markSessionAsCompleted(sessionId).subscribe({
+        next: () => console.log("✅ Session marked as completed."),
+        error: err => console.error("❌ Failed to mark session as completed:", err)
+      });
+
+      setTimeout(() => {
+        this.router.navigate(['/ConsultationReview/' + this.messages()[0].sessionId]);
+      }, 4000);
+    }
+  }
   // playEndSound() {
   //   const audio = new Audio('/assets/sounds/soundend.mp3');
   //   audio.play().catch(err => {

@@ -23,7 +23,7 @@ export class ConsultationsContentComponent implements OnInit {
   pageSize = 10;
   loading = false;
   error = '';
-  
+
   // Rejection modal
   showRejectModal = false;
   selectedConsultation: JobListDTO | null = null;
@@ -32,7 +32,7 @@ export class ConsultationsContentComponent implements OnInit {
   constructor(
     private consultationService: ConsultationService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.checkAuthenticationAndLoad();
@@ -41,33 +41,33 @@ export class ConsultationsContentComponent implements OnInit {
   checkAuthenticationAndLoad(): void {
     const userInfo = this.authService.getUserInfo();
     const token = this.authService.getToken();
-    
+
     console.log('User info:', userInfo);
     console.log('Token exists:', !!token);
     console.log('User ID from token:', userInfo?.userId);
     console.log('User role:', userInfo?.role);
-    
+
     if (!token) {
       this.error = 'No authentication token found. Please login again.';
       return;
     }
-    
+
     if (!userInfo) {
       this.error = 'User information not found. Please login again.';
       return;
     }
-    
+
     if (userInfo.role !== 'Lawyer') {
       this.error = 'Access denied. Only lawyers can view consultations.';
       return;
     }
-    
+
     // Check if user ID is valid (GUID string)
     if (!userInfo.userId || userInfo.userId.trim() === '') {
       this.error = 'Invalid user ID. Please login again.';
       return;
     }
-    
+
     console.log('Authentication check passed. Loading consultations...');
     console.log('Sending user ID to backend:', userInfo.userId);
     this.loadConsultations();
@@ -76,10 +76,10 @@ export class ConsultationsContentComponent implements OnInit {
   loadConsultations(): void {
     this.loading = true;
     this.error = '';
-    
+
     console.log('Loading consultations for page:', this.currentPage);
     console.log('Page size:', this.pageSize);
-    
+
     this.consultationService.getConsultationsForLawyer(this.currentPage, this.pageSize).subscribe({
       next: (response: ApiResponse<PagedResponse<JobListDTO>>) => {
         console.log('Consultations response:', response);
@@ -91,13 +91,13 @@ export class ConsultationsContentComponent implements OnInit {
           dataType: typeof response.data,
           dataKeys: response.data ? Object.keys(response.data) : 'null'
         });
-        
+
         if (response.succeeded && response.data) {
           // Backend returns PagedResponse directly in data property
           this.consultations = response.data.data || [];
           this.totalItems = response.data.totalRecords || 0;
           this.totalPages = response.data.totalPages || 1;
-          
+
           console.log('Loaded consultations:', this.consultations);
           console.log('Consultation details:', this.consultations.map(c => ({
             id: c.id,
@@ -112,7 +112,7 @@ export class ConsultationsContentComponent implements OnInit {
             currentPage: this.currentPage,
             consultationsCount: this.consultations.length
           });
-          
+
           // Clear any previous errors
           this.error = '';
         } else {
@@ -157,6 +157,9 @@ export class ConsultationsContentComponent implements OnInit {
           console.log('Accept consultation response:', response);
           if (response.succeeded) {
             alert('Consultation accepted successfully!');
+            consultation.status = 'Accepted' as JobStatus;
+
+
             this.loadConsultations(); // Reload the list
           } else {
             alert(response.message || 'Failed to accept consultation');
@@ -269,11 +272,11 @@ export class ConsultationsContentComponent implements OnInit {
     console.log('=== Testing API Connection ===');
     console.log('Current user info:', this.authService.getUserInfo());
     console.log('Current token:', this.authService.getToken());
-    
+
     // First check authentication
     const userInfo = this.authService.getUserInfo();
     const token = this.authService.getToken();
-    
+
     console.log('Authentication check:', {
       hasToken: !!token,
       userInfo: userInfo,
@@ -281,7 +284,7 @@ export class ConsultationsContentComponent implements OnInit {
       userId: userInfo?.userId,
       userIdType: typeof userInfo?.userId
     });
-    
+
     this.consultationService.testApiConnection().subscribe({
       next: (response: ApiResponse<PagedResponse<JobListDTO>>) => {
         console.log('API test successful:', response);
@@ -294,7 +297,7 @@ export class ConsultationsContentComponent implements OnInit {
           dataStructure: response.data,
           consultationsCount: response.data?.data?.length || 0
         });
-        
+
         if (response.succeeded) {
           alert(`API connection test successful!\nFound ${response.data?.data?.length || 0} consultations.\nCheck console for details.`);
         } else {
