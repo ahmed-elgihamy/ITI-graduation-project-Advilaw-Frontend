@@ -104,14 +104,15 @@
                       }}</span>
                     </div>
                     <div class="mb-2">
-                      <span class="fw-bold" style="color: var(--color-mustard)"
-                        >Appointment:</span
-                      >
-                      <span>{{
-                        consultation.appointmentTime
-                          ? (consultation.appointmentTime | date : "short")
-                          : "N/A"
-                      }}</span>
+                      <span class="fw-bold" style="color: var(--color-mustard);">Appointment:</span>
+                      <span>
+                        {{ consultation.appointmentTime 
+                            ? (consultation.appointmentTime | date:'short') 
+                            : (getStatusText(asJobStatus(consultation.status || '')) === 'WaitingPayment' 
+                                ? 'To be scheduled after payment' 
+                                : 'N/A') 
+                        }}
+                      </span>
                     </div>
                     <div class="mb-3">
                       <span class="fw-bold" style="color: var(--color-mustard)"
