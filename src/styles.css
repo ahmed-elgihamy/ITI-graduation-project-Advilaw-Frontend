@@ -101,4 +101,6 @@ body {
 .p-rating .p-rating-icon {
   color: var(--color-mustard) !important;
 }
-
+.text-yellow {
+  color: var(--color-mustard) !important;
+}

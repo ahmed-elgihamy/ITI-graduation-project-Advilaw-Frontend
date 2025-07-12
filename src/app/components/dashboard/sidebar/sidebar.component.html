@@ -3,15 +3,29 @@
   [ngStyle]="{ width: isOpendsidebar() ? '250px' : '80px' }"
   style="transition: width 0.3s"
 >
-  <div
+  <!-- <div
     class="logo fs-4 fw-bold text-center text-white"
     style="cursor: pointer"
     routerLink="/"
   >
     <span *ngIf="isOpendsidebar()">AdviLaw</span>
     <i *ngIf="!isOpendsidebar()" class="fa-solid fa-scale-balanced"></i>
-  </div>
+  </div> -->
 
+  <div
+    class="logo fs-4 fw-bold text-center text-white"
+    style="cursor: pointer"
+    routerLink="/"
+  >
+    <span *ngIf="isOpendsidebar()">
+      <a class="navbar-brand w-100 d-flex justify-content-center" routerLink="/"
+        ><img
+          class="w-50 object-fit-cover"
+          src="assets/images/logos/dark_logo-new.png"
+      /></a>
+    </span>
+    <i *ngIf="!isOpendsidebar()" class="fa-solid fa-scale-balanced"></i>
+  </div>
   <hr class="text-white fw-bold" />
 
   <div
@@ -31,16 +45,17 @@
       [name]="profileLabel"
       [toLink]="profileLink"
       [isOpendsidebar]="isOpendsidebar()"
+      *ngIf="isProfileAdded"
     ></app-nav-item>
 
     <app-nav-item
-    *ngIf="isAdmin"
-    [iconClass]="'fa-user-edit'"
-    [name]="'Edit Profile'"
-    [toLink]="'/dashboard/admin-dashboard/profile-edit'"
-    [isOpendsidebar]="isOpendsidebar()"
-  ></app-nav-item>
-  
+      *ngIf="isAdmin"
+      [iconClass]="'fa-user-edit'"
+      [name]="'Edit Profile'"
+      [toLink]="'/dashboard/admin-dashboard/profile-edit'"
+      [isOpendsidebar]="isOpendsidebar()"
+    ></app-nav-item>
+
     <app-nav-item
       [iconClass]="'fa-briefcase'"
       [name]="'Jobs'"
@@ -55,8 +70,6 @@
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
 
-
-
     <app-nav-item
       *ngIf="isLawyer()"
       [iconClass]="'fa-money-check'"
@@ -65,16 +78,13 @@
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
 
-    
     <app-nav-item
       [iconClass]="'fa-microphone'"
       [name]="'Reviews'"
       [toLink]="'/dashboard/reviews'"
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
-   
-   
-   
+
     <app-nav-item
       *ngIf="isAdmin"
       [iconClass]="'fa-user-clock'"
@@ -112,10 +122,7 @@
       [toLink]="'/dashboard/admin-dashboard/session-history'"
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
-
   </div>
-
-  
 
   <!-- Toggle Button at Bottom -->
   <button

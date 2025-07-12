@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   ProposalDetailsDTO,
   ProposalStatus,
@@ -22,7 +22,8 @@ export class ProposalDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private proposalService: ProposalService
+    private proposalService: ProposalService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +68,8 @@ export class ProposalDetailsComponent implements OnInit {
       next: (response: ApiResponse<ProposalDetailsDTO>) => {
         if (response.succeeded && response.data) {
           this.proposal = response.data;
+          // console.log(response.data);
+          this.router.navigate(['/jobs']);
         } else {
           this.errorMessage = response.message ?? 'Error accepting proposal.';
         }

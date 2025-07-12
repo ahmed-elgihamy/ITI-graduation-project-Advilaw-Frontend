@@ -4,9 +4,11 @@
   title="Job Listings"
   url="jobs"
 ></app-dashboard-table>
-<app-pagination
-  [currentPage]="currentPage"
-  [totalPages]="totalPages"
-  (pageChanged)="loadData($event)"
->
-</app-pagination>
+<div class="d-flex justify-content-center align-items-center mt-3">
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChanged)="loadData($event)"
+  >
+  </app-pagination>
+</div>

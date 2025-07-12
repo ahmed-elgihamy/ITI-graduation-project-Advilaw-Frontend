@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -5,14 +6,15 @@ import { RouterModule } from '@angular/router';
   selector: 'app-client-dashboard',
   templateUrl: './client-dashboard.component.html',
   styleUrl: './client-dashboard.component.css',
-  imports: [RouterModule]
+  imports: [RouterModule, CommonModule],
 })
 export class ClientDashboardComponent {
-   links=document.querySelectorAll('#sidebarMenuOffcanvas .nav-link')
-    closeNavbar():void{
-       (document.querySelector(".offcanvas-header .btn-close") as HTMLButtonElement)?.click();
-          
-        }
-        
-      
+  links = document.querySelectorAll('#sidebarMenuOffcanvas .nav-link');
+  closeNavbar(): void {
+    (
+      document.querySelector(
+        '.offcanvas-header .btn-close'
+      ) as HTMLButtonElement
+    )?.click();
+  }
 }

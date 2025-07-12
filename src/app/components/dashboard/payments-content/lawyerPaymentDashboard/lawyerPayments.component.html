@@ -7,17 +7,22 @@
   </div>
   <div class="stripe-status" *ngIf="!loading">
     <div *ngIf="isStripeConnected">
-      <p class="success">✅ Your Stripe account is connected and ready to receive payouts.</p>
+      <p class="success">
+        ✅ Your Stripe account is connected and ready to receive payouts.
+      </p>
       <button (click)="openStripeDashboard()">Show Stripe Profile</button>
       <button (click)="startOnboarding()">Complete Stripe Setup</button>
     </div>
     <div *ngIf="isStripeOnboardingRequired">
-      <p class="warning">⚠️ You have not set up your Stripe account for payouts.</p>
+      <p class="warning">
+        ⚠️ You have not set up your Stripe account for payouts.
+      </p>
       <button (click)="setupStripeAccount()">Start Stripe Onboarding</button>
-    
     </div>
     <div *ngIf="isStripePending">
-      <p class="info">⏳ Your Stripe account setup is in progress. Please complete onboarding.</p>
+      <p class="info">
+        ⏳ Your Stripe account setup is in progress. Please complete onboarding.
+      </p>
       <button (click)="startOnboarding()">Complete Stripe Setup</button>
       <button (click)="openStripeDashboard()">Edit Account</button>
     </div>
@@ -37,9 +42,11 @@
   ></app-dashboard-table>
 
   <!-- Pagination -->
-  <app-pagination
-    [currentPage]="currentPage"
-    [totalPages]="totalPages"
-    (pageChanged)="loadData($event)"
-  ></app-pagination>
+  <div class="d-flex justify-content-center align-items-center mt-3">
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChanged)="loadData($event)"
+    ></app-pagination>
+  </div>
 </div>

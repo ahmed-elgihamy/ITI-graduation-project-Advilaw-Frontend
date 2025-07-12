@@ -362,7 +362,7 @@ export class LawyerConsultationComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['/lawyers']);
+    this.router.navigate(['/allLawyers']);
   }
 
   clearMessages(): void {

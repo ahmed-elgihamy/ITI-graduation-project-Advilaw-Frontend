@@ -20,7 +20,7 @@
           <button
             type="button"
             class="btn btn-warning"
-            *ngIf="isClient && myJob"
+            *ngIf="!isJobAssigned && myJob"
             [routerLink]="['/jobs', job.id, 'edit']"
           >
             Edit
@@ -160,6 +160,14 @@
         </div>
       </div>
 
+      <div class="mt-4">
+        <label class="form-label text-muted">Description</label>
+        <p class="fw-normal text-dark mb-0" style="white-space: pre-line">
+          {{ job.description }}
+        </p>
+      </div>
+
+      <hr />
       <div class="row g-3 mb-3">
         <div class="col-sm-6">
           <label class="form-label text-muted">Client Name</label>
@@ -188,16 +196,16 @@
           <div class="fw-semibold">{{ job.status }}</div>
         </div>
         <!-- <div class="col-sm-6">
-          <label class="form-label text-muted">Anonymous</label>
-          <div class="fw-semibold">
-            {{ job.isAnonymus ? "Yes" : "No" }}
-          </div>
-        </div> -->
-
-        <div class="col-sm-6" *ngIf="job.lawyerId">
-          <label class="form-label text-muted">Lawyer ID</label>
-          <div class="fw-semibold">{{ job.lawyerId }}</div>
+        <label class="form-label text-muted">Anonymous</label>
+        <div class="fw-semibold">
+          {{ job.isAnonymus ? "Yes" : "No" }}
         </div>
+      </div> -->
+
+        <!-- <div class="col-sm-6" *ngIf="job.lawyerId">
+        <label class="form-label text-muted">Lawyer ID</label>
+        <div class="fw-semibold">{{ job.lawyerId }}</div>
+      </div> -->
 
         <div class="col-sm-6" *ngIf="job.escrowTransactionId">
           <label class="form-label text-muted">Escrow Transaction ID</label>
@@ -208,13 +216,6 @@
           <label class="form-label text-muted">Session ID</label>
           <div class="fw-semibold">{{ job.sessionId }}</div>
         </div>
-      </div>
-
-      <div class="mt-4">
-        <label class="form-label text-muted">Description</label>
-        <p class="fw-normal text-dark mb-0" style="white-space: pre-line">
-          {{ job.description }}
-        </p>
       </div>
       <!-- Appointment Section -->
       <div class="mt-5" *ngIf="job.appointments">
@@ -255,7 +256,10 @@
           </tbody>
         </table>
       </div>
-      <div class="mt-5" *ngIf="isClient && job.proposals?.length">
+      <div
+        class="mt-5"
+        *ngIf="isClient && job.proposals?.length && !isJobAssigned"
+      >
         <h4 class="mb-4 text-primary">
           Proposals ({{ job.proposals.length }})
         </h4>

@@ -23,11 +23,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly _auth = inject(AuthService);
   readonly router = inject(Router);
   userInfo: UserInfo | null = null;
+  isLawyer: boolean = false;
 
   ngOnInit(): void {
     this.sub = this._auth.isLoggedIn$.subscribe((res) => (this.isLogged = res));
     this.userInfo = this._auth.getUserInfo();
-    console.log(this.userInfo);
+    this.isLawyer = this.userInfo?.role === 'Lawyer';
+    console.log(this.isLawyer);
   }
 
   GoToProfile() {
