@@ -4,7 +4,5 @@ export const env = {
 
   publicImgUrl: 'https://localhost:44302'
 
-
-
-};
+}
 
