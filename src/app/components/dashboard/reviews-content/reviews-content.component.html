@@ -1,12 +1,19 @@
-<app-dashboard-table
-  [data]="reviews"
-  [columns]="reviewColumns"
-  title="Review Listings"
-  url="reviews"
-></app-dashboard-table>
-<app-pagination
-  [currentPage]="currentPage"
-  [totalPages]="totalPages"
-  (pageChanged)="loadData($event)"
+<div
+  class="py-5 d-flex align-items-center justify-content-center flex-column h-100"
 >
-</app-pagination>
+  <app-dashboard-table
+    [data]="reviews"
+    [columns]="reviewColumns"
+    title="Review Listings"
+    url="reviews"
+  ></app-dashboard-table>
+  <div class="d-flex justify-content-center align-items-center">
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChanged)="loadData($event)"
+      *ngIf="reviews.length > 0"
+    >
+    </app-pagination>
+  </div>
+</div>

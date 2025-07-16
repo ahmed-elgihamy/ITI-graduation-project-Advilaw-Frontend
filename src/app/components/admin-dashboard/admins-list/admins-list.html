@@ -1,6 +1,9 @@
 <section
-  class="py-5 text-white text-center admin-hero-section"
-  style="background: url('/assets/images/Area.jpg') no-repeat center center / cover; backdrop-filter: blur(5px);"
+  class="py-5 text-white text-center admin-hero-section w-100 h-100"
+  style="
+    background: url('/assets/images/Area.jpg') no-repeat center center / cover;
+    backdrop-filter: blur(5px);
+  "
 >
   <div class="container position-relative z-1">
     <div class="row justify-content-center">
@@ -34,23 +37,25 @@
                     <td>{{ admin.email }}</td>
                     <td>{{ admin.role }}</td>
                     <td>
-                      <select 
-                      [value]="admin.role" 
-                      (change)="onRoleChange(admin, $event)" 
-                      class="form-select bg-dark text-white border-secondary rounded-pill px-3"
-                    >
-                      <option value="Admin">Admin</option>
-                      <option value="SuperAdmin">SuperAdmin</option>
-                    </select>
+                      <select
+                        [value]="admin.role"
+                        (change)="onRoleChange(admin, $event)"
+                        class="form-select bg-dark text-white border-secondary rounded-pill px-3"
+                      >
+                        <option value="Admin">Admin</option>
+                        <option value="SuperAdmin">SuperAdmin</option>
+                      </select>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            
           </div>
 
-          <div *ngIf="!isLoading && !admins.length && !error" class="mt-4 text-light">
+          <div
+            *ngIf="!isLoading && !admins.length && !error"
+            class="mt-4 text-light"
+          >
             <i class="fas fa-info-circle me-2"></i>No admins found.
           </div>
         </div>

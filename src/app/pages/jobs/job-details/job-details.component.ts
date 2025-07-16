@@ -32,6 +32,7 @@ export class JobDetailsComponent {
   id: number = 0;
   AppointmentType = AppointmentType;
   AppointmentStatus = AppointmentStatus;
+  isJobAssigned: boolean = false;
 
   constructor(
     private jobsService: JobsService,
@@ -112,6 +113,7 @@ export class JobDetailsComponent {
     }).subscribe({
       next: (res) => {
         console.log('Appointment created:', res);
+        this.closeMakeAppointmentModal();
         this.loadData(this.id);
       },
       error: (err) => {
@@ -125,6 +127,7 @@ export class JobDetailsComponent {
       next: (res: ApiResponse<JobDetailsForLawyerDTO>) => {
         this.job = res.data; // actual job list
         this.myJob = this.job.clientId === this.foreignKey;
+        this.isJobAssigned = this.job.lawyerId !== null;
         if (this.isLawyer && this.job.status === JobStatus.NotAssigned) {
           this.canMakeProposal = true;
         }
@@ -197,6 +200,7 @@ export class JobDetailsComponent {
         const modalElement = document.getElementById('createProposalModal');
         const modal = bootstrap.Modal.getInstance(modalElement!);
         modal?.hide();
+        this.loadData(this.id);
       },
       error: (err) => console.error('Error applying to job:', err),
     });
@@ -228,6 +232,9 @@ export class JobDetailsComponent {
       next: (res: any) => {
         console.log('Appointment accepted:', res);
         this.makePayment();
+        this.closeMakeAppointmentModal();
+        this.loadData(this.id);
+        this.canAcceptAppointment = false;
       },
       error: (err: any) => {
         console.error('Failed to accept appointment:', err);
@@ -240,6 +247,13 @@ export class JobDetailsComponent {
       document.getElementById('appointmentModal')!
     );
     modal.show();
+  }
+
+  closeMakeAppointmentModal() {
+    const modal = new bootstrap.Modal(
+      document.getElementById('appointmentModal')!
+    );
+    modal.hide();
   }
 
   showReplyToLastAppointmentModal() {

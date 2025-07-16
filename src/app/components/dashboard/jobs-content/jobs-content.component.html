@@ -1,3 +1,4 @@
+
 <div class="container py-4">
   <div class="card shadow-lg border-0 mb-4" style="background: #f6f6eb;">
     <div class="card-header bg-warning text-dark fw-bold fs-4 border-0 rounded-top">
@@ -18,5 +19,26 @@
         (pageChanged)="loadData($event)"
       ></app-pagination>
     </div>
+
+<div
+  class="d-flex align-items-center justify-content-center p-4 flex-column h-100"
+>
+  <app-dashboard-table
+    [data]="jobs"
+    [columns]="jobColumns"
+    title="Job Listings"
+    url="jobs"
+  ></app-dashboard-table>
+  <div
+    class="d-flex justify-content-center align-items-center mt-3"
+    *ngIf="jobs.length > 0"
+  >
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChanged)="loadData($event)"
+    >
+    </app-pagination>
+
   </div>
 </div>

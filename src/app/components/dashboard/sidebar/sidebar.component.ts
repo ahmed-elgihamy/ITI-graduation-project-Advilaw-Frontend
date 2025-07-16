@@ -13,8 +13,11 @@ import { AuthService } from '../../../core/services/auth.service';
 export class SidebarComponent implements OnInit {
   isOpendsidebar = signal(true);
   isAdmin = false;
-  profileLink: string = '/dashboard/profile';
-  profileLabel: string = 'Profile';
+  profileLink: string = '';
+  profileLabel: string = '';
+  // profileLink: string = '/dashboard/profile';
+  // profileLabel: string = 'Profile';
+  isProfileAdded: boolean = false;
 
   constructor(private authService: AuthService) {}
 
@@ -24,12 +27,23 @@ export class SidebarComponent implements OnInit {
     if (user?.role === 'Admin' || user?.role === 'SuperAdmin') {
       this.profileLink = '/dashboard/admin-dashboard/admin/profile';
       this.profileLabel = 'Admin Profile';
+
     } else if (user?.role === 'Lawyer') {
       this.profileLink = `/profile/${user.userId}`;
       this.profileLabel = 'Lawyer Profile';
     } else if (user?.role === 'Client') {
+
+      this.isProfileAdded = true;
+    }
+    // else if (user?.role === 'Lawyer') {
+    //   this.profileLink = '/dashboard/lawyer/profile';
+    //   this.profileLabel = 'Lawyer Profile';
+    // }
+    else if (user?.role === 'Client') {
+
       this.profileLink = '/dashboard/client/profile';
       this.profileLabel = 'Client Profile';
+      this.isProfileAdded = true;
     }
   }
 
@@ -41,5 +55,4 @@ export class SidebarComponent implements OnInit {
   toggleSidebar() {
     this.isOpendsidebar.set(!this.isOpendsidebar());
   }
-  
 }
