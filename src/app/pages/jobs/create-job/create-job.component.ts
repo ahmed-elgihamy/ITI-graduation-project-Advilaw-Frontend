@@ -15,6 +15,7 @@ import { JobType } from '../../../types/Jobs/JobType';
 @Component({
   selector: 'app-create-job',
   templateUrl: './create-job.component.html',
+  styleUrl: './create-job.component.css',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
 })

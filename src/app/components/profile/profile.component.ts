@@ -68,6 +68,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return this.lawyer?.photoUrl || 'assets/images/default-profile.png';
   }
 
+  getFullImageUrl(photoUrl: string): string {
+    if (!photoUrl) return 'assets/client4.jpg';
+    if (photoUrl.startsWith('http')) return photoUrl;
+    // Assume relative path from backend
+    return 'https://localhost:44302' + photoUrl;
+  }
+
   private loadLawyerData(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) {

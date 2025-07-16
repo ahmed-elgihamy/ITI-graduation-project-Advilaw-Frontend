@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import { ClientService } from '../../../core/services/client.service';
 import { Client } from '../../../core/models/client.model';
+import { NavbarComponent } from '../../navbar/navbar.component';
 
 
 export enum Gender {
@@ -14,7 +15,7 @@ export enum Gender {
 @Component({
   selector: 'app-client-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NavbarComponent],
   templateUrl: './client-profile.component.html',
   styleUrl: './client-profile.component.css'
 })

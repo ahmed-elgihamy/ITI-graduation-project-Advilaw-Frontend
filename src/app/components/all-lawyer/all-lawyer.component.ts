@@ -312,6 +312,14 @@ export class AllLawyerComponent implements OnInit {
     this.loadLawyers();
   }
 
+  getLawyerImageUrl(lawyer: any): string {
+    const url = lawyer.profileImageUrl || lawyer.imageUrl || lawyer.image || '';
+    if (!url) {
+      return 'assets/images/default-avatar.png';
+    }
+    return url;
+  }
+
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
 
   scroll(direction: 'left' | 'right') {

@@ -249,4 +249,10 @@ export class JobDetailsComponent {
     );
     modal.show();
   }
+
+  getFullImageUrl(imagePath: string | undefined): string {
+    if (!imagePath) return 'assets/images/default-profile.png';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `https://localhost:44302${imagePath}`;
+  }
 }

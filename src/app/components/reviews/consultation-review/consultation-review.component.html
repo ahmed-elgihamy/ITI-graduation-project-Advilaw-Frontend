@@ -1,4 +1,15 @@
-<div class="container py-5">
+<div *ngIf="reviewSubmitted; else reviewForm">
+  <div class="card border-0 shadow rounded-4 p-4 text-center">
+    <div class="mb-3">
+      <i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>
+    </div>
+    <h3 class="fw-bold mb-2">Thank you for your feedback!</h3>
+    <p class="text-muted">Your review has been submitted successfully. We appreciate your input to help us improve our services.</p>
+    <button class="btn btn-warning mt-3" (click)="close()">Close</button>
+  </div>
+</div>
+<ng-template #reviewForm>
+  <div class="container py-5">
     <div class="card border-0 shadow rounded-4 p-4">
 
         <div class="mb-4 text-center">
@@ -50,5 +61,6 @@
             </button>
         </div>
     </div>
-</div>
+  </div>
+</ng-template>
 <!-- <p-toast></p-toast> -->

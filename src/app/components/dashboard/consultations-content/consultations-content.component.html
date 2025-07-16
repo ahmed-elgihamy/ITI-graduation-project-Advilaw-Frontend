@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid mt-4">
   <div class="row">
     <div class="col-12">
       <div class="card">
@@ -65,10 +65,8 @@
                 >
                   <div class="card-body d-flex flex-column p-4">
                     <div class="d-flex align-items-center mb-3">
-                      <img
-                        [src]="
-                          consultation.clientImageUrl || 'assets/client4.jpg'
-                        "
+                      <img [src]="getFullImageUrl(consultation.clientImageUrl)" alt="Profile Image"
+                        
                         class="rounded-circle me-3"
                         style="
                           width: 64px;
@@ -145,36 +143,23 @@
                         class="main-btn flex-fill fw-bold"
                         (click)="acceptConsultation(consultation)"
                         title="Accept Consultation"
-                        [disabled]="
-                          getStatusText(
-                            asJobStatus(consultation.status || '')
-                          ) === 'Accepted'
-                        "
+                        [disabled]="getStatusText(asJobStatus(consultation.status || '')) === 'Accepted' || acceptingIds.has(toStr(consultation.id))"
                         [ngClass]="{
-                          'btn-disabled':
-                            getStatusText(
-                              asJobStatus(consultation.status || '')
-                            ) === 'Accepted'
+                          'btn-disabled': getStatusText(asJobStatus(consultation.status || '')) === 'Accepted' || acceptingIds.has(toStr(consultation.id))
                         }"
                       >
                         <i class="fas fa-check me-1"></i>
                         {{
-                          getStatusText(
-                            asJobStatus(consultation.status || "")
-                          ) === "Accepted"
+                          getStatusText(asJobStatus(consultation.status || "")) === "Accepted"
                             ? "Accepted"
                             : "Accept"
                         }}
                       </button>
                       <button
+                        *ngIf="getStatusText(asJobStatus(consultation.status || '')) !== 'Accepted'"
                         class="btn btn-danger flex-fill fw-bold"
                         (click)="openRejectModal(consultation)"
                         title="Reject Consultation"
-                        [disabled]="
-                          getStatusText(
-                            asJobStatus(consultation.status || '')
-                          ) === 'Accepted'
-                        "
                       >
                         <i class="fas fa-times me-1"></i> Reject
                       </button>

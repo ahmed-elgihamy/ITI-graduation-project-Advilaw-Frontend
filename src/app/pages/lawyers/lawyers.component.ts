@@ -6,6 +6,7 @@ import { PagedResponse } from '../../types/PagedResponse';
 import { LawyersService } from '../../core/services/lawyer/lawyers.service';
 import { LawyerListDTO } from '../../types/Lawyers/LawyerListDTO';
 import { RouterLink } from '@angular/router';
+import { env } from '../../core/env/env';
 
 @Component({
   selector: 'app-lawyers',
@@ -20,6 +21,12 @@ export class LawyersComponent {
   }
   ngOnInit(): void {
     this.loadData(1);
+  }
+
+  getFullImageUrl(imagePath: string | undefined): string {
+    if (!imagePath) return 'assets/images/default-profile.png';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `${env.publicImgUrl}${imagePath}`;
   }
 
   lawyersColumns = [

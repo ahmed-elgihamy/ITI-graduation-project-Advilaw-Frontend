@@ -174,8 +174,8 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <div class="lawyer-avatar">
-                                    <img [src]="lawyer.image? lawyer.image : 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=150 '"
-                                        [alt]="lawyer.name" class="rounded-circle">
+                                    <img [src]="getLawyerImageUrl(lawyer)"
+                                         [alt]="lawyer.name" class="rounded-circle" style="width:48px;height:48px;object-fit:cover;">
                                 </div>
                             </div>
                             <div class="col">

@@ -26,6 +26,7 @@ export class ConsultationReviewComponent implements OnInit {
   sessionDetails: any;
   UserInfo: any;
   ErrorText: string = '';
+  reviewSubmitted = false;
   // Services
   router = inject(Router);
   route = inject(ActivatedRoute);
@@ -80,15 +81,17 @@ export class ConsultationReviewComponent implements OnInit {
     this.reviewService.submitReview(review).subscribe({
       next: () => {
         console.log('✅ Review submitted to backend');
-        confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
-        setTimeout(() => this.router.navigate(['/home']), 5000);
+        this.reviewSubmitted = true;
       },
       error: (err) => {
-
         this.ErrorText = err.error?.message || 'An error occurred while submitting the review.';
         console.error('❌ Failed to submit review:', err);
       }
     });
+  }
+
+  close() {
+    this.router.navigate(['/home']);
   }
   getRevieweeId(): string {
     if (!this.UserInfo || !this.sessionDetails) return '';

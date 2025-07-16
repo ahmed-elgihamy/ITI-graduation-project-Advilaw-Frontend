@@ -7,6 +7,8 @@ import { JobListDTO } from '../../../types/Jobs/JobListDTO';
 import { JobStatus } from '../../../types/Jobs/JobStatus';
 import { PagedResponse } from '../../../types/PagedResponse';
 import { ApiResponse } from '../../../types/ApiResponse';
+import { env } from '../../../core/env/env';
+
 
 @Component({
   selector: 'app-consultations-content',
@@ -28,6 +30,10 @@ export class ConsultationsContentComponent implements OnInit {
   showRejectModal = false;
   selectedConsultation: JobListDTO | null = null;
   rejectReason = '';
+
+  backendUrl = env.publicImgUrl;
+
+  acceptingIds = new Set<string>();
 
   constructor(
     private consultationService: ConsultationService,
@@ -145,6 +151,11 @@ export class ConsultationsContentComponent implements OnInit {
       alert('Consultation ID is missing.');
       return;
     }
+    const idStr = String(consultation.id);
+    if (this.acceptingIds.has(idStr)) {
+      return;
+    }
+    this.acceptingIds.add(idStr);
     if (confirm(`Are you sure you want to accept the consultation for "${consultation.header}"?`)) {
       console.log('Accepting consultation:', consultation.id);
       console.log('Consultation details:', {
@@ -157,19 +168,24 @@ export class ConsultationsContentComponent implements OnInit {
           console.log('Accept consultation response:', response);
           if (response.succeeded) {
             alert('Consultation accepted successfully!');
+            // Update status locally for immediate UI feedback
             consultation.status = 'Accepted' as JobStatus;
-
-
-            this.loadConsultations(); // Reload the list
+            this.acceptingIds.delete(idStr);
+            // Optionally, reload the list if you want to refresh everything
+            // this.loadConsultations();
           } else {
             alert(response.message || 'Failed to accept consultation');
+            this.acceptingIds.delete(idStr);
           }
         },
         error: (err) => {
           alert('Error accepting consultation');
           console.error('Error accepting consultation:', err);
+          this.acceptingIds.delete(idStr);
         }
       });
+    } else {
+      this.acceptingIds.delete(idStr);
     }
   }
 
@@ -315,5 +331,15 @@ export class ConsultationsContentComponent implements OnInit {
   asJobStatus(status: string | undefined): JobStatus {
     if (!status) return JobStatus.WaitingAppointment;
     return status as JobStatus;
+  }
+
+  getFullImageUrl(imagePath: string | undefined): string {
+    if (!imagePath) return 'assets/default-profile.png';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `${env.publicImgUrl}${imagePath}`; // 👈 adds backend prefix to /Uploads/...
+  }
+
+  toStr(val: any): string {
+    return String(val);
   }
 } 

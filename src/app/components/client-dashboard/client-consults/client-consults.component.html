@@ -245,12 +245,24 @@
               
               <!-- Actions -->
               <td class="px-3">
-                <ng-container *ngIf="job.status === JobStatus.WaitingPayment; else noAction">
+                <ng-container *ngIf="job.status === 'WaitingApproval'; else normalActions">
+                  <button class="btn btn-secondary btn-sm" disabled title="Waiting lawyer approval">
+                    <i class="fas fa-hourglass-half me-1"></i> Waiting Lawyer Approval
+                  </button>
+                </ng-container>
+                <ng-template #normalActions>
+                  <ng-container *ngIf="job.status === JobStatus.WaitingPayment; else paymentStatus">
                   <button class="btn btn-success btn-sm" (click)="payNow(job)" title="Pay Now">
                     <i class="fas fa-credit-card"></i> Pay Now
                   </button>
                 </ng-container>
-                <ng-template #noAction></ng-template>
+                  <ng-template #paymentStatus>
+                    <span *ngIf="job.status === JobStatus.Started || job.status === JobStatus.Ended" class="badge bg-success px-3 py-2">
+                      <i class="fas fa-check-circle me-1"></i> Payment Done
+                    </span>
+                    <span *ngIf="job.status !== JobStatus.Started && job.status !== JobStatus.Ended" class="text-muted">-</span>
+                  </ng-template>
+                </ng-template>
               </td>
             </tr>
           </tbody>
@@ -335,13 +347,23 @@
               <td class="px-3">
                 <ng-container [ngSwitch]="job.statusLabel">
                   <!-- Pending Status -->
-                  <span *ngSwitchCase="'Pending'" class="badge bg-secondary text-light px-3 py-2">
-                    <i class="fas fa-hourglass-half me-1"></i> Waiting for lawyer...
-                  </span>
-                  <!-- Accepted Status -->
+                  <button *ngSwitchCase="'Pending'" class="btn btn-secondary btn-sm" disabled title="Waiting for approval">
+                    <i class="fas fa-hourglass-half me-1"></i> Waiting for Approval
+                  </button>
+                  <!-- Waiting for Payment -->
                   <button *ngSwitchCase="'Waiting for Payment'" class="btn btn-success btn-sm" (click)="payNow(job)" title="Pay Now">
                     <i class="fas fa-credit-card me-1"></i>Pay Now
                   </button>
+                  <!-- Payment Done (Accepted/In Progress/Completed) -->
+                  <span *ngSwitchCase="'Accepted'" class="badge bg-success px-3 py-2">
+                    <i class="fas fa-check-circle me-1"></i> Payment Done
+                  </span>
+                  <span *ngSwitchCase="'In Progress'" class="badge bg-success px-3 py-2">
+                    <i class="fas fa-check-circle me-1"></i> Payment Done
+                  </span>
+                  <span *ngSwitchCase="'Completed'" class="badge bg-success px-3 py-2">
+                    <i class="fas fa-check-circle me-1"></i> Payment Done
+                  </span>
                   <!-- Rejected Status -->
                   <span *ngSwitchCase="'Rejected'" class="text-danger small">Rejected</span>
                   <!-- Default case -->
