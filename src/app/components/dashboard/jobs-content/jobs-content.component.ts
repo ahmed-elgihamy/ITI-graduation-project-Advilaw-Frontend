@@ -5,6 +5,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
 import { ApiResponse } from '../../../types/ApiResponse';
 import { PagedResponse } from '../../../types/PagedResponse';
 import { CommonModule } from '@angular/common';
+import { env } from '../../../core/env/env';
 
 @Component({
   selector: 'app-jobs-content',
@@ -66,7 +67,10 @@ export class JobsContentComponent implements OnInit {
     this.jobsService.GetActiveJobs(page).subscribe({
       next: (res: ApiResponse<PagedResponse<any>>) => {
         const pagedData = res.data;
-        this.jobs = pagedData.data; // actual job list
+        this.jobs = pagedData.data.map(job => ({
+          ...job,
+          imageUrl: this.getFullImageUrl(job.clientImageUrl)
+        })); // actual job list
         this.totalPages = pagedData.totalPages;
         this.pageSize = pagedData.pageSize;
         this.currentPage = pagedData.pageNumber;
@@ -76,5 +80,11 @@ export class JobsContentComponent implements OnInit {
         console.error('Failed to load jobs:', err);
       },
     });
+  }
+
+  getFullImageUrl(imagePath: string | undefined): string {
+    if (!imagePath) return 'assets/images/default-profile.png';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `https://localhost:44302${imagePath}`;
   }
 }

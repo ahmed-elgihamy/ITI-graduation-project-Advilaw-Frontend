@@ -25,7 +25,7 @@ import { ProposalDetailsComponent } from './pages/proposals/details/details.comp
 
 import { AnalysisContentComponent } from './components/dashboard/analysis-content/analysis-content.component';
 import { JobsContentComponent } from './components/dashboard/jobs-content/jobs-content.component';
-import { ProfileContentComponent } from './components/dashboard/profile-content/profile-content.component';
+
 // Update the import to match the actual exported member from the file
 import { LawyerPaymentsComponent } from './components/dashboard/payments-content/lawyerPaymentDashboard/lawyerPayments.component';
 // import { LawyerPaymentsComponent } from './components/dashboard/payments-content/lawyerPaymentDashboard/lawyerPayments.component';
@@ -148,7 +148,6 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'analytics', pathMatch: 'full' },
       { path: 'analytics', component: AnalysisContentComponent },
-      { path: 'profile', component: ProfileContentComponent },
       { path: 'jobs', component: JobsContentComponent },
       { path: 'lawyer-payments', component: LawyerPaymentsComponent },
       // { path: 'lawyer-payments', component: LawyerPaymentsComponent },

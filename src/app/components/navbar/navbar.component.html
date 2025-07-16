@@ -75,6 +75,28 @@
       >
         LogOut
       </button> -->
+
+      <div class="dropdown pointer" *ngIf="isLogged">
+        <div
+          class="rounded-circle"
+          alt="Profile"
+          style="
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            margin-right: 8px;
+            aspect-ratio: 1/1;
+          "
+          id="profileDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            class="rounded-circle w-100 h-100 object-fit-cover"
+            [src]="profileImageUrl"
+            alt=""
+          />
+
       <div *ngIf="isLogged" class="text-white me-3">
         <div class="name fs-5 text-white d-flex align-items-center">
           {{ userInfo?.name }}
@@ -142,6 +164,7 @@
               </button>
             </li>
           </ul>
+
         </div>
       </div>
     </div>

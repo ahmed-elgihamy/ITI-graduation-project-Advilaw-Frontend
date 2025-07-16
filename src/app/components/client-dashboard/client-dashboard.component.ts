@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { SidebarComponent } from '../dashboard/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-client-dashboard',
   templateUrl: './client-dashboard.component.html',
   styleUrl: './client-dashboard.component.css',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule,SidebarComponent],
+
 })
 export class ClientDashboardComponent {
   links = document.querySelectorAll('#sidebarMenuOffcanvas .nav-link');

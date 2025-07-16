@@ -12,5 +12,9 @@ export interface LawyerDetails {
   postalCode: string;
   profileHeader: string;
   profileAbout: string;
+  nationalityId: number,
   barAssociationCardNumber: string;
+  userId: string;
+  imageUrl: string;
+  experience: number;
 }

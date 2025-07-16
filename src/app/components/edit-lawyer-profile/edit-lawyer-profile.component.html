@@ -1,11 +1,91 @@
+<section class="py-5 text-white admin-hero-section" style="background-image: url('/assets/images/Area.jpg'); background-size: cover;">
 <div class="container">
-  <div class="spacing my-4">
-    <h1 class="text-center">Edit Lawyer Profile</h1>
-    <app-generic-form
-      [formFields]="formFields"
-      [onSubmitFn]="handleSubmit"
-      [data]="lawyerDetails"
-      *ngIf="lawyerDetails && isDataLoaded"
-    ></app-generic-form>
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-xl-9">
+        <div class="glass-form p-4 p-md-5 rounded-4 shadow-lg">
+
+          <h2 class="fw-bold text-warning text-center mb-4">Edit Lawyer Profile</h2>
+
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex flex-column align-items-center mb-4">
+              <img [src]="profileImageUrl || 'assets/images/default-profile.png'"
+                   alt="Profile Photo"
+                   class="rounded-circle border border-3 border-light shadow-sm mb-2"
+                   style="width: 120px; height: 120px; object-fit: cover;" />
+              <input type="file"
+                     accept="image/*"
+                     (change)="onImageChange($event)"
+                     class="form-control w-auto mt-2" />
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6" *ngFor="let field of [
+                {label: 'User Name', name: 'userName', type: 'text'},
+                {label: 'Bio', name: 'bio', type: 'text'},
+                {label: 'Profile Header', name: 'profileHeader', type: 'text'},
+                {label: 'About', name: 'profileAbout', type: 'text'},
+                {label: 'City', name: 'city', type: 'text'},
+                {label: 'Country', name: 'country', type: 'text'},
+                {label: 'Country Code', name: 'countryCode', type: 'text'},
+                {label: 'Postal Code', name: 'postalCode', type: 'text'},
+                {label: 'National ID', name: 'nationalityId', type: 'text'},
+                {label: 'Hourly Rate', name: 'hourlyRate', type: 'number'},
+                {label: 'Experience (years)', name: 'experience', type: 'number'},
+                {label: 'Bar Association Card Number', name: 'barAssociationCardNumber', type: 'text'}
+              ]">
+                <div class="mb-3">
+                  <label [for]="field.name" class="form-label">{{ field.label }}</label>
+                  <input [id]="field.name"
+                         [type]="field.type"
+                         class="form-control"
+                         [formControlName]="field.name"
+                         [class.is-invalid]="profileForm.get(field.name)?.invalid && profileForm.get(field.name)?.touched" />
+                  <div *ngIf="profileForm.get(field.name)?.invalid && profileForm.get(field.name)?.touched" class="invalid-feedback">
+                    <div *ngIf="profileForm.get(field.name)?.errors?.['required']">{{ field.label }} is required.</div>
+                    <div *ngIf="profileForm.get(field.name)?.errors?.['pattern']">
+                      <ng-container [ngSwitch]="field.name">
+                        <span *ngSwitchCase="'countryCode'">Country code must be 2 uppercase letters (e.g. EG, US).</span>
+                        <span *ngSwitchCase="'nationalityId'">National ID must be exactly 14 digits.</span>
+                        <span *ngSwitchCase="'barAssociationCardNumber'">Bar card number must be 5 or 6 digits.</span>
+                        <span *ngSwitchDefault>Invalid format.</span>
+                      </ng-container>
+                    </div>
+                    <div *ngIf="profileForm.get(field.name)?.errors?.['min']">Hourly rate must be greater than 0.</div>
+                    <div *ngIf="field.name === 'experience' && profileForm.get('experience')?.errors?.['min']">Experience must be 0 or greater.</div>
+                    <div *ngIf="profileForm.get(field.name)?.errors?.['minlength']">
+                      Minimum length is {{ profileForm.get(field.name)?.errors?.['minlength'].requiredLength }}.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="gender" class="form-label">Gender</label>
+                <select id="gender"
+                        class="form-select"
+                        formControlName="gender">
+                  <option *ngFor="let g of genderOptions" [value]="g.value">{{ g.label }}</option>
+                </select>
+                <div *ngIf="profileForm.get('gender')?.invalid && profileForm.get('gender')?.touched" class="invalid-feedback">
+                  Gender is required.
+                </div>
   </div>
 </div>
+
+            <div class="text-center mt-4">
+              <button type="submit"
+                      class="btn btn-warning fw-bold rounded-pill px-5 py-2"
+                      [disabled]="profileForm.invalid || isLoading">
+                <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin me-2"></i> Saving...</span>
+                <span *ngIf="!isLoading">Save Changes</span>
+              </button>
+            </div>
+          </form>
+
+          <div *ngIf="successMsg" class="alert alert-success mt-4">{{ successMsg }}</div>
+          <div *ngIf="errorMsg" class="alert alert-danger mt-3">{{ errorMsg }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

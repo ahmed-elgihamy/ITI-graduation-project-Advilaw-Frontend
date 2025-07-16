@@ -22,6 +22,7 @@ import ValidateForm from '../../../components/helpers/ValidationForm';
   selector: 'app-lawyer-consultation',
   standalone: true,
   templateUrl: './lawyer-consultation.component.html',
+  styleUrls: ['./lawyer-consultation.component.css'],
   imports: [CommonModule, ReactiveFormsModule],
 })
 export class LawyerConsultationComponent implements OnInit {
@@ -375,5 +376,10 @@ export class LawyerConsultationComponent implements OnInit {
     if (formSection) {
       formSection.scrollIntoView({ behavior: 'smooth' });
     }
+  }
+
+  get totalCost(): number {
+    const duration = this.jobForm?.get('durationHours')?.value || 0;
+    return Math.ceil(this.hourlyRate * duration);
   }
 }

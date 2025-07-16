@@ -1,164 +1,128 @@
-import { LawyerService } from './../../core/services/lawyer.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { GenericFormComponent } from '../generic-form/generic-form.component';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LawyerService } from '../../core/services/lawyer.service';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
+import { Gender } from '../../types/Lawyers/LawyerListDTO';
 
 @Component({
   selector: 'app-edit-lawyer-profile',
-  imports: [GenericFormComponent, CommonModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-lawyer-profile.component.html',
   styleUrl: './edit-lawyer-profile.component.css',
 })
 export class EditLawyerProfileComponent implements OnInit {
-  registerForm!: FormGroup;
-  lawyerDetails: any = {};
-  isDataLoaded = false;
+  profileForm!: FormGroup;
+  isLoading = false;
+  successMsg = '';
+  errorMsg = '';
+  genderOptions = [
+    { label: 'Male', value: Gender.Male },
+    { label: 'Female', value: Gender.Female }
+  ];
+  Gender = Gender; // for template access
+  profileImageUrl: string = '';
+  profileUserId: string = '';
 
   constructor(
+    private fb: FormBuilder,
     private lawyerService: LawyerService,
-    private router: Router,
-    private authService: AuthService
+    private router: Router
   ) {}
-  formFields = [
-    {
-      name: 'userName',
-      label: 'Username',
-      type: 'text',
-      validators: [Validators.required],
-      errors: {
-        required: 'Username is required.',
-      },
-    },
-    {
-      name: 'bio',
-      label: 'Bio',
-      type: 'text',
-      validators: [Validators.required],
-      errors: {
-        required: 'Bio is required.',
-      },
-    },
-    {
-      name: 'profileHeader',
-      label: 'Profile Header',
-      type: 'text',
-      validators: [Validators.required],
-      errors: {
-        required: 'Profile header is required.',
-      },
-    },
-    {
-      name: 'profileAbout',
-      label: 'About',
-      type: 'text',
-      validators: [Validators.required],
-      errors: {
-        required: 'Profile about section is required.',
-      },
-    },
-    {
-      name: 'city',
-      label: 'City',
-      type: 'text',
-      validators: [Validators.required],
-      errors: {
-        required: 'City is required.',
-      },
-    },
-    {
-      name: 'country',
-      label: 'Country',
-      type: 'text',
-      validators: [Validators.required],
-      errors: {
-        required: 'Country is required.',
-      },
-    },
-    {
-      name: 'countryCode',
-      label: 'Country Code',
-      type: 'text',
-      validators: [Validators.required, Validators.pattern(/^[A-Z]{2}$/)],
-      errors: {
-        required: 'Country code is required.',
-        pattern: 'Country code must be 2 uppercase letters (e.g. EG, US).',
-      },
-    },
-    {
-      name: 'postalCode',
-      label: 'Postal Code',
-      type: 'text',
-      validators: [Validators.required],
-      errors: {
-        required: 'Postal Code is required.',
-      },
-    },
-    {
-      name: 'nationalityId',
-      label: 'National ID',
-      type: 'text',
-      validators: [Validators.required, Validators.pattern(/^\d{14}$/)],
-      errors: {
-        required: 'National ID is required.',
-        pattern: 'National ID must be 14 digits.',
-      },
-    },
-    // {
-    //   name: 'barAssociationCardNumber',
-    //   label: 'Bar Card Number',
-    //   type: 'text',
-    //   validators: [Validators.required, Validators.pattern(/^[0-9]{5,6}$/)],
-    //   errors: {
-    //     required: 'Bar card number is required.',
-    //     pattern: 'Bar card number must be 5 or 6 digits.',
-    //   },
-    // },
-    {
-      name: 'hourlyRate',
-      label: 'Hourly Rate',
-      type: 'number',
-      validators: [Validators.required, Validators.min(1)],
-      errors: {
-        required: 'Hourly rate is required.',
-        min: 'Hourly rate must be greater than 0.',
-      },
-    },
-    {
-      name: 'gender',
-      label: 'Gender',
-      type: 'select',
-      options: ['Male', 'Female'],
-      validators: [Validators.required],
-      errors: {
-        required: 'Gender is required.',
-      },
-    },
-  ];
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.profileForm = this.fb.group({
+      userName: ['', [Validators.required, Validators.minLength(3)]],
+      bio: ['', [Validators.required]],
+      profileHeader: ['', [Validators.required]],
+      profileAbout: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      country: ['', [Validators.required]],
+      countryCode: ['', [Validators.required, Validators.pattern('^[A-Z]{2}$')]],
+      postalCode: ['', [Validators.required]],
+      nationalityId: ['', [Validators.required, Validators.pattern('^[0-9]{14}$')]],
+      hourlyRate: [null, [Validators.required, Validators.min(1)]],
+      experience: [0, [Validators.required, Validators.min(0)]],
+      gender: [Gender.Male, Validators.required],
+      barAssociationCardNumber: ['', [Validators.pattern('^[0-9]{5,6}$')]],
+      imageUrl: ['']
+    });
+    this.fetchProfile();
+  }
+
+  fetchProfile() {
+    this.isLoading = true;
     this.lawyerService.GetLawyerDetails().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.lawyerDetails = res;
-        this.isDataLoaded = true;
-        console.log(this.lawyerDetails);
+      next: (profile) => {
+        this.profileForm.patchValue({
+          userName: profile.userName,
+          bio: profile.bio,
+          profileHeader: profile.profileHeader,
+          profileAbout: profile.profileAbout,
+          city: profile.city,
+          country: profile.country,
+          countryCode: profile.countryCode,
+          postalCode: profile.postalCode,
+          nationalityId: profile.nationalityId,
+          hourlyRate: profile.hourlyRate,
+          experience: profile.experience,
+          gender: profile.gender,
+          barAssociationCardNumber: profile.barAssociationCardNumber,
+          imageUrl: profile.imageUrl
+        });
+        this.profileUserId = profile.userId;
+        this.profileImageUrl = profile.imageUrl || '';
+        this.isLoading = false;
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: () => {
+        this.errorMsg = 'Failed to load profile.';
+        this.isLoading = false;
+      }
     });
   }
-  handleSubmit = (formValue: any) => {
-    this.lawyerService.editLawyerProfile(formValue).subscribe({
-      next: (res) => {
-        console.log('hello');
-        console.log(this.lawyerDetails.userId);
-        this.router.navigate(['/profile', this.lawyerDetails.userId]);
+
+  onImageChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      if (!['image/jpeg', 'image/png'].includes(file.type)) {
+        this.errorMsg = 'Only JPG and PNG images are allowed.';
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) { // 2MB limit
+        this.errorMsg = 'Image must be less than 2MB.';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.profileImageUrl = e.target.result;
+        this.profileForm.patchValue({ imageUrl: this.profileImageUrl });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onSubmit() {
+  
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    this.successMsg = '';
+    this.errorMsg = '';
+    const payload = this.profileForm.value;
+    this.lawyerService.editLawyerProfile(payload).subscribe({
+      next: () => {
+        this.successMsg = 'Profile updated successfully!';
+        this.isLoading = false;
+        this.router.navigate([`/profile/${this.profileUserId}`]);
       },
-      error: (err) => console.error(err),
+      error: () => {
+        this.errorMsg = 'Failed to update profile.';
+        this.isLoading = false;
+      }
     });
-  };
+  }
 }

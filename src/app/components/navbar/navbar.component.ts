@@ -5,6 +5,8 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { UserInfo } from '../../types/UserInfo';
+import { ClientService } from '../../core/services/client.service';
+import { LawyerService } from '../../core/services/lawyer.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,23 +22,62 @@ import { UserInfo } from '../../types/UserInfo';
 export class NavbarComponent implements OnInit, OnDestroy {
   isLogged: boolean = false;
   private sub!: Subscription;
-  readonly _auth = inject(AuthService);
-  readonly router = inject(Router);
   userInfo: UserInfo | null = null;
-  isLawyer: boolean = false;
-  isClient: boolean = false;
+  profileImageUrl: string = 'assets/images/male.jpg';
+
+  constructor(
+    public _auth: AuthService,
+    public router: Router,
+    private clientService: ClientService,
+    private lawyerService: LawyerService
+  ) {}
 
   ngOnInit(): void {
-    this.sub = this._auth.isLoggedIn$.subscribe((res) => (this.isLogged = res));
+    this.sub = this._auth.isLoggedIn$.subscribe((res) => {
+      this.isLogged = res;
     this.userInfo = this._auth.getUserInfo();
-    this.isLawyer = this.userInfo?.role === 'Lawyer';
-    this.isClient = this.userInfo?.role === 'Client';
-    console.log(this.isLawyer);
+      this.loadProfileImage();
+    });
+  }
+
+  loadProfileImage() {
+    if (this.userInfo) {
+      if (this.userInfo.role === 'Client') {
+        this.clientService.getClientProfile().subscribe({
+          next: (response) => {
+            this.profileImageUrl = response.data?.imageUrl
+              ? (response.data.imageUrl.startsWith('http') ? response.data.imageUrl : 'https://localhost:44302' + response.data.imageUrl)
+              : 'assets/images/male.jpg';
+          },
+          error: () => {
+            this.profileImageUrl = 'assets/images/male.jpg';
+          }
+        });
+      } else if (this.userInfo.role === 'Lawyer') {
+        this.lawyerService.GetLawyerDetails().subscribe({
+          next: (profile) => {
+            this.profileImageUrl = profile.imageUrl
+              ? (profile.imageUrl.startsWith('http') ? profile.imageUrl : 'https://localhost:44302' + profile.imageUrl)
+              : 'assets/images/male.jpg';
+          },
+          error: () => {
+            this.profileImageUrl = 'assets/images/male.jpg';
+          }
+        });
+      } else {
+        this.profileImageUrl = 'assets/images/male.jpg';
+      }
+    } else {
+      this.profileImageUrl = 'assets/images/male.jpg';
+    }
   }
 
   GoToProfile() {
-    // console.log(`link to go: /profile/${this.userInfo?.userId}`);
+    if (this.userInfo?.role === 'Client') {
+      this.router.navigate(['/client/profile']);
+    } else {
     this.router.navigate(['/profile', this.userInfo?.userId]);
+    }
   }
 
   ngOnDestroy(): void {

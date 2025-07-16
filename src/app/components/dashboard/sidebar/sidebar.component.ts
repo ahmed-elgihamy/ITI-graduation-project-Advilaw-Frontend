@@ -27,6 +27,12 @@ export class SidebarComponent implements OnInit {
     if (user?.role === 'Admin' || user?.role === 'SuperAdmin') {
       this.profileLink = '/dashboard/admin-dashboard/admin/profile';
       this.profileLabel = 'Admin Profile';
+
+    } else if (user?.role === 'Lawyer') {
+      this.profileLink = `/profile/${user.userId}`;
+      this.profileLabel = 'Lawyer Profile';
+    } else if (user?.role === 'Client') {
+
       this.isProfileAdded = true;
     }
     // else if (user?.role === 'Lawyer') {
@@ -34,6 +40,7 @@ export class SidebarComponent implements OnInit {
     //   this.profileLabel = 'Lawyer Profile';
     // }
     else if (user?.role === 'Client') {
+
       this.profileLink = '/dashboard/client/profile';
       this.profileLabel = 'Client Profile';
       this.isProfileAdded = true;

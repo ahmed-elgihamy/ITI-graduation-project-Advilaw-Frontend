@@ -1,174 +1,109 @@
-<section class="py-5 text-white admin-hero-section" style="background-image: url('/assets/images/Area.jpg'); background-size: cover;">
-<div class="profile-page">
-  <!-- Loading State -->
-  <div *ngIf="isLoading" class="d-flex flex-column align-items-center justify-content-center loading-overlay">
-    <div class="spinner-border text-warning" style="width: 3rem; height: 3rem" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-    <p class="mt-3 fw-medium text-dark">Loading consultation...</p>
-  </div>
+<section class="py-5 admin-hero-section ">
+  <div class="background-blur-overlay"></div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-xl-9">
+        <div class="glass-form p-4 p-md-5 rounded-4 shadow-lg">
 
-  <!-- Error State -->
-  <div *ngIf="errorMessage && !isLoading" class="d-flex flex-column align-items-center justify-content-center error-container">
-    <div class="alert alert-danger" role="alert">
-      <i class="fas fa-exclamation-triangle me-2"></i>
-      {{ errorMessage }}
-    </div>
-  </div>
+          <h2 class="fw-bold text-dark text-center mb-4">Book Consultation</h2>
 
-  <!-- Main Content -->
-  <div *ngIf="!isLoading && !errorMessage" class="profile-content">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-10 col-xl-9">
-          <div class="glass-form p-4 p-md-5 rounded-4 shadow-lg">
-            <!-- Profile Header Section -->
-            <section class="profile-header fade-in-down">
-              <div class="container">
-                <div class="row justify-content-center">
-                  <div class="col-12 col-lg-8 text-center">
-                    <!-- Profile Avatar -->
-                    <div class="mb-4">
-                      <div class="profile-avatar d-flex align-items-center justify-content-center slide-in-top">
-                        <i class="fas fa-user-tie fa-3x"></i>
-                      </div>
-                    </div>
-                    <!-- Name -->
-                    <h1 class="fw-bold mb-3 text-uppercase fade-in-up">{{ lawyerProfile?.name || 'Lawyer' }}</h1>
-                    <!-- Title, Experience, and Hourly Rate -->
-                    <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-2 meta slide-in-left">
-                      <span class="fw-semibold">{{ lawyerProfile?.title || 'Business Law' }}</span>
-                      <span class="divider">|</span>
-                      <span>Experience: {{ lawyerProfile?.experience || 'N/A' }} yrs</span>
-                      <span class="divider">|</span>
-                      <span class="fw-bold">EGP {{ hourlyRate }}/hr</span>
-                    </div>
-                    <!-- Action Buttons -->
-                    <div class="d-flex justify-content-center gap-3 flex-wrap mt-4 actions slide-in-right">
-                      <button type="button" class="btn main-btn fw-semibold px-4 py-2" (click)="onCancel()">
-                        <i class="fas fa-arrow-left me-2"></i>Back
-                      </button>
-                    </div>
-                  </div>
+          <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex flex-column align-items-center mb-4">
+              <div class="d-flex justify-content-center align-items-center bg-secondary rounded-circle mb-2" style="width: 80px; height: 80px;">
+                <i class="fas fa-user-tie fa-2x text-dark"></i>
+              </div>
+              <h1 class="fw-bold text-uppercase text-dark mb-0">{{ lawyerProfile?.name || 'Lawyer' }}</h1>
+              <div class="d-flex flex-wrap justify-content-center gap-3 text-muted mb-2">
+                <span class="fw-semibold">{{ lawyerProfile?.title || 'Business Law' }}</span>
+                <span>|</span>
+                <span>Experience: {{ lawyerProfile?.experience || 'N/A' }} yrs</span>
+                <span>|</span>
+                <span class="fw-bold text-dark">EGP {{ hourlyRate }}/hr</span>
+              </div>
+              <button type="button" class="btn main-btn px-4 py-2 fw-semibold mt-3" (click)="onCancel()">
+                <i class="fas fa-arrow-left me-2"></i>Back
+              </button>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6 mb-3">
+                <label for="header" class="form-label text-dark">Consultation Title</label>
+                <input id="header" formControlName="header" class="form-control" type="text" placeholder="Enter a brief title" [ngClass]="{ 'is-invalid': isInvalid('header') }" />
+                <div *ngIf="isInvalid('header')" class="invalid-feedback">
+                  {{ getErrorMessage('header') }}
                 </div>
               </div>
-            </section>
-            <!-- Main Content Container -->
-            <div class="container pb-5">
-              <!-- Bio Section (Full Width) -->
-              <section class="bio-section fade-in-up">
-                <h2 class="fw-bold text-uppercase mb-3">ABOUT LAWYER</h2>
-                <p class="mb-0">{{ lawyerProfile?.bio }}</p>
-              </section>
-              <!-- Consultation Form Section -->
-              <section class="bio-section fade-in-up">
-                <h2 class="fw-bold text-uppercase mb-3">BOOK CONSULTATION</h2>
-                <div class="form-card-profile slide-in-bottom">
-                  <!-- Success Message -->
-                  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fas fa-check-circle me-2"></i>
-                    {{ successMessage }}
-                    <button type="button" class="btn-close" (click)="clearMessages()"></button>
-                  </div>
-                  <!-- Error Message -->
-                  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="fas fa-exclamation-triangle me-2"></i>
-                    {{ errorMessage }}
-                    <button type="button" class="btn-close" (click)="clearMessages()"></button>
-                  </div>
-                  <form [formGroup]="jobForm" (ngSubmit)="onSubmit()" class="fade-in-up">
-                    <div class="mb-4">
-                      <label class="form-label fw-semibold" for="header">
-                        <i class="fas fa-heading me-2"></i>Consultation Title
-                      </label>
-                      <input id="header" formControlName="header" class="form-control form-control-lg" type="text" placeholder="Enter a brief title for your consultation" [ngClass]="{ 'is-invalid': isInvalid('header') }" />
-                      <div *ngIf="isInvalid('header')" class="invalid-feedback">
-                        {{ getErrorMessage('header') }}
-                      </div>
-                    </div>
-                    <div class="mb-4">
-                      <label class="form-label fw-semibold" for="description">
-                        <i class="fas fa-align-left me-2"></i>Description
-                      </label>
-                      <textarea id="description" formControlName="description" class="form-control" rows="4" placeholder="Describe your legal issue or consultation needs in detail" [ngClass]="{ 'is-invalid': isInvalid('description') }"></textarea>
-                      <div *ngIf="isInvalid('description')" class="invalid-feedback">
-                        {{ getErrorMessage('description') }}
-                      </div>
-                      <small class="form-text text-muted">Minimum 20 characters, maximum 1000 characters</small>
-                    </div>
-                    <div class="mb-4">
-                      <label class="form-label fw-semibold" for="jobFieldId">
-                        <i class="fas fa-briefcase me-2"></i>Legal Field
-                      </label>
-                      <select formControlName="jobFieldId" class="form-select form-select-lg" [ngClass]="{ 'is-invalid': isInvalid('jobFieldId') }">
-                        <option [value]="null" disabled selected>Select a legal field</option>
-                        <option *ngFor="let field of jobFields" [value]="field.id">{{ field.name }}</option>
-                      </select>
-                      <div *ngIf="isInvalid('jobFieldId')" class="invalid-feedback">
-                        {{ getErrorMessage('jobFieldId') }}
-                      </div>
-                    </div>
-                    <div class="row mb-4">
-                      <div class="col-md-6">
-                        <label class="form-label fw-semibold" for="appointmentTime">
-                          <i class="fas fa-calendar me-2"></i>Appointment Date & Time
-                        </label>
-                        <input id="appointmentTime" formControlName="appointmentTime" type="datetime-local" class="form-control" [ngClass]="{ 'is-invalid': isInvalid('appointmentTime') }" />
-                        <div *ngIf="isInvalid('appointmentTime')" class="invalid-feedback">
-                          {{ getErrorMessage('appointmentTime') }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row mb-4">
-                      <div class="col-md-6">
-                        <label class="form-label fw-semibold" for="durationHours">
-                          <i class="fas fa-hourglass-half me-2"></i>Duration (hours)
-                        </label>
-                        <input id="durationHours" formControlName="durationHours" type="number" class="form-control" [ngClass]="{ 'is-invalid': isInvalid('durationHours') }" />
-                        <div *ngIf="isInvalid('durationHours')" class="invalid-feedback">
-                          {{ getErrorMessage('durationHours') }}
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <label class="form-label fw-semibold" for="budget">
-                          <i class="fas fa-money-bill-wave me-2"></i>Total Cost (EGP)
-                        </label>
-                        <input id="budget" formControlName="budget" type="number" class="form-control" readonly [ngClass]="{ 'is-invalid': isInvalid('budget') }" />
-                        <div *ngIf="isInvalid('budget')" class="invalid-feedback">
-                          {{ getErrorMessage('budget') }}
-                        </div>
-                        <small class="form-text text-muted">Calculated based on hourly rate: EGP {{ hourlyRate }}/hr</small>
-                      </div>
-                    </div>
-                    <div class="form-check mb-4">
-                      <input id="isAnonymus" type="checkbox" class="form-check-input" formControlName="isAnonymus" />
-                      <label for="isAnonymus" class="form-check-label fw-semibold">
-                        <i class="fas fa-user-secret me-2"></i>Request Anonymously
-                      </label>
-                      <small class="form-text text-muted d-block">Your name will be hidden from the lawyer</small>
-                    </div>
-                    <div class="d-flex gap-3 justify-content-center mt-5">
-                      <button class="btn main-btn full-width-btn px-4 py-2" type="submit" [disabled]="jobForm.invalid || isSubmitting" *ngIf="isClient">
-                        <span *ngIf="!isSubmitting">
-                          <i class="fas fa-paper-plane me-2"></i>Request Consultation
-                        </span>
-                        <span *ngIf="isSubmitting">
-                          <span class="spinner-border spinner-border-sm me-2" role="status"></span>
-                          Submitting...
-                        </span>
-                      </button>
-                      <button type="button" class="btn btn-outline-secondary px-4 py-2" (click)="onCancel()" [disabled]="isSubmitting">
-                        <i class="fas fa-times me-2"></i>Cancel
-                      </button>
-                    </div>
-                  </form>
+
+              <div class="col-md-6 mb-3">
+                <label for="jobFieldId" class="form-label text-dark">Legal Field</label>
+                <select id="jobFieldId" formControlName="jobFieldId" class="form-select" [ngClass]="{ 'is-invalid': isInvalid('jobFieldId') }">
+                  <option [value]="null" disabled selected>Select a legal field</option>
+                  <option *ngFor="let field of jobFields" [value]="field.id">{{ field.name }}</option>
+                </select>
+                <div *ngIf="isInvalid('jobFieldId')" class="invalid-feedback">
+                  {{ getErrorMessage('jobFieldId') }}
                 </div>
-              </section>
+              </div>
+
+              <div class="col-12 mb-3">
+                <label for="description" class="form-label text-dark">Description</label>
+                <textarea id="description" formControlName="description" rows="4" class="form-control" placeholder="Describe your legal issue in detail" [ngClass]="{ 'is-invalid': isInvalid('description') }"></textarea>
+                <div *ngIf="isInvalid('description')" class="invalid-feedback">
+                  {{ getErrorMessage('description') }}
+                </div>
+                <small class="text-muted">Minimum 20 characters, maximum 1000 characters</small>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="appointmentTime" class="form-label text-dark">Appointment Date & Time</label>
+                <input id="appointmentTime" type="datetime-local" formControlName="appointmentTime" class="form-control" [ngClass]="{ 'is-invalid': isInvalid('appointmentTime') }" />
+                <div *ngIf="isInvalid('appointmentTime')" class="invalid-feedback">
+                  {{ getErrorMessage('appointmentTime') }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="durationHours" class="form-label text-dark">Duration (hours)</label>
+                <input id="durationHours" type="number" formControlName="durationHours" class="form-control" [ngClass]="{ 'is-invalid': isInvalid('durationHours') }" />
+                <div *ngIf="isInvalid('durationHours')" class="invalid-feedback">
+                  {{ getErrorMessage('durationHours') }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label text-dark">Total Cost (EGP)</label>
+                <input class="form-control-plaintext fw-bold text-dark" [value]="totalCost" readonly tabindex="-1" />
+              </div>
+
+              <div class="col-md-6 mb-3 d-flex align-items-center">
+                <div class="form-check">
+                  <input id="isAnonymus" type="checkbox" class="form-check-input" formControlName="isAnonymus" />
+                  <label for="isAnonymus" class="form-check-label text-dark">Request Anonymously</label>
+                  <small class="d-block text-muted">Your name will be hidden from the lawyer</small>
+                </div>
+              </div>
             </div>
-          </div>
+
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-warning fw-bold rounded-pill px-5 py-2" [disabled]="jobForm.invalid || isSubmitting" *ngIf="isClient">
+                <span *ngIf="!isSubmitting">
+                  <i class="fas fa-paper-plane me-2"></i>Request Consultation
+                </span>
+                <span *ngIf="isSubmitting">
+                  <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                  Submitting...
+                </span>
+              </button>
+              <button type="button" class="btn btn-outline-secondary px-4 py-2 ms-2" (click)="onCancel()" [disabled]="isSubmitting">
+                <i class="fas fa-times me-2"></i>Cancel
+              </button>
+            </div>
+          </form>
+
+          <div *ngIf="successMessage" class="alert alert-success mt-4 text-dark">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3 text-dark">{{ errorMessage }}</div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </section>

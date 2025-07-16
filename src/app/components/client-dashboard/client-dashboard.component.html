@@ -1,5 +1,14 @@
 <nav class="navbar navbar-dark bg-dark d-lg-none">
   <div class="container-fluid">
+
+    <div class="row">
+      <!-- Sidebar for large screens -->
+      <app-sidebar class="col-lg-2 d-none d-lg-block sidebar p-0"></app-sidebar>
+      <!-- Main Content -->
+      <main class="col-lg-10 ms-sm-auto p-0 " id="mainContent">
+        <router-outlet></router-outlet>
+      </main>
+
     <a class="navbar-brand" href="javascript:void(0)">Client Dashboard</a>
     <button
       class="navbar-toggler"
@@ -109,6 +118,7 @@
           </li>
         </ul>
       </div>
+
     </div>
     <!-- Main Content -->
     <main class="col-lg-10 ms-sm-auto px-4 py-4" id="mainContent">

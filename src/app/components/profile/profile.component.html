@@ -31,60 +31,56 @@
     <section class="profile-header">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-12 col-lg-8 text-center">
-            <!-- Profile Avatar -->
-            <div class="mb-4">
-              <img
-                [src]="avatarUrl || 'assets/client4.jpg'"
-                class="profile-avatar"
-                loading="lazy"
-              />
-            </div>
-
-            <!-- Name -->
-            <h1 class="fw-bold mb-3 text-uppercase">{{ lawyer.name }}</h1>
-
-            <!-- Title, Experience, and Hourly Rate -->
-            <div
-              class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-2 meta"
-            >
-              <span class="fw-semibold">{{
-                lawyer.title || "Business Law"
-              }}</span>
-              <span class="divider">|</span>
-              <span>Experience: {{ lawyer.experience }} yrs</span>
-              <span class="divider">|</span>
-              <span class="fw-bold">EGP {{ lawyer.hourlyRate }}/hr</span>
-            </div>
-
-            <!-- Action Buttons -->
-            <div
-              class="d-flex justify-content-center gap-3 flex-wrap mt-4 actions"
-            >
-              <button
-                type="button"
-                *ngIf="!isMe"
-                class="btn main-btn fw-semibold px-4 py-2"
-                (click)="onFollowClick()"
-              >
-                <i class="fas fa-plus me-2"></i>Follow
-              </button>
-              <button
-                type="button"
-                *ngIf="isMe"
-                class="btn main-btn fw-semibold px-4 py-2"
-                [routerLink]="['/profile-edit']"
-              >
-                <i class="fas fa-edit me-2"></i>Edit
-              </button>
-              <button
-                *ngIf="isClient"
-                type="button"
-                class="btn consult-btn fw-semibold px-4 py-2"
-                [routerLink]="['/client/consultation', lawyer.id]"
-              >
-                Request Consultation
-              </button>
+          <div class="col-12 col-lg-8">
+            <div class="glass-card text-center p-4 p-md-5 rounded-4 shadow-lg">
+              <!-- Profile Avatar -->
+              <div class="mb-4">
+                <img
+                  [src]="avatarUrl || 'assets/client4.jpg'"
+                  class="profile-avatar"
+                  loading="eager"
+                  style="width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 4px solid #ffc107; box-shadow: 0 4px 24px rgba(0,0,0,0.15);"
+                />
+              </div>
+              <!-- Name -->
+              <h1 class="fw-bold mb-2 text-uppercase text-dark">{{ lawyer.name }}</h1>
+              <!-- Profile Header -->
+              <h3 class="fw-semibold mb-2 text-dark" *ngIf="lawyer.profileHeader">{{ lawyer.profileHeader }}</h3>
+              <!-- Title, Experience, and Hourly Rate -->
+              <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap mb-2 meta">
+                <span class="fw-semibold text-secondary">{{ lawyer.title || "Business Law" }}</span>
+                <span class="divider text-muted">|</span>
+                <span class="text-muted">Experience: <span class="fw-bold text-dark">{{ lawyer.experience }}</span> yrs</span>
+                <span class="divider text-muted">|</span>
+                <span class="fw-bold text-warning">EGP {{ lawyer.hourlyRate }}/hr</span>
+              </div>
+              <!-- Action Buttons -->
+              <div class="d-flex justify-content-center gap-3 flex-wrap mt-4 actions">
+                <button
+                  type="button"
+                  *ngIf="!isMe"
+                  class="btn main-btn fw-semibold px-4 py-2"
+                  (click)="onFollowClick()"
+                >
+                  <i class="fas fa-plus me-2"></i>Follow
+                </button>
+                <button
+                  type="button"
+                  *ngIf="isMe"
+                  class="btn main-btn fw-semibold px-4 py-2"
+                  [routerLink]="['/profile-edit']"
+                >
+                  <i class="fas fa-edit me-2"></i>Edit
+                </button>
+                <button
+                  *ngIf="isClient"
+                  type="button"
+                  class="btn consult-btn fw-semibold px-4 py-2"
+                  [routerLink]="['/client/consultation', lawyer.id]"
+                >
+                  Request Consultation
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -93,17 +89,20 @@
 
     <!-- Main Content Container -->
     <div class="container pb-5">
-      <!-- Bio Section (Full Width) -->
-      <section class="bio-section">
-        <h2 class="fw-bold text-uppercase mb-3">BIO</h2>
-        <p class="mb-0">{{ lawyer.bio }}</p>
-      </section>
-
+      <div class="glass-card p-4 mb-4 bio-section mt-5 d-flex align-items-start gap-3">
+        <div class="bio-icon flex-shrink-0">
+          <i class="fas fa-user-pen fa-2x text-warning"></i>
+        </div>
+        <div>
+          <h2 class="fw-bold text-uppercase mb-2 text-warning" style="letter-spacing: 1px; font-size: 1.5rem;">Bio</h2>
+          <p class="mb-0 text-dark fs-5" style="line-height: 1.7;">{{ lawyer.bio }}</p>
+        </div>
+      </div>
+      <hr class="my-4" style="border-top: 2px solid #ffc107; opacity: 0.2;">
       <div class="row">
-        <!-- Left Column -->
         <div class="col-12 col-lg-6">
-          <!-- Rating Overview Section -->
-          <section class="rating-overview mb-5">
+          <div class="glass-card p-4 mb-4">
+            <!-- Rating Overview Section -->
             <h2 class="fw-bold text-uppercase mb-3">RATING OVERVIEW</h2>
 
             <!-- Progress Bars -->
@@ -130,10 +129,9 @@
                 </div>
               </ng-container>
             </div>
-          </section>
-
-          <!-- Schedule Section -->
-          <section class="schedule mb-5">
+          </div>
+          <div class="glass-card p-4 mb-4">
+            <!-- Schedule Section -->
             <div class="d-flex">
               <h2 class="fw-bold text-uppercase mb-3">SCHEDULE</h2>
               <div class="ms-auto">
@@ -174,13 +172,13 @@
                 </tbody>
               </table>
             </div>
-          </section>
+          </div>
         </div>
 
         <!-- Right Column -->
         <div class="col-12 col-lg-6">
-          <!-- Client Reviews Section -->
-          <section class="reviews mb-5">
+          <div class="glass-card p-4 mb-4">
+            <!-- Client Reviews Section -->
             <h2 class="fw-bold text-uppercase mb-3">CLIENT REVIEWS</h2>
             <ng-container *ngIf="reviews.length > 0; else noReviews">
               <div
@@ -188,16 +186,16 @@
                 *ngFor="let rev of reviews; trackBy: trackByReviewId"
               >
                 <img
-                  [src]="rev.reviewerPhotoUrl || 'assets/client4.jpg'"
+                  [src]="getFullImageUrl(rev.reviewerPhotoUrl)"
                   (error)="rev.reviewerPhotoUrl = 'assets/client4.jpg'"
                   alt="Client photo"
-                  class="review-avatar"
+                  class="review-avatar review-avatar-small"
                 />
 
                 <div class="review-content">
                   <div class="header">
-                    <h6 class="fw-semibold mb-0">{{ rev.reviewer }}</h6>
-                    <small>{{ rev.date }}</small>
+                    <h6 class="fw-semibold mb-0">{{ rev.reviewerName }}</h6>
+                    <small>{{ rev.createdAt | date:'mediumDate' }}</small>
                   </div>
                   <div class="stars">
                     <span *ngFor="let _ of getStarArray(rev.rate)">★</span>
@@ -213,7 +211,7 @@
                 <p class="mb-0">No reviews available yet.</p>
               </div>
             </ng-template>
-          </section>
+          </div>
         </div>
       </div>
     </div>

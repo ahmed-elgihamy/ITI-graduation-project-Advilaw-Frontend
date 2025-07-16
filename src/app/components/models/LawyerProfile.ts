@@ -7,4 +7,5 @@ export interface LawyerProfile {
   photoUrl: string;
   hourlyRate: number;
   rating?: number;
+  profileHeader: string;
 }

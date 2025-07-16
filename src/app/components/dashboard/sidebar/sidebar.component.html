@@ -34,6 +34,56 @@
     role="tablist"
     aria-orientation="vertical"
   >
+
+    <!-- Client Sidebar Section -->
+    <ng-container *ngIf="profileLabel === 'Client Profile'">
+      <app-nav-item
+        [iconClass]="'fa-house'"
+        [name]="'Overview'"
+        [toLink]="'overview'"
+        [isOpendsidebar]="isOpendsidebar()"
+      ></app-nav-item>
+      <app-nav-item
+        [iconClass]="'fa-user'"
+        [name]="'My Profile'"
+        [toLink]="'/client/profile'"
+        [isOpendsidebar]="isOpendsidebar()"
+      ></app-nav-item>
+      <app-nav-item
+        [iconClass]="'fa-calendar-check'"
+        [name]="'Consultations'"
+        [toLink]="'consults'"
+        [isOpendsidebar]="isOpendsidebar()"
+      ></app-nav-item>
+      <app-nav-item
+        [iconClass]="'fa-message'"
+        [name]="'Chats'"
+        [toLink]="'chats'"
+        [isOpendsidebar]="isOpendsidebar()"
+      ></app-nav-item>
+      <app-nav-item
+        [iconClass]="'fa-money-check'"
+        [name]="'Payments'"
+        [toLink]="'payments'"
+        [isOpendsidebar]="isOpendsidebar()"
+      ></app-nav-item>
+    </ng-container>
+
+    <!-- Existing Sidebar Section (for other roles) -->
+    <ng-container *ngIf="profileLabel !== 'Client Profile'">
+      <app-nav-item
+        [iconClass]="'fa-chart-simple'"
+        [name]="'Analytics'"
+        [toLink]="'/dashboard/analytics'"
+        [isOpendsidebar]="isOpendsidebar()"
+      ></app-nav-item>
+      <app-nav-item
+        [iconClass]="'fa-user'"
+        [name]="profileLabel"
+        [toLink]="profileLink"
+        [isOpendsidebar]="isOpendsidebar()"
+      ></app-nav-item>
+
     <app-nav-item
       [iconClass]="'fa-chart-simple'"
       [name]="'Analytics'"
@@ -47,6 +97,7 @@
       [isOpendsidebar]="isOpendsidebar()"
       *ngIf="isProfileAdded"
     ></app-nav-item>
+
 
     <app-nav-item
       *ngIf="isAdmin"
@@ -122,6 +173,9 @@
       [toLink]="'/dashboard/admin-dashboard/session-history'"
       [isOpendsidebar]="isOpendsidebar()"
     ></app-nav-item>
+
+    </ng-container>
+
   </div>
 
   <!-- Toggle Button at Bottom -->

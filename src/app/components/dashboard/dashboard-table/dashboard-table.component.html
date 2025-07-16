@@ -21,8 +21,7 @@
           <!-- Image column -->
           <ng-container *ngIf="col.type === 'image'; else nonImage">
             <img
-              [src]="item[col.key]"
-              alt="image"
+              [src]="getFullImageUrl(item.imageUrl)" alt="Profile Image"
               class="rounded-circle object-fit-cover"
               style="width: 50px; height: 50px"
             />
