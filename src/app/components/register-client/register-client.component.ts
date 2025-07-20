@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { CommonModule, NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-register-client',
@@ -31,7 +32,7 @@ export class RegisterClientComponent {
     NationalIDImage: null,
 
   };
-
+  loader = inject(NgxSpinnerService)
   private readonly _Auth = inject(AuthService)
   private readonly fb = inject(FormBuilder)
   private readonly _Router = inject(Router)
@@ -40,7 +41,7 @@ export class RegisterClientComponent {
     password: ['', [
       Validators.required,
       Validators.minLength(6),
-      Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@!?*\.]).{6,}$/)
+      Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@!$?*\.]).{6,}$/)
     ]],
     userName: ['', [Validators.required]],
     city: ['', Validators.required],
@@ -106,23 +107,27 @@ export class RegisterClientComponent {
 
     console.log("formData", formData);
     console.log("formData keys", Array.from(formData.keys()));
+    this.loader.show()
+
     this._Auth.setRegisterForm(formData).subscribe(
 
       {
 
+
         next: (res) => {
+          this.loader.hide();
           console.log("res", res);
-          if (res?.message === 'Email already exists.') {
-            this.messError = res.message;
-          } else if (res?.succeeded || res?.message === 'Operation successful') {
+          if (res?.succeeded || res?.message === 'Operation successful') {
             this._Router.navigate(['/login']);
           } else {
-            this.messError = 'Unexpected response';
+            this.messError = res.message;
           }
           this.islodaing = false;
         },
         error: (err: HttpErrorResponse) => {
           console.error("err", err);
+          //   this.messError = err.message + "dddddddddddddddd";
+
           this.messError = err.error?.message || 'Registration failed';
           this.islodaing = false;
 

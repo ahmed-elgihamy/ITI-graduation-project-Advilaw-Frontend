@@ -63,6 +63,7 @@ import { SubscriptionCancelComponent } from './components/subscription-cancel/su
 import { CountdownTimerComponentComponent } from './components/countdown-timer-component/countdown-timer-component.component';
 import { EditLawyerProfileComponent } from './components/edit-lawyer-profile/edit-lawyer-profile.component';
 import { LawyerScheduleComponent } from './components/lawyer-schedule/lawyer-schedule.component';
+import { SessionGuard } from './core/guards/session.guard';
 
 export const routes: Routes = [
   {

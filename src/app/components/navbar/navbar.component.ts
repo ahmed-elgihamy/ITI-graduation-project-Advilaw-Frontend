@@ -30,14 +30,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
     public router: Router,
     private clientService: ClientService,
     private lawyerService: LawyerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.sub = this._auth.isLoggedIn$.subscribe((res) => {
       this.isLogged = res;
-    this.userInfo = this._auth.getUserInfo();
+      this.userInfo = this._auth.getUserInfo();
       this.loadProfileImage();
     });
+  }
+  notifications = [
+    { title: 'New message from Lawyer Ahmed', timeAgo: '2 mins ago' },
+    { title: 'Job #123 status updated', timeAgo: '1 hour ago' },
+    // Add more dummy or API data here
+  ];
+
+  get hasNotifications(): boolean {
+    return this.notifications.length > 0;
   }
 
   loadProfileImage() {
@@ -76,7 +85,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.userInfo?.role === 'Client') {
       this.router.navigate(['/client/profile']);
     } else {
-    this.router.navigate(['/profile', this.userInfo?.userId]);
+      this.router.navigate(['/profile', this.userInfo?.userId]);
     }
   }
 

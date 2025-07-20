@@ -18,7 +18,9 @@ export class ChatService {
   private router = inject(Router);
   private _http = inject(HttpClient);
   private sessionService = inject(SessionService);
+  sessid: number = 0;
   startConnection(sessionId: number, senderId: string) {
+    this.sessid = sessionId;
     this.hubConnection = new signalR.HubConnectionBuilder()
 
       .withUrl(`${env.publicUrl}/chathub`)
@@ -64,6 +66,7 @@ export class ChatService {
 
 
   stopConnection() {
+    // this.playEndSound();
     if (this.hubConnection?.state === signalR.HubConnectionState.Connected) {
       this.hubConnection.stop().then(() => {
         console.log('🔌 SignalR disconnected.');
@@ -73,7 +76,7 @@ export class ChatService {
     }
 
 
-    const sessionId = 5//this.messages()[0]?.sessionId;
+    const sessionId = this.sessid;
 
     if (sessionId) {
       this.sessionService.markSessionAsCompleted(sessionId).subscribe({
@@ -82,16 +85,18 @@ export class ChatService {
       });
 
       setTimeout(() => {
-        this.router.navigate(['/ConsultationReview/' + this.messages()[0].sessionId]);
+        this.router.navigate(['/ConsultationReview/' + this.sessid]);
       }, 4000);
     }
   }
-  // playEndSound() {
-  //   const audio = new Audio('/assets/sounds/soundend.mp3');
-  //   audio.play().catch(err => {
-  //     console.warn('🔇 Audio playback failed:', err);
-  //   });
 
+
+  playEndSound() {
+    const audio = new Audio('/assets/sounds/soundend.mp3');
+    audio.play().catch(err => {
+      console.warn('🔇 Audio playback failed:', err);
+    });
+  }
   getMessages(sessionId: number): Observable<any> {
     return this._http.get(`${env.baseUrl}/session/${sessionId}/messages`);
   }

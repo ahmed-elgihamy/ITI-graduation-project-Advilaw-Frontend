@@ -9,7 +9,7 @@ import { env } from '../../../core/env/env';
 
 @Component({
   selector: 'app-jobs-content',
-  imports: [DashboardTableComponent, PaginationComponent,CommonModule],
+  imports: [DashboardTableComponent, PaginationComponent, CommonModule],
   templateUrl: './jobs-content.component.html',
   styleUrl: './jobs-content.component.css',
 })

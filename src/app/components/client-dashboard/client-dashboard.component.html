@@ -9,17 +9,14 @@
         <router-outlet></router-outlet>
       </main>
 
-    <a class="navbar-brand" href="javascript:void(0)">Client Dashboard</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasSidebar"
-      aria-controls="offcanvasSidebar"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <a class="navbar-brand" href="javascript:void(0)">Client Dashboard</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar"
+        aria-controls="offcanvasSidebar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
   </div>
+
 </nav>
 
 <div class="container-fluid">
@@ -29,92 +26,64 @@
       <div class="d-flex flex-column p-3 h-100">
         <!-- <h3 class="mb-4">Dashboard</h3> -->
         <ul class="nav nav-pills flex-column mb-auto" id="sidebarMenu">
-          <div
-            class="logo fs-4 fw-bold text-center text-white"
-            style="cursor: pointer"
-            routerLink="/"
-          >
+          <div class="logo fs-4 fw-bold text-center text-white" style="cursor: pointer" routerLink="/">
             <span>
-              <a
-                class="navbar-brand w-100 d-flex justify-content-center"
-                routerLink="/"
-                ><img
-                  class="w-50 object-fit-cover"
-                  src="assets/images/logos/dark_logo-new.png"
-              /></a>
+              <a class="navbar-brand w-100 d-flex justify-content-center" routerLink="/"><img
+                  class="w-50 object-fit-cover" src="assets/images/logos/dark_logo-new.png" /></a>
             </span>
           </div>
           <hr />
           <li class="nav-item">
-            <a class="nav-link" routerLink="overview" routerLinkActive="active"
-              ><i class="fa-solid fa-house"></i> Overview</a
-            >
+            <a class="nav-link" routerLink="overview" routerLinkActive="active"><i class="fa-solid fa-house"></i>
+              Overview</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="profile" routerLinkActive="active"
-              ><i class="fa-solid fa-house"></i> My Profile</a
-            >
+            <a class="nav-link" routerLink="profile" routerLinkActive="active"><i class="fa-solid fa-house"></i> My
+              Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="consults" routerLinkActive="active"
-              ><i class="fa-solid fa-calendar-check"></i> Consultations</a
-            >
+            <a class="nav-link" routerLink="consults" routerLinkActive="active"><i
+                class="fa-solid fa-calendar-check"></i> Consultations</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="chats" routerLinkActive="active"
-              ><i class="fa-regular fa-message"></i> Chats</a
-            >
+            <a class="nav-link" routerLink="chats" routerLinkActive="active"><i class="fa-regular fa-message"></i>
+              Chats</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="payments" routerLinkActive="active"
-              ><i class="fa-solid fa-money-check"></i> Payments</a
-            >
+            <a class="nav-link" routerLink="payments" routerLinkActive="active"><i class="fa-solid fa-money-check"></i>
+              Payments</a>
           </li>
         </ul>
       </div>
     </nav>
     <!-- Sidebar Offcanvas for small screens -->
-    <div
-      class="offcanvas offcanvas-start bg-dark text-white"
-      tabindex="-1"
-      id="offcanvasSidebar"
-      aria-labelledby="offcanvasSidebarLabel"
-    >
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasSidebar"
+      aria-labelledby="offcanvasSidebarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Dashboard</h5>
-        <button
-          type="button"
-          class="btn-close btn-close-white"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body p-0">
         <ul class="nav nav-pills flex-column mb-auto" id="sidebarMenuOffcanvas">
           <li class="nav-item" (click)="closeNavbar()">
-            <a class="nav-link" routerLink="overview" routerLinkActive="active"
-              ><i class="fa-solid fa-house"></i> Overview</a
-            >
+            <a class="nav-link" routerLink="overview" routerLinkActive="active"><i class="fa-solid fa-house"></i>
+              Overview</a>
           </li>
           <li class="nav-item" (click)="closeNavbar()">
-            <a class="nav-link" routerLink="profile" routerLinkActive="active"
-              ><i class="fa-solid fa-house"></i> My Profile</a
-            >
+            <a class="nav-link" routerLink="profile" routerLinkActive="active"><i class="fa-solid fa-house"></i> My
+              Profile</a>
           </li>
           <li class="nav-item" (click)="closeNavbar()">
-            <a class="nav-link" routerLink="consults" routerLinkActive="active"
-              ><i class="fa-solid fa-calendar-check"></i> Consultations</a
-            >
+            <a class="nav-link" routerLink="consults" routerLinkActive="active"><i
+                class="fa-solid fa-calendar-check"></i> Consultations</a>
           </li>
           <li class="nav-item" (click)="closeNavbar()">
-            <a class="nav-link" routerLink="chats" routerLinkActive="active"
-              ><i class="fa-regular fa-message"></i> Chats</a
-            >
+            <a class="nav-link" routerLink="chats" routerLinkActive="active"><i class="fa-regular fa-message"></i>
+              Chats</a>
           </li>
           <li class="nav-item" (click)="closeNavbar()">
-            <a class="nav-link" routerLink="payments" routerLinkActive="active"
-              ><i class="fa-solid fa-money-check"></i> Payments</a
-            >
+            <a class="nav-link" routerLink="payments" routerLinkActive="active"><i class="fa-solid fa-money-check"></i>
+              Payments</a>
           </li>
         </ul>
       </div>

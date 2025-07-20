@@ -80,10 +80,10 @@ export class SessionService {
       const now = Date.now();
       const remaining = Math.floor((end - now) / 1000);
 
-      if (remaining <= 0) {
+      if (remaining <= 9) {
         this.remainingSeconds.set(0);
         clearInterval(this.intervalId);
-        this.playEndSound();
+        //this.playEndSound();
         this.markSessionAsCompleted(this.sesstionId).subscribe({
           next: () => console.log("✅ Session marked as completed."),
           error: (err) => console.error("❌ Failed to mark session as completed:", err)

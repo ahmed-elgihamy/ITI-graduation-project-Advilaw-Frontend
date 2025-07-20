@@ -29,7 +29,7 @@ export class LoginComponent {
     password: ['', [
       Validators.required,
       Validators.minLength(6),
-      Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@!?*\.]).{6,}$/)
+      Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@!?$*\.]).{6,}$/)
     ]],
   });
 

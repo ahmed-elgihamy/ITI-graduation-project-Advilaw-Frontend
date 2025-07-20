@@ -1,8 +1,5 @@
 <div class="table-responsive">
-  <table
-    class="table table-bordered table-hover align-middle"
-    *ngIf="data.length > 0; else noData"
-  >
+  <table class="table table-bordered table-hover align-middle" *ngIf="data.length > 0; else noData">
     <thead class="table-light">
       <tr>
         <th *ngFor="let col of columns" class="text-capitalize text-center">
@@ -11,30 +8,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr
-        *ngFor="let item of data"
-        (click)="goToDetailsPage(item.id)"
-        class="clickable-row"
-        style="cursor: pointer"
-      >
+      <tr *ngFor="let item of data" (click)="goToDetailsPage(item.id)" class="clickable-row" style="cursor: pointer">
         <td *ngFor="let col of columns" class="text-center">
           <!-- Image column -->
           <ng-container *ngIf="col.type === 'image'; else nonImage">
-            <img
-              [src]="getFullImageUrl(item.imageUrl)" alt="Profile Image"
-              class="rounded-circle object-fit-cover"
-              style="width: 50px; height: 50px"
-            />
+            <img [src]="getFullImageUrl(item.imageUrl)" alt="Profile Image" class="rounded-circle object-fit-cover"
+              style="width: 50px; height: 50px" />
           </ng-container>
 
           <!-- Other columns -->
           <ng-template #nonImage>
             <!-- Boolean -->
             <ng-container *ngIf="col.type === 'boolean'; else nonBoolean">
-              <span
-                class="badge"
-                [ngClass]="item[col.key] ? 'bg-success' : 'bg-danger'"
-              >
+              <span class="badge" [ngClass]="item[col.key] ? 'bg-success' : 'bg-danger'">
                 {{ item[col.key] ? "Yes" : "No" }}
               </span>
             </ng-container>

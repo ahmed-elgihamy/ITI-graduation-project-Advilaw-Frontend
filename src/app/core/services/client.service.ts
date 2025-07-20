@@ -6,6 +6,14 @@ import { ApiResponse } from '../../types/ApiResponse';
 import { PagedResponse } from '../../types/PagedResponse';
 import { ChatDTO } from '../../types/Chat/ChatDTO';
 import { ClientPaymentDTO, ClientPaymentStatistics, ClientBalance, WithdrawalRequest } from '../../types/Clients/ClientPaymentDTO';
+export interface ClientJobChatDto {
+  jobId: number;
+  jobTitle: string;
+  status: string;
+  lawyerName: string;
+  lawyerImageUrl: string;
+  sessionId: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +21,12 @@ import { ClientPaymentDTO, ClientPaymentStatistics, ClientBalance, WithdrawalReq
 export class ClientService {
   apiUrl = env.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-
+  getClientJobChats(clientId: string): Observable<ClientJobChatDto[]> {
+    console.log(clientId + "dd")
+    return this.http.get<ClientJobChatDto[]>(`${env.baseUrl}/Client/${clientId}/chats`);
+  }
 
   // Get client jobs 
   getClientJobs(): Observable<ApiResponse<any>> {
@@ -47,7 +58,7 @@ export class ClientService {
     return this.http.get<ApiResponse<ClientPaymentDTO>>(`${this.apiUrl}/dummy/${paymentId}`);
   }
 
- 
+
 
   // Get client balance
   getClientBalance(): Observable<ApiResponse<ClientBalance>> {

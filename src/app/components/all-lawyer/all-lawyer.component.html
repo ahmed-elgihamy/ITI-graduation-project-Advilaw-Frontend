@@ -130,37 +130,43 @@
 <section class="container mb-5 top-lawyers">
     <h2 class="mb-4 fw-bold">Top 10 Lawyers</h2>
     <div class="position-relative">
-
-        <!-- SCROLLABLE ROW -->
         <div class="row flex-nowrap overflow-auto pb-4 gap-3" #scrollContainer>
             <div class="col-md-3 col-10" *ngFor="let item of topLawyers">
                 <div class="card lawyer-card h-100 border-0 shadow-sm">
-                    <img src="/assets/images/Family.jpg" class="card-img-top h-50" alt="{{item.name}}">
+                    <img [src]="getLawyerImageUrl(item) || 'assets/images/default-lawyer.jpg'"
+                        class="card-img-top object-fit-cover" style="height: 200px" alt="{{ item.name }}" />
+
                     <div class="card-body">
-                        <h5 class="card-title">{{item.name}}</h5>
-                        <p class="card-text text-muted">{{item.field}}</p>
-                        <p class="card-text"><small class="text-muted">8 years exp, 47 reviews</small></p>
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text text-muted">{{ item.field }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                {{ item.experience || '10 years' }},
+                                {{ item.cases || 5 }} cases,
+                                20 reviews
+                            </small>
+                        </p>
+
+                        <!-- Optional stars rating -->
+                        <div class="text-warning">
+                            <i class="fa fa-star" *ngFor="let _ of getStars(item.rating)"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Navigation Arrows OUTSIDE scroll row -->
+        <!-- Arrows -->
         <button (click)="scroll('left')"
-            class="btn btn-light position-absolute top-50 left-1 translate-middle-y rounded-circle p-2 d-none d-md-block ">
-            <i class="fa-solid fa-arrow-left"></i> </button>
+            class="btn btn-light position-absolute top-50 start-0 translate-middle-y rounded-circle p-2 d-none d-md-block">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
         <button (click)="scroll('right')"
             class="btn btn-light position-absolute top-50 end-0 translate-middle-y rounded-circle p-2 d-none d-md-block">
-            <i class="fa-solid fa-arrow-right"></i> </button>
-
-        <!-- Pagination Dots OUTSIDE scroll row -->
-        <!-- <div class="text-center  mt-3">
-                <span class="pagination-dot active">dff</span>
-                <span class="pagination-dot">dr</span>
-                <span class="pagination-dot"></span>
-            </div> -->
-
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
     </div>
+
 
     <!-- All Lawyers -->
     <section class="all-lawyers py-5">
@@ -174,8 +180,8 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <div class="lawyer-avatar">
-                                    <img [src]="getLawyerImageUrl(lawyer)"
-                                         [alt]="lawyer.name" class="rounded-circle" style="width:48px;height:48px;object-fit:cover;">
+                                    <img [src]="getLawyerImageUrl(lawyer)" [alt]="lawyer.name" class="rounded-circle"
+                                        style="width:48px;height:48px;object-fit:cover;">
                                 </div>
                             </div>
                             <div class="col">

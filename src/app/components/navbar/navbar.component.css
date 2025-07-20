@@ -123,3 +123,7 @@ ul.main-navbar li a:hover::before {
 .dropdown-menu .dropdown-item:hover {
   background-color: #f1f1f1;
 }
+.bi-bell-fill {
+  font-size: 1.4rem;
+  color: #fff;
+}

@@ -44,7 +44,7 @@ export class RegisterLawyerComponent {
       [
         Validators.required,
         Validators.minLength(6),
-        Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@!?*\.]).{6,}$/),
+        Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@!?*$\.]).{6,}$/),
       ],
     ],
     userName: ['', [Validators.required]],
@@ -125,12 +125,10 @@ export class RegisterLawyerComponent {
     this._Auth.setRegisterForm(formData).subscribe({
       next: (res) => {
         console.log('res', res);
-        if (res?.message === 'Email already exists.') {
-          this.messError = res.message;
-        } else if (res?.succeeded || res?.message === 'Operation successful') {
+        if (res?.succeeded || res?.message === 'Operation successful') {
           this._Router.navigate(['/login']);
         } else {
-          this.messError = 'Unexpected response';
+          this.messError = res.message;
         }
         this.islodaing = false;
       },
