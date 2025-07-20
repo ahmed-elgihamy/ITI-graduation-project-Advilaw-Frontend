@@ -127,3 +127,6 @@ ul.main-navbar li a:hover::before {
   font-size: 1.4rem;
   color: #fff;
 }
+.fss{
+  font-size: 2.25rem;
+}
