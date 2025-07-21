@@ -45,15 +45,15 @@ export class AllLawyerComponent implements OnInit {
 
   countries = ['USA', 'Egypt', 'Canada', 'UK', 'Australia', 'Germany'];
   cities: { [key: string]: string[] } = {
-    'USA': ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'],
+    'USA': ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'],
     'Canada': ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Ottawa'],
     'UK': ['London', 'Manchester', 'Birmingham', 'Glasgow', 'Liverpool'],
     'Australia': ['Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide'],
     'Germany': ['Berlin', 'Munich', 'Hamburg', 'Cologne', 'Frankfurt'],
-    'Egypt': ['Alex', 'Munich', 'Hamburg', 'Cologne', 'Frankfurt']
+    'Egypt': ['Cairo', 'Alexandria', 'Giza', 'Mansoura', 'Tanta']
   };
   legalFields = [
-    'Personal Injury Law', 'Business Law', 'Family Law', 'Criminal Defense', 'Real Estate Law',
+    'Personal Injury Law', 'Business Law', 'Family Law', 'Civil Law', 'Criminal Defense', 'Real Estate Law',
     'Immigration Law', 'Employment Law', 'Intellectual Property', 'Estate Planning', 'Tax Law',
     'Environmental Law', 'Medical Malpractice'
   ];
@@ -93,6 +93,7 @@ export class AllLawyerComponent implements OnInit {
         this.applySorting();
 
 
+        this.applyFilters();
 
 
         console.log('Top Lawyers by Experience:', this.topLawyers);
@@ -201,7 +202,7 @@ export class AllLawyerComponent implements OnInit {
   getLawyerImageUrl(lawyer: any): string {
     const url = lawyer.profileImageUrl || lawyer.imageUrl || lawyer.image || '';
     if (!url) {
-      return 'assets/images/default-avatar.png';
+      return ' assets/images/lawyer-professional.jpg';
     }
     return url;
   }

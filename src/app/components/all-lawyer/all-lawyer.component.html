@@ -133,7 +133,7 @@
         <div class="row flex-nowrap overflow-auto pb-4 gap-3" #scrollContainer>
             <div class="col-md-3 col-10" *ngFor="let item of topLawyers">
                 <div class="card lawyer-card h-100 border-0 shadow-sm">
-                    <img [src]="getLawyerImageUrl(item) || 'assets/images/default-lawyer.jpg'"
+                    <img [src]="getLawyerImageUrl(item) ?getLawyerImageUrl(item): 'assets/images/lawyer-professional.jpg'"
                         class="card-img-top object-fit-cover" style="height: 200px" alt="{{ item.name }}" />
 
                     <div class="card-body">
@@ -180,7 +180,8 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <div class="lawyer-avatar">
-                                    <img [src]="getLawyerImageUrl(lawyer)" [alt]="lawyer.name" class="rounded-circle"
+                                    <img [src]="getLawyerImageUrl(lawyer) ?getLawyerImageUrl(lawyer): '/assets/images/lawyer-professional.jpg'"
+                                        [alt]="lawyer.name" class="rounded-circle"
                                         style="width:48px;height:48px;object-fit:cover;">
                                 </div>
                             </div>
