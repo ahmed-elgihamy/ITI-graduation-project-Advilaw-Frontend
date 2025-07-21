@@ -8,7 +8,7 @@ import { NavbarComponent } from "../navbar/navbar.component";
   selector: 'app-client-dashboard',
   templateUrl: './client-dashboard.component.html',
   styleUrl: './client-dashboard.component.css',
-  imports: [RouterModule, CommonModule, SidebarComponent, NavbarComponent],
+  imports: [RouterModule, CommonModule, SidebarComponent],
 
 })
 export class ClientDashboardComponent {
