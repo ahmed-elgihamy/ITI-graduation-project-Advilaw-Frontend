@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-dark bg-dark d-lg-none">
   <div class="container-fluid">
 
@@ -90,8 +91,10 @@
 
     </div>
     <!-- Main Content -->
-    <main class="col-lg-10 ms-sm-auto px-4 py-4" id="mainContent">
+    <main class="col-lg-10 ms-sm-auto" id="mainContent" style="padding-left:0; padding-right:0;">
+      <app-navbar></app-navbar>
       <router-outlet></router-outlet>
+      
     </main>
   </div>
 </div>

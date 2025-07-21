@@ -17,7 +17,7 @@
         </li> -->
 
         <li class="text-decoration-none list-unstyled semi-white mx-2">
-          <a class="nav-link" routerLinkActive="active" routerLink="/jobs">Jobs</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="dashboard/jobs">Jobs</a>
         </li>
 
 
@@ -65,7 +65,7 @@
             </a>
           </li>
           <li>
-            <a class="dropdown-item" routerLink="/dashboard">
+            <a class="dropdown-item"(click)="GoToOverviewOrDashboard()">
               <i class="bi bi-speedometer2 me-2"></i> Dashboard
             </a>
           </li>
@@ -130,7 +130,7 @@
           <a class="nav-link" routerLinkActive="active" routerLink="/dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/jobs">Jobs</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="dashboard/jobs">Jobs</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="/allLawyers">Lawyers</a>

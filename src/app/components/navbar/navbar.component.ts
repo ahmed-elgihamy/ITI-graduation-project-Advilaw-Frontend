@@ -89,6 +89,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  GoToOverviewOrDashboard() {
+    if (this.userInfo?.role === 'Client') {
+      this.router.navigate(['/client/overview']);
+    } else {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
