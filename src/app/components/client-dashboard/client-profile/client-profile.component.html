@@ -70,7 +70,7 @@
                   <div class="position-relative">
                     <div class="rounded-circle overflow-hidden border border-warning shadow" style="width: 200px; height: 200px;">
                       <img
-                        [src]="imagePreview || 'https://localhost:44302' + client.imageUrl"
+                        [src]="imagePreview || (client.imageUrl ? 'https://localhost:44302' + client.imageUrl : 'assets/images/default-profile.png')"
                         alt="Profile Picture"
                         class="w-100 h-100 object-fit-cover"
                         (error)="onImageError($event)"
@@ -81,7 +81,7 @@
                         </label>
                       </div>
                     </div>
-                    <input type="file" id="profile-image-input" accept="image/*" (change)="onImageChange($event)" hidden>
+                    <input *ngIf="isEditing" type="file" id="profile-image-input" accept="image/*" (change)="onImageChange($event)" hidden>
                     <small class="text-muted d-block mt-2" *ngIf="isEditing">Max 2MB. JPG, PNG allowed.</small>
                   </div>
                 </div>

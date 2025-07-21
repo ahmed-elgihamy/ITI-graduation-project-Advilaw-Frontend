@@ -15,7 +15,7 @@ export enum Gender {
 @Component({
   selector: 'app-client-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NavbarComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './client-profile.component.html',
   styleUrl: './client-profile.component.css'
 })
