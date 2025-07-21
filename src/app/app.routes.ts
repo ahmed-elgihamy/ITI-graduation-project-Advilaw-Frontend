@@ -227,6 +227,7 @@ export const routes: Routes = [
 
   {
     path: 'client',
+
     component: ClientDashboardComponent,
     children: [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

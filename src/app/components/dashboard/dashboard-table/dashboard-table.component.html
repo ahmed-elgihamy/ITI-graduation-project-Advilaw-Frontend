@@ -12,7 +12,7 @@
         <td *ngFor="let col of columns" class="text-center">
           <!-- Image column -->
           <ng-container *ngIf="col.type === 'image'; else nonImage">
-            <img [src]="getFullImageUrl(item.imageUrl)" alt="Profile Image" class="rounded-circle object-fit-cover"
+            <img [src]="getFullImageUrl(item[col.key])" alt="Profile Image" class="rounded-circle object-fit-cover"
               style="width: 50px; height: 50px" />
           </ng-container>
 

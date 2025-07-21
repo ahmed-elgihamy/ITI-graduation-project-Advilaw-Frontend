@@ -82,11 +82,11 @@ export class LawyerPaymentsComponent implements OnInit {
         this.stripeAccountStatus = status;
 
         this.loading = false;
-        // Log ChargesEnabled to the console
-        console.log('Stripe chargesEnabled:', status.chargesEnabled);
+        // // Log ChargesEnabled to the console
+        // console.log('Stripe chargesEnabled:', status.chargesEnabled);
 
-        // Optionally, log the whole status object for more details
-        console.log('Stripe Account Status:', status);
+        // // Optionally, log the whole status object for more details
+        // console.log('Stripe Account Status:', status);
       },
       error: (err) => {
         this.stripeAccountStatus = null;
@@ -135,5 +135,9 @@ export class LawyerPaymentsComponent implements OnInit {
     return !!this.stripeAccountStatus && !this.stripeAccountStatus.chargesEnabled;
   }
   
+  getFullImageUrl(relativePath: string): string {
+    if (!relativePath) return 'assets/default-user.png'; // fallback
+    return 'https://your-backend-domain.com' + relativePath;
+  }
 
 }
